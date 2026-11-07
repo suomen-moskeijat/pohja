@@ -32,7 +32,7 @@
     <div class="u-ala__yhteys">
       <h2>{% include k.html a="yhteystiedot" %}</h2>
       <ul>
-        {% if m.osoite and m.osoite != "" %}<li>{% include ikoni-ph.html nimi="sijainti" koko=18 %}<a href="https://www.google.com/maps/dir/?api=1&amp;destination={{ m.osoite | url_encode }}" target="_blank" rel="noopener">{{ m.osoite }}</a></li>{% endif %}
+        {% if m.osoite and m.osoite != "" %}<li>{% include ikoni-ph.html nimi="sijainti" koko=18 %}<a href="https://www.google.com/maps/dir/?api=1&amp;destination={% include osat/reitti.html moskeija=m %}" target="_blank" rel="noopener">{{ m.osoite }}</a></li>{% endif %}
         {% if m.puhelin and m.puhelin != "" %}<li>{% include ikoni-ph.html nimi="puhelin" koko=18 %}<a href="tel:{{ m.puhelin | remove: ' ' }}" dir="ltr">{{ m.puhelin }}</a></li>{% endif %}
         {% if m.sahkoposti and m.sahkoposti != "" %}<li>{% include ikoni-ph.html nimi="posti" koko=18 %}<a href="mailto:{{ m.sahkoposti }}">{{ m.sahkoposti }}</a></li>{% endif %}
       </ul>

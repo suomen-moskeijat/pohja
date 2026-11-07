@@ -12,7 +12,7 @@
       {% if m.juma and m.juma != "" %}<li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="moskeija" koko=20 %}</span><span><small>{% include k.html a="jumua" %}</small><strong dir="ltr">{{ m.juma }}</strong></span></li>{% endif %}
     </ul>
     <div class="u-napit">
-      <a class="u-nappi u-nappi--kulta" href="https://www.google.com/maps/dir/?api=1&amp;destination={{ m.osoite | url_encode }}" target="_blank" rel="noopener">{% include ikoni-ph.html nimi="sijainti" koko=18 %} {% include k.html a="reittiohjeet" %}</a>
+      <a class="u-nappi u-nappi--kulta" href="https://www.google.com/maps/dir/?api=1&amp;destination={% include osat/reitti.html moskeija=m %}" target="_blank" rel="noopener">{% include ikoni-ph.html nimi="sijainti" koko=18 %} {% include k.html a="reittiohjeet" %}</a>
       {% if wa != "" %}<a class="u-nappi u-nappi--reuna" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" koko=18 %} WhatsApp</a>{% endif %}
     </div>
   </div>

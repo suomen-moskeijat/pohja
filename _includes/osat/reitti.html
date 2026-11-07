@@ -1,0 +1,8 @@
+{%- comment -%}
+  Reittiohjeiden kohde: katuosoite, jos se on (muoto "Katu 1, 00100 Kaupunki");
+  muuten koordinaatit (esim. Mawaqitista), viimeisenä pelkkä osoite.
+{%- endcomment -%}
+{%- assign _m = include.moskeija -%}
+{%- if _m.osoite contains "," -%}{{ _m.osoite | url_encode }}
+{%- elsif _m.sijainti.lat and _m.sijainti.lat != 0 -%}{{ _m.sijainti.lat }},{{ _m.sijainti.lon }}
+{%- else -%}{{ _m.osoite | url_encode }}{%- endif -%}
