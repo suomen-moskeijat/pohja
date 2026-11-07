@@ -32,6 +32,10 @@ some:
 teema:
   logo: ""            # esim. /tiedostot/logo.png – ilman logoa näytetään nimi
   hero: vaalea
+  # Omat värit (tyhjä = pohjan kulta-ruskea). Esim. vihreä: paa "#123d30", korostus "#5fae8a", korostus_vaalea "#e7f4ee"
+  paa: ""             # otsikot ja teksti
+  korostus: ""        # painikkeet, kuvio, korostukset
+  korostus_vaalea: "" # vaaleat pohjat
 
 # ===== Tekstit (valinnainen; suomi riittää, muut kielet näkyvät kun ne lisätään) =====
 hero_tunniste: { fi: "KAUPUNKI" }

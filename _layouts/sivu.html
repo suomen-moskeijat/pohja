@@ -23,19 +23,23 @@
       document.documentElement.dir = k === 'ar' ? 'rtl' : 'ltr';
     })();
   </script>
-  {% if t.fontit_url %}<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="{{ t.fontit_url }}">{% endif %}
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  {%- comment -%} Fontit: moskeijan oma valinta (teema.fontit_url) tai pohjan oletus {%- endcomment -%}
+  <link rel="stylesheet" href="{{ t.fontit_url | default: 'https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Kufi+Arabic:wght@500;600;700&display=swap' }}">
   <link rel="stylesheet" href="{{ '/assets/css/sivu.css' | relative_url }}?v={{ v }}">
-  {% if t %}
-  <style>
-    :root {
-      --paa: {{ t.paa }}; --paa-tumma: {{ t.paa_tumma | default: t.paa }};
-      --kulta: {{ t.korostus }}; --kulta-vaalea: {{ t.korostus_vaalea }};
-      --tausta: {{ t.tausta | default: '#faf9f5' }}; --raja: {{ t.raja | default: '#ebe3da' }}; --hieno: {{ t.hieno | default: '#796456' }};
-      {% if t.fontti_otsikot %}--fontti-otsikot: {{ t.fontti_otsikot }};{% endif %}
-      {% if t.fontti_teksti %}--fontti-teksti: {{ t.fontti_teksti }};{% endif %}
-    }
-  </style>
-  {% endif %}
+  {%- comment -%} Moskeijan omat värit ja fontit (vain annetut korvaavat oletukset) {%- endcomment -%}
+  {%- capture _teema -%}
+    {%- if t.paa and t.paa != "" -%}--paa: {{ t.paa }}; --teksti: {{ t.paa_tumma | default: t.paa }};{%- endif -%}
+    {%- if t.paa_tumma and t.paa_tumma != "" -%}--paa-tumma: {{ t.paa_tumma }};{%- endif -%}
+    {%- if t.korostus and t.korostus != "" -%}--kulta: {{ t.korostus }}; --kulta-teksti: color-mix(in srgb, {{ t.korostus }} 45%, {{ t.paa | default: '#3f2717' }});{%- endif -%}
+    {%- if t.korostus_vaalea and t.korostus_vaalea != "" -%}--kulta-vaalea: {{ t.korostus_vaalea }};{%- endif -%}
+    {%- if t.tausta and t.tausta != "" -%}--tausta: {{ t.tausta }};{%- endif -%}
+    {%- if t.raja and t.raja != "" -%}--raja: {{ t.raja }};{%- endif -%}
+    {%- if t.hieno and t.hieno != "" -%}--hieno: {{ t.hieno }};{%- endif -%}
+    {%- if t.fontti_otsikot and t.fontti_otsikot != "" -%}--fontti-otsikot: {{ t.fontti_otsikot }};{%- endif -%}
+    {%- if t.fontti_teksti and t.fontti_teksti != "" -%}--fontti-teksti: {{ t.fontti_teksti }};{%- endif -%}
+  {%- endcapture -%}
+  {% if _teema != "" %}<style>:root { {{ _teema }} }</style>{% endif %}
   {% if page.kartta %}<link rel="stylesheet" href="{{ '/assets/vendor/leaflet/leaflet.css' | relative_url }}">{% endif %}
   {%- assign _ikoni = t.logo_pieni | default: t.logo -%}
   {% if _ikoni and _ikoni != "" %}<link rel="icon" type="image/png" href="{{ _ikoni | relative_url }}">{% endif %}

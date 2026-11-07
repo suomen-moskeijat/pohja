@@ -134,6 +134,10 @@ some:
 teema:
   logo: ""            # ilman logoa yläpalkissa näkyy moskeijan nimi
   hero: vaalea
+  # Omat värit (tyhjä = pohjan kulta-ruskea), esim. paa "#123d30", korostus "#5fae8a", korostus_vaalea "#e7f4ee"
+  paa: ""
+  korostus: ""
+  korostus_vaalea: ""
 
 hero_tunniste: {{ fi: {yaml_str(t['kaupunki'])} }}
 esittely: {{ fi: "Rukouksen, oppimisen ja yhteisön paikka." }}
