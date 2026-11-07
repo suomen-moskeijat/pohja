@@ -106,7 +106,7 @@ def masjidbox(tunnus):
     if not m:
         raise ValueError("sivulta ei löytynyt aikataulua")
     raaka = re.sub(r"%u([0-9A-Fa-f]{4})", lambda x: chr(int(x.group(1), 16)), m.group(2))
-    athany = json.loads(urllib.parse.unquote(raaka)).get("masjidbox", {}).get("masjidboxAthany") or {}
+    athany = json.loads(urllib.parse.unquote(raaka, encoding="latin-1")).get("masjidbox", {}).get("masjidboxAthany") or {}
     paivat = {}
     for p in athany.get("timetable") or []:
         pvm = (p.get("date") or "")[:10]

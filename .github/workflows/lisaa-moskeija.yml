@@ -1,0 +1,51 @@
+# Lisää uusi moskeija: Actions → "Lisää moskeija" → Run workflow → täytä lomake.
+# Luo moskeijalle repon mallista, hakee tiedot (Mawaqit / Masjidbox / osoite)
+# ja julkaisee sivun. Vaatii salaisuuden MOSKEIJA_AVAIN (ks. README).
+name: Lisää moskeija
+
+on:
+  workflow_dispatch:
+    inputs:
+      nimi:
+        description: "Moskeijan nimi (voi jättää tyhjäksi, jos Mawaqit/Masjidbox on annettu)"
+        required: false
+      kaupunki:
+        description: "Kaupunki"
+        required: true
+      mawaqit:
+        description: "Mawaqit-linkki tai upotuskoodi (valinnainen)"
+        required: false
+      masjidbox:
+        description: "Masjidbox-linkki (valinnainen)"
+        required: false
+      osoite:
+        description: "Katuosoite, esim. Kauppakatu 1, 05800 Hyvinkää (valinnainen)"
+        required: false
+      instagram:
+        description: "Instagram-linkki (valinnainen)"
+        required: false
+      whatsapp:
+        description: "WhatsApp-numero (valinnainen)"
+        required: false
+      repo:
+        description: "Repon nimi (valinnainen; oletus nimestä)"
+        required: false
+
+jobs:
+  lisaa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Luo moskeijan sivu
+        env:
+          MOSKEIJA_AVAIN: ${{ secrets.MOSKEIJA_AVAIN }}
+          ORG: ${{ github.repository_owner }}
+          SYOTE_NIMI: ${{ inputs.nimi }}
+          SYOTE_KAUPUNKI: ${{ inputs.kaupunki }}
+          SYOTE_MAWAQIT: ${{ inputs.mawaqit }}
+          SYOTE_MASJIDBOX: ${{ inputs.masjidbox }}
+          SYOTE_OSOITE: ${{ inputs.osoite }}
+          SYOTE_INSTAGRAM: ${{ inputs.instagram }}
+          SYOTE_WHATSAPP: ${{ inputs.whatsapp }}
+          SYOTE_REPO: ${{ inputs.repo }}
+        run: python3 .github/scripts/lisaa_moskeija.py

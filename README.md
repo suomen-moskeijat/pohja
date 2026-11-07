@@ -19,16 +19,41 @@ Instagram-julkaisut ja rukousajat, rakentaa sivun ja julkaisee sen moskeijan rep
 GitHub Pagesiin. Haetut tiedot säilytetään välimuistissa, joten katkos Instagramissa tai
 Masjidboxissa ei tyhjennä sivua.
 
-## Uusi moskeija käsin
+## Uusi moskeija (noin 2 minuuttia)
 
-1. Luo organisaatioon julkinen repo (esim. `moskeija-tampere`).
-2. Kopioi sinne kansion `malli/` sisältö ja korvaa `SLUG`, `REPO`, `MOSKEIJAN NIMI`
-   ja osoitetiedot (`_moskeijat/SLUG.md` → `_moskeijat/<slug>.md`).
-3. Repon asetuksista: **Settings → Pages → Source: GitHub Actions**.
-4. Pages CMS: kirjaudu https://app.pagescms.org ja valitse repo – moskeija voi muokata
-   tietojaan ja lisätä tapahtumia selaimessa.
+1. **Actions → Lisää moskeija → Run workflow**
+   (https://github.com/suomen-moskeijat/pohja/actions/workflows/lisaa-moskeija.yml)
+2. Täytä lomake:
+   - **kaupunki** (pakollinen)
+   - **Mawaqit- tai Masjidbox-linkki**, jos moskeija käyttää niitä (linkin tai upotuskoodin
+     voi liittää sellaisenaan) – silloin nimi, koordinaatit, Jumuah, rukousajat, iqamah
+     (ja Mawaqitista kuvat) tulevat automaattisesti
+   - muuten **nimi** ja **katuosoite** (koordinaatit haetaan osoitteesta)
+   - valinnaisesti Instagram ja WhatsApp
+3. Valmis: ajon yhteenvedossa on sivun osoite. Repo luodaan nimellä
+   `suomen-moskeijat/<moskeijan-nimi>` ja sivu julkaistaan noin kahdessa minuutissa.
+4. Täydennä tiedot (osoite, puhelin, logo, tekstit) Pages CMS:ssä: https://app.pagescms.org
 
-(Automaattinen "Lisää moskeija" -lomake tulee seuraavaksi.)
+**Kokeilu ilman että mitään luodaan:**
+`python3 .github/scripts/lisaa_moskeija.py --kuiva /tmp/kokeilu --kaupunki Hyvinkää --mawaqit <linkki>`
+
+### Kertaluonteinen asetus: avain, jolla automaatio luo repoja
+
+1. Luo avain: https://github.com/settings/personal-access-tokens/new
+   - **Resource owner:** `suomen-moskeijat`
+   - **Expiration:** esim. 1 vuosi (uusi avain ennen kuin se vanhenee)
+   - **Repository access:** All repositories
+   - **Repository permissions:** Administration, Contents, Pages ja Workflows → *Read and write*
+2. Jos organisaatio vaatii hyväksynnän: Organisaation asetukset → Personal access tokens →
+   hyväksy avain.
+3. Tallenna avain: tämän repon **Settings → Secrets and variables → Actions →
+   New repository secret**, nimi `MOSKEIJA_AVAIN`.
+
+### Käsin (ilman automaatiota)
+
+1. Luo organisaatioon julkinen repo ja kopioi sinne kansion `malli/` sisältö; korvaa `SLUG`,
+   `REPO`, `MOSKEIJAN NIMI` ja osoitetiedot (`_moskeijat/SLUG.md` → `_moskeijat/<slug>.md`).
+2. Repon asetuksista: **Settings → Pages → Source: GitHub Actions**.
 
 ## Rakenne
 
@@ -39,8 +64,9 @@ Masjidboxissa ei tyhjennä sivua.
 | `*.html`, `palvelut/` | Sivut: etusivu, rukousajat, meistä, palvelut, lasten opetus, tapahtumat, yhteystiedot, lahjoita, tietosuoja |
 | `assets/css/sivu.css`, `assets/js/sivu.js` | Tyylit ja toiminnot (kielet, rukousajat, lomakkeet …) |
 | `_data/kaannokset.yml` | Käännökset: suomi, englanti, arabia, somali |
-| `.github/scripts/` | Haut: `instagram.py`, `rukousajat.py` |
+| `.github/scripts/` | Haut: `instagram.py`, `rukousajat.py`; uuden moskeijan luonti: `lisaa_moskeija.py` |
 | `.github/workflows/rakenna.yml` | Yhteinen julkaisuajo |
+| `.github/workflows/lisaa-moskeija.yml` | Lomake: Lisää moskeija |
 | `malli/` | Mallitiedostot uuden moskeijan repoon |
 
 Kuvakkeet: Phosphor Icons (MIT). Rukousaikojen laskenta: adhan.js (MIT).
