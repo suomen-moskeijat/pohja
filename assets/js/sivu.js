@@ -306,6 +306,27 @@
   else kaynnistaRukous();
 
   /* ---------- 5. Instagram: julkaisu isona ---------- */
+  /* Seuraa meitä: välilehdet (nuolinäppäimet vaihtavat) */
+  kaikki('[data-somet]').forEach(function (o) {
+    var tabit = kaikki('[data-somet-tab]', o);
+    function valitse(t, kohdista) {
+      tabit.forEach(function (x) {
+        var on = x === t;
+        x.setAttribute('aria-selected', on ? 'true' : 'false'); x.tabIndex = on ? 0 : -1;
+        var p = document.getElementById(x.getAttribute('aria-controls')); if (p) p.hidden = !on;
+      });
+      if (kohdista) t.focus();
+    }
+    tabit.forEach(function (t, i) {
+      t.addEventListener('click', function () { valitse(t); });
+      t.addEventListener('keydown', function (e) {
+        var suunta = document.documentElement.dir === 'rtl' ? -1 : 1, d = 0;
+        if (e.key === 'ArrowRight') d = suunta; if (e.key === 'ArrowLeft') d = -suunta;
+        if (d) { e.preventDefault(); valitse(tabit[(i + d + tabit.length) % tabit.length], true); }
+      });
+    });
+  });
+
   /* YouTube: video sivulla vasta napautuksesta (evästeetön soitin) */
   kaikki('[data-yt]').forEach(function (g) {
     var ikkuna = g.querySelector('[data-yt-ikkuna]'), soitin = g.querySelector('[data-yt-soitin]');

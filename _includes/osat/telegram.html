@@ -2,7 +2,8 @@
 {%- assign m = include.moskeija -%}
 {%- assign d = site.data.telegram[m.slug] -%}
 {%- if d.julkaisut.size > 0 -%}
-<section class="u-osio u-kehys u-tg">
+{% if include.upotettu %}<div class="u-somepaneeli__sisalto u-tg">{% else %}<section class="u-osio u-kehys u-tg">{% endif %}
+  {% unless include.upotettu %}
   <div class="u-osio__yla">
     <div class="u-ig__profiili">
       <span class="u-ig__logo u-tg__logo" aria-hidden="true">{% include osat/somekuvake.html nimi="tg" koko=22 %}</span>
@@ -10,6 +11,7 @@
     </div>
     <a class="u-nappi u-nappi--reuna u-nappi--pieni" href="{{ d.osoite }}" target="_blank" rel="noopener">{% include k.html a="tg_liity" %}</a>
   </div>
+  {% endunless %}
   <ul class="u-tg__lista">
     {% for j in d.julkaisut limit: 6 %}
     <li><a class="u-tg__julkaisu" href="{{ j.linkki }}" target="_blank" rel="noopener">
@@ -19,5 +21,6 @@
     </a></li>
     {% endfor %}
   </ul>
-</section>
+{% if include.upotettu %}<a class="u-nappi u-nappi--reuna u-somepaneeli__nappi" href="{{ d.osoite }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="tg" koko=18 %} <span>{% include k.html a="tg_liity" %}: <bdi>{{ d.kanava }}</bdi></span></a>
+</div>{% else %}</section>{% endif %}
 {%- endif -%}

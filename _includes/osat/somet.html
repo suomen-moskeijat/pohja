@@ -1,0 +1,42 @@
+{%- comment -%}
+  Seuraa meitä: moskeijan somet yhdessä osiossa. Välilehdet niille, joiden julkaisut
+  näytetään sivulla (Instagram, YouTube, Telegram) – vain ne joita moskeijalla on;
+  muut palvelut linkkeinä ("Löydät meidät myös"). Ei näy, jos someja ei ole.
+{%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- assign s = m.some -%}
+{%- assign ig = s.instagram | default: "" -%}
+{%- assign ig_tunnus = ig | split: '?' | first | split: 'instagram.com/' | last | remove: '/' | remove: '@' | downcase | replace: '.', '_' -%}
+{%- assign ig_d = site.data.instagram[ig_tunnus] -%}
+{%- assign yt_d = site.data.youtube[m.slug] -%}
+{%- assign tg_d = site.data.telegram[m.slug] -%}
+{%- capture valilehdet -%}{% if ig_d.julkaisut.size > 0 %}ig,{% endif %}{% if yt_d.videot.size > 0 %}yt,{% endif %}{% if tg_d.julkaisut.size > 0 %}tg,{% endif %}{%- endcapture -%}
+{%- assign valilehdet = valilehdet | split: "," -%}
+{%- comment -%} Muut palvelut: kaikki lisätyt, joita ei näytetä välilehtenä {%- endcomment -%}
+{%- assign _palvelut = "instagram:ig:Instagram,facebook:fb:Facebook,youtube:yt:YouTube,tiktok:tt:TikTok,telegram:tg:Telegram,snapchat:sc:Snapchat,x:x:X,threads:th:Threads,whatsapp_kanava:wak:WhatsApp-kanava" | split: "," -%}
+{%- capture muut -%}
+  {%- for _p in _palvelut -%}{%- assign _o = _p | split: ":" -%}{%- assign _avain = _o[0] -%}{%- assign _kuvake = _o[1] -%}{%- assign _url = s[_avain] -%}
+  {%- if _url and _url != "" and valilehdet contains _kuvake -%}{%- continue -%}{%- endif -%}
+  {%- if _url and _url != "" -%}<a href="{{ _url }}" target="_blank" rel="noopener" aria-label="{{ _o[2] }}" title="{{ _o[2] }}">{% include osat/somekuvake.html nimi=_kuvake %}</a>{%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- if valilehdet.size > 0 or muut != "" -%}
+<section class="u-osio u-kehys u-somet" data-somet>
+  <div class="u-osio__yla"><h2>{% include k.html a="seuraa_meita" %}</h2></div>
+  {% if valilehdet.size > 1 %}
+  <div class="u-somet__valilehdet" role="tablist" aria-label="{{ site.data.kaannokset.seuraa_meita.fi }}">
+    {% for v in valilehdet %}
+    <button type="button" role="tab" id="somet-tab-{{ v }}" aria-controls="somet-{{ v }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"{% unless forloop.first %} tabindex="-1"{% endunless %} data-somet-tab="{{ v }}">
+      {% include osat/somekuvake.html nimi=v koko=18 %}<span>{% case v %}{% when "ig" %}Instagram{% when "yt" %}YouTube{% when "tg" %}Telegram{% endcase %}</span>
+    </button>
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% for v in valilehdet %}
+  <div class="u-somet__paneeli" id="somet-{{ v }}"{% if valilehdet.size > 1 %} role="tabpanel" aria-labelledby="somet-tab-{{ v }}"{% endif %}{% unless forloop.first %} hidden{% endunless %}>
+    {% case v %}{% when "ig" %}{% include osat/instagram.html moskeija=m upotettu=true %}{% when "yt" %}{% include osat/youtube.html moskeija=m upotettu=true %}{% when "tg" %}{% include osat/telegram.html moskeija=m upotettu=true %}{% endcase %}
+  </div>
+  {% endfor %}
+  {% if muut != "" %}<div class="u-somet__muut"><span>{% if valilehdet.size > 0 %}{% include k.html a="myos_somessa" %}{% else %}{% include k.html a="seuraa_meita" %}{% endif %}</span><div class="u-somet__linkit">{{ muut }}</div></div>{% endif %}
+</section>
+{%- endif -%}

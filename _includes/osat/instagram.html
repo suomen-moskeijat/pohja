@@ -8,7 +8,8 @@
 {%- assign avain = tunnus | replace: '.', '_' -%}
 {%- assign d = site.data.instagram[avain] -%}
 {%- if d.julkaisut.size > 0 -%}
-<section class="u-osio u-kehys u-ig" data-ig>
+{% if include.upotettu %}<div class="u-somepaneeli__sisalto u-ig" data-ig>{% else %}<section class="u-osio u-kehys u-ig" data-ig>{% endif %}
+  {% unless include.upotettu %}
   <div class="u-osio__yla">
     <div class="u-ig__profiili">
       <span class="u-ig__logo" aria-hidden="true">{% include osat/somekuvake.html nimi="ig" koko=22 %}</span>
@@ -16,6 +17,7 @@
     </div>
     <a class="u-nappi u-nappi--reuna u-nappi--pieni" href="https://www.instagram.com/{{ d.kayttaja }}/" target="_blank" rel="noopener">{% include k.html a="ig_seuraa" %}</a>
   </div>
+  {% endunless %}
   <ul class="u-ig__ruudukko">
     {% for j in d.julkaisut limit: 6 %}
     <li><button type="button" class="u-ig__ruutu" data-ig-avaa="{{ forloop.index0 }}" aria-label="{{ j.teksti | strip_newlines | truncate: 80 | escape }}">
@@ -47,5 +49,6 @@
       </a>
     </div>
   </dialog>
-</section>
+{% if include.upotettu %}<a class="u-nappi u-nappi--reuna u-somepaneeli__nappi" href="https://www.instagram.com/{{ d.kayttaja }}/" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="ig" koko=18 %} <span>{% include k.html a="ig_seuraa" %} <bdi dir="ltr">@{{ d.kayttaja }}</bdi></span></a>
+</div>{% else %}</section>{% endif %}
 {%- endif -%}

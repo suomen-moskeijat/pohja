@@ -5,7 +5,8 @@
 {%- assign m = include.moskeija -%}
 {%- assign d = site.data.youtube[m.slug] -%}
 {%- if d.videot.size > 0 -%}
-<section class="u-osio u-kehys u-yt" data-yt>
+{% if include.upotettu %}<div class="u-somepaneeli__sisalto u-yt" data-yt>{% else %}<section class="u-osio u-kehys u-yt" data-yt>{% endif %}
+  {% unless include.upotettu %}
   <div class="u-osio__yla">
     <div class="u-ig__profiili">
       <span class="u-ig__logo u-yt__logo" aria-hidden="true">{% include osat/somekuvake.html nimi="yt" koko=22 %}</span>
@@ -13,6 +14,7 @@
     </div>
     <a class="u-nappi u-nappi--reuna u-nappi--pieni" href="{{ d.osoite }}" target="_blank" rel="noopener">{% include k.html a="yt_tilaa" %}</a>
   </div>
+  {% endunless %}
   <ul class="u-yt__ruudukko">
     {% for v in d.videot limit: 6 %}
     <li><button type="button" class="u-yt__video" data-yt-avaa="{{ v.id }}">
@@ -28,5 +30,6 @@
       <div class="u-yt__soitin" data-yt-soitin></div>
     </div>
   </dialog>
-</section>
+{% if include.upotettu %}<a class="u-nappi u-nappi--reuna u-somepaneeli__nappi" href="{{ d.osoite }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="yt" koko=18 %} <span>{% include k.html a="yt_tilaa" %}: <bdi>{{ d.kanava }}</bdi></span></a>
+</div>{% else %}</section>{% endif %}
 {%- endif -%}

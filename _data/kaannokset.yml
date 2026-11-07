@@ -186,3 +186,4 @@ yt_tilaa:           { fi: "Tilaa", en: "Subscribe", ar: "اشترك", so: "Is-di
 telegramissa:       { fi: "Telegramissa", en: "On Telegram", ar: "على تيليجرام", so: "Telegram-ka" }
 tg_liity:           { fi: "Liity", en: "Join", ar: "انضم", so: "Ku biir" }
 tg_lue:             { fi: "Lue Telegramissa", en: "Read on Telegram", ar: "اقرأ على تيليجرام", so: "Ka akhri Telegram" }
+myos_somessa:       { fi: "Löydät meidät myös", en: "Also find us on", ar: "تجدوننا أيضاً على", so: "Sidoo kale nagu hel" }

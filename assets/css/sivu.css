@@ -306,6 +306,8 @@ html[dir="rtl"] .kk__taulu tr.kk__tanaan { box-shadow: inset -4px 0 0 var(--kult
 .u-ig__profiili small { color: var(--hieno); font-size: 14px; }
 .u-ig__logo { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border-radius: 14px; color: #fff; background: linear-gradient(45deg, #f09433, #dc2743 55%, #bc1888); }
 .u-ig__ruudukko { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; border-radius: var(--r-m); overflow: hidden; }
+/* Puhelimessa vain täydet rivit: 4–5 julkaisua → näytetään 3 */
+@media (max-width: 899px) { .u-ig__ruudukko li:first-child:nth-last-child(-n+5) ~ li:nth-child(n+4) { display: none; } }
 @media (min-width: 900px) { .u-ig__ruudukko { grid-template-columns: repeat(6, 1fr); gap: 10px; border-radius: 0; overflow: visible; } }
 .u-ig__ruutu { position: relative; display: block; width: 100%; aspect-ratio: 1; padding: 0; border: 0; background: var(--kulta-vaalea); cursor: pointer; overflow: hidden; }
 @media (min-width: 900px) { .u-ig__ruutu { border-radius: var(--r-s); } }
@@ -638,6 +640,7 @@ html[dir="rtl"] .u-seur__palkki span { background: linear-gradient(-90deg, var(-
 .u-yt__logo { background: #ff0033; color: #fff; }
 .u-tg__logo { background: #27a7e7; color: #fff; }
 .u-yt__ruudukko { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; }
+@media (max-width: 699px) { .u-yt__ruudukko li:nth-child(n+5) { display: none; } }
 @media (min-width: 900px) { .u-yt__ruudukko { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 20px; } }
 .u-yt__video { display: grid; gap: 6px; width: 100%; padding: 0; border: 0; background: none; text-align: start; color: inherit; font: inherit; cursor: pointer; }
 .u-yt__kuva { position: relative; display: block; overflow: hidden; border-radius: var(--r-s); aspect-ratio: 16 / 9; background: var(--kulta-vaalea); }
@@ -659,3 +662,20 @@ html[dir="rtl"] .u-seur__palkki span { background: linear-gradient(-90deg, var(-
 .u-tg__teksti { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; margin: 12px 14px 0; font-size: 14.5px; line-height: 1.45; color: var(--teksti); }
 .u-tg__ala { display: flex; justify-content: space-between; gap: 8px; margin-top: auto; padding: 12px 14px; font-size: 13px; color: var(--hieno); }
 .u-tg__ala span { font-weight: 700; color: var(--kulta-teksti); }
+
+/* ---------- Seuraa meitä (somet välilehdillä) ---------- */
+.u-somet__valilehdet { display: flex; gap: 6px; margin-bottom: 16px; padding: 4px; border-radius: 999px; background: var(--kulta-vaalea); overflow-x: auto; scrollbar-width: none; }
+.u-somet__valilehdet::-webkit-scrollbar { display: none; }
+.u-somet__valilehdet [role="tab"] {
+  flex: 1 0 auto; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 16px;
+  border: 0; border-radius: 999px; background: transparent; color: var(--hieno); font: 700 15px/1 var(--ft); cursor: pointer; transition: background-color .15s, color .15s;
+}
+.u-somet__valilehdet [role="tab"][aria-selected="true"] { background: var(--pinta); color: var(--paa); box-shadow: 0 1px 3px rgb(0 0 0 / .1); }
+.u-somet__valilehdet [role="tab"]:hover { color: var(--paa); }
+.u-somet__paneeli[hidden] { display: none; }
+.u-somepaneeli__nappi { display: flex; width: fit-content; margin: 16px auto 0; }
+.u-somet__muut { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 14px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--raja); color: var(--hieno); font-size: 15px; }
+.u-somet__linkit { display: flex; flex-wrap: wrap; gap: 8px; }
+.u-somet__linkit a { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--raja); background: var(--pinta); color: var(--paa); transition: border-color .15s, background-color .15s; }
+.u-somet__linkit a:hover { border-color: var(--kulta); background: var(--kulta-vaalea); }
+@media (max-width: 599px) { .u-somet__valilehdet [role="tab"] { padding-inline: 10px; font-size: 14px; } }
