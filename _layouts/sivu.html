@@ -1,0 +1,58 @@
+<!doctype html>
+{%- comment -%}
+  Suomen moskeijat -sivupohja. Sivut: juuren *.html, osat: _includes/osat/, tyylit: assets/css/sivu.css,
+  toiminnot: assets/js/sivu.js. Moskeijan tiedot: _moskeijat/<moskeija>.md (moskeijan omassa repossa).
+{%- endcomment -%}
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- assign t = m.teema -%}
+{%- assign v = site.time | date: '%s' -%}
+{%- assign juuri = '/' | relative_url -%}
+<html lang="{{ site.kielet | first | default: 'fi' }}" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{% if page.title and page.title != "" %}{{ page.title }} – {% endif %}{{ m.title }}</title>
+  <meta name="description" content="{{ m.esittely.fi | default: site.description | strip_html | strip_newlines | truncate: 160 }}">
+  <meta name="theme-color" content="{{ t.paa_tumma | default: '#2b1a0e' }}">
+    <script>
+    (function () {
+      var sallitut = {{ site.kielet | jsonify }}, k = null;
+      try { k = localStorage.getItem('kieli'); } catch (e) {}
+      if (sallitut.indexOf(k) < 0) { var n = (navigator.language || '').slice(0, 2); k = sallitut.indexOf(n) >= 0 ? n : sallitut[0]; }
+      document.documentElement.lang = k;
+      document.documentElement.dir = k === 'ar' ? 'rtl' : 'ltr';
+    })();
+  </script>
+  {% if t.fontit_url %}<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="{{ t.fontit_url }}">{% endif %}
+  <link rel="stylesheet" href="{{ '/assets/css/sivu.css' | relative_url }}?v={{ v }}">
+  {% if t %}
+  <style>
+    :root {
+      --paa: {{ t.paa }}; --paa-tumma: {{ t.paa_tumma | default: t.paa }};
+      --kulta: {{ t.korostus }}; --kulta-vaalea: {{ t.korostus_vaalea }};
+      --tausta: {{ t.tausta | default: '#faf9f5' }}; --raja: {{ t.raja | default: '#ebe3da' }}; --hieno: {{ t.hieno | default: '#796456' }};
+      {% if t.fontti_otsikot %}--fontti-otsikot: {{ t.fontti_otsikot }};{% endif %}
+      {% if t.fontti_teksti %}--fontti-teksti: {{ t.fontti_teksti }};{% endif %}
+    }
+  </style>
+  {% endif %}
+  {% if page.kartta %}<link rel="stylesheet" href="{{ '/assets/vendor/leaflet/leaflet.css' | relative_url }}">{% endif %}
+  {%- assign _ikoni = t.logo_pieni | default: t.logo -%}
+  {% if _ikoni and _ikoni != "" %}<link rel="icon" type="image/png" href="{{ _ikoni | relative_url }}">{% endif %}
+</head>
+<body>
+  <a class="u-ohita" href="#sisalto">{% include k.html a="siirry_sisaltoon" %}</a>
+  {% include osat/yla.html moskeija=m %}
+
+  <main id="sisalto">
+    {{ content }}
+  </main>
+
+  {% include osat/ala.html moskeija=m %}
+  {% include osat/pikanapit.html moskeija=m %}
+
+  <script>window.SIVU = { baseurl: "{{ site.baseurl }}" };</script>
+  {% if page.rukousajat %}<script src="{{ '/assets/vendor/adhan.umd.min.js' | relative_url }}" defer></script>{% endif %}
+  <script src="{{ '/assets/js/sivu.js' | relative_url }}?v={{ v }}" defer></script>
+</body>
+</html>

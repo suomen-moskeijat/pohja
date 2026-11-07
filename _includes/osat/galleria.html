@@ -1,0 +1,13 @@
+{%- comment -%}
+  Kuvagalleria: moskeijan omat kuvat (kenttä galleria) + automaattisesti haetut kuvat
+  (_data/kuvat/<slug>.json, esim. Mawaqitista). Ei näy, jos kuvia ei ole.
+{%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- capture _lista -%}{%- for k in m.galleria -%}{%- if k and k != "" -%}{{ k }}|{%- endif -%}{%- endfor -%}{%- for k in site.data.kuvat[m.slug].kuvat -%}{%- if k and k != "" -%}{{ k }}|{%- endif -%}{%- endfor -%}{%- endcapture -%}
+{%- assign kuvat = _lista | split: "|" | uniq -%}
+{%- if kuvat.size > 0 -%}
+<section class="u-osio{% if include.kehys %} u-kehys{% endif %}">
+  <div class="u-osio__yla"><h2>{% include k.html a="galleria" %}</h2></div>
+  <div class="u-galleria">{% for kuva in kuvat limit: 9 %}<a href="{{ kuva | relative_url }}" target="_blank" rel="noopener"><img src="{{ kuva | relative_url }}" alt="{{ m.title }}" loading="lazy"></a>{% endfor %}</div>
+</section>
+{%- endif -%}

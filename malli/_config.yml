@@ -1,0 +1,9 @@
+# Moskeijan sivun asetukset (pohjan asetukset: github.com/suomen-moskeijat/pohja)
+title: MOSKEIJAN NIMI
+description: MOSKEIJAN NIMI, KATUOSOITE. Rukousajat, tapahtumat ja toiminta.
+moskeija: SLUG                 # tiedosto _moskeijat/SLUG.md
+
+# Osoite: https://suomen-moskeijat.github.io/REPO/
+# Omalla verkkotunnuksella (esim. moskeija.fi): url: "https://moskeija.fi" ja baseurl: ""
+url: "https://suomen-moskeijat.github.io"
+baseurl: "/REPO"

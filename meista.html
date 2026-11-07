@@ -1,0 +1,35 @@
+---
+layout: sivu
+title: Meistä
+permalink: /meista/
+---
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{% include osat/sivuhero.html avain="meista_otsikko" johdanto=m.esittely %}
+<div class="u-kehys u-sivu">
+  <article class="u-kortti u-artikkeli">
+    {%- capture _meista -%}{% if m.meista %}{% include kt.html arvo=m.meista md=true tagi="div" %}{% else %}{{ m.content }}{% endif %}{%- endcapture -%}
+    {%- assign _meista_tyhja = _meista | strip_html | strip -%}
+    {% if _meista_tyhja != "" %}<div class="u-proosa u-proosa--iso">{{ _meista }}</div>{% endif %}
+    {% if m.kielet.size > 0 %}
+    <div class="u-artikkeli__kielet">
+      <p class="u-eyebrow">{% include k.html a="toiminta_kielet" %}</p>
+      <ul class="u-sirut">{% for kieli in m.kielet %}{% assign avain = 'kieli_' | append: kieli %}<li>{% if site.data.kaannokset[avain] %}{% include k.html a=avain %}{% else %}{{ kieli }}{% endif %}</li>{% endfor %}</ul>
+    </div>
+    {% endif %}
+  </article>
+
+  {% if m.missio.size > 0 %}
+  <section class="u-osio">
+    <div class="u-osio__yla"><h2>{% include k.html a="missio_otsikko" %}</h2></div>
+    <ol class="u-missio">
+      {% for k in m.missio %}
+      <li class="u-kortti"><span class="u-missio__nro" dir="ltr">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span><h3>{% include kt.html arvo=k.nimi %}</h3><p>{% include kt.html arvo=k.kuvaus %}</p></li>
+      {% endfor %}
+    </ol>
+  </section>
+  {% endif %}
+
+  {% include osat/galleria.html moskeija=m %}
+
+  {% include osat/lahjoitus.html moskeija=m %}
+</div>

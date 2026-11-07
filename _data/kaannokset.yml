@@ -1,0 +1,183 @@
+# Käyttöliittymän tekstit: fi = suomi, en = englanti, ar = arabia, so = somali.
+# Sivustolla näkyvät kielet valitaan _config.yml-tiedoston asetuksella `kielet`.
+# Moskeijan omat tekstit (esittely, palvelut, tapahtumat ym.) kirjoitetaan moskeijan tietoihin.
+# Puuttuva käännös korvataan englannilla ja sen puuttuessa suomella.
+
+# --- Valikko ---
+nav_etusivu:        { fi: "Etusivu", en: "Home", ar: "الرئيسية", so: "Bogga hore" }
+nav_moskeijat:      { fi: "Moskeijat", en: "Mosques", ar: "المساجد", so: "Masaajidda" }
+nav_tapahtumat:     { fi: "Tapahtumat", en: "Events", ar: "الفعاليات", so: "Dhacdooyinka" }
+nav_artikkelit:     { fi: "Artikkelit", en: "Articles", ar: "المقالات", so: "Maqaallada" }
+nav_moskeijoille:   { fi: "Moskeijoille", en: "For mosques", ar: "للمساجد", so: "Masaajidda" }
+nav_meista:         { fi: "Meistä", en: "About", ar: "من نحن", so: "Annaga" }
+nav_rukousajat:     { fi: "Rukousajat", en: "Prayer times", ar: "مواقيت الصلاة", so: "Waqtiyada salaadda" }
+nav_palvelut:       { fi: "Opetus ja palvelut", en: "Education & services", ar: "التعليم والخدمات", so: "Waxbarasho & adeegyo" }
+nav_some:           { fi: "Somessa", en: "Social media", ar: "تواصل اجتماعي", so: "Baraha bulshada" }
+nav_yhteystiedot:   { fi: "Yhteystiedot", en: "Contact", ar: "اتصل بنا", so: "Xiriir" }
+nav_lahjoita:       { fi: "Lahjoita", en: "Donate", ar: "تبرّع", so: "Deeq" }
+valikko:            { fi: "Valikko", en: "Menu", ar: "القائمة", so: "Liiska" }
+siirry_sisaltoon:   { fi: "Siirry sisältöön", en: "Skip to content", ar: "انتقل إلى المحتوى", so: "U gudub nuxurka" }
+lue_lisaa:          { fi: "Lue lisää", en: "Read more", ar: "اقرأ المزيد", so: "Akhri wax dheeraad ah" }
+
+# --- Etusivu ---
+tervetuloa:         { fi: "Tervetuloa", en: "Welcome", ar: "أهلاً وسهلاً بكم", so: "Ku soo dhowow" }
+seuraava_rukous:    { fi: "Seuraava rukous", en: "Next prayer", ar: "الصلاة القادمة", so: "Salaadda xigta" }
+katso_rukousajat:   { fi: "Katso rukousajat", en: "View prayer times", ar: "مواقيت الصلاة", so: "Eeg waqtiyada salaadda" }
+tutustu_toimintaan: { fi: "Tutustu toimintaamme", en: "Explore our activities", ar: "تعرّف على أنشطتنا", so: "Baro hawlahayaga" }
+ota_yhteytta:       { fi: "Ota yhteyttä", en: "Contact us", ar: "تواصل معنا", so: "Nala soo xiriir" }
+
+# --- Meistä ---
+meista_otsikko:     { fi: "Tietoa meistä", en: "About us", ar: "من نحن", so: "Annaga" }
+missio_otsikko:     { fi: "Missio ja visio", en: "Mission and vision", ar: "الرسالة والرؤية", so: "Hadafka iyo aragtida" }
+toimintamme:        { fi: "Toimintamme", en: "Our activities", ar: "أنشطتنا", so: "Hawlahayaga" }
+galleria:           { fi: "Kuvagalleria", en: "Photo gallery", ar: "معرض الصور", so: "Sawirro" }
+kielet:             { fi: "Kielet", en: "Languages", ar: "اللغات", so: "Luqadaha" }
+
+# --- Rukousajat ---
+rukousajat:         { fi: "Rukousajat", en: "Prayer times", ar: "مواقيت الصلاة", so: "Waqtiyada salaadda" }
+tanaan:             { fi: "Tänään", en: "Today", ar: "اليوم", so: "Maanta" }
+nykyinen_rukous:    { fi: "Nykyinen rukous", en: "Current prayer", ar: "الصلاة الحالية", so: "Salaadda hadda" }
+iqamah:             { fi: "Iqamah", en: "Iqamah", ar: "الإقامة", so: "Iqaamo" }
+jumua:              { fi: "Perjantairukous (jumu'a)", en: "Jumu'ah prayer", ar: "صلاة الجمعة", so: "Salaadda Jimcaha" }
+jumua_lyhyt:        { fi: "Joka perjantai", en: "Every Friday", ar: "كل يوم جمعة", so: "Jimce kasta" }
+nayta_viikko:       { fi: "Näytä seuraavat 7 päivää", en: "Show the next 7 days", ar: "عرض الأيام السبعة القادمة", so: "Tus 7da maalmood ee soo socda" }
+viikon_rukousajat:  { fi: "Viikon rukousajat", en: "This week", ar: "مواقيت الأسبوع", so: "Waqtiyada toddobaadka" }
+kuukauden_rukousajat: { fi: "Kuukauden rukousajat", en: "Monthly timetable", ar: "الجدول الشهري", so: "Waqtiyada bisha" }
+koko_aikataulu:     { fi: "Koko aikataulu", en: "Full timetable", ar: "الجدول الكامل", so: "Jadwalka oo dhan" }
+virallinen_aikataulu: { fi: "Avaa virallinen aikataulu", en: "Open official timetable", ar: "فتح الجدول الرسمي", so: "Fur jadwalka rasmiga ah" }
+aikataulu_virallinen: { fi: "Ajat ovat moskeijan virallinen aikataulu.", en: "Times follow the mosque's official timetable.", ar: "المواقيت وفق الجدول الرسمي للمسجد.", so: "Waqtiyadu waa jadwalka rasmiga ah ee masjidka." }
+rukous_huom:        { fi: "Ajat on laskettu tähtitieteellisesti ja voivat poiketa hieman moskeijan omasta aikataulusta.", en: "Times are calculated astronomically and may differ slightly from the mosque's own timetable.", ar: "المواقيت محسوبة فلكياً وقد تختلف قليلاً عن جدول المسجد.", so: "Waqtiyada waxaa lagu xisaabiyay xiddigiska, waxayna wax yar ka duwanaan karaan jadwalka masjidka." }
+lataa_aikataulu:    { fi: "Lataa moskeijan virallinen aikataulu", en: "Download the official timetable", ar: "تحميل الجدول الرسمي للمسجد", so: "Soo dejiso jadwalka rasmiga ah" }
+
+# --- Palvelut ---
+palvelut_otsikko:   { fi: "Opetus ja palvelut", en: "Education & services", ar: "التعليم والخدمات", so: "Waxbarasho & adeegyo" }
+lasten_opetus:      { fi: "Lasten opetus", en: "Children's education", ar: "تعليم الأطفال", so: "Waxbarashada carruurta" }
+ilmoita_lapsesi:    { fi: "Ilmoita lapsesi opetukseen", en: "Register your child for classes", ar: "سجّل طفلك في الدروس", so: "Ka diiwaangeli ilmahaaga waxbarashada" }
+
+# --- Tapahtumat ---
+tulevat_tapahtumat: { fi: "Tulevat tapahtumat", en: "Upcoming events", ar: "الفعاليات القادمة", so: "Dhacdooyinka soo socda" }
+kaikki_tapahtumat:  { fi: "Kaikki tapahtumat", en: "All events", ar: "كل الفعاليات", so: "Dhammaan dhacdooyinka" }
+ei_tapahtumia:      { fi: "Ei tulevia tapahtumia juuri nyt. Seuraa meitä somessa.", en: "No upcoming events right now. Follow us on social media.", ar: "لا توجد فعاليات قادمة حالياً. تابعونا على وسائل التواصل.", so: "Hadda ma jiraan dhacdooyin soo socda. Nagala soco baraha bulshada." }
+tapahtumat_teksti:  { fi: "Tulevat tapahtumat aikajärjestyksessä.", en: "Upcoming events in chronological order.", ar: "الفعاليات القادمة حسب التاريخ.", so: "Dhacdooyinka soo socda sida ay u kala horreeyaan." }
+klo:                { fi: "klo", en: "at", ar: "الساعة", so: "saacadda" }
+lisaa_kalenteriin:  { fi: "Lisää kalenteriin", en: "Add to calendar", ar: "أضف إلى التقويم", so: "Ku dar kalandarka" }
+ilmoittaudu:        { fi: "Ilmoittaudu", en: "Register", ar: "سجّل الآن", so: "Is diiwaangeli" }
+kaupunki:           { fi: "Kaupunki", en: "City", ar: "المدينة", so: "Magaalada" }
+
+# --- Some ---
+some_otsikko:       { fi: "Seuraa meitä somessa", en: "Follow us on social media", ar: "تابعونا على وسائل التواصل", so: "Nagala soco baraha bulshada" }
+some_teksti:        { fi: "Uusimmat julkaisut ja videot moskeijan elämästä.", en: "Latest posts and videos from mosque life.", ar: "أحدث المنشورات والفيديوهات من حياة المسجد.", so: "Qoraallada iyo fiidiyowyada ugu dambeeyay ee nolosha masjidka." }
+some_lupa:          { fi: "Julkaisut näytetään suoraan moskeijan somesta. Ne ladataan ulkopuolisesta palvelusta, joka voi asettaa evästeitä. Omaa tiliä ei tarvita.", en: "Posts are shown directly from the mosque's social media. They are loaded from an external service that may set cookies. No account needed.", ar: "تُعرض المنشورات مباشرة من حسابات المسجد، وتُحمَّل من خدمة خارجية قد تستخدم ملفات تعريف الارتباط. لا حاجة إلى حساب.", so: "Qoraallada waxaa si toos ah looga soo bandhigaa baraha masjidka. Waxaa laga soo raraa adeeg dibadeed oo isticmaali kara cookies. Akoon looma baahna." }
+some_nayta:         { fi: "Näytä julkaisut", en: "Show posts", ar: "عرض المنشورات", so: "Tus qoraallada" }
+some_muista:        { fi: "Muista valintani", en: "Remember my choice", ar: "تذكّر اختياري", so: "Xasuuso doorashadayda" }
+ig_katso_video:     { fi: "Katso video Instagramissa", en: "Watch the video on Instagram", ar: "شاهد الفيديو على إنستغرام", so: "Ku daawo muuqaalka Instagram" }
+ig_seuraa:          { fi: "Seuraa", en: "Follow", ar: "تابِع", so: "Raac" }
+ig_seuraajaa:       { fi: "seuraajaa", en: "followers", ar: "متابع", so: "taageere" }
+ig_avaa_julkaisu:   { fi: "Avaa julkaisu Instagramissa", en: "Open post on Instagram", ar: "افتح المنشور في إنستغرام", so: "Ku fur qoraalka Instagram" }
+seuraa_meita:       { fi: "Seuraa meitä", en: "Follow us", ar: "تابعونا", so: "Nagala soco" }
+
+# --- Artikkelit ---
+artikkelit_otsikko: { fi: "Artikkelit ja materiaalit", en: "Articles and materials", ar: "المقالات والمواد", so: "Maqaallo iyo agab" }
+artikkelit_teksti:  { fi: "Kirjoituksia, tiedotteita ja ladattavia tiedostoja.", en: "Articles, announcements and downloadable files.", ar: "مقالات وإعلانات وملفات للتحميل.", so: "Maqaallo, ogeysiisyo iyo faylal la soo dejin karo." }
+kaikki_artikkelit:  { fi: "Kaikki artikkelit", en: "All articles", ar: "كل المقالات", so: "Dhammaan maqaallada" }
+ei_artikkeleita:    { fi: "Ei vielä artikkeleita.", en: "No articles yet.", ar: "لا توجد مقالات بعد.", so: "Weli maqaal ma jiro." }
+uusimmat_artikkelit: { fi: "Uusimmat artikkelit", en: "Latest articles", ar: "أحدث المقالات", so: "Maqaalladii ugu dambeeyay" }
+ladattavat:         { fi: "Ladattavat tiedostot", en: "Downloads", ar: "ملفات للتحميل", so: "Faylal la soo dejin karo" }
+
+# --- Lahjoitukset ---
+lahjoita_otsikko:   { fi: "Tue moskeijan toimintaa", en: "Support the mosque", ar: "ادعم أنشطة المسجد", so: "Taageer hawlaha masjidka" }
+lahjoita_nyt:       { fi: "Lahjoita nyt", en: "Donate now", ar: "تبرّع الآن", so: "Hadda deeq" }
+lahjoitus_kysy:     { fi: "Lahjoitustiedot lisätään pian. Kysy lisää WhatsAppilla tai puhelimella.", en: "Donation details will be added soon. Ask us on WhatsApp or by phone.", ar: "ستُضاف معلومات التبرّع قريباً. للاستفسار عبر واتساب أو الهاتف.", so: "Macluumaadka deeqda dhowaan ayaa lagu dari doonaa. Nagu weydii WhatsApp ama taleefan." }
+saaja:              { fi: "Saaja", en: "Recipient", ar: "المستفيد", so: "Qaataha" }
+tilinumero:         { fi: "Tilinumero", en: "Account number (IBAN)", ar: "رقم الحساب (IBAN)", so: "Lambarka koontada (IBAN)" }
+viite:              { fi: "Viite", en: "Reference", ar: "المرجع", so: "Tixraac" }
+lahjoita_verkossa:  { fi: "Lahjoita verkossa", en: "Donate online", ar: "تبرّع عبر الإنترنت", so: "Ku deeq online" }
+kopioi:             { fi: "Kopioi", en: "Copy", ar: "نسخ", so: "Koobi" }
+kopioitu:           { fi: "Kopioitu", en: "Copied", ar: "تم النسخ", so: "Waa la koobiyay" }
+
+# --- Yhteystiedot ---
+yhteystiedot:       { fi: "Yhteystiedot", en: "Contact", ar: "اتصل بنا", so: "Xiriir" }
+yhteystiedot_teksti: { fi: "Tervetuloa käymään moskeijassa tai ota meihin yhteyttä.", en: "You are welcome to visit the mosque or get in touch.", ar: "مرحباً بزيارتكم للمسجد أو التواصل معنا.", so: "Ku soo dhowow masjidka ama nala soo xiriir." }
+osoite:             { fi: "Osoite", en: "Address", ar: "العنوان", so: "Cinwaan" }
+puhelin:            { fi: "Puhelin", en: "Phone", ar: "الهاتف", so: "Taleefan" }
+sahkoposti:         { fi: "Sähköposti", en: "Email", ar: "البريد الإلكتروني", so: "Iimayl" }
+nettisivu:          { fi: "Nettisivu", en: "Website", ar: "الموقع", so: "Website" }
+reittiohjeet:       { fi: "Reittiohjeet", en: "Get directions", ar: "الاتجاهات", so: "Tilmaamaha jidka" }
+google_maps:        { fi: "Avaa Google Mapsissa", en: "Open in Google Maps", ar: "افتح في خرائط جوجل", so: "Ku fur Google Maps" }
+soita:              { fi: "Soita", en: "Call", ar: "اتصال", so: "Wac" }
+laheta_sahkoposti:  { fi: "Sähköposti", en: "Email", ar: "بريد", so: "Iimayl" }
+sijainti:           { fi: "Sijainti", en: "Location", ar: "الموقع", so: "Goobta" }
+pikalinkit:         { fi: "Pikalinkit", en: "Quick links", ar: "روابط سريعة", so: "Xiriirro degdeg ah" }
+
+# --- Lomakkeet ---
+kysy_otsikko:       { fi: "Kysy moskeijalta", en: "Ask the mosque", ar: "اسأل المسجد", so: "Weydii masjidka" }
+kysy_teksti:        { fi: "Onko sinulla kysyttävää opetuksesta, ilmoittautumisesta tai moskeijan toiminnasta? Lähetä meille viesti.", en: "Do you have questions about classes, registration or the mosque's activities? Send us a message.", ar: "هل لديك أسئلة حول الدروس أو التسجيل أو أنشطة المسجد؟ أرسل لنا رسالة.", so: "Ma qabtaa su'aal ku saabsan waxbarashada, diiwaangelinta ama hawlaha masjidka? Noo soo dir fariin." }
+nimi:               { fi: "Nimi", en: "Name", ar: "الاسم", so: "Magac" }
+aihe:               { fi: "Aihe", en: "Subject", ar: "الموضوع", so: "Mawduuc" }
+viesti:             { fi: "Viesti", en: "Message", ar: "الرسالة", so: "Fariin" }
+laheta_viesti:      { fi: "Lähetä viesti", en: "Send message", ar: "إرسال الرسالة", so: "Dir fariinta" }
+huoltajan_tiedot:   { fi: "Huoltajan tiedot", en: "Parent or guardian", ar: "بيانات وليّ الأمر", so: "Macluumaadka waalidka" }
+lapsen_tiedot:      { fi: "Lapsen tiedot", en: "Child", ar: "بيانات الطفل", so: "Macluumaadka ilmaha" }
+lisatiedot:         { fi: "Lisätiedot", en: "Additional information", ar: "معلومات إضافية", so: "Faahfaahin dheeraad ah" }
+huoltajan_nimi:     { fi: "Huoltajan nimi", en: "Guardian's full name", ar: "اسم وليّ الأمر", so: "Magaca waalidka" }
+lapsen_nimi:        { fi: "Lapsen nimi", en: "Child's name", ar: "اسم الطفل", so: "Magaca ilmaha" }
+lapsen_ika:         { fi: "Lapsen ikä", en: "Child's age", ar: "عمر الطفل", so: "Da'da ilmaha" }
+opetuksen_tyyppi:   { fi: "Opetuksen tyyppi", en: "Education type", ar: "نوع التعليم", so: "Nooca waxbarashada" }
+lisatiedot_valinnainen: { fi: "Lisätiedot (valinnainen)", en: "Additional information (optional)", ar: "معلومات إضافية (اختياري)", so: "Faahfaahin dheeraad ah (ikhtiyaari)" }
+hyvaksyn_tietosuoja: { fi: "Olen lukenut tietosuojailmoituksen ja hyväksyn, että tietojani käytetään ilmoittautumisen käsittelyyn.", en: "I have read the privacy notice and agree that my information is used to process this registration.", ar: "قرأت إشعار الخصوصية وأوافق على استخدام بياناتي لمعالجة التسجيل.", so: "Waxaan akhriyay ogeysiiska asturnaanta, waxaana ogolaaday in xogtayda loo isticmaalo habaynta diiwaangelinta." }
+tietosuoja_huom:    { fi: "Keräämme vain ilmoittautumiseen tarvittavat tiedot. Tiedot toimitetaan suoraan moskeijalle, eikä niitä julkaista tai luovuteta eteenpäin.", en: "We collect only the information needed for registration. It is delivered directly to the mosque and never published or shared.", ar: "نجمع فقط المعلومات اللازمة للتسجيل، وتُرسل مباشرة إلى المسجد ولا تُنشر أو تُشارك.", so: "Waxaan ururinnaa oo keliya xogta diiwaangelinta loo baahan yahay. Xogta si toos ah ayaa masjidka loogu gudbiyaa, lamana daabaco lamana wadaago." }
+laheta_ilmoittautuminen: { fi: "Lähetä ilmoittautuminen", en: "Send registration", ar: "إرسال التسجيل", so: "Dir diiwaangelinta" }
+lomake_pakollinen:  { fi: "Pakollinen kenttä", en: "Required", ar: "حقل مطلوب", so: "Goob loo baahan yahay" }
+lomake_sahkoposti:  { fi: "Tarkista sähköpostiosoite", en: "Please check the email address", ar: "تحقّق من البريد الإلكتروني", so: "Hubi iimaylka" }
+lomake_puhelin:     { fi: "Tarkista puhelinnumero", en: "Please check the phone number", ar: "تحقّق من رقم الهاتف", so: "Hubi lambarka taleefanka" }
+lomake_ika:         { fi: "Ikä 3–17 vuotta", en: "Age 3–17", ar: "العمر من 3 إلى 17", so: "Da'da 3–17 sano" }
+lomake_hyvaksy:     { fi: "Hyväksy tietosuojailmoitus", en: "Please accept the privacy notice", ar: "يرجى الموافقة على إشعار الخصوصية", so: "Ogolow ogeysiiska asturnaanta" }
+lomake_lahetetaan:  { fi: "Lähetetään…", en: "Sending…", ar: "جارٍ الإرسال…", so: "Waa la dirayaa…" }
+lomake_kiitos:      { fi: "Kiitos! Viestisi on vastaanotettu, ja otamme sinuun yhteyttä mahdollisimman pian.", en: "Thank you! We have received your message and will contact you as soon as possible.", ar: "شكراً لك! لقد استلمنا رسالتك وسنتواصل معك في أقرب وقت ممكن.", so: "Mahadsanid! Fariintaada waan helnay, dhowaan ayaan kula soo xiriiri doonnaa." }
+lomake_whatsapp:    { fi: "Viesti avautuu WhatsAppissa valmiiksi kirjoitettuna. Lähetä se painamalla WhatsAppin lähetysnappia.", en: "Your message opens in WhatsApp ready to send. Tap send in WhatsApp to deliver it.", ar: "ستُفتح رسالتك في واتساب جاهزة للإرسال. اضغط زر الإرسال في واتساب.", so: "Fariintaadu waxay ku furmaysaa WhatsApp iyadoo diyaar ah. Riix badhanka dirista ee WhatsApp." }
+lomake_sahkoposti_auki: { fi: "Viesti avautuu sähköpostiohjelmassasi valmiiksi kirjoitettuna. Lähetä se sieltä.", en: "Your message opens in your email app ready to send. Send it from there.", ar: "ستُفتح رسالتك في تطبيق البريد جاهزة للإرسال. أرسلها من هناك.", so: "Fariintaadu waxay ku furmaysaa barnaamijka iimaylka iyadoo diyaar ah. Halkaas ka dir." }
+lomake_virhe:       { fi: "Lähetys epäonnistui. Yritä uudelleen tai ota yhteyttä puhelimitse tai WhatsAppilla.", en: "Sending failed. Please try again or contact us by phone or WhatsApp.", ar: "فشل الإرسال. حاول مرة أخرى أو تواصل معنا هاتفياً أو عبر واتساب.", so: "Diristu way fashilantay. Isku day mar kale ama nagala soo xiriir taleefan ama WhatsApp." }
+ilmoittautuminen_aihe: { fi: "Ilmoittautuminen lasten opetukseen", en: "Children's class registration", ar: "تسجيل في دروس الأطفال", so: "Diiwaangelinta waxbarashada carruurta" }
+
+# --- Tietosuoja ---
+tietosuoja:         { fi: "Tietosuoja", en: "Privacy", ar: "الخصوصية", so: "Asturnaanta" }
+tietosuojaseloste:  { fi: "Tietosuojaseloste", en: "Privacy policy", ar: "سياسة الخصوصية", so: "Ogeysiiska asturnaanta" }
+tietosuoja_1:       { fi: "Käsittelemme verkkosivuston lomakkeilla lähetettyjä tietoja vain yhteydenottojen ja opetukseen ilmoittautumisen käsittelyyn.", en: "We process information sent through the website's forms only to handle enquiries and class registrations.", ar: "نعالج المعلومات المرسلة عبر نماذج الموقع فقط للرد على الاستفسارات وتسجيل الدروس.", so: "Xogta foomamka bogga loo soo diro waxaan u isticmaalnaa oo keliya ka jawaabidda xiriirada iyo diiwaangelinta waxbarashada." }
+tietosuoja_2:       { fi: "Keräämme vain tarpeelliset tiedot: huoltajan nimen ja yhteystiedot sekä lapsen nimen, iän ja opetuksen tyypin. Emme pyydä arkaluonteisia tietoja.", en: "We collect only what is necessary: the guardian's name and contact details, and the child's name, age and type of education. We never ask for sensitive information.", ar: "نجمع فقط ما هو ضروري: اسم وليّ الأمر وبيانات التواصل، واسم الطفل وعمره ونوع التعليم. لا نطلب أي معلومات حساسة.", so: "Waxaan ururinnaa oo keliya xogta lagama maarmaanka ah: magaca iyo xiriirka waalidka, iyo magaca, da'da iyo nooca waxbarashada ilmaha. Ma weydiisanno xog xasaasi ah." }
+tietosuoja_3:       { fi: "Lomakkeen tiedot toimitetaan moskeijalle suojattua yhteyttä pitkin joko lomakepalvelun kautta tai valmiiksi kirjoitettuna WhatsApp- tai sähköpostiviestinä, jonka lähetät itse. Sivusto ei tallenna tietoja, eikä niitä julkaista tai käytetä analytiikkaan.", en: "Form information is delivered to the mosque over a secure connection, either through a form service or as a pre-written WhatsApp or email message that you send yourself. The website does not store the information, and it is never published or used for analytics.", ar: "تُرسل معلومات النموذج إلى المسجد عبر اتصال آمن، إما من خلال خدمة نماذج أو كرسالة واتساب أو بريد إلكتروني جاهزة ترسلها بنفسك. لا يخزّن الموقع المعلومات ولا تُنشر ولا تُستخدم للتحليلات.", so: "Xogta foomka waxaa masjidka loogu gudbiyaa xiriir sugan, ha ahaato adeeg foom ama fariin WhatsApp ama iimayl oo diyaar ah oo adigu dirto. Boggu ma kaydiyo xogta, lama daabaco, looma isticmaalo falanqayn." }
+tietosuoja_4:       { fi: "Voit pyytää tietojesi tarkastamista tai poistamista ottamalla yhteyttä moskeijaan.", en: "You may request access to or deletion of your information by contacting the mosque.", ar: "يمكنك طلب الاطلاع على بياناتك أو حذفها بالتواصل مع المسجد.", so: "Waxaad codsan kartaa in xogtaada la eego ama la tirtiro adigoo la xiriiraya masjidka." }
+tietosuoja_5:       { fi: "Somejulkaisut ja kartta ladataan ulkopuolisista palveluista vasta, kun annat siihen luvan tai avaat ne.", en: "Social media posts and maps are loaded from external services only after you allow it or open them.", ar: "لا تُحمَّل منشورات التواصل الاجتماعي والخرائط من خدمات خارجية إلا بعد موافقتك أو فتحها.", so: "Qoraallada baraha bulshada iyo khariidadaha waxaa laga soo raraa adeegyo dibadeed kaliya marka aad ogolaato ama aad furto." }
+
+# --- Hakemisto ---
+haku_otsikko:       { fi: "Löydä moskeija läheltäsi", en: "Find a mosque near you", ar: "ابحث عن مسجد قريب منك", so: "Raadi masjid kuu dhow" }
+haku_teksti:        { fi: "Rukousajat, tapahtumat ja ajankohtaiset asiat Suomen moskeijoista yhdessä paikassa – myös ilman sometiliä.", en: "Prayer times, events and news from mosques in Finland in one place – no social media account needed.", ar: "مواقيت الصلاة والفعاليات وأخبار مساجد فنلندا في مكان واحد – دون الحاجة إلى حسابات تواصل.", so: "Waqtiyada salaadda, dhacdooyinka iyo wararka masaajidda Finland hal meel – akoon baraha bulshada looma baahna." }
+haku_placeholder:   { fi: "Hae kaupungilla tai nimellä, esim. Tampere", en: "Search by city or name, e.g. Tampere", ar: "ابحث بالمدينة أو الاسم، مثل تامبيري", so: "Ku raadi magaalo ama magac, tusaale Tampere" }
+ei_osumia:          { fi: "Hakuehdolla ei löytynyt moskeijoita.", en: "No mosques found.", ar: "لم يتم العثور على مساجد.", so: "Masjid lama helin." }
+esimerkki_huom:     { fi: "Tämä on esimerkkimoskeija, jonka tiedot ovat keksittyjä.", en: "This is an example mosque with made-up details.", ar: "هذا مسجد تجريبي ببيانات غير حقيقية.", so: "Kani waa masjid tusaale ah oo xogtiisu aysan dhab ahayn." }
+
+# --- Alapalkki ---
+footer_yllapito:    { fi: "Tiedot ylläpitävät moskeijat itse.", en: "Information is maintained by the mosques themselves.", ar: "تُحدّث المساجد معلوماتها بنفسها.", so: "Macluumaadka waxaa cusbooneysiiya masaajidda laftooda." }
+footer_lisaa:       { fi: "Lisää oma moskeijasi", en: "Add your mosque", ar: "أضف مسجدك", so: "Ku dar masjidkaaga" }
+footer_rukous:      { fi: "Rukousajat lasketaan tähtitieteellisesti. Tarkista tarkat ajat omasta moskeijastasi.", en: "Prayer times are calculated astronomically. Check exact times with your mosque.", ar: "تُحسب مواقيت الصلاة فلكياً. تحقق من المواقيت الدقيقة لدى مسجدك.", so: "Waqtiyada salaadda waxaa lagu xisaabiyaa xiddigiska. Ka hubi waqtiyada saxda ah masjidkaaga." }
+footer_hakemisto:   { fi: "Etsi muita moskeijoita", en: "Find other mosques", ar: "ابحث عن مساجد أخرى", so: "Raadi masaajid kale" }
+oikeudet:           { fi: "Kaikki oikeudet pidätetään.", en: "All rights reserved.", ar: "جميع الحقوق محفوظة.", so: "Xuquuqda oo dhan way dhowran tahay." }
+
+# --- Uusi ulkoasu ---
+adhan:              { fi: "Adhan", en: "Adhan", ar: "الأذان", so: "Aadaan" }
+jaljella:           { fi: "jäljellä", en: "remaining", ar: "متبقٍّ", so: "ka hadhay" }
+edellinen_kuukausi: { fi: "Edellinen kuukausi", en: "Previous month", ar: "الشهر السابق", so: "Bishii hore" }
+seuraava_kuukausi:  { fi: "Seuraava kuukausi", en: "Next month", ar: "الشهر التالي", so: "Bisha xigta" }
+tervetuloa_kaymaan: { fi: "Tervetuloa käymään", en: "Visit us", ar: "زورونا", so: "Nagu soo booqo" }
+instagramissa:      { fi: "Instagramissa", en: "On Instagram", ar: "على إنستغرام", so: "Instagram-ka" }
+kieli:              { fi: "Kieli", en: "Language", ar: "اللغة", so: "Luqadda" }
+sulje:              { fi: "Sulje", en: "Close", ar: "إغلاق", so: "Xir" }
+toiminta_kielet:    { fi: "Toimintaa kielillä", en: "Activities in", ar: "الأنشطة باللغات", so: "Hawlaha luqadaha" }
+kysyttavaa:         { fi: "Kysyttävää?", en: "Questions?", ar: "لديك سؤال؟", so: "Su'aal ma qabtaa?" }
+kysy_whatsapp:      { fi: "Vastaamme nopeimmin WhatsAppissa tai puhelimitse.", en: "We reply fastest on WhatsApp or by phone.", ar: "نرد بشكل أسرع عبر واتساب أو الهاتف.", so: "Sida ugu dhakhsaha badan waxaan uga jawaabnaa WhatsApp ama taleefan." }
+paivan_ajat:        { fi: "Päivän rukousajat", en: "Today's prayer times", ar: "مواقيت اليوم", so: "Waqtiyada maanta" }
+kieli_suomi:        { fi: "suomi", en: "Finnish", ar: "الفنلندية", so: "Finnish" }
+kieli_arabia:       { fi: "arabia", en: "Arabic", ar: "العربية", so: "Carabi" }
+kieli_somali:       { fi: "somali", en: "Somali", ar: "الصومالية", so: "Soomaali" }
+kieli_englanti:     { fi: "englanti", en: "English", ar: "الإنجليزية", so: "Ingiriisi" }
+kieli_turkki:       { fi: "turkki", en: "Turkish", ar: "التركية", so: "Turki" }
+ilmoita_lyhyt:      { fi: "Ilmoita lapsesi", en: "Register a child", ar: "سجّل طفلك", so: "Diiwaangeli ilmaha" }

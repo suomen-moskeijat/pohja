@@ -1,0 +1,10 @@
+{%- comment -%} Alasivun otsikko-osa. Parametrit: avain (käännösavain otsikolle), johdanto (monikielinen arvo, valinnainen), murupolku (true) {%- endcomment -%}
+<section class="u-sivuhero">
+  <div class="u-kuvio" aria-hidden="true"></div>
+  <div class="u-kehys">
+    {% if include.yla %}<p class="u-eyebrow u-eyebrow--vaalea">{% include k.html a=include.yla %}</p>{% endif %}
+    <h1>{% include k.html a=include.avain %}</h1>
+    {% if include.johdanto %}<p class="u-sivuhero__johdanto">{% include kt.html arvo=include.johdanto %}</p>{% endif %}
+    {% if include.johdanto_avain %}<p class="u-sivuhero__johdanto">{% include k.html a=include.johdanto_avain %}</p>{% endif %}
+  </div>
+</section>

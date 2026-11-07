@@ -1,0 +1,17 @@
+{%- comment -%} Kuukauden rukousajat: kuukauden vaihto nuolilla, tämä päivä korostettuna. Vaatii u/rukousdata.html:n. {%- endcomment -%}
+{%- assign r = include.moskeija.rukousajat -%}
+<section class="kk" data-kk>
+  <header class="kk__yla">
+    <button type="button" class="kk__siirto" data-kk-siirto="-1" aria-label="{{ site.data.kaannokset.edellinen_kuukausi.fi }}">{% include ikoni-ph.html nimi="vasen" koko=20 luokka="u-flip" %}</button>
+    <h2 class="kk__nimi" data-kk-nimi aria-live="polite">&nbsp;</h2>
+    <button type="button" class="kk__siirto" data-kk-siirto="1" aria-label="{{ site.data.kaannokset.seuraava_kuukausi.fi }}">{% include ikoni-ph.html nimi="oikea" koko=20 luokka="u-flip" %}</button>
+  </header>
+  <div class="kk__kaari">
+    <table class="kk__taulu" data-kk-taulu></table>
+  </div>
+  <footer class="kk__ala">
+    <p class="u-hieno" data-kk-lahde-virallinen hidden>{% include k.html a="aikataulu_virallinen" %}</p>
+    <p class="u-hieno" data-kk-lahde-laskettu hidden>{% include k.html a="rukous_huom" %}</p>
+    {% if r.virallinen_url and r.virallinen_url != "" %}<a class="u-linkki" href="{{ r.virallinen_url }}" target="_blank" rel="noopener">{% include k.html a="virallinen_aikataulu" %} <span class="u-flip" aria-hidden="true">↗</span></a>{% endif %}
+  </footer>
+</section>

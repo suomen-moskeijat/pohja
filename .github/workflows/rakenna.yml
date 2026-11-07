@@ -1,0 +1,93 @@
+# Yhteinen julkaisuajo kaikille moskeijoiden sivuille (kutsutaan moskeijan repon
+# .github/workflows/julkaisu.yml -tiedostosta). Yhdistää tämän pohjan ja moskeijan
+# omat tiedot, hakee Instagram-julkaisut sekä rukous- ja iqamah-ajat ja julkaisee
+# sivun moskeijan repon GitHub Pagesiin.
+name: Rakenna moskeijan sivu
+
+on:
+  workflow_call:
+    inputs:
+      pohja_versio:
+        description: Pohjan haara tai tagi
+        type: string
+        default: main
+
+jobs:
+  rakenna:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hae moskeijan tiedot
+        uses: actions/checkout@v4
+        with:
+          path: moskeija
+
+      - name: Hae sivupohja
+        uses: actions/checkout@v4
+        with:
+          repository: suomen-moskeijat/pohja
+          ref: ${{ inputs.pohja_versio }}
+          path: pohja
+
+      - name: Kokoa pohja
+        run: |
+          mkdir sivu
+          (cd pohja && tar --exclude=.git --exclude=.github/workflows --exclude=malli --exclude=testi -cf - .) | (cd sivu && tar -xf -)
+
+      # Edellisen ajon haetut tiedot (Instagram, rukousajat, kuvat): jos haku nyt
+      # epäonnistuu, sivulla pysyvät viimeisimmät tiedot.
+      - name: Palauta edelliset haetut tiedot
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            sivu/_data/instagram
+            sivu/_data/aikataulut
+            sivu/_data/kuvat
+            sivu/tiedostot/instagram
+            sivu/tiedostot/*/mawaqit
+          key: haetut-${{ github.run_id }}
+          restore-keys: haetut-
+
+      - name: Lisää moskeijan tiedot (voittavat pohjan)
+        run: |
+          (cd moskeija && tar --exclude=.git --exclude=.github -cf - .) | (cd sivu && tar -xf -)
+          cat pohja/_config.yml moskeija/_config.yml > sivu/_config.yml
+
+      - name: Hae Instagram-julkaisut
+        working-directory: sivu
+        run: python3 .github/scripts/instagram.py
+
+      - name: Hae rukous- ja iqamah-ajat
+        working-directory: sivu
+        run: python3 .github/scripts/rukousajat.py
+
+      - name: Tallenna haetut tiedot seuraavaa ajoa varten
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            sivu/_data/instagram
+            sivu/_data/aikataulut
+            sivu/_data/kuvat
+            sivu/tiedostot/instagram
+            sivu/tiedostot/*/mawaqit
+          key: haetut-${{ github.run_id }}
+
+      - uses: actions/configure-pages@v5
+
+      - name: Rakenna sivu (Jekyll)
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./sivu
+          destination: ./_site
+          future: true
+
+      - uses: actions/upload-pages-artifact@v3
+
+  julkaise:
+    needs: rakenna
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.julkaisu.outputs.page_url }}
+    steps:
+      - id: julkaisu
+        uses: actions/deploy-pages@v4

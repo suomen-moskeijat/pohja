@@ -1,0 +1,20 @@
+{%- comment -%}
+  Rukousaikojen asetukset ja virallinen aikataulu sivulle JSON-muodossa (kerran sivua kohden).
+  assets/js/sivu.js lukee tämän ja täyttää [data-rk]- ja [data-kk]-osat.
+{%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- assign r = m.rukousajat -%}
+{%- assign s = r.saadot -%}
+{%- assign aikataulu = nil -%}
+{%- assign kansio = r.aikataulu | default: m.slug -%}{%- comment -%} oletus: moskeijan slug {%- endcomment -%}
+{%- if kansio and kansio != "" -%}{%- assign aikataulu = site.data.aikataulut[kansio] -%}{%- endif -%}
+<script type="application/json" id="rk-data">{
+  "lat": {{ m.sijainti.lat | default: "null" }}, "lon": {{ m.sijainti.lon | default: "null" }},
+  "laskentatapa": {{ r.laskentatapa | default: "MuslimWorldLeague" | jsonify }},
+  "madhab": {{ r.madhab | default: "Shafi" | jsonify }},
+  "leveysaste": {{ r.korkeat_leveysasteet | default: "TwilightAngle" | jsonify }},
+  "saadot": { "fajr": {{ s.fajr | default: 0 }}, "sunrise": {{ s.auringonnousu | default: 0 }}, "dhuhr": {{ s.dhuhr | default: 0 }}, "asr": {{ s.asr | default: 0 }}, "maghrib": {{ s.maghrib | default: 0 }}, "isha": {{ s.isha | default: 0 }} },
+  "iqamah": {% if r.iqamah_oletus %}{{ r.iqamah_oletus | jsonify }}{% else %}null{% endif %},
+  "juma": {{ m.juma | default: "" | jsonify }},
+  "aikataulu": {% if aikataulu %}{{ aikataulu | jsonify }}{% else %}{}{% endif %}
+}</script>

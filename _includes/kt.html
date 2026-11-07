@@ -1,0 +1,14 @@
+{%- comment -%}
+  Monikielinen sisältökenttä. Kenttä voi olla tavallinen teksti tai {fi, en, ar, so}.
+  Puuttuva käännös korvataan englannilla tai suomella. Parametrit: arvo, md (true = markdown), tagi (oletus span)
+{%- endcomment -%}
+{%- assign _a = include.arvo -%}
+{%- assign _t = include.tagi | default: "span" -%}
+{%- if _a.fi or _a.en or _a.ar or _a.so -%}
+  {%- for _l in site.kielet -%}
+    {%- assign _v = _a[_l] | default: _a.en | default: _a.fi -%}
+    {%- if include.md -%}<{{ _t }} data-l="{{ _l }}" lang="{{ _l }}">{{ _v | markdownify }}</{{ _t }}>{%- else -%}<{{ _t }} data-l="{{ _l }}">{{ _v }}</{{ _t }}>{%- endif -%}
+  {%- endfor -%}
+{%- else -%}
+  {%- if include.md -%}{{ _a | markdownify }}{%- else -%}{{ _a }}{%- endif -%}
+{%- endif -%}

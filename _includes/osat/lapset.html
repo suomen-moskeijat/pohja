@@ -1,0 +1,15 @@
+{%- comment -%} Nosto: lasten opetukseen ilmoittautuminen (näytetään, jos lasten_opetus.kaytossa). {%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- if m.lasten_opetus.kaytossa -%}
+{%- assign tx = m.lasten_opetus.teksti -%}
+<section class="u-nosto">
+  <span class="u-nosto__ikoni">{% include ikoni-ph.html nimi="hattu" koko=28 %}</span>
+  <div class="u-nosto__teksti">
+    <p class="u-eyebrow">{% include k.html a="lasten_opetus" %}</p>
+    <h2>{% include k.html a="ilmoita_lapsesi" %}</h2>
+    {%- comment -%} Vain ensimmäinen virke jokaisesta kielestä {%- endcomment -%}
+    <p>{% for l in site.kielet %}{% assign teksti = tx[l] | default: tx.en | default: tx.fi | default: tx %}<span data-l="{{ l }}">{{ teksti | split: '. ' | first | remove: '.' }}.</span>{% endfor %}</p>
+  </div>
+  <a class="u-nappi u-nappi--tumma" href="{{ '/palvelut/lasten-opetus/' | relative_url }}">{% include k.html a="ilmoittaudu" %} <span class="u-flip" aria-hidden="true">→</span></a>
+</section>
+{%- endif -%}

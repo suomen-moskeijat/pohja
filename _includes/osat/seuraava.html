@@ -1,0 +1,13 @@
+{%- comment -%} Seuraava rukous -kortti (etusivu ja rukousajat). Parametri: ilman_linkkia=true piilottaa Koko aikataulu -linkin. Täyttää sivu.js ([data-laskuri]). {%- endcomment -%}
+<div class="u-seur" data-laskuri>
+  <div class="u-seur__yla">
+    <p class="u-seur__otsikko">{% include k.html a="seuraava_rukous" %} <span class="u-seur__huomenna" data-laskuri-huomenna hidden></span></p>
+    <div class="u-seur__rivi">
+      <p class="u-seur__paa"><span class="u-seur__nimi" data-laskuri-nimi>&nbsp;</span> <span class="u-seur__klo" data-laskuri-aika dir="ltr">--:--</span></p>
+      <p class="u-seur__jaljella"><b data-laskuri-jaljella dir="ltr">--:--:--</b><small>{% include k.html a="jaljella" %}</small></p>
+    </div>
+    <p class="u-seur__iqamah" data-laskuri-iqamah hidden>{% include k.html a="iqamah" %} <b data-laskuri-iqamah-aika dir="ltr"></b></p>
+    <div class="u-seur__palkki" aria-hidden="true"><span data-laskuri-palkki></span></div>
+  </div>
+  {% unless include.ilman_linkkia %}<a class="u-seur__linkki" href="{{ '/rukousajat/' | relative_url }}">{% include k.html a="koko_aikataulu" %} <span class="u-flip" aria-hidden="true">→</span></a>{% endunless %}
+</div>

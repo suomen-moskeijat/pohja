@@ -1,0 +1,30 @@
+# Suomen moskeijat -sivupohjan perusasetukset.
+# Julkaisussa tämän perään liitetään moskeijan oma _config.yml (sen arvot voittavat).
+lang: fi
+kielet: [fi, en, ar, so]
+timezone: Europe/Helsinki
+future: true          # tapahtumat ovat tulevaisuudessa
+hakemisto_url: ""
+
+collections:
+  moskeijat:
+    output: false     # moskeijan tiedot, ei omaa sivua
+  tapahtumat:
+    output: true
+    permalink: /tapahtumat/:name/
+
+defaults:
+  - scope: { path: "", type: tapahtumat }
+    values: { layout: tapahtuma }
+
+markdown: kramdown
+
+exclude:
+  - README.md
+  - OHJE.md
+  - malli
+  - testi
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - node_modules

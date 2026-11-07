@@ -1,0 +1,11 @@
+{%- comment -%} Lahjoitusnosto. {%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- if m.lahjoitus -%}
+<section class="u-lahjoitus">
+  <div class="u-kuvio" aria-hidden="true"></div>
+  <span class="u-lahjoitus__ikoni">{% include ikoni-ph.html nimi="sydan" koko=26 %}</span>
+  <h2>{% include k.html a="lahjoita_otsikko" %}</h2>
+  {% if m.lahjoitus.teksti %}<p>{% include kt.html arvo=m.lahjoitus.teksti %}</p>{% endif %}
+  <a class="u-nappi u-nappi--kulta" href="{{ '/lahjoita/' | relative_url }}">{% include k.html a="lahjoita_nyt" %}</a>
+</section>
+{%- endif -%}

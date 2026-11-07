@@ -1,0 +1,20 @@
+---
+layout: sivu
+title: Ilmoita lapsesi opetukseen
+permalink: /palvelut/lasten-opetus/
+---
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+{% include osat/sivuhero.html yla="lasten_opetus" avain="ilmoita_lapsesi" johdanto=m.lasten_opetus.teksti %}
+<div class="u-kehys u-sivu u-kaksi">
+  {% include osat/lomake-lapsi.html moskeija=m %}
+  <aside class="u-kortti u-sivupalkki">
+    <span class="u-ikoni">{% include ikoni-ph.html nimi="puhelin" koko=22 %}</span>
+    <h2>{% include k.html a="kysyttavaa" %}</h2>
+    <p class="u-hieno">{% include k.html a="kysy_whatsapp" %}</p>
+    <div class="u-napit u-napit--pino">
+      {% if wa != "" %}<a class="u-nappi u-nappi--wa" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" koko=18 %} WhatsApp</a>{% endif %}
+      {% if m.puhelin and m.puhelin != "" %}<a class="u-nappi u-nappi--reuna" href="tel:{{ m.puhelin | remove: ' ' }}" dir="ltr">{{ m.puhelin }}</a>{% endif %}
+    </div>
+  </aside>
+</div>

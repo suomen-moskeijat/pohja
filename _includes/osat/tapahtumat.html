@@ -1,0 +1,29 @@
+{%- comment -%}
+  Tulevat tapahtumat. Parametri: maara (enimmäismäärä). Menneet piilotetaan myös selaimessa.
+  Jos tulevia ei ole, näytetään tyhjä tila (paitsi jos piilota_tyhja=true).
+{%- endcomment -%}
+{%- assign tanaan = site.time | date: '%Y-%m-%d' -%}
+{%- assign kaikki = site.tapahtumat | sort: 'paiva' -%}
+{%- assign naytetty = 0 -%}
+<ul class="u-tapahtumat" data-tulevat{% if include.maara %} data-maara="{{ include.maara }}"{% endif %}>
+  {%- for t in kaikki -%}
+  {%- assign alku = t.paiva | date: '%Y-%m-%d' -%}
+  {%- assign loppu = t.paiva_loppuu | default: t.paiva | date: '%Y-%m-%d' -%}
+  {%- if loppu < tanaan -%}{%- continue -%}{%- endif -%}
+  {%- assign naytetty = naytetty | plus: 1 -%}
+  <li class="u-tapahtuma" data-paiva="{{ loppu }}">
+    <a href="{{ t.url | relative_url }}">
+      <time class="u-tapahtuma__pvm" datetime="{{ alku }}" dir="ltr"><b>{{ t.paiva | date: '%-d' }}</b><small>{{ t.paiva | date: '%-m/%Y' }}</small></time>
+      <span class="u-tapahtuma__tiedot">
+        <strong>{% include kolme.html fi=t.title en=t.otsikko_en ar=t.otsikko_ar so=t.otsikko_so %}</strong>
+        {% if t.alkaa and t.alkaa != "" %}<small>{% include k.html a="klo" %} <span dir="ltr">{{ t.alkaa }}{% if t.loppuu and t.loppuu != "" %}–{{ t.loppuu }}{% endif %}</span></small>{% endif %}
+      </span>
+    </a>
+  </li>
+  {%- endfor -%}
+</ul>
+<div class="u-tyhja" data-tyhja{% if naytetty > 0 %} hidden{% endif %}>
+  <span class="u-ikoni">{% include ikoni-ph.html nimi="kalenteri" koko=26 %}</span>
+  <p>{% include k.html a="ei_tapahtumia" %}</p>
+  {% assign ig = include.moskeija.some.instagram %}{% if ig and ig != "" %}<a class="u-nappi u-nappi--reuna u-nappi--pieni" href="{{ ig }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="ig" koko=18 %} Instagram</a>{% endif %}
+</div>

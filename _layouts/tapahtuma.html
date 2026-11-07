@@ -1,0 +1,23 @@
+---
+layout: sivu
+---
+{%- comment -%} Yksittäisen tapahtuman sivu (_tapahtumat/*.md). {%- endcomment -%}
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+<section class="u-sivuhero">
+  <div class="u-kehys">
+    <p class="u-eyebrow u-eyebrow--vaalea"><a href="{{ '/tapahtumat/' | relative_url }}">{% include k.html a="nav_tapahtumat" %}</a></p>
+    <h1>{% include kolme.html fi=page.title en=page.otsikko_en ar=page.otsikko_ar so=page.otsikko_so %}</h1>
+    <p class="u-sivuhero__johdanto">
+      <strong dir="ltr">{{ page.paiva | date: '%-d.%-m.%Y' }}{% if page.paiva_loppuu and page.paiva_loppuu != "" %} – {{ page.paiva_loppuu | date: '%-d.%-m.%Y' }}{% endif %}</strong>
+      {% if page.alkaa and page.alkaa != "" %} · {% include k.html a="klo" %} <span dir="ltr">{{ page.alkaa }}{% if page.loppuu and page.loppuu != "" %}–{{ page.loppuu }}{% endif %}</span>{% endif %}
+      <br>{% if page.paikka and page.paikka != "" %}{{ page.paikka }}{% else %}{{ m.osoite }}{% endif %}
+    </p>
+  </div>
+</section>
+<div class="u-kehys u-sivu u-sivu--kapea">
+  <article class="u-kortti u-proosa">
+    {% if page.kuva and page.kuva != "" %}<img src="{{ page.kuva | relative_url }}" alt="" style="width:100%;border-radius:var(--r-m);margin-bottom:16px">{% endif %}
+    {{ content }}
+    {% if page.ilmoittautuminen and page.ilmoittautuminen != "" %}<p><a class="u-nappi u-nappi--kulta" href="{{ page.ilmoittautuminen }}" target="_blank" rel="noopener">{% include k.html a="ilmoittaudu" %}</a></p>{% endif %}
+  </article>
+</div>

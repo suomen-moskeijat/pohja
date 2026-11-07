@@ -1,0 +1,38 @@
+{%- comment -%} Lasten opetukseen ilmoittautuminen. {%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+<form class="u-kortti u-lomake" data-lomake data-osoite="{{ m.lomake_osoite }}" data-wa="{{ wa }}" data-sahkoposti="{{ m.sahkoposti }}" data-aihe="{{ site.data.kaannokset.ilmoittautuminen_aihe.fi }}" novalidate>
+  <fieldset>
+    <legend><span class="u-lomake__nro">1</span>{% include k.html a="huoltajan_tiedot" %}</legend>
+    <label class="u-kentta"><span>{% include k.html a="huoltajan_nimi" %} *</span><input name="huoltaja" required autocomplete="name"></label>
+    <div class="u-kentat">
+      <label class="u-kentta"><span>{% include k.html a="sahkoposti" %} *</span><input name="sahkoposti" type="email" required autocomplete="email" inputmode="email" dir="ltr"></label>
+      <label class="u-kentta"><span>{% include k.html a="puhelin" %} *</span><input name="puhelin" type="tel" required autocomplete="tel" pattern="[+0-9 ()-]{6,20}" dir="ltr"></label>
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend><span class="u-lomake__nro">2</span>{% include k.html a="lapsen_tiedot" %}</legend>
+    <div class="u-kentat">
+      <label class="u-kentta"><span>{% include k.html a="lapsen_nimi" %} *</span><input name="lapsi" required></label>
+      <label class="u-kentta u-kentta--kapea"><span>{% include k.html a="lapsen_ika" %} *</span><input name="ika" type="number" min="3" max="17" required inputmode="numeric" dir="ltr"></label>
+    </div>
+    {% if m.lasten_opetus.tyypit.size > 0 %}
+    <div class="u-kentta" role="radiogroup">
+      <span>{% include k.html a="opetuksen_tyyppi" %} *</span>
+      <div class="u-valinnat">
+        {% for t in m.lasten_opetus.tyypit %}
+        <label class="u-valinta"><input type="radio" name="opetus" value="{{ t.fi | default: t }}" required {% if forloop.first %}checked{% endif %}><span>{% include kt.html arvo=t %}</span></label>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </fieldset>
+  <fieldset>
+    <legend><span class="u-lomake__nro">3</span>{% include k.html a="lisatiedot" %}</legend>
+    <label class="u-kentta"><span>{% include k.html a="lisatiedot_valinnainen" %}</span><textarea name="lisatiedot" rows="3"></textarea></label>
+  </fieldset>
+  <label class="u-hyvaksy"><input type="checkbox" name="hyvaksyn" required><span>{% include k.html a="hyvaksyn_tietosuoja" %} <a href="{{ '/tietosuoja/' | relative_url }}">{% include k.html a="tietosuoja" %}</a></span></label>
+  {% include osat/lomakeviestit.html %}
+  <button type="submit" class="u-nappi u-nappi--kulta u-nappi--levea">{% include k.html a="laheta_ilmoittautuminen" %}</button>
+  <p class="u-hieno u-lomake__huom">{% include k.html a="tietosuoja_huom" %}</p>
+</form>

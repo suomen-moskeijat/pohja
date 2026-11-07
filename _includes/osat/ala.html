@@ -1,0 +1,45 @@
+{%- comment -%} Alapalkki: logo, tunnuslause, linkit, yhteystiedot ja somet. {%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- assign j = '/' | relative_url -%}
+{%- assign s = m.some -%}
+{%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+<footer class="u-ala">
+  <div class="u-kuvio" aria-hidden="true"></div>
+  <div class="u-kehys u-ala__ruudukko">
+    <div class="u-ala__brand">
+      {%- assign _logo = m.teema.logo_pieni | default: m.teema.logo -%}
+      {% if _logo and _logo != "" %}<img class="u-ala__logo" src="{{ _logo | relative_url }}" alt="{{ m.title }}" width="320" height="144" loading="lazy">{% else %}<p class="u-ala__nimi">{% include nimi.html moskeija=m %}</p>{% endif %}
+      {% if m.tunnuslause %}<p class="u-ala__motto">{% include kt.html arvo=m.tunnuslause %}</p>{% endif %}
+      <div class="u-ala__somet">
+        {% if s.instagram and s.instagram != "" %}<a href="{{ s.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% include osat/somekuvake.html nimi="ig" %}</a>{% endif %}
+        {% if s.facebook and s.facebook != "" %}<a href="{{ s.facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{% include osat/somekuvake.html nimi="fb" %}</a>{% endif %}
+        {% if s.youtube and s.youtube != "" %}<a href="{{ s.youtube }}" target="_blank" rel="noopener" aria-label="YouTube">{% include osat/somekuvake.html nimi="yt" %}</a>{% endif %}
+        {% if s.tiktok and s.tiktok != "" %}<a href="{{ s.tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% include osat/somekuvake.html nimi="tt" %}</a>{% endif %}
+        {% if wa != "" %}<a href="https://wa.me/{{ wa }}" target="_blank" rel="noopener" aria-label="WhatsApp">{% include osat/somekuvake.html nimi="wa" %}</a>{% endif %}
+      </div>
+    </div>
+    <nav class="u-ala__linkit" aria-label="Pikalinkit">
+      <h2>{% include k.html a="pikalinkit" %}</h2>
+      <ul>
+        <li><a href="{{ j }}rukousajat/">{% include k.html a="nav_rukousajat" %}</a></li>
+        <li><a href="{{ j }}meista/">{% include k.html a="nav_meista" %}</a></li>
+        <li><a href="{{ j }}palvelut/">{% include k.html a="nav_palvelut" %}</a></li>
+        <li><a href="{{ j }}tapahtumat/">{% include k.html a="nav_tapahtumat" %}</a></li>
+        <li><a href="{{ j }}lahjoita/">{% include k.html a="nav_lahjoita" %}</a></li>
+        <li><a href="{{ j }}yhteystiedot/">{% include k.html a="nav_yhteystiedot" %}</a></li>
+      </ul>
+    </nav>
+    <div class="u-ala__yhteys">
+      <h2>{% include k.html a="yhteystiedot" %}</h2>
+      <ul>
+        {% if m.osoite and m.osoite != "" %}<li>{% include ikoni-ph.html nimi="sijainti" koko=18 %}<a href="https://www.google.com/maps/dir/?api=1&amp;destination={{ m.osoite | url_encode }}" target="_blank" rel="noopener">{{ m.osoite }}</a></li>{% endif %}
+        {% if m.puhelin and m.puhelin != "" %}<li>{% include ikoni-ph.html nimi="puhelin" koko=18 %}<a href="tel:{{ m.puhelin | remove: ' ' }}" dir="ltr">{{ m.puhelin }}</a></li>{% endif %}
+        {% if m.sahkoposti and m.sahkoposti != "" %}<li>{% include ikoni-ph.html nimi="posti" koko=18 %}<a href="mailto:{{ m.sahkoposti }}">{{ m.sahkoposti }}</a></li>{% endif %}
+      </ul>
+    </div>
+  </div>
+  <div class="u-kehys u-ala__pohja">
+    <p>© {{ site.time | date: '%Y' }} {{ m.title }}</p>
+    <p><a href="{{ j }}tietosuoja/">{% include k.html a="tietosuoja" %}</a>{% if site.hakemisto_url and site.hakemisto_url != "" %} · <a href="{{ site.hakemisto_url }}">{% include k.html a="footer_hakemisto" %}</a>{% endif %}</p>
+  </div>
+</footer>

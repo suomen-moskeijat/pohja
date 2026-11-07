@@ -1,0 +1,17 @@
+---
+layout: sivu
+title: Tietosuoja
+permalink: /tietosuoja/
+---
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{% include osat/sivuhero.html avain="tietosuojaseloste" %}
+<div class="u-kehys u-sivu u-sivu--kapea">
+  <article class="u-kortti u-artikkeli u-proosa">
+    <p><strong>{% include nimi.html moskeija=m %}</strong>{% if m.osoite %}, {{ m.osoite }}{% endif %}</p>
+    <p>{% include k.html a="tietosuoja_1" %}</p>
+    <p>{% include k.html a="tietosuoja_2" %}</p>
+    <p>{% include k.html a="tietosuoja_3" %}</p>
+    <p>{% include k.html a="tietosuoja_5" %}</p>
+    <p>{% include k.html a="tietosuoja_4" %}{% if m.whatsapp and m.whatsapp != "" %} (WhatsApp <span dir="ltr">{{ m.whatsapp }}</span>){% endif %}</p>
+  </article>
+</div>

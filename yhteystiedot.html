@@ -1,0 +1,11 @@
+---
+layout: sivu
+title: Yhteystiedot
+permalink: /yhteystiedot/
+---
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{% include osat/sivuhero.html avain="yhteystiedot" johdanto_avain="yhteystiedot_teksti" %}
+<div class="u-kehys u-sivu">
+  {% include osat/vierailu.html moskeija=m otsikko=false %}
+  <div class="u-osio u-sivu--kapea">{% include osat/lomake-kysy.html moskeija=m %}</div>
+</div>

@@ -1,0 +1,13 @@
+{%- comment -%}
+  Pikayhteys: pyöreä WhatsApp-nappi oikeassa alakulmassa (puhelin löytyy valikosta,
+  yhteystiedoista ja alapalkista). Piiloutuu alaspäin vieritettäessä ja palaa ylöspäin
+  vieritettäessä; piilossa myös rukousaikataulun, lomakkeiden, yhteystietojen ja alapalkin kohdalla – ks. sivu.js.
+{%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+{%- assign puh = m.puhelin | default: "" | remove: " " -%}
+{%- if wa != "" -%}
+<div class="u-pikanapit" data-pikanapit>
+  {% if wa != "" %}<a class="u-pikanappi u-pikanappi--wa" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener" aria-label="WhatsApp">{% include osat/somekuvake.html nimi="wa" koko=34 %}</a>{% endif %}
+</div>
+{%- endif -%}

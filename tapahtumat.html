@@ -1,0 +1,10 @@
+---
+layout: sivu
+title: Tapahtumat
+permalink: /tapahtumat/
+---
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{% include osat/sivuhero.html avain="nav_tapahtumat" johdanto_avain="tapahtumat_teksti" %}
+<div class="u-kehys u-sivu u-sivu--kapea">
+  {% include osat/tapahtumat.html moskeija=m %}
+</div>

@@ -1,0 +1,232 @@
+# Pages CMS -muokkausnäkymän asetukset (https://pagescms.org)
+# Moskeija voi tämän avulla muokata omia tietojaan ja lisätä tapahtumia
+# selaimessa ilman koodaamista. Muutos julkaistaan automaattisesti sivustolle.
+
+media:
+  input: tiedostot
+  output: /tiedostot
+
+content:
+  - name: tapahtumat
+    label: Tapahtumat
+    type: collection
+    path: _tapahtumat
+    filename: "{year}-{month}-{day}-{primary}.md"
+    view:
+      fields: [title, paiva, moskeija]
+      sort: [paiva]
+      default:
+        sort: paiva
+        order: desc
+    fields:
+      - { name: title, label: Tapahtuman nimi (suomi), type: string, required: true }
+      - { name: otsikko_en, label: Tapahtuman nimi englanniksi, type: string }
+      - { name: otsikko_ar, label: Tapahtuman nimi arabiaksi, type: string }
+      - { name: otsikko_so, label: Tapahtuman nimi somaliksi, type: string }
+      - { name: paiva, label: Päivämäärä, type: date, required: true }
+      - { name: paiva_loppuu, label: Päättymispäivä (jos useampipäiväinen), type: date }
+      - { name: alkaa, label: Alkaa klo, type: string, description: "esim. 18.00" }
+      - { name: loppuu, label: Päättyy klo, type: string, description: "esim. 20.00" }
+      - { name: paikka, label: Paikka (jos muualla kuin moskeijassa), type: string }
+      - { name: ilmoittautuminen, label: Ilmoittautumislinkki, type: string }
+      - { name: kuva, label: Kuva, type: image }
+      - { name: body, label: Kuvaus, type: rich-text }
+
+  - name: moskeijat
+    label: Moskeijat
+    type: collection
+    path: _moskeijat
+    filename: "{primary}.md"
+    view:
+      fields: [title, kaupunki]
+    fields:
+      # --- Perustiedot ---
+      - { name: title, label: Moskeijan nimi (suomi), type: string, required: true }
+      - { name: nimi_en, label: Nimi englanniksi, type: string }
+      - { name: nimi_ar, label: Nimi arabiaksi, type: string }
+      - { name: nimi_so, label: Nimi somaliksi, type: string }
+      - { name: kaupunki, label: Kaupunki, type: string, required: true }
+      - { name: osoite, label: Katuosoite, type: string }
+      - name: sijainti
+        label: Sijainti (kartta ja laskettu rukousaika)
+        type: object
+        description: Koordinaatit saat Google Mapsista klikkaamalla karttaa hiiren oikealla.
+        fields:
+          - { name: lat, label: Leveysaste (lat), type: number }
+          - { name: lon, label: Pituusaste (lon), type: number }
+      - { name: puhelin, label: Puhelin, type: string }
+      - { name: whatsapp, label: WhatsApp-numero, type: string, description: "esim. +358 40 123 4567 – näkyy pikanappina ja lomakkeet lähetetään tähän, jos lomakepalvelua ei ole" }
+      - { name: sahkoposti, label: Sähköposti, type: string }
+      - { name: nettisivu, label: Oma nettisivu (hakemistoa varten), type: string }
+      - { name: kielet, label: Toiminnan kielet, type: string, list: true }
+      - { name: juma, label: Perjantairukouksen aika, type: string, description: "esim. 13.30" }
+      - { name: kuva, label: Valokuva moskeijasta (sivun alkuun), type: image }
+      - { name: lomake_osoite, label: Lomakepalvelun osoite (valinnainen), type: string, description: "esim. https://formspree.io/f/xxxx – ilman tätä lomakkeet avautuvat valmiina WhatsApp-viestinä" }
+
+      # --- Etusivun alkuosa ---
+      - name: hero_tunniste
+        label: Pieni yläotsikko (esim. Malmi, Helsinki)
+        type: object
+        fields: &kielet_rivi
+          - { name: fi, label: Suomi, type: string }
+          - { name: en, label: English, type: string }
+          - { name: ar, label: العربية, type: string }
+          - { name: so, label: Soomaali, type: string }
+      - { name: hero_otsikko, label: Pääotsikko, type: object, fields: *kielet_rivi }
+      - name: esittely
+        label: Lyhyt esittely
+        type: object
+        fields: &kielet_teksti
+          - { name: fi, label: Suomi, type: text }
+          - { name: en, label: English, type: text }
+          - { name: ar, label: العربية, type: text }
+          - { name: so, label: Soomaali, type: text }
+      - { name: tunnuslause, label: Tunnuslause (alapalkki), type: object, fields: *kielet_rivi }
+      - name: kortit
+        label: Etusivun kortit
+        type: object
+        list: true
+        fields:
+          - { name: kuvake, label: Kuvake, type: select, options: { values: [kello, kirja, ryhma, kalenteri, moskeija, hattu, tahti, sydan, lapsi, maailma] } }
+          - { name: linkki, label: Linkki, type: string, description: "esim. /rukousajat/ tai /palvelut/" }
+          - { name: nimi, label: Otsikko, type: object, fields: *kielet_rivi }
+          - { name: kuvaus, label: Kuvaus, type: object, fields: *kielet_teksti }
+
+      # --- Meistä ---
+      - { name: meista_lyhyt, label: Meistä lyhyesti (etusivulle), type: object, fields: *kielet_teksti }
+      - name: meista
+        label: Meistä (koko teksti, Meistä-sivulle)
+        type: object
+        fields:
+          - { name: fi, label: Suomi, type: rich-text }
+          - { name: en, label: English, type: rich-text }
+          - { name: ar, label: العربية, type: rich-text }
+          - { name: so, label: Soomaali, type: rich-text }
+      - name: missio
+        label: Missio ja visio (kortit)
+        type: object
+        list: true
+        fields:
+          - { name: nimi, label: Otsikko, type: object, fields: *kielet_rivi }
+          - { name: kuvaus, label: Kuvaus, type: object, fields: *kielet_teksti }
+      - { name: galleria, label: Kuvagalleria (omat kuvat; Mawaqitin kuvat lisätään automaattisesti), type: image, list: true }
+
+      # --- Opetus ja palvelut ---
+      - { name: palvelut_esittely, label: Palvelusivun johdanto, type: object, fields: *kielet_teksti }
+      - name: palvelut
+        label: Palvelut
+        type: object
+        list: true
+        fields:
+          - { name: kuvake, label: Kuvake, type: select, options: { values: [kello, kirja, ryhma, kalenteri, moskeija, hattu, tahti, sydan, lapsi, maailma] } }
+          - { name: nimi, label: Nimi, type: object, fields: *kielet_rivi }
+          - { name: kuvaus, label: Kuvaus, type: object, fields: *kielet_teksti }
+      - name: lasten_opetus
+        label: Lasten opetukseen ilmoittautuminen
+        type: object
+        fields:
+          - { name: kaytossa, label: Ilmoittautuminen käytössä, type: boolean }
+          - { name: teksti, label: Teksti, type: object, fields: *kielet_teksti }
+          - { name: tyypit, label: Opetuksen tyypit, type: object, list: true, fields: *kielet_rivi }
+
+      # --- Lahjoitukset ---
+      - name: lahjoitus
+        label: Lahjoitukset
+        type: object
+        fields:
+          - { name: teksti, label: Teksti, type: object, fields: *kielet_teksti }
+          - { name: saaja, label: Saaja, type: string }
+          - { name: tilinumero, label: Tilinumero (IBAN), type: string }
+          - { name: viite, label: Viite, type: string }
+          - { name: mobilepay, label: MobilePay-numero, type: string }
+          - { name: linkki, label: Verkkolahjoituksen osoite, type: string }
+
+      # --- Some ---
+      - name: some
+        label: Sosiaalinen media
+        type: object
+        fields:
+          - { name: facebook, label: Facebook-sivun osoite, type: string, description: Julkaisut ja tapahtumat näytetään sivulla automaattisesti. }
+          - { name: instagram, label: Instagram-osoite, type: string }
+          - name: instagram_julkaisut
+            label: Instagram-julkaisut ja julisteet
+            type: string
+            list: true
+            description: Liitä julkaisun osoite, esim. https://www.instagram.com/p/ABC123/
+          - { name: youtube, label: YouTube-kanavan osoite, type: string }
+          - { name: youtube_kanava_id, label: YouTube-kanavan tunnus (UC...), type: string, description: Uusimmat videot näkyvät automaattisesti. Tunnus löytyy YouTubesta kohdasta Asetukset → Lisäasetukset. }
+          - { name: tiktok, label: TikTok-profiilin osoite, type: string, description: "esim. https://www.tiktok.com/@moskeija – uusimmat videot näkyvät automaattisesti" }
+          - name: upotuskoodi
+            label: Upotuskoodi (valinnainen)
+            type: code
+            options: { format: html }
+            description: Esim. ilmaisen Instagram-widgetin (Behold, LightWidget, SnapWidget) HTML-koodi.
+
+      # --- Rukousajat ---
+      - name: rukousajat
+        label: Rukousajat
+        type: object
+        fields:
+          - name: lahde
+            label: Mistä rukousajat tulevat
+            type: select
+            description: "masjidbox / mawaqit = ajat ja iqamah haetaan automaattisesti kerran tunnissa; rukousajat = rukousajat.fi:n Helsingin aikataulu (oletus Helsingissä, Espoossa ja Vantaalla); taulukko = omat CSV-tiedostot; laskenta = sama laskenta kuin rukousajat.fi muissa kaupungeissa (oletus muualla)."
+            options:
+              values: [masjidbox, mawaqit, rukousajat, taulukko, laskenta]
+          - { name: tunnus, label: Moskeijan tunnus palvelussa, type: string, description: "Masjidbox: osoitteen masjidbox.com/prayer-times/TUNNUS loppuosa. Mawaqit: osoitteen mawaqit.net/fi/TUNNUS loppuosa." }
+          - { name: aikataulu, label: Aikataulukansio (valinnainen), type: string, description: "Oletus on moskeijan tiedostonimi. Kansio _data/aikataulut/-kansiossa, kuukauden CSV esim. 2026-12.csv" }
+          - { name: virallinen_url, label: Linkki viralliseen aikatauluun (esim. Masjidbox), type: string }
+          - name: iqamah_oletus
+            label: Iqamah minuutteina rukousajan jälkeen (jos aikataulussa ei ole iqamah-aikaa)
+            type: object
+            fields:
+              - { name: fajr, label: Fajr, type: number }
+              - { name: dhuhr, label: Dhuhr, type: number }
+              - { name: asr, label: Asr, type: number }
+              - { name: maghrib, label: Maghrib, type: number }
+              - { name: isha, label: Isha, type: number }
+          - name: laskentatapa
+            label: Laskentatapa (kun virallista aikaa ei ole)
+            type: select
+            options:
+              values: [MuslimWorldLeague, Turkey, MoonsightingCommittee, Egyptian, Karachi, UmmAlQura, NorthAmerica, Dubai, Qatar, Kuwait, Tehran, Singapore]
+          - name: madhab
+            label: Asr-laskenta
+            type: select
+            options:
+              values: [Shafi, Hanafi]
+          - name: korkeat_leveysasteet
+            label: Kesän valoisien öiden sääntö
+            type: select
+            options:
+              values: [TwilightAngle, SeventhOfTheNight, MiddleOfTheNight]
+          - name: saadot
+            label: Säädöt minuutteina (+/-)
+            type: object
+            fields:
+              - { name: fajr, label: Fajr, type: number }
+              - { name: auringonnousu, label: Auringonnousu, type: number }
+              - { name: dhuhr, label: Dhuhr, type: number }
+              - { name: asr, label: Asr, type: number }
+              - { name: maghrib, label: Maghrib, type: number }
+              - { name: isha, label: Isha, type: number }
+          - { name: oma_aikataulu, label: Aikataulu PDF-tiedostona, type: file }
+
+      # --- Ulkoasu ---
+      - name: teema
+        label: Ulkoasu (moskeijan oma sivusto)
+        type: object
+        fields:
+          - { name: logo, label: Logo, type: image }
+          - { name: hero, label: Alkuosan tyyli, type: select, options: { values: [vaalea, tumma] } }
+          - { name: paa, label: "Pääväri (esim. #3f2717)", type: string }
+          - { name: paa_tumma, label: Tumma sävy, type: string }
+          - { name: korostus, label: Korostusväri (painikkeet), type: string }
+          - { name: korostus_vaalea, label: Vaalea korostus, type: string }
+          - { name: tausta, label: Taustaväri, type: string }
+          - { name: raja, label: Reunaviivojen väri, type: string }
+          - { name: hieno, label: Toissijaisen tekstin väri, type: string }
+          - { name: fontit_url, label: Google Fonts -osoite, type: string }
+          - { name: fontti_otsikot, label: Otsikkofontti, type: string }
+          - { name: fontti_teksti, label: Leipätekstin fontti, type: string }
+      - { name: body, label: "Lisätietoa (näytetään, jos Meistä on tyhjä)", type: rich-text }

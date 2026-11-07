@@ -1,0 +1,2 @@
+{%- comment -%} Teksti eri kielillä erillisistä kentistä: {% include kolme.html fi=x en=y ar=z so=w %}. Puuttuva korvataan englannilla tai suomella. {%- endcomment -%}
+{%- for _l in site.kielet -%}{%- case _l -%}{%- when "fi" -%}{%- assign _v = include.fi -%}{%- when "en" -%}{%- assign _v = include.en -%}{%- when "ar" -%}{%- assign _v = include.ar -%}{%- when "so" -%}{%- assign _v = include.so -%}{%- else -%}{%- assign _v = nil -%}{%- endcase -%}<span data-l="{{ _l }}">{{ _v | default: include.en | default: include.fi }}</span>{%- endfor -%}

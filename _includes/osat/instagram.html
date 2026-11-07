@@ -1,0 +1,51 @@
+{%- comment -%}
+  Instagram: uusimmat julkaisut ruudukkona, napautus avaa julkaisun isona.
+  Data ja kuvat: .github/scripts/instagram.py (päivittyy automaattisesti).
+{%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- assign ig = m.some.instagram | default: "" -%}
+{%- assign tunnus = ig | split: '?' | first | split: 'instagram.com/' | last | remove: '/' | remove: '@' | downcase -%}
+{%- assign avain = tunnus | replace: '.', '_' -%}
+{%- assign d = site.data.instagram[avain] -%}
+{%- if d.julkaisut.size > 0 -%}
+<section class="u-osio u-kehys u-ig" data-ig>
+  <div class="u-osio__yla">
+    <div class="u-ig__profiili">
+      <span class="u-ig__logo" aria-hidden="true">{% include osat/somekuvake.html nimi="ig" koko=22 %}</span>
+      <span><h2>{% include k.html a="instagramissa" %}</h2><small dir="ltr">@{{ d.kayttaja }}{% if d.seuraajia %} · {{ d.seuraajia }}{% endif %}</small></span>
+    </div>
+    <a class="u-nappi u-nappi--reuna u-nappi--pieni" href="https://www.instagram.com/{{ d.kayttaja }}/" target="_blank" rel="noopener">{% include k.html a="ig_seuraa" %}</a>
+  </div>
+  <ul class="u-ig__ruudukko">
+    {% for j in d.julkaisut limit: 6 %}
+    <li><button type="button" class="u-ig__ruutu" data-ig-avaa="{{ forloop.index0 }}" aria-label="{{ j.teksti | strip_newlines | truncate: 80 | escape }}">
+      <img src="{{ j.kuva | relative_url }}" alt="" loading="lazy" width="320" height="320">
+      {% if j.tyyppi == "video" %}<span class="u-ig__merkki" aria-hidden="true">{% include ikoni-ph.html nimi="toista" koko=18 %}</span>{% elsif j.tyyppi == "albumi" %}<span class="u-ig__merkki" aria-hidden="true">{% include ikoni-ph.html nimi="albumi" koko=16 %}</span>{% endif %}
+    </button></li>
+    {% endfor %}
+  </ul>
+  <script type="application/json" data-ig-json>[
+    {%- for j in d.julkaisut limit: 6 -%}
+    { "koodi": {{ j.koodi | jsonify }}, "tyyppi": {{ j.tyyppi | jsonify }}, "paiva": {{ j.paiva | jsonify }}, "teksti": {{ j.teksti | jsonify }}, "kuva": {{ j.kuva | relative_url | jsonify }} }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]</script>
+  <dialog class="u-ikkuna" data-ig-ikkuna aria-label="Instagram">
+    <div class="u-ikkuna__sisalto">
+      <button type="button" class="u-ikkuna__sulje" data-ig-sulje>{% include ikoni-ph.html nimi="sulje" koko=22 %}<span class="u-nakymaton">{% include k.html a="sulje" %}</span></button>
+      <div class="u-ikkuna__kuva">
+        <img data-ig-kuva alt="">
+        <span class="u-ikkuna__video" data-ig-video hidden>{% include ikoni-ph.html nimi="toista" koko=34 %}</span>
+        <button type="button" class="u-ikkuna__nuoli u-ikkuna__nuoli--ed" data-ig-siirry="-1" aria-label="←">{% include ikoni-ph.html nimi="vasen" koko=22 luokka="u-flip" %}</button>
+        <button type="button" class="u-ikkuna__nuoli u-ikkuna__nuoli--seur" data-ig-siirry="1" aria-label="→">{% include ikoni-ph.html nimi="oikea" koko=22 luokka="u-flip" %}</button>
+      </div>
+      <div class="u-ikkuna__teksti">
+        <p class="u-hieno" data-ig-paiva></p>
+        <p class="u-ikkuna__kuvaus" data-ig-teksti></p>
+      </div>
+      <a class="u-nappi u-nappi--kulta u-ikkuna__linkki" data-ig-linkki href="#" target="_blank" rel="noopener">
+        <span data-ig-linkki-kuva>{% include k.html a="ig_avaa_julkaisu" %}</span><span data-ig-linkki-video hidden>{% include k.html a="ig_katso_video" %}</span>
+      </a>
+    </div>
+  </dialog>
+</section>
+{%- endif -%}

@@ -1,0 +1,30 @@
+---
+layout: sivu
+title: Lahjoita
+permalink: /lahjoita/
+---
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- assign l = m.lahjoitus -%}
+{%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+{% include osat/sivuhero.html avain="lahjoita_otsikko" johdanto=l.teksti %}
+<div class="u-kehys u-sivu u-sivu--kapea">
+  <div class="u-kortti u-lahjoitustiedot">
+    <span class="u-ikoni u-ikoni--iso">{% include ikoni-ph.html nimi="sydan" koko=28 %}</span>
+    {% if l.tilinumero and l.tilinumero != "" %}
+    <dl>
+      {% if l.saaja and l.saaja != "" %}<div><dt>{% include k.html a="saaja" %}</dt><dd>{{ l.saaja }}</dd></div>{% endif %}
+      <div><dt>{% include k.html a="tilinumero" %}</dt><dd><code dir="ltr">{{ l.tilinumero }}</code><button type="button" class="u-nappi u-nappi--reuna u-nappi--pieni" data-kopioi="{{ l.tilinumero | remove: ' ' }}">{% include k.html a="kopioi" %}</button></dd></div>
+      {% if l.viite and l.viite != "" %}<div><dt>{% include k.html a="viite" %}</dt><dd><code dir="ltr">{{ l.viite }}</code></dd></div>{% endif %}
+      {% if l.mobilepay and l.mobilepay != "" %}<div><dt>MobilePay</dt><dd><code dir="ltr">{{ l.mobilepay }}</code></dd></div>{% endif %}
+    </dl>
+    {% endif %}
+    {% if l.linkki and l.linkki != "" %}<a class="u-nappi u-nappi--kulta" href="{{ l.linkki }}" target="_blank" rel="noopener">{% include k.html a="lahjoita_verkossa" %}</a>{% endif %}
+    {% if l.tilinumero == "" or l.tilinumero == nil %}{% unless l.linkki and l.linkki != "" %}
+    <p>{% include k.html a="lahjoitus_kysy" %}</p>
+    <div class="u-napit">
+      {% if wa != "" %}<a class="u-nappi u-nappi--wa" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" koko=18 %} WhatsApp</a>{% endif %}
+      {% if m.puhelin and m.puhelin != "" %}<a class="u-nappi u-nappi--reuna" href="tel:{{ m.puhelin | remove: ' ' }}" dir="ltr">{% include ikoni-ph.html nimi="puhelin" koko=18 %} {{ m.puhelin }}</a>{% endif %}
+    </div>
+    {% endunless %}{% endif %}
+  </div>
+</div>

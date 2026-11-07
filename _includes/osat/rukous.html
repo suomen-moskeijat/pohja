@@ -1,0 +1,23 @@
+{%- comment -%}
+  Päivän rukousajat: seuraava rukous (aika, laskuri, edistyminen) ja päivän taulukko
+  (adhan + iqamah). Vaatii sivulle u/rukousdata.html:n. Parametri: linkki (true = "Koko aikataulu")
+{%- endcomment -%}
+<section class="rk" data-rk aria-label="{{ site.data.kaannokset.rukousajat.fi }}">
+  <div class="rk__seuraava">
+    <p class="rk__eyebrow">{% include k.html a="seuraava_rukous" %}</p>
+    <p class="rk__nimi"><span data-rk-nimi>&nbsp;</span> <span class="rk__klo" data-rk-klo></span></p>
+    <p class="rk__laskuri"><span class="rk__aika" data-rk-jaljella dir="ltr">--:--:--</span><small>{% include k.html a="jaljella" %}</small></p>
+    <div class="rk__palkki" aria-hidden="true"><span data-rk-palkki></span></div>
+  </div>
+  <table class="rk__taulu">
+    <caption class="u-nakymaton">{% include k.html a="paivan_ajat" %}</caption>
+    <thead><tr><th scope="col"><span data-rk-pvm></span></th><th scope="col">{% include k.html a="adhan" %}</th><th scope="col">{% include k.html a="iqamah" %}</th></tr></thead>
+    <tbody data-rk-rivit>
+      <tr><th>Fajr</th><td>–</td><td>–</td></tr><tr><th>Dhuhr</th><td>–</td><td>–</td></tr><tr><th>Asr</th><td>–</td><td>–</td></tr><tr><th>Maghrib</th><td>–</td><td>–</td></tr><tr><th>Isha</th><td>–</td><td>–</td></tr>
+    </tbody>
+  </table>
+  <footer class="rk__ala">
+    <span data-rk-hijri></span>
+    {% if include.linkki %}<a class="u-linkki" href="{{ '/rukousajat/' | relative_url }}">{% include k.html a="koko_aikataulu" %} <span class="u-flip" aria-hidden="true">→</span></a>{% endif %}
+  </footer>
+</section>

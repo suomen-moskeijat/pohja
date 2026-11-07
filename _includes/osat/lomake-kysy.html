@@ -1,0 +1,15 @@
+{%- comment -%} Kysy moskeijalta. {%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+<form class="u-kortti u-lomake" data-lomake data-osoite="{{ m.lomake_osoite }}" data-wa="{{ wa }}" data-sahkoposti="{{ m.sahkoposti }}" data-aihe="{{ site.data.kaannokset.kysy_otsikko.fi }}" novalidate>
+  <h2>{% include k.html a="kysy_otsikko" %}</h2>
+  <p class="u-hieno">{% include k.html a="kysy_teksti" %}</p>
+  <div class="u-kentat">
+    <label class="u-kentta"><span>{% include k.html a="nimi" %} *</span><input name="nimi" required autocomplete="name"></label>
+    <label class="u-kentta"><span>{% include k.html a="sahkoposti" %} *</span><input name="sahkoposti" type="email" required autocomplete="email" inputmode="email" dir="ltr"></label>
+  </div>
+  <label class="u-kentta"><span>{% include k.html a="aihe" %}</span><input name="aihe"></label>
+  <label class="u-kentta"><span>{% include k.html a="viesti" %} *</span><textarea name="viesti" rows="4" required></textarea></label>
+  {% include osat/lomakeviestit.html %}
+  <button type="submit" class="u-nappi u-nappi--kulta">{% include k.html a="laheta_viesti" %}</button>
+</form>

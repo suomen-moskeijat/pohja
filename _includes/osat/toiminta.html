@@ -1,0 +1,17 @@
+{%- comment -%} Toimintamme: moskeijan kortit (kortit-kenttä) listana / ruudukkona. {%- endcomment -%}
+{%- assign m = include.moskeija -%}
+<ul class="u-toiminta">
+  {% for c in m.kortit %}
+  {%- assign polku = c.linkki | default: '/palvelut/' | remove_first: '/' -%}
+  <li>
+    <a class="u-toiminta__kohta" href="{{ '/' | append: polku | relative_url }}">
+      <span class="u-ikoni">{% include ikoni-ph.html nimi=c.kuvake koko=24 %}</span>
+      <span class="u-toiminta__teksti">
+        <strong>{% include kt.html arvo=c.nimi %}</strong>
+        <span>{% include kt.html arvo=c.kuvaus %}</span>
+      </span>
+      <span class="u-toiminta__nuoli u-flip" aria-hidden="true">→</span>
+    </a>
+  </li>
+  {% endfor %}
+</ul>

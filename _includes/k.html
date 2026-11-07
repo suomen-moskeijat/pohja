@@ -1,0 +1,2 @@
+{%- comment -%} Käännetty käyttöliittymäteksti: {% include k.html a="avain" %} – teksti jokaisella sivuston kielellä. {%- endcomment -%}
+{%- assign _k = site.data.kaannokset[include.a] -%}{%- for _l in site.kielet -%}<span data-l="{{ _l }}">{{ _k[_l] | default: _k.en | default: _k.fi }}</span>{%- endfor -%}

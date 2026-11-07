@@ -1,0 +1,64 @@
+{%- comment -%} Yläpalkki: logo, valikko, Lahjoita, kielivalikko ja puhelimen valikko. {%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- assign j = '/' | relative_url -%}
+{%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+{%- capture linkit -%}
+rukousajat/|nav_rukousajat
+meista/|nav_meista
+palvelut/|nav_palvelut
+tapahtumat/|nav_tapahtumat
+yhteystiedot/|nav_yhteystiedot
+{%- endcapture -%}
+{%- assign linkit = linkit | strip | newline_to_br | split: '<br />' -%}
+<header class="u-yla" data-yla>
+  <div class="u-kehys u-yla__sisalto">
+    <a class="u-logo" href="{{ j }}" aria-label="{{ m.title }}">
+      {%- assign _logo = m.teema.logo_pieni | default: m.teema.logo -%}
+      {% if _logo and _logo != "" %}<img src="{{ _logo | relative_url }}" alt="{{ m.title }}" width="320" height="144">{% else %}<span class="u-logo__nimi">{% include nimi.html moskeija=m %}</span>{% endif %}
+    </a>
+
+    <nav class="u-nav" aria-label="Päävalikko">
+      {% for l in linkit %}{% assign o = l | strip | split: '|' %}{% assign o_avain = o[1] %}
+      <a href="{{ j }}{{ o[0] }}" {% if page.url contains o[0] %}aria-current="page"{% endif %}>{% include k.html a=o_avain %}</a>
+      {% endfor %}
+    </nav>
+
+    <a class="u-nappi u-nappi--kulta u-nappi--pieni u-yla__lahjoita" href="{{ j }}lahjoita/">{% include k.html a="nav_lahjoita" %}</a>
+
+    {% if site.kielet.size > 1 %}
+    <div class="u-kieli" data-kielivalikko>
+      <button type="button" class="u-kieli__nappi" aria-expanded="false" aria-haspopup="true" data-kieli-avaa>
+        {% include ikoni-ph.html nimi="maailma" koko=18 %}
+        <span data-kieli-nyt>{{ site.kielet | first | upcase }}</span>
+        <span class="u-nakymaton">{% include k.html a="kieli" %}</span>
+      </button>
+      <ul class="u-kieli__lista" role="menu" hidden>
+        {% for l in site.kielet %}
+        <li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-kieli="{{ l }}" lang="{{ l }}">{% case l %}{% when "fi" %}Suomi{% when "en" %}English{% when "ar" %}العربية{% when "so" %}Soomaali{% else %}{{ l | upcase }}{% endcase %}</button></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <button type="button" class="u-valikkonappi" aria-expanded="false" aria-controls="u-mobiilivalikko" data-valikko-avaa>
+      {% include ikoni-ph.html nimi="valikko" koko=22 luokka="u-valikkonappi__auki" %}
+      {% include ikoni-ph.html nimi="sulje" koko=22 luokka="u-valikkonappi__kiinni" %}
+      <span class="u-nakymaton">{% include k.html a="valikko" %}</span>
+    </button>
+  </div>
+
+  <div class="u-mobiilivalikko" id="u-mobiilivalikko" hidden>
+    <nav class="u-kehys" aria-label="Valikko">
+      <a class="u-mv-linkki" href="{{ j }}">{% include k.html a="nav_etusivu" %}<span class="u-nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span></a>
+      {% for l in linkit %}{% assign o = l | strip | split: '|' %}{% assign o_avain = o[1] %}
+      <a class="u-mv-linkki" href="{{ j }}{{ o[0] }}" {% if page.url contains o[0] %}aria-current="page"{% endif %}>{% include k.html a=o_avain %}<span class="u-nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span></a>
+      {% endfor %}
+      {% if m.lasten_opetus.kaytossa %}<a class="u-mv-linkki" href="{{ j }}palvelut/lasten-opetus/">{% include k.html a="ilmoita_lapsesi" %}<span class="u-nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span></a>{% endif %}
+      <div class="u-mv-napit">
+        <a class="u-nappi u-nappi--kulta" href="{{ j }}lahjoita/">{% include k.html a="nav_lahjoita" %}</a>
+        {% if wa != "" %}<a class="u-nappi u-nappi--reuna" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" %} WhatsApp</a>{% endif %}
+        {% if m.puhelin and m.puhelin != "" %}<a class="u-nappi u-nappi--reuna" href="tel:{{ m.puhelin | remove: ' ' }}">{% include ikoni-ph.html nimi="puhelin" koko=18 %} {% include k.html a="soita" %}</a>{% endif %}
+      </div>
+    </nav>
+  </div>
+</header>

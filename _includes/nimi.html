@@ -1,0 +1,2 @@
+{%- comment -%} Moskeijan nimi valitulla kielellä (kentät nimi_en, nimi_ar, nimi_so ovat valinnaisia). {%- endcomment -%}
+{%- assign _m = include.moskeija -%}{%- for _l in site.kielet -%}{%- assign _avain = "nimi_" | append: _l -%}<span data-l="{{ _l }}">{%- if _l == "fi" -%}{{ _m.title }}{%- else -%}{{ _m[_avain] | default: _m.nimi_en | default: _m.title }}{%- endif -%}</span>{%- endfor -%}

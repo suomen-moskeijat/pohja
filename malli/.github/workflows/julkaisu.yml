@@ -1,0 +1,24 @@
+# Julkaisee moskeijan sivun. Ulkoasu, rukousaikojen ja Instagramin haku tulevat
+# yhteisestä pohjasta: github.com/suomen-moskeijat/pohja
+# Ajetaan aina kun tietoja muutetaan, kerran tunnissa (rukousajat, Instagram) ja käsin.
+name: Julkaise sivusto
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  sivu:
+    uses: suomen-moskeijat/pohja/.github/workflows/rakenna.yml@main
