@@ -128,9 +128,9 @@ rukousajat:
 some:
   instagram: {yaml_str(t['instagram'])}
   facebook: ""
-  youtube: ""
+  youtube: {yaml_str(t['youtube'])}      # uusimmat videot näkyvät sivulla
   tiktok: ""
-  telegram: ""
+  telegram: {yaml_str(t['telegram'])}     # julkisen kanavan julkaisut näkyvät sivulla
   snapchat: ""
   x: ""
   threads: ""
@@ -205,7 +205,7 @@ def julkaise(t, repo, org, avain, tiedot):
 
 def main():
     p = argparse.ArgumentParser()
-    for k in ["nimi", "kaupunki", "mawaqit", "masjidbox", "osoite", "instagram", "whatsapp", "repo"]:
+    for k in ["nimi", "kaupunki", "mawaqit", "masjidbox", "osoite", "instagram", "whatsapp", "youtube", "telegram", "repo"]:
         p.add_argument("--" + k, default=os.environ.get("SYOTE_" + k.upper(), ""))
     p.add_argument("--kuiva", help="kirjoita tiedostot tähän kansioon, älä luo mitään GitHubiin")
     a = p.parse_args()
@@ -215,7 +215,8 @@ def main():
         raise SystemExit("Anna kaupunki.")
 
     t = {"nimi": a.nimi.strip(), "kaupunki": a.kaupunki.strip(), "osoite": a.osoite.strip(),
-         "instagram": a.instagram.strip(), "whatsapp": a.whatsapp.strip(), "puhelin": "", "sahkoposti": "",
+         "instagram": a.instagram.strip(), "whatsapp": a.whatsapp.strip(),
+         "youtube": a.youtube.strip(), "telegram": a.telegram.strip(), "puhelin": "", "sahkoposti": "",
          "nettisivu": "", "juma": "", "lat": 0, "lon": 0, "lahde": "", "tunnus": ""}
     if a.mawaqit:
         t["lahde"], t["tunnus"] = "mawaqit", tunnus(a.mawaqit, "mawaqit")

@@ -306,6 +306,24 @@
   else kaynnistaRukous();
 
   /* ---------- 5. Instagram: julkaisu isona ---------- */
+  /* YouTube: video sivulla vasta napautuksesta (evästeetön soitin) */
+  kaikki('[data-yt]').forEach(function (g) {
+    var ikkuna = g.querySelector('[data-yt-ikkuna]'), soitin = g.querySelector('[data-yt-soitin]');
+    if (!ikkuna || typeof ikkuna.showModal !== 'function') return;
+    kaikki('[data-yt-avaa]', g).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(b.dataset.ytAvaa) + '?autoplay=1&rel=0';
+        f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true; f.title = b.textContent.trim();
+        soitin.textContent = ''; soitin.appendChild(f);
+        ikkuna.showModal(); html.classList.add('u-lukittu');
+      });
+    });
+    ikkuna.querySelector('[data-yt-sulje]').addEventListener('click', function () { ikkuna.close(); });
+    ikkuna.addEventListener('close', function () { soitin.textContent = ''; html.classList.remove('u-lukittu'); });
+    ikkuna.addEventListener('click', function (e) { if (e.target === ikkuna) ikkuna.close(); });
+  });
+
   kaikki('[data-ig]').forEach(function (g) {
     var data = [];
     try { data = JSON.parse(g.querySelector('[data-ig-json]').textContent); } catch (e) { return; }

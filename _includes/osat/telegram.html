@@ -1,0 +1,23 @@
+{%- comment -%} Telegram: julkisen kanavan uusimmat julkaisut (.github/scripts/somet.py). {%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- assign d = site.data.telegram[m.slug] -%}
+{%- if d.julkaisut.size > 0 -%}
+<section class="u-osio u-kehys u-tg">
+  <div class="u-osio__yla">
+    <div class="u-ig__profiili">
+      <span class="u-ig__logo u-tg__logo" aria-hidden="true">{% include osat/somekuvake.html nimi="tg" koko=22 %}</span>
+      <span><h2>{% include k.html a="telegramissa" %}</h2><small>{{ d.kanava }}</small></span>
+    </div>
+    <a class="u-nappi u-nappi--reuna u-nappi--pieni" href="{{ d.osoite }}" target="_blank" rel="noopener">{% include k.html a="tg_liity" %}</a>
+  </div>
+  <ul class="u-tg__lista">
+    {% for j in d.julkaisut limit: 6 %}
+    <li><a class="u-tg__julkaisu" href="{{ j.linkki }}" target="_blank" rel="noopener">
+      {% if j.kuva and j.kuva != "" %}<img src="{{ j.kuva | relative_url }}" alt="" loading="lazy">{% endif %}
+      {% if j.teksti and j.teksti != "" %}<span class="u-tg__teksti" dir="auto">{{ j.teksti | escape | newline_to_br }}</span>{% endif %}
+      <span class="u-tg__ala"><time datetime="{{ j.paiva }}" dir="ltr">{{ j.paiva | date: '%-d.%-m.%Y' }}</time><span>{% include k.html a="tg_lue" %}</span></span>
+    </a></li>
+    {% endfor %}
+  </ul>
+</section>
+{%- endif -%}

@@ -1,0 +1,32 @@
+{%- comment -%}
+  YouTube: kanavan uusimmat videot (.github/scripts/somet.py). Video toistetaan sivulla
+  vasta napautuksesta YouTuben evästeettömällä soittimella (youtube-nocookie.com).
+{%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- assign d = site.data.youtube[m.slug] -%}
+{%- if d.videot.size > 0 -%}
+<section class="u-osio u-kehys u-yt" data-yt>
+  <div class="u-osio__yla">
+    <div class="u-ig__profiili">
+      <span class="u-ig__logo u-yt__logo" aria-hidden="true">{% include osat/somekuvake.html nimi="yt" koko=22 %}</span>
+      <span><h2>{% include k.html a="videot" %}</h2><small>{{ d.kanava }}</small></span>
+    </div>
+    <a class="u-nappi u-nappi--reuna u-nappi--pieni" href="{{ d.osoite }}" target="_blank" rel="noopener">{% include k.html a="yt_tilaa" %}</a>
+  </div>
+  <ul class="u-yt__ruudukko">
+    {% for v in d.videot limit: 6 %}
+    <li><button type="button" class="u-yt__video" data-yt-avaa="{{ v.id }}">
+      <span class="u-yt__kuva"><img src="{{ v.kuva | relative_url }}" alt="" loading="lazy" width="480" height="360"><span class="u-yt__toista" aria-hidden="true">{% include ikoni-ph.html nimi="toista" koko=22 %}</span></span>
+      <span class="u-yt__otsikko" dir="auto">{{ v.otsikko }}</span>
+      <time class="u-yt__pvm" datetime="{{ v.paiva }}" dir="ltr">{{ v.paiva | date: '%-d.%-m.%Y' }}</time>
+    </button></li>
+    {% endfor %}
+  </ul>
+  <dialog class="u-ikkuna u-ikkuna--video" data-yt-ikkuna aria-label="YouTube">
+    <div class="u-ikkuna__sisalto">
+      <button type="button" class="u-ikkuna__sulje" data-yt-sulje>{% include ikoni-ph.html nimi="sulje" koko=22 %}<span class="u-nakymaton">{% include k.html a="sulje" %}</span></button>
+      <div class="u-yt__soitin" data-yt-soitin></div>
+    </div>
+  </dialog>
+</section>
+{%- endif -%}

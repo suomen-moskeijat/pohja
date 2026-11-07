@@ -27,6 +27,12 @@ on:
       whatsapp:
         description: "WhatsApp-numero (valinnainen)"
         required: false
+      youtube:
+        description: "YouTube-kanava, esim. https://www.youtube.com/@kanava (valinnainen)"
+        required: false
+      telegram:
+        description: "Telegram-kanava, esim. https://t.me/kanava (valinnainen)"
+        required: false
       repo:
         description: "Repon nimi (valinnainen; oletus nimestä)"
         required: false
@@ -47,5 +53,7 @@ jobs:
           SYOTE_OSOITE: ${{ inputs.osoite }}
           SYOTE_INSTAGRAM: ${{ inputs.instagram }}
           SYOTE_WHATSAPP: ${{ inputs.whatsapp }}
+          SYOTE_YOUTUBE: ${{ inputs.youtube }}
+          SYOTE_TELEGRAM: ${{ inputs.telegram }}
           SYOTE_REPO: ${{ inputs.repo }}
         run: python3 .github/scripts/lisaa_moskeija.py

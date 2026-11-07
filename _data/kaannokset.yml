@@ -181,3 +181,8 @@ kieli_somali:       { fi: "somali", en: "Somali", ar: "الصومالية", so: 
 kieli_englanti:     { fi: "englanti", en: "English", ar: "الإنجليزية", so: "Ingiriisi" }
 kieli_turkki:       { fi: "turkki", en: "Turkish", ar: "التركية", so: "Turki" }
 ilmoita_lyhyt:      { fi: "Ilmoita lapsesi", en: "Register a child", ar: "سجّل طفلك", so: "Diiwaangeli ilmaha" }
+videot:             { fi: "Videot", en: "Videos", ar: "الفيديوهات", so: "Muuqaallo" }
+yt_tilaa:           { fi: "Tilaa", en: "Subscribe", ar: "اشترك", so: "Is-diiwaangeli" }
+telegramissa:       { fi: "Telegramissa", en: "On Telegram", ar: "على تيليجرام", so: "Telegram-ka" }
+tg_liity:           { fi: "Liity", en: "Join", ar: "انضم", so: "Ku biir" }
+tg_lue:             { fi: "Lue Telegramissa", en: "Read on Telegram", ar: "اقرأ على تيليجرام", so: "Ka akhri Telegram" }

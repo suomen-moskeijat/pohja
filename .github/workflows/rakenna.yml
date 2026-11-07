@@ -42,7 +42,11 @@ jobs:
             sivu/_data/instagram
             sivu/_data/aikataulut
             sivu/_data/kuvat
+            sivu/_data/youtube
+            sivu/_data/telegram
             sivu/tiedostot/instagram
+            sivu/tiedostot/youtube
+            sivu/tiedostot/telegram
             sivu/tiedostot/*/mawaqit
           key: haetut-${{ github.run_id }}
           restore-keys: haetut-
@@ -60,6 +64,10 @@ jobs:
         working-directory: sivu
         run: python3 .github/scripts/rukousajat.py
 
+      - name: Hae YouTube-videot ja Telegram-julkaisut
+        working-directory: sivu
+        run: python3 .github/scripts/somet.py
+
       - name: Tallenna haetut tiedot seuraavaa ajoa varten
         uses: actions/cache/save@v4
         with:
@@ -67,7 +75,11 @@ jobs:
             sivu/_data/instagram
             sivu/_data/aikataulut
             sivu/_data/kuvat
+            sivu/_data/youtube
+            sivu/_data/telegram
             sivu/tiedostot/instagram
+            sivu/tiedostot/youtube
+            sivu/tiedostot/telegram
             sivu/tiedostot/*/mawaqit
           key: haetut-${{ github.run_id }}
 
