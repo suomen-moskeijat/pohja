@@ -15,9 +15,9 @@ layout: sivu
   </div>
 </section>
 <div class="u-kehys u-sivu u-sivu--kapea">
-  <article class="u-kortti u-proosa">
+  <article class="u-kortti u-artikkeli"><div class="u-proosa">
     {% if page.kuva and page.kuva != "" %}<img src="{{ page.kuva | relative_url }}" alt="" style="width:100%;border-radius:var(--r-m);margin-bottom:16px">{% endif %}
     {{ content }}
     {% if page.ilmoittautuminen and page.ilmoittautuminen != "" %}<p><a class="u-nappi u-nappi--kulta" href="{{ page.ilmoittautuminen }}" target="_blank" rel="noopener">{% include k.html a="ilmoittaudu" %}</a></p>{% endif %}
-  </article>
+  </div></article>
 </div>

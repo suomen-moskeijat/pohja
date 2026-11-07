@@ -22,6 +22,7 @@ markdown: kramdown
 exclude:
   - README.md
   - OHJE.md
+  - MUUTOKSET-JA-TESTAUS.md
   - malli
   - testi
   - Gemfile
