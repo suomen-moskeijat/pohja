@@ -25,9 +25,9 @@ rukousajat:
 some:
   instagram: ""       # esim. https://www.instagram.com/tili/ – uusimmat julkaisut näkyvät sivulla
   facebook: ""
-  youtube: ""
+  youtube: ""          # uusimmat videot näkyvät sivulla
   tiktok: ""
-  telegram: ""
+  telegram: ""         # julkisen kanavan julkaisut näkyvät sivulla
   snapchat: ""
   x: ""
   threads: ""

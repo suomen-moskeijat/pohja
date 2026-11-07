@@ -149,9 +149,9 @@ content:
         fields:
           - { name: instagram, label: Instagram, type: string, description: "esim. https://www.instagram.com/tili/ – uusimmat julkaisut näkyvät sivulla automaattisesti" }
           - { name: facebook, label: Facebook, type: string, description: "esim. https://www.facebook.com/sivu" }
-          - { name: youtube, label: YouTube, type: string, description: "esim. https://www.youtube.com/@kanava" }
+          - { name: youtube, label: YouTube, type: string, description: "esim. https://www.youtube.com/@kanava – uusimmat videot näkyvät sivulla automaattisesti" }
           - { name: tiktok, label: TikTok, type: string, description: "esim. https://www.tiktok.com/@tili" }
-          - { name: telegram, label: Telegram, type: string, description: "esim. https://t.me/kanava" }
+          - { name: telegram, label: Telegram, type: string, description: "esim. https://t.me/kanava – julkisen kanavan julkaisut näkyvät sivulla automaattisesti" }
           - { name: snapchat, label: Snapchat, type: string, description: "esim. https://www.snapchat.com/add/tili" }
           - { name: x, label: X (Twitter), type: string, description: "esim. https://x.com/tili" }
           - { name: threads, label: Threads, type: string, description: "esim. https://www.threads.net/@tili" }

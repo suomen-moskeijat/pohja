@@ -64,7 +64,7 @@ Masjidboxissa ei tyhjennä sivua.
 | `*.html`, `palvelut/` | Sivut: etusivu, rukousajat, meistä, palvelut, lasten opetus, tapahtumat, yhteystiedot, lahjoita, tietosuoja |
 | `assets/css/sivu.css`, `assets/js/sivu.js` | Tyylit ja toiminnot (kielet, rukousajat, lomakkeet …) |
 | `_data/kaannokset.yml` | Käännökset: suomi, englanti, arabia, somali |
-| `.github/scripts/` | Haut: `instagram.py`, `rukousajat.py`; uuden moskeijan luonti: `lisaa_moskeija.py` |
+| `.github/scripts/` | Haut: `instagram.py`, `somet.py` (YouTube, Telegram), `rukousajat.py`; uuden moskeijan luonti: `lisaa_moskeija.py` |
 | `.github/workflows/rakenna.yml` | Yhteinen julkaisuajo |
 | `.github/workflows/lisaa-moskeija.yml` | Lomake: Lisää moskeija |
 | `malli/` | Mallitiedostot uuden moskeijan repoon |
