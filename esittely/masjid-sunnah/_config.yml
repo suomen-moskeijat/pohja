@@ -1,0 +1,11 @@
+# ESITTELY: kopio Masjid Sunnahin tiedoista pohjan esittelysivulle. Varsinainen sivu: suomen-moskeijat/Masjid-sunnah.
+# Masjid Sunnah Helsinki – sivun asetukset
+# Ulkoasu, rukousaikojen ja Instagramin haku: https://github.com/suomen-moskeijat/pohja
+title: Masjid Sunnah Helsinki
+description: Masjid Sunnah Helsinki, Ylä-Malmin tori 6B. Rukoukset, perjantaisaarnat suomeksi, madrasah, Akatemia ja viikkoluennot.
+moskeija: masjid-sunnah-helsinki     # tiedosto _moskeijat/masjid-sunnah-helsinki.md
+
+# Osoite: https://suomen-moskeijat.github.io/Masjid-sunnah/
+# Omalla verkkotunnuksella (esim. masjidsunnah.fi): url: "https://masjidsunnah.fi" ja baseurl: ""
+url: "https://suomen-moskeijat.github.io"
+baseurl: "/Masjid-sunnah"

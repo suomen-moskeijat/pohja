@@ -1,0 +1,78 @@
+# Esittelysivu: https://suomen-moskeijat.github.io/pohja/
+# Kokoaa kansion esittely/ esimerkkimoskeijat pohjan kanssa (kuten moskeijoiden oma
+# julkaisuajo) ja julkaisee ne tämän repon Pagesiin. Ei näy hakukoneissa.
+name: Esittelysivu
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "41 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  rakenna:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Kokoa esimerkit ja hae tiedot
+        run: |
+          for nimi in masjid-sunnah hyvinkaa; do
+            d=koottu/$nimi; mkdir -p $d
+            tar --exclude=.git --exclude=.github/workflows --exclude=malli --exclude=testi --exclude=esittely --exclude=koottu -cf - . | (cd $d && tar -xf -)
+            (cd esittely/$nimi && tar -cf - .) | (cd $d && tar -xf -)
+            cat _config.yml esittely/$nimi/_config.yml > $d/_config.yml
+            printf '\nbaseurl: "/pohja/%s"\nnoindex: true\n' "$nimi" >> $d/_config.yml
+            (cd $d && python3 .github/scripts/instagram.py; python3 .github/scripts/rukousajat.py; python3 .github/scripts/somet.py) || true
+          done
+
+      - uses: actions/configure-pages@v5
+
+      - name: Rakenna Masjid Sunnah
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./koottu/masjid-sunnah
+          destination: ./_site/masjid-sunnah
+          future: true
+
+      - name: Rakenna Hyvinkää
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./koottu/hyvinkaa
+          destination: ./_site/hyvinkaa
+          future: true
+
+      - name: Etusivu
+        run: |
+          sudo tee _site/index.html > /dev/null <<'HTML'
+          <!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+          <title>Suomen moskeijat – esimerkit</title>
+          <body style="font:17px/1.5 system-ui,sans-serif;max-width:560px;margin:40px auto;padding:0 16px;color:#3b2a1d">
+          <h1>Suomen moskeijat – esimerkkisivut</h1>
+          <p>Sama pohja, jokaiselle moskeijalle oma sivu.</p>
+          <p><a href="masjid-sunnah/">Masjid Sunnah Helsinki</a><br><small>Rukousajat Masjidboxista, Instagram, lasten opetus</small></p>
+          <p><a href="hyvinkaa/">Hyvinkää Islam Keskus</a><br><small>Lisätty Mawaqit-linkillä: rukousajat ja kuvat Mawaqitista; YouTube ja Telegram esimerkkikanavina</small></p>
+          </body>
+          HTML
+
+      - uses: actions/upload-pages-artifact@v3
+
+  julkaise:
+    needs: rakenna
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.julkaisu.outputs.page_url }}
+    steps:
+      - id: julkaisu
+        uses: actions/deploy-pages@v4

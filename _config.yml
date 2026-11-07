@@ -24,6 +24,8 @@ exclude:
   - OHJE.md
   - MUUTOKSET-JA-TESTAUS.md
   - malli
+  - esittely
+  - koottu
   - testi
   - Gemfile
   - Gemfile.lock

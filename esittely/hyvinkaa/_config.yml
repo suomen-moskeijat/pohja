@@ -1,0 +1,11 @@
+# ESITTELY: Hyvinkään esimerkki pohjan esittelysivulle (YouTube ja Telegram testikanavina).
+# Hyvinkää Islam Keskus – sivun asetukset
+# Ulkoasu, rukousaikojen ja Instagramin haku: https://github.com/suomen-moskeijat/pohja
+title: "Hyvinkää Islam Keskus"
+description: "Hyvinkää Islam Keskus, Hyvinkää. Rukousajat, tapahtumat ja toiminta."
+moskeija: hyvinkaa-islam-keskus     # tiedosto _moskeijat/hyvinkaa-islam-keskus.md
+
+# Osoite: https://suomen-moskeijat.github.io/hyvinkaa-islam-keskus/
+# Omalla verkkotunnuksella (esim. moskeija.fi): url: "https://moskeija.fi" ja baseurl: ""
+url: "https://suomen-moskeijat.github.io"
+baseurl: "/hyvinkaa-islam-keskus"

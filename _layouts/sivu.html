@@ -10,6 +10,7 @@
 <html lang="{{ site.kielet | first | default: 'fi' }}" dir="ltr">
 <head>
   <meta charset="utf-8">
+  {% if site.noindex %}<meta name="robots" content="noindex">{% endif %}
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>{% if page.title and page.title != "" %}{{ page.title }} – {% endif %}{{ m.title }}</title>
   <meta name="description" content="{{ m.esittely.fi | default: site.description | strip_html | strip_newlines | truncate: 160 }}">

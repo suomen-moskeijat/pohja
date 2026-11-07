@@ -31,7 +31,7 @@ jobs:
       - name: Kokoa pohja
         run: |
           mkdir sivu
-          (cd pohja && tar --exclude=.git --exclude=.github/workflows --exclude=malli --exclude=testi -cf - .) | (cd sivu && tar -xf -)
+          (cd pohja && tar --exclude=.git --exclude=.github/workflows --exclude=malli --exclude=testi --exclude=esittely -cf - .) | (cd sivu && tar -xf -)
 
       # Edellisen ajon haetut tiedot (Instagram, rukousajat, kuvat): jos haku nyt
       # epäonnistuu, sivulla pysyvät viimeisimmät tiedot.
