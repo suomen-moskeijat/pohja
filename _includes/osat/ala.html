@@ -11,10 +11,11 @@
       {% if _logo and _logo != "" %}<img class="u-ala__logo" src="{{ _logo | relative_url }}" alt="{{ m.title }}" width="320" height="144" loading="lazy">{% else %}<p class="u-ala__nimi">{% include nimi.html moskeija=m %}</p>{% endif %}
       {% if m.tunnuslause %}<p class="u-ala__motto">{% include kt.html arvo=m.tunnuslause %}</p>{% endif %}
       <div class="u-ala__somet">
-        {% if s.instagram and s.instagram != "" %}<a href="{{ s.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% include osat/somekuvake.html nimi="ig" %}</a>{% endif %}
-        {% if s.facebook and s.facebook != "" %}<a href="{{ s.facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{% include osat/somekuvake.html nimi="fb" %}</a>{% endif %}
-        {% if s.youtube and s.youtube != "" %}<a href="{{ s.youtube }}" target="_blank" rel="noopener" aria-label="YouTube">{% include osat/somekuvake.html nimi="yt" %}</a>{% endif %}
-        {% if s.tiktok and s.tiktok != "" %}<a href="{{ s.tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% include osat/somekuvake.html nimi="tt" %}</a>{% endif %}
+        {%- comment -%} kenttä:kuvake:nimi – vain moskeijan lisäämät näytetään {%- endcomment -%}
+        {%- assign _palvelut = "instagram:ig:Instagram,facebook:fb:Facebook,youtube:yt:YouTube,tiktok:tt:TikTok,telegram:tg:Telegram,snapchat:sc:Snapchat,x:x:X,threads:th:Threads,whatsapp_kanava:wak:WhatsApp-kanava" | split: "," -%}
+        {%- for _p in _palvelut -%}{%- assign _o = _p | split: ":" -%}{%- assign _avain = _o[0] -%}{%- assign _kuvake = _o[1] -%}{%- assign _url = s[_avain] -%}
+        {% if _url and _url != "" %}<a href="{{ _url }}" target="_blank" rel="noopener" aria-label="{{ _o[2] }}">{% include osat/somekuvake.html nimi=_kuvake %}</a>{% endif %}
+        {%- endfor %}
         {% if wa != "" %}<a href="https://wa.me/{{ wa }}" target="_blank" rel="noopener" aria-label="WhatsApp">{% include osat/somekuvake.html nimi="wa" %}</a>{% endif %}
       </div>
     </div>

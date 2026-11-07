@@ -27,6 +27,11 @@ some:
   facebook: ""
   youtube: ""
   tiktok: ""
+  telegram: ""
+  snapchat: ""
+  x: ""
+  threads: ""
+  whatsapp_kanava: ""   # https://whatsapp.com/channel/...
 
 # ===== Ulkoasu (valinnainen) =====
 teema:

@@ -130,6 +130,11 @@ some:
   facebook: ""
   youtube: ""
   tiktok: ""
+  telegram: ""
+  snapchat: ""
+  x: ""
+  threads: ""
+  whatsapp_kanava: ""
 
 teema:
   logo: ""            # ilman logoa yläpalkissa näkyy moskeijan nimi

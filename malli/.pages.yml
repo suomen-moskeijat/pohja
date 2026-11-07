@@ -145,24 +145,17 @@ content:
       - name: some
         label: Sosiaalinen media
         type: object
+        description: Lisää vain ne, joita moskeija käyttää – tyhjät eivät näy sivulla.
         fields:
-          - { name: facebook, label: Facebook-sivun osoite, type: string, description: Julkaisut ja tapahtumat näytetään sivulla automaattisesti. }
-          - { name: instagram, label: Instagram-osoite, type: string }
-          - name: instagram_julkaisut
-            label: Instagram-julkaisut ja julisteet
-            type: string
-            list: true
-            description: Liitä julkaisun osoite, esim. https://www.instagram.com/p/ABC123/
-          - { name: youtube, label: YouTube-kanavan osoite, type: string }
-          - { name: youtube_kanava_id, label: YouTube-kanavan tunnus (UC...), type: string, description: Uusimmat videot näkyvät automaattisesti. Tunnus löytyy YouTubesta kohdasta Asetukset → Lisäasetukset. }
-          - { name: tiktok, label: TikTok-profiilin osoite, type: string, description: "esim. https://www.tiktok.com/@moskeija – uusimmat videot näkyvät automaattisesti" }
-          - name: upotuskoodi
-            label: Upotuskoodi (valinnainen)
-            type: code
-            options: { format: html }
-            description: Esim. ilmaisen Instagram-widgetin (Behold, LightWidget, SnapWidget) HTML-koodi.
-
-      # --- Rukousajat ---
+          - { name: instagram, label: Instagram, type: string, description: "esim. https://www.instagram.com/tili/ – uusimmat julkaisut näkyvät sivulla automaattisesti" }
+          - { name: facebook, label: Facebook, type: string, description: "esim. https://www.facebook.com/sivu" }
+          - { name: youtube, label: YouTube, type: string, description: "esim. https://www.youtube.com/@kanava" }
+          - { name: tiktok, label: TikTok, type: string, description: "esim. https://www.tiktok.com/@tili" }
+          - { name: telegram, label: Telegram, type: string, description: "esim. https://t.me/kanava" }
+          - { name: snapchat, label: Snapchat, type: string, description: "esim. https://www.snapchat.com/add/tili" }
+          - { name: x, label: X (Twitter), type: string, description: "esim. https://x.com/tili" }
+          - { name: threads, label: Threads, type: string, description: "esim. https://www.threads.net/@tili" }
+          - { name: whatsapp_kanava, label: WhatsApp-kanava, type: string, description: "esim. https://whatsapp.com/channel/... (WhatsApp-numero lisätään yhteystietoihin)" }
       - name: rukousajat
         label: Rukousajat
         type: object
