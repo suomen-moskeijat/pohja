@@ -200,3 +200,4 @@ artikkeli_kieli:    { fi: "", en: "The article is in Finnish.", ar: "المقا�
 lisaa_aiheesta:     { fi: "Lisää samasta aiheesta", en: "More on this topic", ar: "المزيد حول هذا الموضوع", so: "Wax dheeraad ah oo mawduucan ku saabsan" }
 luonnos_palkki:     { fi: "Luonnos – sivua ei ole vielä julkaistu. Kerro korjaukset ylläpitäjälle.", en: "Draft – this site has not been published yet.", ar: "مسودة – لم يُنشر هذا الموقع بعد.", so: "Qabyo – boggan weli lama daabicin." }
 seuraava_perjantai: { fi: "Seuraava perjantai", en: "Next Friday", ar: "الجمعة القادمة", so: "Jimcaha soo socda" }
+ehdotus_palkki:     { fi: "Ehdotus – tämä ei ole moskeijan virallinen sivu. Sivu on tehty esimerkiksi moskeijalle.", en: "Proposal – this is not the mosque's official website. It was made as an example for the mosque.", ar: "اقتراح – هذا ليس الموقع الرسمي للمسجد، بل نموذج مقترح له.", so: "Soo jeedin – kani maaha bogga rasmiga ah ee masjidka. Waxaa loo sameeyay tusaale ahaan." }

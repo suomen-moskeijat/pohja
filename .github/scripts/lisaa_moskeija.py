@@ -82,7 +82,23 @@ def koordinaatit(osoite, kaupunki):
         except Exception as e:
             print(f"  koordinaatteja ei saatu ({haku}): {e}", file=sys.stderr)
         time.sleep(1)  # Nominatimin käyttöehto: enintään 1 haku sekunnissa
+    k = KAUPUNKIEN_KESKUSTAT.get(kaupunki.strip().lower())
+    if k:
+        print(f"  käytetään kaupungin keskustan sijaintia ({kaupunki}) – tarkista kartalta", file=sys.stderr)
+        return k
     return 0, 0
+
+
+# Varalla, jos osoitehaku ei onnistu (rukousajat lasketaan kaupungin mukaan)
+KAUPUNKIEN_KESKUSTAT = {
+    "helsinki": (60.1699, 24.9384), "espoo": (60.2055, 24.6559), "vantaa": (60.2934, 25.0378),
+    "tampere": (61.4978, 23.761), "turku": (60.4518, 22.2666), "oulu": (65.0121, 25.4651),
+    "jyväskylä": (62.2426, 25.7473), "kuopio": (62.8924, 27.677), "lahti": (60.9827, 25.6612),
+    "vaasa": (63.0951, 21.6165), "joensuu": (62.601, 29.7636), "seinäjoki": (62.7903, 22.8403),
+    "hyvinkää": (60.6305, 24.8581), "pori": (61.4851, 21.7974), "lappeenranta": (61.0587, 28.1887),
+    "kotka": (60.4664, 26.9458), "hämeenlinna": (60.9959, 24.4643), "rovaniemi": (66.5039, 25.7294),
+    "kouvola": (60.8681, 26.7042), "järvenpää": (60.4737, 25.0899), "kerava": (60.4034, 25.105),
+}
 
 
 # ------------------------------------------------------------- vanha nettisivu
@@ -156,7 +172,7 @@ def tiedostot(t, repo, org):
                         f"meista: {{ fi: {yaml_str(t['meista'])} }}\n")
     md = f"""---
 # Lisätty automaattisesti. Täydennä ja korjaa tietoja Pages CMS:ssä (https://app.pagescms.org).
-luonnos: true        # uusi sivu on luonnos (palkki ylhäällä, ei Googlessa); kun moskeija hyväksyy → false
+{"ehdotus: true        # esimerkkisivu: moskeija ei ole vielä mukana (palkki: Ehdotus)" + chr(10) if t.get("ehdotus") else ""}luonnos: true        # uusi sivu on luonnos (palkki ylhäällä, ei Googlessa); kun moskeija hyväksyy → false
 title: {yaml_str(t['nimi'])}
 slug: {t['slug']}
 kaupunki: {yaml_str(t['kaupunki'])}
@@ -289,9 +305,10 @@ def kutsu_muokkaajat(tunnukset, repo, org, avain):
 
 def main():
     p = argparse.ArgumentParser()
-    for k in ["nimi", "kaupunki", "mawaqit", "masjidbox", "osoite", "instagram", "whatsapp", "youtube", "telegram", "repo", "muokkaajat", "nettisivu"]:
+    for k in ["nimi", "kaupunki", "mawaqit", "masjidbox", "osoite", "instagram", "whatsapp", "youtube", "telegram", "repo", "muokkaajat", "nettisivu", "puhelin", "sahkoposti", "facebook", "linkki"]:
         p.add_argument("--" + k, default=os.environ.get("SYOTE_" + k.upper(), ""))
     p.add_argument("--kuiva", help="kirjoita tiedostot tähän kansioon, älä luo mitään GitHubiin")
+    p.add_argument("--ehdotus", action="store_true", help="esimerkkisivu, josta moskeija ei ole vielä päättänyt (palkki: Ehdotus)")
     p.add_argument("--vain-muokkaajat", action="store_true", help="kutsu muokkaajat olemassa olevaan repoon (--repo)")
     a = p.parse_args()
     if a.vain_muokkaajat:
@@ -322,12 +339,17 @@ def main():
          "instagram": a.instagram.strip(), "whatsapp": a.whatsapp.strip(),
          "youtube": a.youtube.strip(), "telegram": a.telegram.strip(), "puhelin": "", "sahkoposti": "",
          "nettisivu": "", "juma": "", "lat": 0, "lon": 0, "lahde": "", "tunnus": "",
-         "some": {}, "logo": "", "teema": {}, "esittely": "", "meista": "", "galleria": [], "lisatiedostot": {}}
+         "some": {}, "logo": "", "teema": {}, "esittely": "", "meista": "", "galleria": [], "lisatiedostot": {},
+         "ehdotus": a.ehdotus}
+    t["puhelin"], t["sahkoposti"] = a.puhelin.strip(), a.sahkoposti.strip()
+    t["nettisivu"] = a.linkki.strip()
     for k in ("osoite", "puhelin", "sahkoposti", "whatsapp", "juma", "nettisivu", "esittely", "meista"):
         t[k] = t[k] or tuotu.get(k, "")
     for k in ("instagram", "youtube", "telegram"):
         t[k] = t[k] or tuotu.get("some", {}).get(k, "")
     t["some"] = tuotu.get("some", {})
+    if a.facebook.strip():
+        t["some"]["facebook"] = a.facebook.strip()
     if a.mawaqit:
         t["lahde"], t["tunnus"] = "mawaqit", tunnus(a.mawaqit, "mawaqit")
         try:

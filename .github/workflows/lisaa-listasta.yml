@@ -1,0 +1,25 @@
+# Luo ehdotussivut moskeijoille listasta moskeijat.csv (ne, joilla ei vielä ole sivua).
+# Ehdotus = esimerkkisivu, josta moskeija ei ole vielä päättänyt: keltainen palkki, ei Googlessa.
+name: Luo ehdotussivut listasta
+
+on:
+  workflow_dispatch:
+    inputs:
+      vain:
+        description: "Vain nämä repot (pilkulla eroteltuina). Tyhjä = kaikki listan moskeijat, joilla ei vielä ole sivua."
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  luo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Luo sivut
+        env:
+          MOSKEIJA_AVAIN: ${{ secrets.MOSKEIJA_AVAIN }}
+          ORG: ${{ github.repository_owner }}
+          SYOTE_VAIN: ${{ inputs.vain }}
+        run: python3 .github/scripts/lisaa_listasta.py

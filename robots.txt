@@ -4,5 +4,5 @@ permalink: /robots.txt
 ---
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 User-agent: *
-{% if site.noindex or m.luonnos %}Disallow: /{% else %}Allow: /{% endif %}
+{% if site.noindex or m.luonnos or m.ehdotus %}Disallow: /{% else %}Allow: /{% endif %}
 Sitemap: {{ site.url }}{{ '/sitemap.xml' | relative_url }}

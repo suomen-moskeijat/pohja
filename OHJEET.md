@@ -2,8 +2,64 @@
 
 Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/pohja/ohjeet/**
 
-- **[Osa 1: Moskeijan muokkaajalle](#osa-1)**: sivun päivittäminen selaimessa ilman koodia.
-- **[Osa 2: Ylläpitäjälle](#osa-2)**: uudet moskeijat, oikeudet, automaatiot ja vianetsintä.
+- **[Missä mikin on](#kartta)**: linkit ja kokonaisuus yhdellä silmäyksellä
+- **[Tilanteet: mitä teen, kun…](#tilanteet)**: nopeat vastaukset
+- **[Osa 1: Moskeijan muokkaajalle](#osa-1)**: sivun päivittäminen selaimessa ilman koodia
+- **[Osa 2: Ylläpitäjälle](#osa-2)**: uudet moskeijat, oikeudet, automaatiot ja vianetsintä
+
+---
+
+<a id="kartta"></a>
+
+## Missä mikin on
+
+| Mikä | Osoite | Kenelle |
+|---|---|---|
+| **Kaikki moskeijat ja niiden tila** | https://suomen-moskeijat.github.io/pohja/ | kaikille |
+| **Nämä ohjeet** | https://suomen-moskeijat.github.io/pohja/ohjeet/ | kaikille |
+| **Moskeijan sivu** | `https://suomen-moskeijat.github.io/<moskeija>/` (tai oma verkkotunnus) | kävijöille |
+| **Sivun muokkaus** | https://app.pagescms.org → valitse moskeija | moskeijan muokkaajille |
+| **Uusi moskeija, muokkaajat, ehdotussivut** | https://github.com/suomen-moskeijat/pohja/actions | ylläpitäjille |
+| **Moskeijalista** | `moskeijat.csv` pohja-repossa | ylläpitäjille |
+| **Esimerkkisivut** | https://suomen-moskeijat.github.io/pohja/masjid-sunnah/ ja `/pohja/hyvinkaa/` | esittelyyn |
+
+**Miten kokonaisuus toimii:**
+
+- **Pohja** (`suomen-moskeijat/pohja`) on yhteinen "moottori": ulkoasu, sivut, rukousaikojen haku,
+  automaatiot, hakemisto ja ohjeet. Pohja on aina olemassa. Kun sitä parannetaan, kaikki moskeijasivut
+  päivittyvät tunnin sisällä.
+- **Jokainen moskeija on oma reponsa** (esim. `suomen-moskeijat/hyvinkaa-islam-keskus`), jossa on vain
+  sen omat tiedot: tekstit, kuvat, tapahtumat ja artikkelit. Moskeijan muokkaajat pääsevät vain omaansa.
+- **Sivun tila** näkyy palkkina sivun yläreunassa ja hakemistossa:
+
+| Tila | Palkki sivulla | Google | Tarkoitus |
+|---|---|---|---|
+| **Ehdotus** | "Ehdotus – tämä ei ole moskeijan virallinen sivu" | ei näy | esimerkkisivu, josta moskeija ei ole vielä päättänyt |
+| **Luonnos** | "Luonnos – sivua ei ole vielä julkaistu" | ei näy | moskeija on mukana ja tarkistaa sivua |
+| **Julkaistu** | ei palkkia | näkyy | valmis sivu |
+
+---
+
+<a id="tilanteet"></a>
+
+## Tilanteet: mitä teen, kun…
+
+| Tilanne | Kuka | Mitä tehdään |
+|---|---|---|
+| Haluan näyttää moskeijalle, millainen sivu heille tulisi | ylläpitäjä | Katso hakemistosta, onko heillä ehdotussivu. Jos ei, lisää heidät `moskeijat.csv`:hen ja aja **Luo ehdotussivut listasta** (Osa 2, kohta 3a). Lähetä linkki. |
+| Moskeija haluaa lähteä mukaan | ylläpitäjä | 1) Pages CMS → Moskeijat → poista **Ehdotus**. 2) Jos heillä on vanha nettisivu: kysy lupa ja tuo tiedot (Osa 2, kohta 3b). 3) Kysy muokkaajien GitHub-tunnukset → **Lisää muokkaaja**. Sivu on nyt luonnos. |
+| Moskeija on tarkistanut sivun ja hyväksyy sen | muokkaaja tai ylläpitäjä | Pages CMS → Moskeijat → poista **Luonnos** → Save. Sivu on julkinen noin 2 minuutissa. |
+| Moskeija ei halua sivua | ylläpitäjä | Arkistoi repo (repo → Settings → Archive) tai poista se, ja merkitse `moskeijat.csv`:hen tila `ei`. Sivu poistuu hakemistosta. |
+| Uusi moskeija, joka ei ole listalla | ylläpitäjä | **Lisää moskeija** -lomake (nimi, kaupunki, Mawaqit- tai Masjidbox-linkki, nettisivu luvalla). |
+| Moskeija haluaa muokata tekstejä tai lisätä tapahtuman | muokkaaja | Pages CMS (Osa 1). |
+| Uusi henkilö haluaa muokkausoikeuden | ylläpitäjä | GitHub-tunnus → Actions → **Lisää muokkaaja** (repo + tunnus). |
+| Henkilö lopettaa | ylläpitäjä | moskeijan repo → Settings → Collaborators → Remove. |
+| Rukousajat ovat väärin | muokkaaja | Tarkista Masjidbox tai Mawaqit. Jos moskeija ei käytä kumpaakaan, ylläpitäjä valitsee lähteen (Osa 2, kohta 7). |
+| Moskeija ottaa Mawaqitin tai Masjidboxin käyttöön | ylläpitäjä | Pages CMS → Moskeijat → Rukousajat: lähde ja tunnus. |
+| Moskeija haluaa oman osoitteen (esim. moskeija.fi) | ylläpitäjä | Osa 2, kohta 8. Tee vasta, kun sivu on julkaistu. |
+| Sivu ei päivity tai näyttää rikkinäiseltä | ylläpitäjä | Osa 2, kohta 10 (Actions-loki). |
+| Haluan muuttaa ulkoasua kaikille | ylläpitäjä | Muutos pohjaan → tarkista esittelysivulta → kaikki päivittyvät tunnin sisällä. |
+| Avain `MOSKEIJA_AVAIN` vanhenee | ylläpitäjä | Tee uusi (Osa 2, kohta 2) ja korvaa salaisuus. |
 
 ---
 
@@ -186,7 +242,7 @@ suomen-moskeijat/<moskeija>       ← yhden moskeijan tiedot + julkaisu.yml, jok
 
 ### 3. Uuden moskeijan prosessi: luonnos → hyväksyntä → julkinen
 
-1. **Lisää moskeija** (alla). Sivu syntyy **luonnoksena**: ylhäällä on keltainen palkki
+1. **Lisää moskeija** (kohta 3c) tai poista ehdotussivulta Ehdotus-valinta. Sivu on nyt **luonnos**: ylhäällä on keltainen palkki
    "Luonnos – sivua ei ole vielä julkaistu", eikä Google näytä sivua.
 2. **Tarkista** sivu itse tarkistuslistalla (alla).
 3. **Lähetä linkki moskeijalle**, esim. `https://suomen-moskeijat.github.io/<moskeija>/`.
@@ -198,7 +254,27 @@ suomen-moskeijat/<moskeija>       ← yhden moskeijan tiedot + julkaisu.yml, jok
 > Luonnos ei ole salainen: kuka tahansa, jolla on linkki, voi avata sen. Se ei kuitenkaan näy
 > Googlessa eikä missään listassa.
 
-### 3b. Uuden moskeijan lisääminen (noin 2 minuuttia)
+### 3a. Ehdotussivut listasta (moskeijat, jotka eivät vielä ole mukana)
+
+1. Lisää moskeija tiedostoon **`moskeijat.csv`** (pohja-repo → tiedosto → kynä → muokkaa → *Commit*).
+   Sarakkeet: nimi, kaupunki, osoite, puhelin, sähköposti, nettisivu, facebook, **repo** (sivun osoite,
+   esim. `masjid-al-nuur`), **tila** (tyhjä = tee ehdotus, `ei` = ei sivua), lähde, huomautus.
+2. **Actions → Luo ehdotussivut listasta → Run workflow.** Kenttä *vain* tyhjäksi = kaikki listan moskeijat,
+   joilla ei vielä ole sivua. Voit myös kirjoittaa yhden repon nimen.
+3. Sivut syntyvät **ehdotuksina**, ja niissä on vain listan julkiset tiedot: nimi, osoite, yhteystiedot ja linkit.
+   Rukousajat tulevat rukousajat.fi:stä (Helsinki, Espoo ja Vantaa) tai lasketaan sijainnista.
+4. Hakemisto https://suomen-moskeijat.github.io/pohja/ päivittyy. Lähetä moskeijalle linkki heidän sivuunsa.
+
+> Moskeijan omaa nettisivua (logo, kuvat, tekstit) **ei** tuoda ehdotukseen. Se tuodaan vasta, kun moskeija
+> on lähtenyt mukaan ja antanut luvan (kohta 3b).
+
+### 3b. Mukaan lähtevän moskeijan tiedot heidän vanhalta sivultaan
+
+Kun moskeija lähtee mukaan ja antaa luvan, voit tuoda heidän vanhalta sivultaan logon, kuvat ja tekstit:
+- **Uusi repo:** Lisää moskeija -lomake ja kenttä **nettisivu**.
+- **Ehdotussivu on jo olemassa:** täydennä tiedot Pages CMS:ssä, tai pyydä Claudea tuomaan ne (`tuo_sivusto.py`).
+
+### 3c. Uuden moskeijan lisääminen lomakkeella (noin 2 minuuttia)
 
 **pohja → Actions → Lisää moskeija → Run workflow**
 

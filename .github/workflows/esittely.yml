@@ -64,19 +64,11 @@ jobs:
           destination: ./_site/hyvinkaa
           future: true
 
-      - name: Etusivu
-        run: |
-          sudo tee _site/index.html > /dev/null <<'HTML'
-          <!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
-          <title>Suomen moskeijat – esimerkit</title>
-          <body style="font:17px/1.5 system-ui,sans-serif;max-width:560px;margin:40px auto;padding:0 16px;color:#3b2a1d">
-          <h1>Suomen moskeijat – esimerkkisivut</h1>
-          <p>Sama pohja, jokaiselle moskeijalle oma sivu.</p>
-          <p><a href="masjid-sunnah/">Masjid Sunnah Helsinki</a><br><small>Rukousajat Masjidboxista, Instagram, lasten opetus</small></p>
-          <p><a href="ohjeet/"><b>Ohjeet</b></a><br><small>Muokkaajille ja ylläpitäjille: kaikki ohjeet yhdessä paikassa</small></p>
-          <p><a href="hyvinkaa/">Hyvinkää Islam Keskus</a><br><small>Lisätty Mawaqit-linkillä: rukousajat ja kuvat Mawaqitista; YouTube ja Telegram esimerkkikanavina</small></p>
-          </body>
-          HTML
+      - name: Etusivu (kaikki moskeijat ja niiden tila)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ORG: ${{ github.repository_owner }}
+        run: python3 .github/scripts/hakemisto.py index.html && sudo cp index.html _site/index.html
 
       - uses: actions/upload-pages-artifact@v3
 
