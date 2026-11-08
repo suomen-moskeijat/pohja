@@ -9,6 +9,8 @@ Tiedot täydennetään automaattisesti:
 - Mawaqit: nimi, koordinaatit, Jumuah; ajat, iqamah ja kuvat haetaan julkaisussa.
 - Masjidbox: nimi ja osoite; ajat ja iqamah haetaan julkaisussa.
 - Muuten koordinaatit osoitteesta (OpenStreetMap Nominatim).
+- Nykyinen nettisivu (--nettisivu): logo, värit, yhteystiedot, somet, kuvat, Meistä-teksti,
+  WordPress-sivut ja -kirjoitukset (tuo_sivusto.py). Tarkistetaan Pages CMS:ssä.
 Ympäristömuuttujat GitHubissa: MOSKEIJA_AVAIN (organisaation avain), ORG.
 """
 import argparse
@@ -83,6 +85,48 @@ def koordinaatit(osoite, kaupunki):
     return 0, 0
 
 
+# ------------------------------------------------------------- vanha nettisivu
+def tuo_nettisivu(osoite):
+    """Hakee tiedot moskeijan nykyiseltä sivulta (tuo_sivusto.py). Virhe ei estä sivun luomista."""
+    import tempfile
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    try:
+        import tuo_sivusto
+        kansio = tempfile.mkdtemp(prefix="tuonti-")
+        d = tuo_sivusto.tuo(osoite.strip(), kansio)
+        d["_kansio"] = kansio
+        print(f"Nettisivu {osoite}: nimi {d.get('nimi')!r}, osoite {d.get('osoite')!r}, sähköposti {d.get('sahkoposti')!r}, "
+              f"puhelin {d.get('puhelin')!r}, somet {list(d.get('some', {}))}, kuvia {len(d.get('kuvat', []))}, "
+              f"omia sivuja {len(d.get('omat_sivut', []))}, artikkeleita {len(d.get('artikkelit', []))}")
+        return d
+    except Exception as e:
+        print(f"Nettisivua ei voitu lukea ({osoite}): {e}", file=sys.stderr)
+        return {}
+
+
+def lisaa_tuodut_tiedostot(t, d):
+    """Logo, kuvat, omat sivut ja artikkelit vanhalta sivulta uuden repon tiedostoiksi."""
+    kansio, slug = d.get("_kansio"), t["slug"]
+    lisat = t["lisatiedostot"]
+    if d.get("logo") and kansio:
+        polku = f"tiedostot/{slug}/{d['logo']}"
+        lisat[polku] = open(os.path.join(kansio, d["logo"]), "rb").read()
+        t["logo"] = "/" + polku
+        t["teema"] = d.get("teema") or {}
+    for nimi in d.get("kuvat", []):
+        polku = f"tiedostot/{slug}/{nimi}"
+        lisat[polku] = open(os.path.join(kansio, nimi), "rb").read()
+        t["galleria"].append("/" + polku)
+    for i, s in enumerate(d.get("omat_sivut", [])):
+        lisat[f"_sivut/{s['slug']}.md"] = (
+            f"---\ntitle: {yaml_str(s['nimi'])}\nvalikossa: {'true' if i < 2 else 'false'}\njarjestys: {i + 1}\n"
+            f"# Tuotu vanhalta sivulta: {s['url']} – tarkista\n---\n{{% raw %}}\n{s['html']}\n{{% endraw %}}\n")
+    for a in d.get("artikkelit", []):
+        lisat[f"_artikkelit/{a['paiva']}-{a['slug'][:60]}.md"] = (
+            f"---\ntitle: {yaml_str(a['nimi'])}\npaiva: {a['paiva']}\nkuvaus: {yaml_str(a['kuvaus'])}\n"
+            f"# Tuotu vanhalta sivulta: {a['url']}\n---\n{{% raw %}}\n{a['html']}\n{{% endraw %}}\n")
+
+
 # ------------------------------------------------------------- tiedostot
 def yaml_str(s):
     return json.dumps(s or "", ensure_ascii=False)
@@ -104,6 +148,12 @@ def tiedostot(t, repo, org):
     lahde_kommentti = {"mawaqit": "Mawaqitista automaattisesti (adhan, iqamah, Jumuah, kuvat)",
                        "masjidbox": "Masjidboxista automaattisesti (adhan, iqamah, Jumuah)",
                        "": "rukousajat.fi (Helsinki/Espoo/Vantaa) tai laskenta sijainnista"}[t["lahde"]]
+    meista_lohko = ""
+    if t.get("meista"):
+        lyhyt = t["meista"].split("\n\n")[0]
+        meista_lohko = (f"\n# Tuotu vanhalta sivulta ({t['nettisivu']}) – tarkista ja muokkaa\n"
+                        f"meista_lyhyt: {{ fi: {yaml_str(lyhyt[:600])} }}\n"
+                        f"meista: {{ fi: {yaml_str(t['meista'])} }}\n")
     md = f"""---
 # Lisätty automaattisesti. Täydennä ja korjaa tietoja Pages CMS:ssä (https://app.pagescms.org).
 title: {yaml_str(t['nimi'])}
@@ -127,26 +177,26 @@ rukousajat:
 
 some:
   instagram: {yaml_str(t['instagram'])}
-  facebook: ""
+  facebook: {yaml_str(t['some'].get('facebook'))}
   youtube: {yaml_str(t['youtube'])}      # uusimmat videot näkyvät sivulla
-  tiktok: ""
+  tiktok: {yaml_str(t['some'].get('tiktok'))}
   telegram: {yaml_str(t['telegram'])}     # julkisen kanavan julkaisut näkyvät sivulla
-  snapchat: ""
-  x: ""
+  snapchat: {yaml_str(t['some'].get('snapchat'))}
+  x: {yaml_str(t['some'].get('x'))}
   threads: ""
-  whatsapp_kanava: ""
+  whatsapp_kanava: {yaml_str(t['some'].get('whatsapp_kanava'))}
 
 teema:
-  logo: ""            # ilman logoa yläpalkissa näkyy moskeijan nimi
+  logo: {yaml_str(t['logo'])}            # ilman logoa yläpalkissa näkyy moskeijan nimi
   hero: vaalea
-  # Omat värit (tyhjä = pohjan kulta-ruskea), esim. paa "#123d30", korostus "#5fae8a", korostus_vaalea "#e7f4ee"
-  paa: ""
-  korostus: ""
-  korostus_vaalea: ""
+  # Omat värit (tyhjä = pohjan kulta-ruskea){' – arvattu logosta, tarkista' if t['teema'] else ''}
+  paa: {yaml_str(t['teema'].get('paa'))}
+  korostus: {yaml_str(t['teema'].get('korostus'))}
+  korostus_vaalea: {yaml_str(t['teema'].get('korostus_vaalea'))}
 
 hero_tunniste: {{ fi: {yaml_str(t['kaupunki'])} }}
-esittely: {{ fi: "Rukouksen, oppimisen ja yhteisön paikka." }}
-
+esittely: {{ fi: {yaml_str(t['esittely'] or "Rukouksen, oppimisen ja yhteisön paikka.")} }}
+{meista_lohko}
 # Etusivun yläosa: tausta kuvio | kuva | vari, napit (enintään 2):
 # lapsi, toiminta, rukousajat, lahjoita, yhteys, oma tai oman sivun nimi
 alku:
@@ -160,7 +210,7 @@ artikkelit:
 
 # Valikosta piilotettavat sivut, esim. [tapahtumat]. Lahjoita näkyy, kun lahjoitustiedot on lisätty.
 valikko_piilota: []
-galleria: []
+galleria: {json.dumps(t['galleria'], ensure_ascii=False)}
 ---
 """
     readme = lue("README.md").replace("MOSKEIJAN NIMI", t["nimi"]).replace("SLUG", t["slug"]) \
@@ -173,6 +223,7 @@ galleria: []
         "_tapahtumat/.gitkeep": "",
         "_sivut/.gitkeep": "",
         "tiedostot/.gitkeep": "",
+        **t.get("lisatiedostot", {}),
         ".github/workflows/julkaisu.yml": lue(".github/workflows/julkaisu.yml"),  # viimeisenä: käynnistää julkaisun
     }
 
@@ -210,7 +261,8 @@ def julkaise(t, repo, org, avain, tiedot):
         nykyinen = {}
         if polku == "README.md":
             _, nykyinen = api("GET", f"/repos/{org}/{repo}/contents/README.md", avain=avain, sallitut=(404,))
-        data = {"message": f"Lisää {polku}", "content": base64.b64encode(sisalto.encode()).decode()}
+        tavut = sisalto if isinstance(sisalto, bytes) else sisalto.encode()
+        data = {"message": f"Lisää {polku}", "content": base64.b64encode(tavut).decode()}
         if nykyinen.get("sha"):
             data["sha"] = nykyinen["sha"]
         api("PUT", f"/repos/{org}/{repo}/contents/{polku}", data, avain)
@@ -236,7 +288,7 @@ def kutsu_muokkaajat(tunnukset, repo, org, avain):
 
 def main():
     p = argparse.ArgumentParser()
-    for k in ["nimi", "kaupunki", "mawaqit", "masjidbox", "osoite", "instagram", "whatsapp", "youtube", "telegram", "repo", "muokkaajat"]:
+    for k in ["nimi", "kaupunki", "mawaqit", "masjidbox", "osoite", "instagram", "whatsapp", "youtube", "telegram", "repo", "muokkaajat", "nettisivu"]:
         p.add_argument("--" + k, default=os.environ.get("SYOTE_" + k.upper(), ""))
     p.add_argument("--kuiva", help="kirjoita tiedostot tähän kansioon, älä luo mitään GitHubiin")
     p.add_argument("--vain-muokkaajat", action="store_true", help="kutsu muokkaajat olemassa olevaan repoon (--repo)")
@@ -255,15 +307,26 @@ def main():
         if os.environ.get("GITHUB_STEP_SUMMARY"):
             open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8").write(viesti)
         return
-    if not a.nimi.strip() and not (a.mawaqit or a.masjidbox):
-        raise SystemExit("Anna vähintään moskeijan nimi (tai Mawaqit/Masjidbox-linkki).")
+    if not a.nimi.strip() and not (a.mawaqit or a.masjidbox or a.nettisivu):
+        raise SystemExit("Anna vähintään moskeijan nimi (tai Mawaqit-, Masjidbox- tai nettisivun linkki).")
+    tuotu = tuo_nettisivu(a.nettisivu) if a.nettisivu.strip() else {}
+    if not a.kaupunki.strip() and tuotu.get("osoite"):
+        a.kaupunki = tuotu["osoite"].split()[-1]  # "Katu 1, 05800 Hyvinkää" → Hyvinkää
+    if not a.nimi.strip() and tuotu.get("nimi"):
+        a.nimi = tuotu["nimi"]
     if not a.kaupunki.strip():
         raise SystemExit("Anna kaupunki.")
 
     t = {"nimi": a.nimi.strip(), "kaupunki": a.kaupunki.strip(), "osoite": a.osoite.strip(),
          "instagram": a.instagram.strip(), "whatsapp": a.whatsapp.strip(),
          "youtube": a.youtube.strip(), "telegram": a.telegram.strip(), "puhelin": "", "sahkoposti": "",
-         "nettisivu": "", "juma": "", "lat": 0, "lon": 0, "lahde": "", "tunnus": ""}
+         "nettisivu": "", "juma": "", "lat": 0, "lon": 0, "lahde": "", "tunnus": "",
+         "some": {}, "logo": "", "teema": {}, "esittely": "", "meista": "", "galleria": [], "lisatiedostot": {}}
+    for k in ("osoite", "puhelin", "sahkoposti", "whatsapp", "juma", "nettisivu", "esittely", "meista"):
+        t[k] = t[k] or tuotu.get(k, "")
+    for k in ("instagram", "youtube", "telegram"):
+        t[k] = t[k] or tuotu.get("some", {}).get(k, "")
+    t["some"] = tuotu.get("some", {})
     if a.mawaqit:
         t["lahde"], t["tunnus"] = "mawaqit", tunnus(a.mawaqit, "mawaqit")
         try:
@@ -288,6 +351,8 @@ def main():
         t["lat"], t["lon"] = koordinaatit(t["osoite"], t["kaupunki"])
         print(f"Koordinaatit osoitteesta: {t['lat']}, {t['lon']}")
     t["slug"] = slugiksi(t["nimi"])
+    if tuotu:
+        lisaa_tuodut_tiedostot(t, tuotu)
     repo = slugiksi(a.repo) if a.repo.strip() else t["slug"]
     org = os.environ.get("ORG", "suomen-moskeijat")
     tiedot = tiedostot(t, repo, org)
@@ -296,7 +361,7 @@ def main():
         for polku, sisalto in tiedot.items():
             kohde = os.path.join(a.kuiva, polku)
             os.makedirs(os.path.dirname(kohde), exist_ok=True)
-            open(kohde, "w", encoding="utf-8").write(sisalto)
+            open(kohde, "wb").write(sisalto if isinstance(sisalto, bytes) else sisalto.encode())
         print(f"Kuivaharjoitus: {len(tiedot)} tiedostoa kansioon {a.kuiva} (repo olisi {org}/{repo})")
         return
     avain = os.environ.get("MOSKEIJA_AVAIN")

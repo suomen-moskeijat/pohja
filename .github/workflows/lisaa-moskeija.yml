@@ -7,11 +7,11 @@ on:
   workflow_dispatch:
     inputs:
       nimi:
-        description: "Moskeijan nimi (voi jättää tyhjäksi, jos Mawaqit/Masjidbox on annettu)"
+        description: "Moskeijan nimi (voi jättää tyhjäksi, jos Mawaqit, Masjidbox tai nettisivu on annettu)"
         required: false
       kaupunki:
-        description: "Kaupunki"
-        required: true
+        description: "Kaupunki (voi jättää tyhjäksi, jos nettisivulla on osoite)"
+        required: false
       mawaqit:
         description: "Mawaqit-linkki tai upotuskoodi (valinnainen)"
         required: false
@@ -36,6 +36,9 @@ on:
       repo:
         description: "Repon nimi (valinnainen; oletus nimestä)"
         required: false
+      nettisivu:
+        description: "Moskeijan nykyinen nettisivu (valinnainen). Sieltä haetaan logo, värit, yhteystiedot, somet, kuvat, Meistä-teksti ja sivut."
+        required: false
       muokkaajat:
         description: "Muokkaajien GitHub-tunnukset pilkulla eroteltuina (valinnainen). He saavat oikeuden vain tämän moskeijan sivuun."
         required: false
@@ -45,6 +48,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Kuvankäsittely (logon värit, kuvien pienennys)
+        run: pip install --quiet pillow || true
       - name: Luo moskeijan sivu
         env:
           MOSKEIJA_AVAIN: ${{ secrets.MOSKEIJA_AVAIN }}
@@ -60,4 +65,5 @@ jobs:
           SYOTE_TELEGRAM: ${{ inputs.telegram }}
           SYOTE_REPO: ${{ inputs.repo }}
           SYOTE_MUOKKAAJAT: ${{ inputs.muokkaajat }}
+          SYOTE_NETTISIVU: ${{ inputs.nettisivu }}
         run: python3 .github/scripts/lisaa_moskeija.py
