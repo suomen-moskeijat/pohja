@@ -1,0 +1,7 @@
+---
+layout: null
+permalink: /robots.txt
+---
+User-agent: *
+{% if site.noindex %}Disallow: /{% else %}Allow: /{% endif %}
+Sitemap: {{ site.url }}{{ '/sitemap.xml' | relative_url }}

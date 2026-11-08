@@ -12,8 +12,7 @@
   <meta charset="utf-8">
   {% if site.noindex %}<meta name="robots" content="noindex">{% endif %}
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>{% if page.title and page.title != "" %}{{ page.title }} – {% endif %}{{ m.title }}</title>
-  <meta name="description" content="{{ m.esittely.fi | default: site.description | strip_html | strip_newlines | truncate: 160 }}">
+{% include seo.html moskeija=m %}
   <meta name="theme-color" content="{{ t.paa_tumma | default: '#2b1a0e' }}">
     <script>
     (function () {

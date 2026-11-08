@@ -1,0 +1,95 @@
+{%- comment -%}
+  Hakukoneet ja jakaminen: otsikko, kuvaus, canonical, Open Graph ja schema.org-tiedot.
+  Yhteisistä lähteistä tuotujen artikkelien canonical osoittaa alkuperäiseen (ei kaksoissisältöä).
+{%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- assign kotisivu = site.url | append: site.baseurl | append: "/" -%}
+{%- assign osoite_nyt = site.url | append: site.baseurl | append: page.url -%}
+{%- assign kanoninen = page.lahde_url | default: osoite_nyt -%}
+{%- comment -%} Otsikko {%- endcomment -%}
+{%- if page.url == "/" -%}
+  {%- capture otsikko -%}{{ m.title }} – moskeija, {{ m.kaupunki }}{%- endcapture -%}
+{%- elsif page.url == "/rukousajat/" -%}
+  {%- capture otsikko -%}Rukousajat {{ m.kaupunki }} – {{ m.title }}{%- endcapture -%}
+{%- elsif page.title and page.title != "" -%}
+  {%- capture otsikko -%}{{ page.title }} – {{ m.title }}{%- endcapture -%}
+{%- else -%}
+  {%- assign otsikko = m.title -%}
+{%- endif -%}
+{%- comment -%} Kuvaus {%- endcomment -%}
+{%- if page.kuvaus and page.kuvaus != "" -%}{%- assign kuvaus = page.kuvaus -%}
+{%- elsif page.collection == "tapahtumat" -%}{%- assign kuvaus = page.content | strip_html | strip_newlines | default: page.title -%}
+{%- elsif page.johdanto -%}{%- assign kuvaus = page.johdanto.fi | default: page.johdanto -%}
+{%- elsif page.url == "/rukousajat/" -%}{%- capture kuvaus -%}Rukousajat {{ m.kaupunki }}: päivän fajr-, dhuhr-, asr-, maghrib- ja isha-ajat, iqamah ja perjantairukous. {{ m.title }}, {{ m.osoite }}.{%- endcapture -%}
+{%- elsif page.url == "/artikkelit/" -%}{%- assign kuvaus = site.data.kaannokset.artikkelit_johdanto.fi -%}
+{%- else -%}{%- assign kuvaus = m.esittely.fi | default: m.esittely | default: site.description -%}{%- endif -%}
+{%- assign kuvaus = kuvaus | strip_html | strip_newlines | normalize_whitespace | truncate: 160 -%}
+{%- comment -%} Jakokuva {%- endcomment -%}
+{%- assign kuva = page.kuva | default: m.alku.kuva -%}
+{%- if kuva == nil or kuva == "" -%}{%- assign kuva = m.galleria | first -%}{%- endif -%}
+{%- if kuva == nil or kuva == "" -%}{%- assign kuva = site.data.kuvat[m.slug].kuvat | first -%}{%- endif -%}
+{%- if kuva == nil or kuva == "" -%}{%- assign kuva = m.teema.logo -%}{%- endif -%}
+{%- if kuva and kuva != "" -%}{%- assign _alku = kuva | slice: 0, 4 -%}{%- if _alku != "http" -%}{%- assign kuva = site.url | append: site.baseurl | append: kuva -%}{%- endif -%}{%- endif -%}
+  <title>{{ otsikko }}</title>
+  <meta name="description" content="{{ kuvaus | escape }}">
+  <link rel="canonical" href="{{ kanoninen }}">
+  <meta property="og:type" content="{% if page.collection == 'artikkelit' %}article{% else %}website{% endif %}">
+  <meta property="og:site_name" content="{{ m.title | escape }}">
+  <meta property="og:title" content="{{ otsikko | escape }}">
+  <meta property="og:description" content="{{ kuvaus | escape }}">
+  <meta property="og:url" content="{{ osoite_nyt }}">
+  <meta property="og:locale" content="fi_FI">
+  {% if kuva and kuva != "" %}<meta property="og:image" content="{{ kuva }}">
+  <meta name="twitter:card" content="summary_large_image">{% endif %}
+{%- comment -%} schema.org: moskeija (kaikilla sivuilla), tapahtuma ja oma artikkeli {%- endcomment -%}
+{%- assign _katu = m.osoite | split: "," | first | strip -%}
+{%- assign _posti = m.osoite | split: "," | last | strip | split: " " | first -%}
+{%- capture _somet -%}{%- for _s in m.some -%}{%- assign _u = _s[1] -%}{%- if _u and _u != "" and _s[0] != "instagram_julkaisut" and _s[0] != "upotuskoodi" and _s[0] != "youtube_kanava_id" -%}{{ _u }}|{%- endif -%}{%- endfor -%}{%- if m.nettisivu and m.nettisivu != "" -%}{{ m.nettisivu }}{%- endif -%}{%- endcapture -%}
+{%- assign _somet = _somet | split: "|" -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Mosque",
+    "@id": {{ kotisivu | append: "#moskeija" | jsonify }},
+    "name": {{ m.title | jsonify }},
+    {% if m.nimi_en or m.nimi_ar %}"alternateName": [{% if m.nimi_en %}{{ m.nimi_en | jsonify }}{% endif %}{% if m.nimi_en and m.nimi_ar %}, {% endif %}{% if m.nimi_ar %}{{ m.nimi_ar | jsonify }}{% endif %}],{% endif %}
+    "url": {{ kotisivu | jsonify }},
+    "description": {{ m.esittely.fi | default: m.esittely | default: site.description | strip_html | jsonify }},
+    {% if m.teema.logo and m.teema.logo != "" %}"logo": {{ site.url | append: site.baseurl | append: m.teema.logo | jsonify }},{% endif %}
+    {% if kuva and kuva != "" %}"image": {{ kuva | jsonify }},{% endif %}
+    {% if m.puhelin and m.puhelin != "" %}"telephone": {{ m.puhelin | jsonify }},{% endif %}
+    {% if m.sahkoposti and m.sahkoposti != "" %}"email": {{ m.sahkoposti | jsonify }},{% endif %}
+    "address": { "@type": "PostalAddress", "streetAddress": {{ _katu | jsonify }},{% if _posti.size == 5 %} "postalCode": {{ _posti | jsonify }},{% endif %} "addressLocality": {{ m.kaupunki | jsonify }}, "addressCountry": "FI" },
+    {% if m.sijainti.lat and m.sijainti.lat != 0 %}"geo": { "@type": "GeoCoordinates", "latitude": {{ m.sijainti.lat }}, "longitude": {{ m.sijainti.lon }} },
+    "hasMap": {{ "https://www.google.com/maps/search/?api=1&query=" | append: m.sijainti.lat | append: "," | append: m.sijainti.lon | jsonify }},{% endif %}
+    "sameAs": {{ _somet | jsonify }}
+  }
+  </script>
+  {%- if page.collection == "tapahtumat" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org", "@type": "Event",
+    "name": {{ page.title | jsonify }},
+    {%- capture _alku -%}{{ page.paiva | date: "%Y-%m-%d" }}{% if page.alkaa and page.alkaa != "" %}T{{ page.alkaa | replace: ".", ":" | strip }}{% endif %}{%- endcapture %}
+    "startDate": {{ _alku | jsonify }},
+    {%- capture _loppu -%}{{ page.paiva_loppuu | default: page.paiva | date: "%Y-%m-%d" }}{% if page.loppuu and page.loppuu != "" %}T{{ page.loppuu | replace: ".", ":" | strip }}{% endif %}{%- endcapture %}
+    "endDate": {{ _loppu | jsonify }}, "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "location": { "@type": "Place", "name": {{ page.paikka | default: m.title | jsonify }}, "address": {{ page.paikka | default: m.osoite | jsonify }} },
+    "organizer": { "@id": {{ kotisivu | append: "#moskeija" | jsonify }} },
+    "description": {{ kuvaus | jsonify }}{% if kuva and kuva != "" %}, "image": {{ kuva | jsonify }}{% endif %}
+  }
+  </script>
+  {%- endif %}
+  {%- if page.collection == "artikkelit" and page.lahde_url == nil %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org", "@type": "Article",
+    "headline": {{ page.title | jsonify }},
+    "datePublished": {{ page.paiva | date: "%Y-%m-%d" | jsonify }},
+    "author": { "@type": "{% if page.kirjoittaja and page.kirjoittaja != '' %}Person{% else %}Organization{% endif %}", "name": {{ page.kirjoittaja | default: m.title | jsonify }} },
+    "publisher": { "@id": {{ kotisivu | append: "#moskeija" | jsonify }} },
+    "description": {{ kuvaus | jsonify }}, "inLanguage": "fi"{% if kuva and kuva != "" %}, "image": {{ kuva | jsonify }}{% endif %}
+  }
+  </script>
+  {%- endif %}

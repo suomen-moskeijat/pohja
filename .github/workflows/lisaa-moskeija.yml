@@ -36,6 +36,9 @@ on:
       repo:
         description: "Repon nimi (valinnainen; oletus nimestä)"
         required: false
+      muokkaajat:
+        description: "Muokkaajien GitHub-tunnukset pilkulla eroteltuina (valinnainen). He saavat oikeuden vain tämän moskeijan sivuun."
+        required: false
 
 jobs:
   lisaa:
@@ -56,4 +59,5 @@ jobs:
           SYOTE_YOUTUBE: ${{ inputs.youtube }}
           SYOTE_TELEGRAM: ${{ inputs.telegram }}
           SYOTE_REPO: ${{ inputs.repo }}
+          SYOTE_MUOKKAAJAT: ${{ inputs.muokkaajat }}
         run: python3 .github/scripts/lisaa_moskeija.py

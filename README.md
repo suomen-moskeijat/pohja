@@ -74,6 +74,37 @@ Valinnat ovat valmiita vaihtoehtoja, joten sivu pysyy siistinä, vaikka moskeijo
 
 Esimerkki: `esittely/hyvinkaa/` (oma sivu `_sivut/hyvat-lahteet.md`).
 
+## Muokkaajat: vain oman moskeijan sivu
+
+Jokainen moskeija on oma reponsa. Muokkaaja kutsutaan **vain oman moskeijansa repoon**
+(rooli *Write*), joten hän ei voi muokata muiden moskeijoiden sivuja eikä pohjaa.
+
+- **Uusi moskeija:** kirjoita *Lisää moskeija* -lomakkeen kenttään *muokkaajat* GitHub-tunnukset.
+- **Myöhemmin:** Actions → **Lisää muokkaaja** → repo + tunnukset. Tai repo → Settings →
+  Collaborators → Add people → *Write*.
+- Muokkaajia **ei** lisätä organisaation jäseniksi. Organisaation asetuksissa
+  (Settings → Member privileges → Base permissions) kannattaa pitää *No permission*.
+- Pages CMS -sovellus asennetaan organisaatioon kerran. Jokainen näkee siinä vain ne repot,
+  joihin hänellä on oikeus.
+
+## Näkyvyys Googlessa
+
+Sivut tekevät automaattisesti:
+
+- otsikot hakusanoja varten, esim. *Rukousajat Hyvinkää – Hyvinkää Islam Keskus*, ja kuvaukset joka sivulle
+- schema.org-tiedot: moskeija (osoite, sijainti, yhteystiedot, somet), tapahtumat ja omat artikkelit
+- jakokuvat (Open Graph), kun linkki jaetaan WhatsAppissa tai somessa
+- `sitemap.xml` ja `robots.txt`
+- yhteisistä lähteistä tuoduissa artikkeleissa canonical-linkin alkuperäiseen, jottei Google pidä niitä kaksoissisältönä
+
+Moskeijan kannattaa tehdä itse (kerran, ilmaiseksi):
+
+1. **Google-yritysprofiili** (business.google.com): moskeija Google Mapsiin, ja kenttään *Verkkosivusto* tämä sivu.
+   Tämä on tärkein, koska haku "moskeija Hyvinkää" näyttää ensin karttatulokset.
+2. **Google Search Console** (search.google.com/search-console): lisää sivu ja lähetä `sitemap.xml`.
+3. **Oma verkkotunnus** (esim. moskeija.fi): `url` ja `baseurl` moskeijan `_config.yml`:ään sekä CNAME.
+4. **Linkit sivulle** Instagramin biosta, Mawaqitista, Masjidboxista ja rukousajat.fi:stä.
+
 ## Rakenne
 
 | Polku | Sisältö |

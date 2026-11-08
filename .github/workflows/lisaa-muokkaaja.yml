@@ -1,0 +1,30 @@
+# Antaa henkilölle oikeuden muokata YHDEN moskeijan sivua (Pages CMS).
+# Henkilö kutsutaan vain kyseiseen repoon Write-oikeudella; muiden moskeijoiden
+# sivuihin tai pohjaan hänellä ei ole muokkausoikeutta.
+name: Lisää muokkaaja
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: "Moskeijan repo, esim. hyvinkaa-islam-keskus"
+        required: true
+      muokkaajat:
+        description: "GitHub-tunnukset pilkulla eroteltuina"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  kutsu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Kutsu muokkaajat
+        env:
+          MOSKEIJA_AVAIN: ${{ secrets.MOSKEIJA_AVAIN }}
+          ORG: ${{ github.repository_owner }}
+          SYOTE_REPO: ${{ inputs.repo }}
+          SYOTE_MUOKKAAJAT: ${{ inputs.muokkaajat }}
+        run: python3 .github/scripts/lisaa_moskeija.py --vain-muokkaajat
