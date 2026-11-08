@@ -199,3 +199,4 @@ kirjoittaja:        { fi: "Kirjoittaja", en: "Author", ar: "الكاتب", so: "
 artikkeli_kieli:    { fi: "", en: "The article is in Finnish.", ar: "المقال باللغة الفنلندية.", so: "Maqaalku waa af-Finnish." }
 lisaa_aiheesta:     { fi: "Lisää samasta aiheesta", en: "More on this topic", ar: "المزيد حول هذا الموضوع", so: "Wax dheeraad ah oo mawduucan ku saabsan" }
 luonnos_palkki:     { fi: "Luonnos – sivua ei ole vielä julkaistu. Kerro korjaukset ylläpitäjälle.", en: "Draft – this site has not been published yet.", ar: "مسودة – لم يُنشر هذا الموقع بعد.", so: "Qabyo – boggan weli lama daabicin." }
+seuraava_perjantai: { fi: "Seuraava perjantai", en: "Next Friday", ar: "الجمعة القادمة", so: "Jimcaha soo socda" }

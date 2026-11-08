@@ -13,8 +13,9 @@ rukousajat: true
       {% include osat/seuraava.html ilman_linkkia=true %}
       {% include osat/rukous.html %}
     </div>
-    {% if m.juma and m.juma != "" %}
-    <div class="u-kortti u-juma"><span class="u-ikoni">{% include ikoni-ph.html nimi="moskeija" koko=22 %}</span><span><strong>{% include k.html a="jumua" %}</strong><small>{% include k.html a="jumua_lyhyt" %}</small></span><b dir="ltr">{{ m.juma }}</b></div>
+    {%- capture _j -%}{% include osat/jumua-aika.html moskeija=m %}{%- endcapture -%}{%- assign _j = _j | strip | split: "|" -%}
+    {% if _j[0] and _j[0] != "" %}
+    <div class="u-kortti u-juma"><span class="u-ikoni">{% include ikoni-ph.html nimi="moskeija" koko=22 %}</span><span><strong>{% include k.html a="jumua" %}</strong><small>{% if _j[2] and _j[2] != "" %}{% include k.html a="seuraava_perjantai" %} <span dir="ltr">{{ _j[2] }}</span>{% if _j[1] and _j[1] != "" %} · {% include k.html a="iqamah" %} <span dir="ltr">{{ _j[1] }}</span>{% endif %}{% else %}{% include k.html a="jumua_lyhyt" %}{% endif %}</small></span><b dir="ltr">{{ _j[0] }}</b></div>
     {% endif %}
   </div>
   {% include osat/kuukausi.html moskeija=m %}

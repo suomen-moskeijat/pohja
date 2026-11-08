@@ -9,7 +9,8 @@
       {% if m.osoite and m.osoite != "" %}<li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="sijainti" koko=20 %}</span><span><small>{% include k.html a="osoite" %}</small>{{ m.osoite }}</span></li>{% endif %}
       {% if m.puhelin and m.puhelin != "" %}<li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="puhelin" koko=20 %}</span><span><small>{% include k.html a="puhelin" %}</small><a href="tel:{{ m.puhelin | remove: ' ' }}" dir="ltr">{{ m.puhelin }}</a></span></li>{% endif %}
       {% if m.sahkoposti and m.sahkoposti != "" %}<li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="posti" koko=20 %}</span><span><small>{% include k.html a="sahkoposti" %}</small><a href="mailto:{{ m.sahkoposti }}">{{ m.sahkoposti | replace: '@', '@<wbr>' }}</a></span></li>{% endif %}
-      {% if m.juma and m.juma != "" %}<li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="moskeija" koko=20 %}</span><span><small>{% include k.html a="jumua" %}</small><strong dir="ltr">{{ m.juma }}</strong></span></li>{% endif %}
+      {%- capture _j -%}{% include osat/jumua-aika.html moskeija=m %}{%- endcapture -%}{%- assign _j = _j | strip | split: "|" -%}
+      {% if _j[0] and _j[0] != "" %}<li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="moskeija" koko=20 %}</span><span><small>{% include k.html a="jumua" %}</small><strong dir="ltr">{{ _j[0] }}</strong>{% if _j[2] and _j[2] != "" %} <small>({% include k.html a="seuraava_perjantai" %} <span dir="ltr">{{ _j[2] }}</span>)</small>{% endif %}</span></li>{% endif %}
     </ul>
     <div class="u-napit">
       <a class="u-nappi u-nappi--kulta" href="https://www.google.com/maps/dir/?api=1&amp;destination={% include osat/reitti.html moskeija=m %}" target="_blank" rel="noopener">{% include ikoni-ph.html nimi="sijainti" koko=18 %} {% include k.html a="reittiohjeet" %}</a>

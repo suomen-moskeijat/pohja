@@ -1,0 +1,23 @@
+{%- comment -%}
+  Perjantairukouksen aika: moskeijan oma kenttä juma, tai seuraavan perjantain aika
+  rukousaikataulusta (Masjidbox/Mawaqit antavat perjantaina Jumuan Dhuhrin paikalle).
+  Tulostaa: aika|iqamah|päivä (päivä ja iqamah tyhjiä, jos aika on kirjoitettu käsin).
+  Käyttö: {% capture j %}{% include osat/jumua-aika.html moskeija=m %}{% endcapture %}
+{%- endcomment -%}
+{%- assign _m = include.moskeija -%}
+{%- if _m.juma and _m.juma != "" -%}{{ _m.juma }}||{%- else -%}
+{%- assign _kansio = _m.rukousajat.aikataulu | default: _m.slug -%}
+{%- assign _aikataulu = site.data.aikataulut[_kansio] -%}
+{%- assign _tanaan = site.time | date: "%Y-%m-%d" -%}
+{%- assign _loytyi = false -%}
+{%- if _aikataulu -%}{%- assign _kuukaudet = _aikataulu | sort -%}
+{%- for _kk in _kuukaudet -%}{%- if _loytyi -%}{%- break -%}{%- endif -%}
+  {%- for _r in _kk[1] -%}
+    {%- assign _pv = _r.pv | prepend: "0" | slice: -2, 2 -%}
+    {%- assign _pvm = _kk[0] | append: "-" | append: _pv -%}
+    {%- if _pvm < _tanaan -%}{%- continue -%}{%- endif -%}
+    {%- assign _vp = _pvm | date: "%u" -%}
+    {%- if _vp == "5" and _r.dhuhr and _r.dhuhr != "" -%}{{ _r.dhuhr }}|{{ _r.iqamah_dhuhr }}|{{ _pvm | date: "%-d.%-m." }}{%- assign _loytyi = true -%}{%- break -%}{%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}{%- endif -%}
+{%- endif -%}
