@@ -1,5 +1,6 @@
 ---
 # ===== Pakolliset =====
+luonnos: true        # uusi sivu on luonnos; kun moskeija hyväksyy sivun → false
 title: MOSKEIJAN NIMI
 slug: SLUG
 kaupunki: KAUPUNKI

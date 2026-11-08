@@ -10,7 +10,7 @@
 <html lang="{{ site.kielet | first | default: 'fi' }}" dir="ltr">
 <head>
   <meta charset="utf-8">
-  {% if site.noindex %}<meta name="robots" content="noindex">{% endif %}
+  {% if site.noindex or m.luonnos %}<meta name="robots" content="noindex">{% endif %}
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 {% include seo.html moskeija=m %}
   <meta name="theme-color" content="{{ t.paa_tumma | default: '#2b1a0e' }}">
@@ -47,6 +47,7 @@
 </head>
 <body>
   <a class="u-ohita" href="#sisalto">{% include k.html a="siirry_sisaltoon" %}</a>
+  {% if m.luonnos %}<div class="u-luonnos" role="status">{% include ikoni-ph.html nimi="kello" koko=16 %} <span>{% include k.html a="luonnos_palkki" %}</span></div>{% endif %}
   {% include osat/yla.html moskeija=m %}
 
   <main id="sisalto">

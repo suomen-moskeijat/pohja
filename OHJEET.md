@@ -13,6 +13,10 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 
 ### 1. Mitä tarvitset
 
+> **Uusi sivu on aluksi luonnos** (keltainen palkki ylhäällä). Kun sivu on kunnossa,
+> poista Pages CMS:ssä kohdasta **Moskeijat** valinta **Luonnos**, niin sivu on julkinen.
+
+
 1. **GitHub-tunnus** (ilmainen): https://github.com/signup
 2. Kerro tunnuksesi ylläpitäjälle. Saat sähköpostiin **kutsun** moskeijasi sivuun: hyväksy se.
    Oikeus koskee vain oman moskeijasi sivua.
@@ -180,7 +184,21 @@ suomen-moskeijat/<moskeija>       ← yhden moskeijan tiedot + julkaisu.yml, jok
    Muokkaajia ei lisätä organisaation jäseniksi.
 4. **Pohjan Pages:** pohja → Settings → Pages → Source: **GitHub Actions** (esittely ja ohjeet).
 
-### 3. Uuden moskeijan lisääminen (noin 2 minuuttia)
+### 3. Uuden moskeijan prosessi: luonnos → hyväksyntä → julkinen
+
+1. **Lisää moskeija** (alla). Sivu syntyy **luonnoksena**: ylhäällä on keltainen palkki
+   "Luonnos – sivua ei ole vielä julkaistu", eikä Google näytä sivua.
+2. **Tarkista** sivu itse tarkistuslistalla (alla).
+3. **Lähetä linkki moskeijalle**, esim. `https://suomen-moskeijat.github.io/<moskeija>/`.
+   He katsovat sivun puhelimella ja kertovat korjaukset, tai korjaavat itse Pages CMS:ssä.
+4. **Hyväksyntä:** Pages CMS → Moskeijat → poista valinta **Luonnos** → Save.
+   Palkki katoaa noin 2 minuutissa, ja Google saa näyttää sivun.
+5. Myöhemmin halutessa **oma verkkotunnus** (kohta 8).
+
+> Luonnos ei ole salainen: kuka tahansa, jolla on linkki, voi avata sen. Se ei kuitenkaan näy
+> Googlessa eikä missään listassa.
+
+### 3b. Uuden moskeijan lisääminen (noin 2 minuuttia)
 
 **pohja → Actions → Lisää moskeija → Run workflow**
 

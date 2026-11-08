@@ -91,6 +91,8 @@ content:
     view:
       fields: [title, kaupunki]
     fields:
+      # --- Julkaisu ---
+      - { name: luonnos, label: "Luonnos (sivu ei vielä julkinen)", type: boolean, description: "Uusi sivu on luonnos: ylhäällä on luonnos-palkki, eikä Google näytä sivua. Kun moskeija on tarkistanut ja hyväksynyt sivun, poista valinta ja tallenna." }
       # --- Perustiedot ---
       - { name: title, label: Moskeijan nimi (suomi), type: string, required: true }
       - { name: nimi_en, label: Nimi englanniksi, type: string }

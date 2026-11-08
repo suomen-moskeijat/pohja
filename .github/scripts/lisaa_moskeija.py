@@ -156,6 +156,7 @@ def tiedostot(t, repo, org):
                         f"meista: {{ fi: {yaml_str(t['meista'])} }}\n")
     md = f"""---
 # Lisätty automaattisesti. Täydennä ja korjaa tietoja Pages CMS:ssä (https://app.pagescms.org).
+luonnos: true        # uusi sivu on luonnos (palkki ylhäällä, ei Googlessa); kun moskeija hyväksyy → false
 title: {yaml_str(t['nimi'])}
 slug: {t['slug']}
 kaupunki: {yaml_str(t['kaupunki'])}
@@ -374,6 +375,8 @@ def main():
                   f"{' (' + t['tunnus'] + ')' if t['tunnus'] else ''}\n- **Koordinaatit:** {t['lat']}, {t['lon']}\n"
                   f"- **Muokkaajat:** {', '.join(kutsutut) if kutsutut else 'ei vielä (lisää: repo → Settings → Collaborators → Add people → Write)'}"
                   f"{' – he saavat kutsun sähköpostiinsa ja hyväksyvät sen' if kutsutut else ''}\n\n"
+                  f"**Sivu on luonnos.** Lähetä linkki moskeijalle tarkistettavaksi. Kun he hyväksyvät sivun, poista Pages CMS:ssä "
+                  f"(Moskeijat → Luonnos) valinta, niin luonnos-palkki katoaa ja Google saa näyttää sivun.\n\n"
                   f"Täydennä tiedot (osoite, puhelin, logo, tekstit) Pages CMS:ssä: https://app.pagescms.org\n")
     print(yhteenveto)
     if os.environ.get("GITHUB_STEP_SUMMARY"):
