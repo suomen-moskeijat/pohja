@@ -754,3 +754,8 @@ html[dir="rtl"] .u-seur__palkki span { background: linear-gradient(-90deg, var(-
 /* Luonnos: palkki ylhäällä, kunnes moskeija hyväksyy sivun (luonnos: false) */
 .u-luonnos { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 16px; background: #fff4d6; border-bottom: 1px solid #f0d58a; color: #6b4e00; font: 600 14px/1.35 var(--ft); text-align: center; }
 .u-luonnos svg { flex: none; }
+
+/* Rukousaikasivu: Seuraava rukous ja päivän taulukko yhtenä korttina */
+.u-rukouskortti { overflow: hidden; border-radius: 24px; background: var(--pinta); box-shadow: 0 0 0 1px var(--raja), 0 18px 40px -22px oklch(30% .045 55 / .35); }
+.u-rukouskortti .u-seur { width: 100%; margin: 0; border-radius: 0; box-shadow: none; }
+.u-rukouskortti .rk { margin-top: 0 !important; border-radius: 0; box-shadow: none; }

@@ -9,8 +9,10 @@ rukousajat: true
 {% include osat/sivuhero.html avain="rukousajat" johdanto_avain="aikataulu_virallinen" %}
 <div class="u-kehys u-sivu u-rukoussivu">
   <div class="u-rukoussivu__tanaan">
-    {% include osat/seuraava.html ilman_linkkia=true %}
-    {% include osat/rukous.html %}
+    <div class="u-rukouskortti">
+      {% include osat/seuraava.html ilman_linkkia=true %}
+      {% include osat/rukous.html %}
+    </div>
     {% if m.juma and m.juma != "" %}
     <div class="u-kortti u-juma"><span class="u-ikoni">{% include ikoni-ph.html nimi="moskeija" koko=22 %}</span><span><strong>{% include k.html a="jumua" %}</strong><small>{% include k.html a="jumua_lyhyt" %}</small></span><b dir="ltr">{{ m.juma }}</b></div>
     {% endif %}
