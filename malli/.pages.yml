@@ -19,7 +19,11 @@ content:
       - { name: title, label: Otsikko, type: string, required: true }
       - { name: paiva, label: Päivämäärä, type: date, required: true }
       - { name: kirjoittaja, label: Kirjoittaja, type: string }
-      - { name: aihe, label: Aihe, type: string, description: "esim. Islamin perusteet, Rukous, Ramadan – samat aiheet ryhmitellään artikkelisivulla" }
+      - name: aihe
+        label: Aihe
+        type: select
+        description: "Valitse listasta. Jos sopivaa ei ole, kirjoita uusi aihe kenttään – se tulee artikkelisivulle omaksi napikseen."
+        options: { values: [Tiedotteet, Islamin perusteet, Ohjeet, Käytös ja tavat, Juhlat, Kysymykset, Profeetta ja hadithit, Dhikr ja dua, Muut], creatable: true }
       - { name: kuvaus, label: Lyhyt kuvaus (näkyy listassa), type: text }
       - { name: kuva, label: Kuva, type: image }
       - { name: body, label: Teksti, type: rich-text }
