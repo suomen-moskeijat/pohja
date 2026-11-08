@@ -623,6 +623,7 @@ html[dir="rtl"] .u-seur__palkki span { background: linear-gradient(-90deg, var(-
 /* Kuvagalleria: puhelimella kaksi saraketta */
 .u-galleria { grid-template-columns: repeat(auto-fill, minmax(min(46%, 220px), 1fr)); }
 .u-galleria a { display: block; overflow: hidden; border-radius: var(--r-s); }
+@media (max-width: 699px) { .u-galleria a:last-child:nth-child(odd) { grid-column: 1 / -1; } .u-galleria a:last-child:nth-child(odd) img { aspect-ratio: 2 / 1; } }
 .u-galleria img { transition: transform .3s; }
 .u-galleria a:hover img { transform: scale(1.03); }
 

@@ -36,6 +36,7 @@ some:
 # ===== Ulkoasu (valinnainen) =====
 teema:
   logo: ""            # esim. /tiedostot/logo.png – ilman logoa näytetään nimi
+  logo_vaalea: ""     # valinnainen: vaalea versio alapalkin tummalle taustalle
   hero: vaalea
   # Omat värit (tyhjä = pohjan kulta-ruskea). Esim. vihreä: paa "#123d30", korostus "#5fae8a", korostus_vaalea "#e7f4ee"
   paa: ""             # otsikot ja teksti

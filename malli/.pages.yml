@@ -211,6 +211,7 @@ content:
         type: object
         fields:
           - { name: logo, label: Logo, type: image }
+          - { name: logo_vaalea, label: "Logo tummalle taustalle (alapalkki), valinnainen", type: image }
           - { name: hero, label: Alkuosan tyyli, type: select, options: { values: [vaalea, tumma] } }
           - { name: paa, label: "Pääväri (esim. #3f2717)", type: string }
           - { name: paa_tumma, label: Tumma sävy, type: string }

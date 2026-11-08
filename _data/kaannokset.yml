@@ -87,7 +87,7 @@ ladattavat:         { fi: "Ladattavat tiedostot", en: "Downloads", ar: "ملفا
 # --- Lahjoitukset ---
 lahjoita_otsikko:   { fi: "Tue moskeijan toimintaa", en: "Support the mosque", ar: "ادعم أنشطة المسجد", so: "Taageer hawlaha masjidka" }
 lahjoita_nyt:       { fi: "Lahjoita nyt", en: "Donate now", ar: "تبرّع الآن", so: "Hadda deeq" }
-lahjoitus_kysy:     { fi: "Lahjoitustiedot lisätään pian. Kysy lisää WhatsAppilla tai puhelimella.", en: "Donation details will be added soon. Ask us on WhatsApp or by phone.", ar: "ستُضاف معلومات التبرّع قريباً. للاستفسار عبر واتساب أو الهاتف.", so: "Macluumaadka deeqda dhowaan ayaa lagu dari doonaa. Nagu weydii WhatsApp ama taleefan." }
+lahjoitus_kysy:     { fi: "Kysy lisää lahjoittamisesta – vastaamme mielellämme.", en: "Ask us about donating – we are happy to help.", ar: "للاستفسار عن التبرّع تواصلوا معنا، يسعدنا مساعدتكم.", so: "Nala soo xiriir wixii ku saabsan deeqda – waan ku faraxsanahay inaan ku caawinno." }
 saaja:              { fi: "Saaja", en: "Recipient", ar: "المستفيد", so: "Qaataha" }
 tilinumero:         { fi: "Tilinumero", en: "Account number (IBAN)", ar: "رقم الحساب (IBAN)", so: "Lambarka koontada (IBAN)" }
 viite:              { fi: "Viite", en: "Reference", ar: "المرجع", so: "Tixraac" }

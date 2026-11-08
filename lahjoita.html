@@ -24,6 +24,7 @@ permalink: /lahjoita/
     <div class="u-napit">
       {% if wa != "" %}<a class="u-nappi u-nappi--wa" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" koko=18 %} WhatsApp</a>{% endif %}
       {% if m.puhelin and m.puhelin != "" %}<a class="u-nappi u-nappi--reuna" href="tel:{{ m.puhelin | remove: ' ' }}" dir="ltr">{% include ikoni-ph.html nimi="puhelin" koko=18 %} {{ m.puhelin }}</a>{% endif %}
+      {% if m.sahkoposti and m.sahkoposti != "" %}<a class="u-nappi u-nappi--reuna" href="mailto:{{ m.sahkoposti }}">{% include ikoni-ph.html nimi="posti" koko=18 %} {% include k.html a="sahkoposti" %}</a>{% endif %}
     </div>
     {% endunless %}{% endif %}
   </div>

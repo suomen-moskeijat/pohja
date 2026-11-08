@@ -7,7 +7,7 @@
   <div class="u-kuvio" aria-hidden="true"></div>
   <div class="u-kehys u-ala__ruudukko">
     <div class="u-ala__brand">
-      {%- assign _logo = m.teema.logo_pieni | default: m.teema.logo -%}
+      {%- assign _logo = m.teema.logo_vaalea | default: m.teema.logo_pieni | default: m.teema.logo -%}
       {% if _logo and _logo != "" %}<img class="u-ala__logo" src="{{ _logo | relative_url }}" alt="{{ m.title }}" width="320" height="144" loading="lazy">{% else %}<p class="u-ala__nimi">{% include nimi.html moskeija=m %}</p>{% endif %}
       {% if m.tunnuslause %}<p class="u-ala__motto">{% include kt.html arvo=m.tunnuslause %}</p>{% endif %}
       <div class="u-ala__somet">
@@ -35,7 +35,7 @@
       <ul>
         {% if m.osoite and m.osoite != "" %}<li>{% include ikoni-ph.html nimi="sijainti" koko=18 %}<a href="https://www.google.com/maps/dir/?api=1&amp;destination={% include osat/reitti.html moskeija=m %}" target="_blank" rel="noopener">{{ m.osoite }}</a></li>{% endif %}
         {% if m.puhelin and m.puhelin != "" %}<li>{% include ikoni-ph.html nimi="puhelin" koko=18 %}<a href="tel:{{ m.puhelin | remove: ' ' }}" dir="ltr">{{ m.puhelin }}</a></li>{% endif %}
-        {% if m.sahkoposti and m.sahkoposti != "" %}<li>{% include ikoni-ph.html nimi="posti" koko=18 %}<a href="mailto:{{ m.sahkoposti }}">{{ m.sahkoposti }}</a></li>{% endif %}
+        {% if m.sahkoposti and m.sahkoposti != "" %}<li>{% include ikoni-ph.html nimi="posti" koko=18 %}<a href="mailto:{{ m.sahkoposti }}">{{ m.sahkoposti | replace: '@', '@<wbr>' }}</a></li>{% endif %}
       </ul>
     </div>
   </div>
