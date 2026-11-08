@@ -22,12 +22,7 @@
     <nav class="u-ala__linkit" aria-label="Pikalinkit">
       <h2>{% include k.html a="pikalinkit" %}</h2>
       <ul>
-        <li><a href="{{ j }}rukousajat/">{% include k.html a="nav_rukousajat" %}</a></li>
-        <li><a href="{{ j }}meista/">{% include k.html a="nav_meista" %}</a></li>
-        <li><a href="{{ j }}palvelut/">{% include k.html a="nav_palvelut" %}</a></li>
-        <li><a href="{{ j }}tapahtumat/">{% include k.html a="nav_tapahtumat" %}</a></li>
-        <li><a href="{{ j }}lahjoita/">{% include k.html a="nav_lahjoita" %}</a></li>
-        <li><a href="{{ j }}yhteystiedot/">{% include k.html a="nav_yhteystiedot" %}</a></li>
+        {% include osat/valikko.html moskeija=m tapa="ala" %}
       </ul>
     </nav>
     <div class="u-ala__yhteys">

@@ -1,0 +1,35 @@
+{%- comment -%}
+  Etusivun yläosan napit (enintään 2). Moskeija valitsee kentässä alku.napit, esim.
+  [lapsi, toiminta]. Vaihtoehdot: lapsi, toiminta, rukousajat, lahjoita, yhteys, oma
+  (alku.oma_nappi: teksti + linkki) tai oman sivun nimi (esim. hyvat-lahteet).
+  Oletus: lapsi (jos lasten opetus on käytössä) ja toiminta. Ensimmäinen nappi korostetaan.
+{%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- assign a = m.alku -%}
+{%- if a.napit and a.napit.size > 0 -%}{%- assign _napit = a.napit -%}{%- else -%}
+  {%- capture _o -%}{% if m.lasten_opetus.kaytossa %}lapsi,{% endif %}toiminta{%- endcapture -%}{%- assign _napit = _o | split: "," -%}
+{%- endif -%}
+{%- assign _maara = 0 -%}
+{%- for n in _napit -%}
+  {%- if _maara >= 2 -%}{%- break -%}{%- endif -%}
+  {%- capture _h -%}
+  {%- case n -%}
+  {%- when "lapsi" -%}{% if m.lasten_opetus.kaytossa %}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/palvelut/lasten-opetus/' | relative_url }}">{% include ikoni-ph.html nimi="hattu" koko=20 %} {% include k.html a="ilmoita_lapsesi" %}</a>{% endif %}
+  {%- when "toiminta" -%}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/palvelut/' | relative_url }}">{% include k.html a="tutustu_toimintaan" %}</a>
+  {%- when "rukousajat" -%}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/rukousajat/' | relative_url }}">{% include ikoni-ph.html nimi="kello" koko=20 %} {% include k.html a="katso_rukousajat" %}</a>
+  {%- when "lahjoita" -%}{% if m.lahjoitus and m.valikko_piilota contains "lahjoita" %}{% elsif m.lahjoitus %}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/lahjoita/' | relative_url }}">{% include ikoni-ph.html nimi="sydan" koko=20 %} {% include k.html a="lahjoita_nyt" %}</a>{% endif %}
+  {%- when "yhteys" -%}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/yhteystiedot/' | relative_url }}">{% include ikoni-ph.html nimi="sijainti" koko=20 %} {% include k.html a="ota_yhteytta" %}</a>
+  {%- when "oma" -%}{%- assign _on = a.oma_nappi -%}
+    {%- if _on.linkki and _on.linkki != "" -%}{%- assign _ulk = _on.linkki | slice: 0, 4 -%}
+    <a class="u-nappi LUOKKA u-nappi--iso" href="{% if _ulk == 'http' %}{{ _on.linkki }}{% else %}{{ _on.linkki | relative_url }}{% endif %}"{% if _ulk == 'http' %} target="_blank" rel="noopener"{% endif %}>{% include kt.html arvo=_on.teksti %}</a>
+    {%- endif -%}
+  {%- else -%}{%- assign _pu = "/" | append: n | append: "/" -%}{%- assign _p = site.sivut | where: "url", _pu | first -%}
+    {%- if _p -%}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ _p.url | relative_url }}">{% include sivunimi.html sivu=_p %}</a>{%- endif -%}
+  {%- endcase -%}
+  {%- endcapture -%}
+  {%- assign _h = _h | strip -%}
+  {%- if _h != "" -%}
+    {%- if _maara == 0 -%}{{ _h | replace_first: "LUOKKA", "u-nappi--kulta" }}{%- else -%}{{ _h | replace_first: "LUOKKA", "u-nappi--reuna" }}{%- endif -%}
+    {%- assign _maara = _maara | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}

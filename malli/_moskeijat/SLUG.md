@@ -46,5 +46,15 @@ teema:
 # ===== Tekstit (valinnainen; suomi riittää, muut kielet näkyvät kun ne lisätään) =====
 hero_tunniste: { fi: "KAUPUNKI" }
 esittely: { fi: "Rukouksen, oppimisen ja yhteisön paikka." }
+
+# Etusivun yläosa: tausta (kuvio | kuva | vari) ja enintään 2 nappia
+# (lapsi, toiminta, rukousajat, lahjoita, yhteys, oma tai oman sivun nimi)
+alku:
+  tausta: kuvio
+  kuva: ""            # kun tausta: kuva, esim. /tiedostot/sali.jpg
+  napit: [lapsi, toiminta]
+
+# Sivut, joita ei ole käytössä (piilotetaan valikosta), esim. [tapahtumat, lahjoita]
+valikko_piilota: []
 galleria: []          # omat kuvat, esim. /tiedostot/sali.jpg
 ---

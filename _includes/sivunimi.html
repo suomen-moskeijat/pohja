@@ -1,0 +1,3 @@
+{%- comment -%} Oman sivun nimi kaikilla kielillä: title (suomi) ja otsikko_en / otsikko_ar / otsikko_so (puuttuva → englanti → suomi). {%- endcomment -%}
+{%- assign _s = include.sivu -%}
+{%- for _l in site.kielet -%}{%- assign _k = "otsikko_" | append: _l -%}{%- if _l == "fi" -%}{%- assign _v = _s.title -%}{%- else -%}{%- assign _v = _s[_k] | default: _s.otsikko_en | default: _s.title -%}{%- endif -%}<span data-l="{{ _l }}">{{ _v }}</span>{%- endfor -%}

@@ -12,10 +12,15 @@ collections:
   tapahtumat:
     output: true
     permalink: /tapahtumat/:name/
+  sivut:
+    output: true      # moskeijan omat sivut (_sivut/), esim. kirjat, lähteet, artikkelit
+    permalink: /:name/
 
 defaults:
   - scope: { path: "", type: tapahtumat }
     values: { layout: tapahtuma }
+  - scope: { path: "", type: sivut }
+    values: { layout: oma }
 
 markdown: kramdown
 

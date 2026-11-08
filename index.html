@@ -5,7 +5,10 @@ rukousajat: true
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {% include osat/rukousdata.html moskeija=m %}
 
-<section class="u-alku">
+{%- assign a = m.alku -%}
+{%- assign _tausta = a.tausta | default: "kuvio" -%}
+{%- if _tausta == "kuva" and a.kuva and a.kuva != "" -%}{%- assign _alku_luokka = " u-alku--kuva" -%}{%- elsif _tausta == "vari" -%}{%- assign _alku_luokka = " u-alku--vari" -%}{%- else -%}{%- assign _alku_luokka = "" -%}{%- endif -%}
+<section class="u-alku{{ _alku_luokka }}"{% if _alku_luokka == " u-alku--kuva" %} style="--alku-kuva: url('{{ a.kuva | relative_url }}')"{% endif %}>
   <div class="u-kehys u-alku__sisalto">
     {% if m.hero_tunniste %}<p class="u-alku__tunniste"><span aria-hidden="true">●</span> {% include kt.html arvo=m.hero_tunniste %}</p>{% endif %}
     <h1>{% if m.hero_otsikko %}{% include kt.html arvo=m.hero_otsikko %}{% else %}{% include nimi.html moskeija=m %}{% endif %}</h1>
@@ -13,11 +16,7 @@ rukousajat: true
 
     {% include osat/seuraava.html %}
 
-    <div class="u-alku__napit">
-      {% if m.lasten_opetus.kaytossa %}
-      <a class="u-nappi u-nappi--kulta u-nappi--iso" href="{{ '/palvelut/lasten-opetus/' | relative_url }}">{% include ikoni-ph.html nimi="hattu" koko=20 %} {% include k.html a="ilmoita_lapsesi" %}</a>
-      {% endif %}
-      <a class="u-nappi u-nappi--reuna u-nappi--iso" href="{{ '/palvelut/' | relative_url }}">{% include k.html a="tutustu_toimintaan" %}</a>
+    <div class="u-alku__napit">{% include osat/alkunapit.html moskeija=m %}
     </div>
   </div>
 </section>

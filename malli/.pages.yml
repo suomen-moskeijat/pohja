@@ -7,6 +7,36 @@ media:
   output: /tiedostot
 
 content:
+  - name: sivut
+    label: Omat sivut
+    type: collection
+    path: _sivut
+    filename: "{primary}.md"
+    view:
+      fields: [title, valikossa, jarjestys]
+    fields:
+      - { name: title, label: Sivun nimi (suomi), type: string, required: true, description: "Tiedoston nimestä tulee osoite, esim. hyvat-lahteet → /hyvat-lahteet/" }
+      - { name: otsikko_en, label: Nimi englanniksi, type: string }
+      - { name: otsikko_ar, label: Nimi arabiaksi, type: string }
+      - { name: otsikko_so, label: Nimi somaliksi, type: string }
+      - { name: valikossa, label: Näytä valikossa, type: boolean, default: true }
+      - { name: jarjestys, label: Järjestys valikossa, type: number, default: 1 }
+      - { name: johdanto, label: Lyhyt johdanto (suomi), type: text }
+      - { name: kuva, label: Kuva, type: image }
+      - { name: body, label: Sisältö (suomi), type: rich-text }
+      - { name: teksti_en, label: Sisältö englanniksi, type: rich-text }
+      - { name: teksti_ar, label: Sisältö arabiaksi, type: rich-text }
+      - { name: teksti_so, label: Sisältö somaliksi, type: rich-text }
+      - name: linkit
+        label: Linkit kortteina (kirjat, lähteet, tiedostot)
+        type: object
+        list: true
+        fields:
+          - { name: nimi, label: Nimi, type: string }
+          - { name: kuvaus, label: Kuvaus, type: string }
+          - { name: osoite, label: Osoite tai tiedosto, type: string, description: "https://… tai /tiedostot/kirja.pdf" }
+          - { name: kuvake, label: Kuvake, type: select, options: { values: [kirja, maailma, toista, hattu, kalenteri, sydan] } }
+
   - name: tapahtumat
     label: Tapahtumat
     type: collection
@@ -60,7 +90,6 @@ content:
       - { name: nettisivu, label: Oma nettisivu (hakemistoa varten), type: string }
       - { name: kielet, label: Toiminnan kielet, type: string, list: true }
       - { name: juma, label: Perjantairukouksen aika, type: string, description: "esim. 13.30" }
-      - { name: kuva, label: Valokuva moskeijasta (sivun alkuun), type: image }
       - { name: lomake_osoite, label: Lomakepalvelun osoite (valinnainen), type: string, description: "esim. https://formspree.io/f/xxxx – ilman tätä lomakkeet avautuvat valmiina WhatsApp-viestinä" }
 
       # --- Etusivun alkuosa ---
@@ -82,6 +111,28 @@ content:
           - { name: ar, label: العربية, type: text }
           - { name: so, label: Soomaali, type: text }
       - { name: tunnuslause, label: Tunnuslause (alapalkki), type: object, fields: *kielet_rivi }
+      - name: alku
+        label: Etusivun yläosa (tausta ja napit)
+        type: object
+        fields:
+          - { name: tausta, label: Tausta, type: select, description: "kuvio = vaalea kuviotausta (oletus), kuva = oma valokuva (tummennetaan, teksti valkoinen), vari = moskeijan pääväri", options: { values: [kuvio, kuva, vari] } }
+          - { name: kuva, label: Taustakuva (kun tausta = kuva), type: image, description: "Vaakakuva, vähintään 1600 px leveä. Esim. rukoussali tai moskeija ulkoa." }
+          - name: napit
+            label: Napit (enintään 2, ensimmäinen korostetaan)
+            type: select
+            description: "lapsi = Ilmoita lapsesi opetukseen, toiminta = Tutustu toimintaamme, rukousajat, lahjoita, yhteys = Ota yhteyttä, oma = oma nappi alla. Voit kirjoittaa myös oman sivun nimen, esim. hyvat-lahteet."
+            options: { values: [lapsi, toiminta, rukousajat, lahjoita, yhteys, oma], multiple: true, creatable: true }
+          - name: oma_nappi
+            label: Oma nappi (kun napeissa on oma)
+            type: object
+            fields:
+              - { name: teksti, label: Napin teksti, type: object, fields: *kielet_rivi }
+              - { name: linkki, label: Linkki, type: string, description: "esim. /hyvat-lahteet/ tai https://…" }
+      - name: valikko_piilota
+        label: Piilota valikosta
+        type: select
+        description: "Sivut, joita moskeijalla ei ole käytössä. Lahjoita piilotetaan myös etusivulta."
+        options: { values: [rukousajat, meista, palvelut, tapahtumat, yhteystiedot, lahjoita], multiple: true }
       - name: kortit
         label: Etusivun kortit
         type: object

@@ -1,0 +1,34 @@
+{%- comment -%}
+  Valikon linkit. Parametrit: moskeija, tapa (yla | mobiili | ala).
+  Moskeija voi piilottaa sivuja (valikko_piilota: [tapahtumat, lahjoita, …]) ja lisätä
+  omia sivujaan (_sivut/, valikossa: true, järjestys kentällä jarjestys).
+{%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- assign j = '/' | relative_url -%}
+{%- assign _omat = site.sivut | where: "valikossa", true | sort: "jarjestys", "last" -%}
+{%- capture _linkit -%}rukousajat:nav_rukousajat,meista:nav_meista,palvelut:nav_palvelut,tapahtumat:nav_tapahtumat,OMAT,yhteystiedot:nav_yhteystiedot{% if include.tapa == "ala" %},lahjoita:nav_lahjoita{% endif %}{%- endcapture -%}
+{%- assign _linkit = _linkit | split: "," -%}
+{%- for _l in _linkit -%}
+  {%- if _l == "OMAT" -%}
+    {%- for p in _omat -%}
+      {%- capture _nimi -%}{% include sivunimi.html sivu=p %}{%- endcapture -%}
+      {%- assign _url = p.url | relative_url -%}
+      {%- capture _nyt -%}{% if page.url == p.url %} aria-current="page"{% endif %}{%- endcapture -%}
+      {%- case include.tapa -%}
+      {%- when "mobiili" -%}<a class="u-mv-linkki" href="{{ _url }}"{{ _nyt }}>{{ _nimi }}<span class="u-nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span></a>
+      {%- when "ala" -%}<li><a href="{{ _url }}">{{ _nimi }}</a></li>
+      {%- else -%}<a href="{{ _url }}"{{ _nyt }}>{{ _nimi }}</a>
+      {%- endcase -%}
+    {%- endfor -%}
+    {%- continue -%}
+  {%- endif -%}
+  {%- assign _o = _l | split: ":" -%}{%- assign _sivu = _o[0] -%}{%- assign _avain = _o[1] -%}
+  {%- if m.valikko_piilota contains _sivu -%}{%- continue -%}{%- endif -%}
+  {%- if _sivu == "lahjoita" and m.lahjoitus == nil -%}{%- continue -%}{%- endif -%}
+  {%- capture _nyt -%}{% if page.url contains _sivu %} aria-current="page"{% endif %}{%- endcapture -%}
+  {%- case include.tapa -%}
+  {%- when "mobiili" -%}<a class="u-mv-linkki" href="{{ j }}{{ _sivu }}/"{{ _nyt }}>{% include k.html a=_avain %}<span class="u-nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span></a>
+  {%- when "ala" -%}<li><a href="{{ j }}{{ _sivu }}/">{% include k.html a=_avain %}</a></li>
+  {%- else -%}<a href="{{ j }}{{ _sivu }}/"{{ _nyt }}>{% include k.html a=_avain %}</a>
+  {%- endcase -%}
+{%- endfor -%}

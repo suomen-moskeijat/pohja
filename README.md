@@ -55,6 +55,23 @@ Masjidboxissa ei tyhjennä sivua.
    `REPO`, `MOSKEIJAN NIMI` ja osoitetiedot (`_moskeijat/SLUG.md` → `_moskeijat/<slug>.md`).
 2. Repon asetuksista: **Settings → Pages → Source: GitHub Actions**.
 
+## Mitä moskeija voi muokata itse (Pages CMS)
+
+Kaikki alla oleva muokataan selaimessa osoitteessa https://app.pagescms.org, eikä koodia tarvita.
+Valinnat ovat valmiita vaihtoehtoja, joten sivu pysyy siistinä, vaikka moskeijoita on sata.
+
+| Mitä | Kenttä | Vaihtoehdot |
+|---|---|---|
+| Etusivun yläosan tausta | `alku.tausta` | `kuvio` (vaalea kuvio, oletus), `kuva` (oma valokuva, tummennetaan ja teksti on valkoinen), `vari` (moskeijan pääväri) |
+| Taustakuva | `alku.kuva` | vaakakuva, vähintään 1600 px leveä |
+| Etusivun napit (enintään 2) | `alku.napit` | `lapsi`, `toiminta`, `rukousajat`, `lahjoita`, `yhteys`, `oma` (teksti ja linkki kentässä `alku.oma_nappi`) tai oman sivun nimi, esim. `hyvat-lahteet` |
+| Valikosta piilotettavat sivut | `valikko_piilota` | `rukousajat`, `meista`, `palvelut`, `tapahtumat`, `yhteystiedot`, `lahjoita`. Lahjoita on piilossa myös silloin, kun lahjoitustietoja ei ole |
+| Omat sivut (kirjat, lähteet, artikkelit…) | kokoelma **Omat sivut** (`_sivut/`) | teksti neljällä kielellä, kuva ja linkkikortit (myös PDF-tiedostot). Näkyy valikossa, kun valinta *Näytä valikossa* on päällä |
+| Värit ja logo | `teema` | pääväri, korostusväri, logo ja vaalea logo alapalkkiin |
+| Tekstit | `esittely`, `meista`, `palvelut`, `kortit`, `lasten_opetus`, `lahjoitus` | suomi, englanti, arabia, somali (puuttuva kieli → englanti → suomi) |
+
+Esimerkki: `esittely/hyvinkaa/` (oma sivu `_sivut/hyvat-lahteet.md`).
+
 ## Rakenne
 
 | Polku | Sisältö |

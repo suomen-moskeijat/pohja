@@ -2,14 +2,7 @@
 {%- assign m = include.moskeija -%}
 {%- assign j = '/' | relative_url -%}
 {%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
-{%- capture linkit -%}
-rukousajat/|nav_rukousajat
-meista/|nav_meista
-palvelut/|nav_palvelut
-tapahtumat/|nav_tapahtumat
-yhteystiedot/|nav_yhteystiedot
-{%- endcapture -%}
-{%- assign linkit = linkit | strip | newline_to_br | split: '<br />' -%}
+{%- assign _lahjoita = false -%}{%- if m.lahjoitus -%}{%- assign _lahjoita = true -%}{%- endif -%}{%- if m.valikko_piilota contains "lahjoita" -%}{%- assign _lahjoita = false -%}{%- endif -%}
 <header class="u-yla" data-yla>
   <div class="u-kehys u-yla__sisalto">
     <a class="u-logo" href="{{ j }}" aria-label="{{ m.title }}">
@@ -18,12 +11,10 @@ yhteystiedot/|nav_yhteystiedot
     </a>
 
     <nav class="u-nav" aria-label="Päävalikko">
-      {% for l in linkit %}{% assign o = l | strip | split: '|' %}{% assign o_avain = o[1] %}
-      <a href="{{ j }}{{ o[0] }}" {% if page.url contains o[0] %}aria-current="page"{% endif %}>{% include k.html a=o_avain %}</a>
-      {% endfor %}
+      {% include osat/valikko.html moskeija=m tapa="yla" %}
     </nav>
 
-    <a class="u-nappi u-nappi--kulta u-nappi--pieni u-yla__lahjoita" href="{{ j }}lahjoita/">{% include k.html a="nav_lahjoita" %}</a>
+    {% if _lahjoita %}<a class="u-nappi u-nappi--kulta u-nappi--pieni u-yla__lahjoita" href="{{ j }}lahjoita/">{% include k.html a="nav_lahjoita" %}</a>{% endif %}
 
     {% if site.kielet.size > 1 %}
     <div class="u-kieli" data-kielivalikko>
@@ -50,12 +41,10 @@ yhteystiedot/|nav_yhteystiedot
   <div class="u-mobiilivalikko" id="u-mobiilivalikko" hidden>
     <nav class="u-kehys" aria-label="Valikko">
       <a class="u-mv-linkki" href="{{ j }}">{% include k.html a="nav_etusivu" %}<span class="u-nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span></a>
-      {% for l in linkit %}{% assign o = l | strip | split: '|' %}{% assign o_avain = o[1] %}
-      <a class="u-mv-linkki" href="{{ j }}{{ o[0] }}" {% if page.url contains o[0] %}aria-current="page"{% endif %}>{% include k.html a=o_avain %}<span class="u-nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span></a>
-      {% endfor %}
+      {% include osat/valikko.html moskeija=m tapa="mobiili" %}
       {% if m.lasten_opetus.kaytossa %}<a class="u-mv-linkki" href="{{ j }}palvelut/lasten-opetus/">{% include k.html a="ilmoita_lapsesi" %}<span class="u-nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span></a>{% endif %}
       <div class="u-mv-napit">
-        <a class="u-nappi u-nappi--kulta" href="{{ j }}lahjoita/">{% include k.html a="nav_lahjoita" %}</a>
+        {% if _lahjoita %}<a class="u-nappi u-nappi--kulta" href="{{ j }}lahjoita/">{% include k.html a="nav_lahjoita" %}</a>{% endif %}
         {% if wa != "" %}<a class="u-nappi u-nappi--reuna" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" %} WhatsApp</a>{% endif %}
         {% if m.puhelin and m.puhelin != "" %}<a class="u-nappi u-nappi--reuna" href="tel:{{ m.puhelin | remove: ' ' }}">{% include ikoni-ph.html nimi="puhelin" koko=18 %} {% include k.html a="soita" %}</a>{% endif %}
       </div>

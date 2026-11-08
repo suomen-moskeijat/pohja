@@ -1,0 +1,37 @@
+---
+layout: sivu
+---
+{%- comment -%}
+  Moskeijan oma sivu (_sivut/<nimi>.md): esim. kirjat, hyvät lähteet, artikkelit.
+  Kentät: title (suomeksi), otsikko_en/_ar/_so, johdanto, kuva, valikossa, jarjestys,
+  teksti (sivun sisältö suomeksi, markdown) ja teksti_en/_ar/_so, linkit (kortteina:
+  nimi, kuvaus, osoite, kuvake: kirja | maailma | toista | kirja …).
+{%- endcomment -%}
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- capture _otsikko -%}{% include sivunimi.html sivu=page %}{%- endcapture -%}
+{% include osat/sivuhero.html otsikko=_otsikko johdanto=page.johdanto %}
+<div class="u-kehys u-sivu u-omasivu">
+  {% if page.kuva and page.kuva != "" %}<img class="u-omasivu__kuva" src="{{ page.kuva | relative_url }}" alt="" loading="lazy">{% endif %}
+  {%- capture _teksti -%}
+    {%- assign _fi = content | strip -%}
+    {%- if page.teksti_en or page.teksti_ar or page.teksti_so -%}
+      {%- for _l in site.kielet -%}{%- assign _k = "teksti_" | append: _l -%}
+        {%- if page[_k] and page[_k] != "" -%}<div data-l="{{ _l }}" lang="{{ _l }}">{{ page[_k] | markdownify }}</div>
+        {%- else -%}<div data-l="{{ _l }}">{{ _fi }}</div>{%- endif -%}
+      {%- endfor -%}
+    {%- else -%}{{ _fi }}{%- endif -%}
+  {%- endcapture -%}
+  {%- assign _tyhja = _teksti | strip_html | strip -%}
+  {% if _tyhja != "" %}<article class="u-kortti u-artikkeli"><div class="u-proosa u-proosa--iso">{{ _teksti }}</div></article>{% endif %}
+  {% if page.linkit.size > 0 %}
+  <ul class="u-linkit">
+    {% for l in page.linkit %}{% assign _ulk = l.osoite | slice: 0, 4 %}{% assign _kuvake = l.kuvake | default: "kirja" %}
+    <li><a class="u-kortti u-linkkikortti" href="{% if _ulk == 'http' %}{{ l.osoite }}{% else %}{{ l.osoite | relative_url }}{% endif %}"{% if _ulk == 'http' %} target="_blank" rel="noopener"{% endif %}>
+      <span class="u-ikoni">{% include ikoni-ph.html nimi=_kuvake koko=24 %}</span>
+      <span class="u-linkkikortti__teksti"><strong>{% include kt.html arvo=l.nimi %}</strong>{% if l.kuvaus %}<small>{% include kt.html arvo=l.kuvaus %}</small>{% endif %}</span>
+      <span class="u-linkkikortti__nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span>
+    </a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>

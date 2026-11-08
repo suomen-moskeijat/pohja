@@ -146,6 +146,16 @@ teema:
 
 hero_tunniste: {{ fi: {yaml_str(t['kaupunki'])} }}
 esittely: {{ fi: "Rukouksen, oppimisen ja yhteisön paikka." }}
+
+# Etusivun yläosa: tausta kuvio | kuva | vari, napit (enintään 2):
+# lapsi, toiminta, rukousajat, lahjoita, yhteys, oma tai oman sivun nimi
+alku:
+  tausta: kuvio
+  kuva: ""
+  napit: [toiminta, yhteys]
+
+# Valikosta piilotettavat sivut, esim. [tapahtumat]. Lahjoita näkyy, kun lahjoitustiedot on lisätty.
+valikko_piilota: []
 galleria: []
 ---
 """
@@ -157,6 +167,7 @@ galleria: []
         "README.md": readme,
         ".pages.yml": lue(".pages.yml"),
         "_tapahtumat/.gitkeep": "",
+        "_sivut/.gitkeep": "",
         "tiedostot/.gitkeep": "",
         ".github/workflows/julkaisu.yml": lue(".github/workflows/julkaisu.yml"),  # viimeisenä: käynnistää julkaisun
     }
