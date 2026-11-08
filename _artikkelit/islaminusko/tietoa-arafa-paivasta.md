@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Tietoa-Arafa-p%C3%A4iv%C3%A4st%C3%A4/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilainen kalenteri ja erityiset päivät"
+aihe: "Juhlat"
 kuvaus: "Arafa-päivä osuu islamilaisen kalenterin Dhul Hijjah-kuukauden yhdeksännelle päivälle. Tuona päivänä pyhiinvaeltajat seisovat Arafa-vuorella ja muita muslimeita suositellaan paastoamaan ja pyytämään Allahilta…"
 ---
 {% raw %}

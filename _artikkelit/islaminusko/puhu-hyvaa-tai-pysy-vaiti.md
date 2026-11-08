@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Puhu-hyv%C3%A4%C3%A4-tai-pysy-vaiti/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Ihmisistä pahan puhuminen on islamissa synti, jonka vaarallisuutta korostetaan monessa Koraanin ja sunnan tekstissä. Islamissa ihmistä katsotaan kokonaisuutena, joka koostuu sydämmen lisäksi puheesta ja teoista. Näiden…"
 ---
 {% raw %}

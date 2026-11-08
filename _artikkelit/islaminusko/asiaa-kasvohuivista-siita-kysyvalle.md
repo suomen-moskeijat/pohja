@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Asiaa-kasvohuivista-siit%C3%A4-kysyv%C3%A4lle/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: "Asiya Rosa, islamin opintojen kandidaatti ja Imam Muhammad ibn Saudin islamilais"
-aihe: ""
+aihe: "Muut"
 kuvaus: "Oletus siitä, ettei kasvohuivin pukeminen voisi koskaan perustua naisen omaan vakaumukseen tai haluun vain siksi, että joissakin yhteyksissä, kulttuureissa ja paikoissa siihen pukeutuvia naisia saatetaan alistaa ja…"
 ---
 {% raw %}

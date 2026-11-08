@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/%C3%84l%C3%A4-k%C3%A4rsi/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Jos pystyt, niin poistu tilanteista, jotka saavat sinulle pahaa mieltä, masentuneisuutta ja huonoa oloa! Älä kiduta itseäsi turhaan. Jos et pysty johonkin, mikä ei ole pakollista, niin älä tee sitä. Elämässä on monia…"
 ---
 {% raw %}

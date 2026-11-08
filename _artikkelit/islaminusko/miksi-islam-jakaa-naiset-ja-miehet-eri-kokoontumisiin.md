@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Miksi-islam-jakaa-naiset-ja-miehet-eri-kokoontumisiin/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Ennen kaikkea tärkein syy miesten ja naisten kokoontumisten jakamiselle on tottelevaisuus Allahia kohtaan. Jokaisessa säädöksessä on viisaus takana, ymmärtäisi ihmisen rajallinen viisaus sitä tai ei. “Totisesti…"
 ---
 {% raw %}

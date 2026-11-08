@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Saako-lemmikkej%C3%A4-omistaa/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Kysymykset ja vastaukset"
+aihe: "Kysymykset"
 kuvaus: "Lemmikkejä on sallittua omistaa, kunhan tietyt säädökset huomioi aiheessa. Anas ibn Malik raportoi, että hänellä oli pikkuveli, jota kutsuttuin Abu Umeyriksi ja profeetalla ‎ﷺ oli tapana tulla heidän luokseen. Pojalla…"
 ---
 {% raw %}

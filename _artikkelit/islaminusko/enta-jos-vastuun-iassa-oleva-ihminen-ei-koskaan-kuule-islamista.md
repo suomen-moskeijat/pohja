@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Ent%C3%A4-jos-vastuun-i%C3%A4ss%C3%A4-oleva-ihminen-ei-koskaan-kuule-islamista/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Kysymykset ja vastaukset"
+aihe: "Kysymykset"
 kuvaus: "Al-Aswad ibn Sari’ raportoi, että profeetta ﷺ sanoi kuuron, joka ei saa tietoa islamista, vammaisen, vanhuuden höperön ja ennen viestin kuulemista kuolleen tilanteesta tuomiopäivänä: “Joten Hän (Allah) ottaa heiltä…"
 ---
 {% raw %}

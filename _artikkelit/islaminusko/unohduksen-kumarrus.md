@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Unohduksen-kumarrus/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Jos et vielä osaa rukoilla, niin katsothan ensisijaisesti rukousohjeen seuraavalta sivulta: https://islaminusko.fi/Uudelle-muslimille/ Huomioithan tässä tekstissä mahdolliset koulukuntaerot, joita ei välttämättä olla…"
 ---
 {% raw %}

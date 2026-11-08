@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Oppineiden-ja-hurskaiden-edelt%C3%A4jien-viisaita-sanoja/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Hurskaiden lausuntoja"
+aihe: "Muut"
 kuvaus: "Uusimmat lausunnot päivitetään ylimmäksi! 🔍 Hae avainsanoja: Crtl + f Viimeisin lausunto julkaistu 3.10.2021 Profetta ﷺ sanoi: “Minä käsken teitä pitää kiinni seuralaisistani, sitten niistä, jotka seuraavat heitä…"
 ---
 {% raw %}

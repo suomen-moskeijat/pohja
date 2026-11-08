@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Pakollisten-rukousten-j%C3%A4lkeiset-autenttiset-athkaarit/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Pyyntörukouksia - Dhikr & Dua"
+aihe: "Dhikr ja dua"
 kuvaus: "Pakollisen rukouksen jälkeen on autenttista tehdä seuraavat asiat: 1. Pyytää kolmesti anteeksiantoa heti salameiden jälkeen sanomalla: Astaghfirullaah, Astaghfirullaah, Astaghfirullaah. Allaahummä äntä-s-Säläämu, wä…"
 ---
 {% raw %}

@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Ramadanin-tarawiih-rukous/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: "Asiya Rosa, Al-Malik Saudin yliopisto, Riyadh"
-aihe: "Islamilainen kalenteri ja erityiset päivät"
+aihe: "Juhlat"
 kuvaus: "Tarawiih -rukous on ramadanina suoritettu yörukous, johon sunnah rohkaisee ja suosittelee. Tätä yörukousta kutsutaan tarawiih-rukoukseksi, joka tarkoittaa karkeasti käännettynä rentoutumistaukoa, sillä muslimeilla oli…"
 ---
 {% raw %}

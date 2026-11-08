@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Naisen-awra-toisten-naisten-ja-mahramien-edess%C3%A4/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: ""
+aihe: "Muut"
 kuvaus: "Islam on siveyden uskonto, joka rohkaisee itsessään siveyttä ja jopa määrää siihen kullekin sopivalla tavalla. Profeetta ﷺ sanoi: \"Siveys on uskosta.\" (Sahih Muslim 36a) Yleinen siveys on siis jokaiselle muslimille…"
 ---
 {% raw %}

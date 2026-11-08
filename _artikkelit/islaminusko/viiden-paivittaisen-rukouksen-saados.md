@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Viiden-p%C3%A4ivitt%C3%A4isen-rukouksen-s%C3%A4%C3%A4d%C3%B6s/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: "Asiya Rosa, Al-Malik Saudin yliopisto, Riyadh"
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Rukous on suurimmista pakollisista asioista muslimille, joka luokitellaan jopa islamin toiseksi pilariksi heti uskontunnustuksen jälkeen. Abdullah - Umar ibn Al-Khattaabin poika - sanoi: “Kuulin profeetan ﷺ sanovan:"
 ---
 {% raw %}

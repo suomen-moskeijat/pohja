@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Oppineiden-tarinoita-Imam-Al-Bukhaari/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Oppineiden tarinoita"
+aihe: "Muut"
 kuvaus: "Imam Al-Bukhaari on yksi arvostetuimmista ja tunnetuimmista hadith-oppineista. Hänen koko nimensä on Abu Abdullah Mohammad Ibn Ismail ibn Ibrahim ibn Mughirah ibn Bardizbah Al-Jufi Al-Bukhaari. Hänellä oli persialaista…"
 ---
 {% raw %}

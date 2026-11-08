@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Tasapaino-luotettavimman-mielipiteen-etsimisess%C3%A4-ja-sokeasti-seuraamisessa-taqliid/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: "Asiya Rosa, Imam Muhammad ibn Saudin islamilainen yliopisto (IMAMU), Riyadh"
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Shaykh Muhammad ibn Abdul-Wahhaab sanoi kirjassaan Kitaab at-Tawhiid (monoteismin kirja): «(38) Kappale: Kuka ikinä tottelee oppineita ja johtajia kieltäen sen, minkä Allah on sallinut ja sallien sen, minkä Allah on…"
 ---
 {% raw %}

@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Saako-unista-puhua/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Unista puhumisen kielto koskaa pahoja unia, mutta ei hyviä unia. Profeetta ‎ﷺ sanoi: “Kun joku teistä näkee unen, josta hän pitää, se on Allahilta, joten ylistäköön Hän Allahia ja puhukoon hän siitä (muillekin). Kun…"
 ---
 {% raw %}

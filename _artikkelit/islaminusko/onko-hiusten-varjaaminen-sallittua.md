@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Onko-hiusten-v%C3%A4rj%C3%A4%C3%A4minen-sallittua/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Kysymykset ja vastaukset"
+aihe: "Kysymykset"
 kuvaus: "Hiusten värjääminen on sallittua, kunhan sitä ei tee mustalla värillä tai imitoi uskottomia. Uskottomien imitoimiseen saattaa kuulua esimerkiksi sateenkaari hiukset tai muuta vastaavaa, jonka tiedetään olevan…"
 ---
 {% raw %}

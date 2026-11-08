@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/20-rivin-runo-profeetan-%EF%B7%BA-el%C3%A4m%C3%A4nkerrasta/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Viimeinen profeetta ﷺ"
+aihe: "Profeetta ja hadithit"
 kuvaus: "Shaykh Saalih ibn Abdullah Al-Usaimii (Aloitan) Valtiaani ylistyksellä Muniiran¹ (tämän runon) ❁ sitten (lähetän) siunaukset ja rauhan (aloittaessani) siiran ¹ Muniirah tarkoittaa valaisevaa. profeetan ylle. Hänen…"
 ---
 {% raw %}

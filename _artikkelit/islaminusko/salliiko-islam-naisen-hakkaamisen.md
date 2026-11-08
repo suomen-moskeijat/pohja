@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Salliiko-islam-naisen-hakkaamisen/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Tässä tekstissä käsitellään vastausta tähän kysymykseen, jonka todellisuudesta monet ovat tietämättömiä, vaikka Koraanin ja sunnan käskyt antavat meille selkeästi väkivaltaa kieltävän tuloksen. Koraani ja sunnah on…"
 ---
 {% raw %}

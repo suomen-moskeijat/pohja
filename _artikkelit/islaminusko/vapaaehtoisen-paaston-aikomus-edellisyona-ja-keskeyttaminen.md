@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Vapaaehtoisen-paaston-aikomus-edellisy%C3%B6n%C3%A4-ja-keskeytt%C3%A4minen/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Ennen pakollista paastoa, kuten ramadanin paastoa tai päivä, jolloin korvaa näitä paastoja, on oltava aikomus paastota ennen auringon sarastusta. Tällaista paastoa ei myöskään ole sallittua rikkoa kesken."
 ---
 {% raw %}

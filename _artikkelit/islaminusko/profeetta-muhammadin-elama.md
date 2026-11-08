@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Profeetta-Muhammadin-%EF%B7%BA-el%C3%A4m%C3%A4/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Viimeinen profeetta ﷺ"
+aihe: "Profeetta ja hadithit"
 kuvaus: "Kirjasta: Tiivistetty opas islamin perusasioista, Armeliaimman palvelija Muslimit ovat kautta aikojen opiskelleet profeetta Muhammadin ﷺ elämää ymmärtääkseen miten Allahin sanansaattaja ﷺ laittoi käytäntöön islamin…"
 ---
 {% raw %}

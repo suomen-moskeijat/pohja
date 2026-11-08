@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Miten-hurskaat-edelt%C3%A4j%C3%A4t-opiskelivat/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Varhaisten muslimien sukupolvissa on meille erinomaisia roolimalleja, joista profeetta ﷺ sanoi erään miehen kysyessä parhaista muslimeista: “(Parhaita ovat) Sen sukupolven (muslimit), josta minä olen, seuraavaksi siitä…"
 ---
 {% raw %}

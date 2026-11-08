@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Musiikin-yll%C3%A4-on-ijmaa/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Musiikki on yksimielisesti (ijmaa’) kiellettyä islamissa olisi kyse sitten mistä tahansa tyylistä. Tästä ei löydy erimielisyyksiä varhailta sukupolvilta ja tämä on myös neljän koulukunnan mielipide, joka pohjautuu…"
 ---
 {% raw %}

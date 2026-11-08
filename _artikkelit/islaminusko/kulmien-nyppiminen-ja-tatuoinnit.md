@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Kulmien-nyppiminen-ja-tatuoinnit/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Kysymykset ja vastaukset"
+aihe: "Kysymykset"
 kuvaus: "Koskien kurlmakarvojen nyppimistä, niin tämä on oppineiden mukaan kiellettyä miehille ja naisille. Tämä on siksi Abd-Allah ibn Mas’ud raportoi, että profeetta ﷺ sanoi: “Allah on kironnut naiset, jotka tekevät…"
 ---
 {% raw %}

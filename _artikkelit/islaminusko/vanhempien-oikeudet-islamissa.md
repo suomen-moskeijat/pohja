@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Vanhempien-oikeudet-islamissa/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Islamissa vanhempien oikeudet koskevat biologisia vanhempia, vaikka joku muu olisi kasvattanut lapsen. Lapsen kasvattaja ansaitsee tietenkin kunnioitusta ja hyvää käytöstä myös, mutta biologisia suhteita ei ole…"
 ---
 {% raw %}

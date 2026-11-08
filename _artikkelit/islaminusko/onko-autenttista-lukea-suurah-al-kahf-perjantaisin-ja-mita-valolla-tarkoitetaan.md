@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Onko-autenttista-lukea-suurah-Al-Kahf-perjantaisin-ja-mit%C3%A4-valolla-tarkoitetaan/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Suurah Al-Kahfista on raportoitu autenttisia ketjuja liittyen sen lukemiseen perjantaisin. Näihin kuuluu Abu Sa’id al-Khudrin raportti, joka sanoi, että profeetta ‎ﷺ sanoi: “Kuka ikinä resitoi Surat al-Kahfin…"
 ---
 {% raw %}

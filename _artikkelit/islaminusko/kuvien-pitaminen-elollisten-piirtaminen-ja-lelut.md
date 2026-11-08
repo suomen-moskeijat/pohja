@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Kuvien-pit%C3%A4minen-elollisten-piirt%C3%A4minen-ja-lelut/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Kysymykset ja vastaukset"
+aihe: "Kysymykset"
 kuvaus: "Elävien olentojen piirtäminen on kiellettyä profeetan saws lausunnon mukaan, jossa hän ﷺ sanoi: ”Jokainen kuvittaja tulee olemaan Helvetissä. Jokaiselle kuvalle, jonka hän teki, tullaan antaa sielu, ja tuo sielu tulee…"
 ---
 {% raw %}

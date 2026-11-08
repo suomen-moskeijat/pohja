@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Luonnon-kutsuun-vastaamisen-etiketit/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "(Tekstin päälähde on Shaykh Saalih al-Fawzaanin Al-Mulakhhas ul-Fiqhii) Islamin uskonto on puhtauden, sivistyneisyyden ja jalouden uskonto, johon sisältyy jopa etiketit vessassa käymiseen liittyen. Vessassa käyminen on…"
 ---
 {% raw %}

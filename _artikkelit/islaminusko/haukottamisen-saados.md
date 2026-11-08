@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Haukottamisen-s%C3%A4%C3%A4d%C3%B6s/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Muslimin tulisi estää haukottamista tai pidettävä suunsa kiinni sen aikana, sillä pahimmassa tapauksessa henkilön sisään voi mennä paholainen aiheuttaen negatiivisia vaikutuksia ihmiseen tai jopa riivausta."
 ---
 {% raw %}

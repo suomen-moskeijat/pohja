@@ -26,6 +26,22 @@ import urllib.parse
 import urllib.request
 from html.parser import HTMLParser
 
+# Lähteen aiheet lyhyemmiksi ja yhdistetyiksi (artikkelisivun aihevalinta mahtuu puhelimeen)
+AIHEET = {
+    "Islamin perusteet": "Islamin perusteet",
+    "Kuka on Allah?": "Islamin perusteet",
+    "Fiqh (lainopilliset asiat), ohjeet ja säädökset": "Ohjeet",
+    "Islamilaiset etiketit ja käytös": "Käytös ja tavat",
+    "Islamilainen kalenteri ja erityiset päivät": "Juhlat",
+    "Kysymykset ja vastaukset": "Kysymykset",
+    "Pyyntörukouksia - Dhikr & Dua": "Dhikr ja dua",
+    "Viimeinen profeetta ﷺ": "Profeetta ja hadithit",
+    "Haditheja": "Profeetta ja hadithit",
+    "Oppineiden tarinoita": "Muut",
+    "Hurskaiden lausuntoja": "Muut",
+    "": "Muut",
+}
+
 JUURI = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 LAHTEET = {
     "islaminusko": {
@@ -216,7 +232,7 @@ def islaminusko(asetus):
         tekija = re.search(r"(?:Kirjoittaja(?: ja kääntäjä)?|Kääntäjä|Kirjoittanut)\s*:\s*([^<]{3,80})", runko)
         artikkelit.append({
             "nimi": tiedostonimi(polku), "title": otsikko, "paiva": paiva,
-            "aihe": html.unescape(aihe.group(1)) if aihe else "",
+            "aihe": AIHEET.get(html.unescape(aihe.group(1)) if aihe else "", html.unescape(aihe.group(1)) if aihe else "Muut"),
             "kirjoittaja": tekija.group(1).strip().rstrip(".") if tekija else "",
             "kuvaus": kuvaus(runko, otsikko), "lahde_url": osoite, "runko": runko,
         })

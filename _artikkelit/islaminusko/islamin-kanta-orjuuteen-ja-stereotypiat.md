@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Islamin-kanta-orjuuteen-ja-stereotypiat/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Amerikan ja Euroopan historian harjoittama orjuus on täysin kiellettyä islamissa ja sama koskee joissakin maissa harjoitettuja orjuuden ja alistamisen muotoja. Islamilaisissa teksteissä mainittu orjuus on erilaista…"
 ---
 {% raw %}

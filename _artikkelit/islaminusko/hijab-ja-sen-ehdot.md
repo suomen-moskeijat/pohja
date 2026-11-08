@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Hijab-ja-sen-ehdot/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Islamissa murrosiän saavuttanutta naista on määrätty peittää hänen kauneutensa ei-mahram miehiltä. Marhrameista voit lukea tältä sivulta: https://islaminusko.fi/Mahram-lista-naisille#wbb1 Tämän säädöksen takana on…"
 ---
 {% raw %}

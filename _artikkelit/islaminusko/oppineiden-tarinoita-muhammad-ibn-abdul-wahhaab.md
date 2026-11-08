@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Oppineiden-tarinoita-Muhammad-Ibn-Abdul-Wahhaab/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Oppineiden tarinoita"
+aihe: "Muut"
 kuvaus: "Muhammad ibn Abdul Wahhab syntyi vuonna 1115 hj. (eli profeetan ﷺ maastamuuton jälkeen, josta alkaa islamilainen ajanlasku: \"Hijran jälkeen\".) kylässä nimeltä ‘Unaynah, Saudi-Arabiassa. Jo nuorena hän pääsi oppimaan…"
 ---
 {% raw %}

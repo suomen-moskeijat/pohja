@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Kuka-laittaa-lainmukaiset-rangaistukset-k%C3%A4yt%C3%A4nt%C3%B6%C3%B6n-ja-mik%C3%A4-on-niiden-tavoite/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Koraani on kokonaisvaltainen Kirja, joka sisältää koko ihmiskunnan tarvitsemat lain yksilön henkilökohtaisista säädöksistä valtion lakiin. Kuten Suomenkin laissa, niin islamin laissa on rikollisille määrättyjä…"
 ---
 {% raw %}

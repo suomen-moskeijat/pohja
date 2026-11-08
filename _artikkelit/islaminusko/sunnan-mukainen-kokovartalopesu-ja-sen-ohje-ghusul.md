@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Sunnan-mukainen-kokovartalopesu-ja-sen-ohje-ghusul/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "(Tekstin päälähde on Shaykh Saalih al-Fawzaanin Al-Mulahkkas ul-Fiqhii) Nyt, kun olemme käsitelleet rukouspesun aiheena ja asiat, jotka mitätöivät sen, niin on aika käydä läpi sunnan mukainen kokovartalopesu (ghusul)…"
 ---
 {% raw %}

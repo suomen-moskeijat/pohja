@@ -6,7 +6,7 @@ layout: sivu
 <section class="u-sivuhero u-artikkelihero">
   <div class="u-kuvio" aria-hidden="true"></div>
   <div class="u-kehys">
-    <p class="u-eyebrow u-eyebrow--vaalea"><a href="{{ '/artikkelit/' | relative_url }}">{% include k.html a="nav_artikkelit" %}</a>{% if page.aihe and page.aihe != "" %} · <span lang="fi">{{ page.aihe }}</span>{% endif %}</p>
+    <p class="u-eyebrow u-eyebrow--vaalea"><a href="{{ '/artikkelit/' | relative_url }}">{% include k.html a="nav_artikkelit" %}</a>{% if page.aihe and page.aihe != "" and page.aihe != "Muut" %} · <span lang="fi">{{ page.aihe }}</span>{% endif %}</p>
     <h1 lang="fi" dir="auto">{{ page.title }}</h1>
     <p class="u-sivuhero__johdanto"><time datetime="{{ page.paiva | date: '%Y-%m-%d' }}" dir="ltr">{{ page.paiva | date: '%-d.%-m.%Y' }}</time>{% if page.lahde_nimi %} · {{ page.lahde_nimi }}{% elsif page.kirjoittaja and page.kirjoittaja != "" %} · {{ page.kirjoittaja }}{% endif %}</p>
   </div>

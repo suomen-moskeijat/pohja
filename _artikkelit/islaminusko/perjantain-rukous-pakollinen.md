@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Perjantain-rukous-pakollinen/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Oppineet ovat yksimielisiä, että naisen ei ole pakollista osallistua perjantai-rukoukseen, vaan sen sijaan hän voi rukoilla kotona tavallisesti Dhuhr-rukouksensa. Ibn al-Mundhir sanoi: \"He (oppineet) olivat yksimielisä…"
 ---
 {% raw %}

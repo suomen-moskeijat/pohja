@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Sunnan-mukaiset-keinot-pid%C3%A4tell%C3%A4-vihaa/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Vihan hallitseminen on yksi teoista, joita sunnassa rohkaistaan voimakkaasti ja jopa määrätään harjoittamaan. Vihaiseksi tuleminen on luonnollista, mutta sen hallitseminen on pakollista. Vihaisuus tulee paholaiselta ja…"
 ---
 {% raw %}

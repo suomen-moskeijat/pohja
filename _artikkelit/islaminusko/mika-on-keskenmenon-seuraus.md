@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Mik%C3%A4-on-keskenmenon-seuraus/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: ""
+aihe: "Muut"
 kuvaus: "Keskenmeno on ikävä kokemus, joka saattaa tapahtua sikiön ollessa pieni tai sen ollessa kehittynyt sellaiseksi, jolla on ihmisen piirteitä. Jos lapseen puhallettin jo sielu, niin häneen pätee hautauksessa samat…"
 ---
 {% raw %}

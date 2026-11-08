@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Tiivistelm%C3%A4-asioista-joita-sinun-tulisi-tiet%C3%A4%C3%A4-paaston-rikkomis-juhlasta-Iid-ul-fitr-sek%C3%A4-iid-rukouksen-ohje/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilainen kalenteri ja erityiset päivät"
+aihe: "Juhlat"
 kuvaus: "Paaston rikkomis -juhlaa vietetään ramadanin kuukauden päättyessä shawwalin kuukauden ensimmäisenä päivänä, joka alkaa viimeisen paastopäivän maghrib-rukouksesta. Iidin päivämäärä vaihtelee vuosittain, sillä ramadan…"
 ---
 {% raw %}

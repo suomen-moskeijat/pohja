@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Voiko-vapaaehtoisia-p%C3%A4ivi%C3%A4-paastota-jos-ramadanina-menetettyj%C3%A4-ei-olla-korvattu/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Kaikki menestys tulee Allahilta ja Allah tietää parhaiten."
 ---
 {% raw %}

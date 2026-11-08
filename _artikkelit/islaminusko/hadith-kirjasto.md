@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Hadith-kirjasto/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Haditheja"
+aihe: "Profeetta ja hadithit"
 kuvaus: "Uusimmat hadithit päivitetään ylimmäksi! 🔍 Hae avainsanoja: Crtl + f Viimeisin hadith julkaistu 10.5.2022 \"Ottakaa se, mitä ikinä sanansaattaja (Muhammad) teille antaa ja pidättäytykää siltä, mitä ikinä sanansaattaja…"
 ---
 {% raw %}

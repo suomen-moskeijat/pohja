@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Mik%C3%A4-on-islamin-lain-mukaan-laillinen-sota/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Moni saattaa miettiä, salliiko islam toiseen maahan hyökkäämisen tai ylipäätään terrorismin sen perusteella, mitä jotkut extrimistiset ryhmät tekevät? Jokainen selväjärkinen ja sivistynyt ihminen kuitenkin varmasti…"
 ---
 {% raw %}

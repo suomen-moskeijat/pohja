@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Joulu-ja-sen-ristiriitaisuus-monoteismiin/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilainen kalenteri ja erityiset päivät"
+aihe: "Juhlat"
 kuvaus: "Islamin ja monoteismin suhde jouluun Joulun viettäminen on tänä päivänä kristinuskosta peräisin oleva juhla, jossa he juhlivat profeetta Jeesuksen, rauhaa hänelle, syntymää uskoen, että tuona päivänä \"Jumalan poika\"…"
 ---
 {% raw %}

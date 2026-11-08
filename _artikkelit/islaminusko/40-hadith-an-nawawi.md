@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/40-Hadith-An-Nawawi/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Haditheja"
+aihe: "Profeetta ja hadithit"
 kuvaus: "Abu Zakariyya Yahya Ibn Sharaf An-Nawawi 631-676 hj. Kääntäjän kommentit Imam An-Nawawin - Allah armahtakoon hänet - hadith-kokoelma on tunnettu, hyväksytty ja arvostettu muslimioppineiden keskuudessa. Se sisältää…"
 ---
 {% raw %}

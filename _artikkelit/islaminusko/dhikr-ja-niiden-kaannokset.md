@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Dhikr-ja-niiden-k%C3%A4%C3%A4nn%C3%B6kset/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Pyyntörukouksia - Dhikr & Dua"
+aihe: "Dhikr ja dua"
 kuvaus: "◯ ◯ ◯ Abu Dharr - Allah olkoon tyytyväinen häneen - raportoi, että seuralaiset sanoivat: “Oi Jumalan sanansaattaja, rikkaat ovat ottaneet kaikki palkkiot. He rukoilevat kuin me rukoilemme, he paastovat kuin me…"
 ---
 {% raw %}

@@ -9,7 +9,7 @@ permalink: /artikkelit/
 {%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {%- assign kaikki = site.artikkelit | sort: 'paiva' | reverse -%}
-{%- assign aiheet = kaikki | map: 'aihe' | compact | uniq | sort -%}
+{%- assign aiheet = kaikki | where_exp: 'a', 'a.aihe' | group_by: 'aihe' | sort: 'size' | reverse -%}
 {% include osat/sivuhero.html avain="nav_artikkelit" johdanto_avain="artikkelit_johdanto" %}
 <div class="u-kehys u-sivu" data-artikkelit>
   {% if kaikki.size > 0 %}
@@ -19,8 +19,11 @@ permalink: /artikkelit/
     </label>
     {% if aiheet.size > 1 %}
     <div class="u-aiheet" role="group" aria-label="Aiheet">
-      <button type="button" class="u-aihe" aria-pressed="true" data-aihe="">{% include k.html a="kaikki_aiheet" %}</button>
-      {% for ai in aiheet %}{% if ai != "" %}<button type="button" class="u-aihe" aria-pressed="false" data-aihe="{{ ai | escape }}" lang="fi">{{ ai }}</button>{% endif %}{% endfor %}
+      <button type="button" class="u-aihe" aria-pressed="true" data-aihe="">{% include k.html a="kaikki_aiheet" %} <small>{{ kaikki.size }}</small></button>
+      {%- for ai in aiheet -%}{%- if ai.name == "" or ai.name == "Muut" -%}{%- continue -%}{%- endif -%}
+      <button type="button" class="u-aihe" aria-pressed="false" data-aihe="{{ ai.name | escape }}" lang="fi">{{ ai.name }} <small>{{ ai.size }}</small></button>
+      {%- endfor -%}
+      {%- for ai in aiheet -%}{%- if ai.name == "Muut" -%}<button type="button" class="u-aihe" aria-pressed="false" data-aihe="Muut" lang="fi">Muut <small>{{ ai.size }}</small></button>{%- endif -%}{%- endfor -%}
     </div>
     {% endif %}
   </div>

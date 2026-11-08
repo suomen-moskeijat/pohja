@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Naisten-meneminen-moskeijaan/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: "Asiya Rosa, Al-Malik Saudin yliopisto, Riyadh"
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Ei ole epäillystäkään siitä, että islam tuo mukanaan kattavasti hyvyyttä sekä ohjeistuksia elämän jokaiselle osa-alueelle. Hyvyys on peräisin Allahilta - Kaikkivaltiaalta - ja tämä hyvyys on sekä miehille että naisille…"
 ---
 {% raw %}

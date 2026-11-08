@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Pit%C3%A4%C3%A4k%C3%B6-islamista-luopuva-tappaa-sharian-mukaan/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Moni tietämätön ymmärtää islamin lailliset aiheet väärin ja käyttää niitä tietämättömästi väärässä kontekstissa ajatellen tietävänsä muutaman käännöksen perusteella miten asiat menevät islamin lain mukaan."
 ---
 {% raw %}

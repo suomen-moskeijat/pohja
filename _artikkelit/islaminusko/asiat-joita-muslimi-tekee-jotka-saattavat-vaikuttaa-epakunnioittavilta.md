@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Asiat-joita-muslimi-tekee-jotka-saattavat-vaikuttaa-ep%C3%A4kunnioittavilta/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Nämä asiat sinun on hyvä tietää muslimista. Harjoittava muslimi kunnioittaa kaikkia, mutta joskus ihminen saattaa ymmärtää muslimin tiettyjen tapojen pohjalta toisin. Seuraavat asiat saattavat tuntua loukkaavilta…"
 ---
 {% raw %}

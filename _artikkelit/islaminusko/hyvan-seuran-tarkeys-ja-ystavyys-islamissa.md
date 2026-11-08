@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Hyv%C3%A4n-seuran-t%C3%A4rkeys-ja-yst%C3%A4vyys-islamissa/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Islamin opetukset vahvistavat ja painostavat hyvien ystävien seuran tärkeyttä. Ystävällä - eteenkin läheisellä sellaisella - on suurta vaikutusta häneen, jonka kanssa tämä viettää aikaa. Ihmisinä saamme vaikutuksia…"
 ---
 {% raw %}

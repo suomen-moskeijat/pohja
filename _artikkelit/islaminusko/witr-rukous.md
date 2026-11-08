@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Witr-rukous/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: "Asiya Rosa, al-Malik Saudin yliopisto, Riyadh"
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Suositeltavien rukousten hyvyyden mainitsemisen jälkeen Shaykh Saalih al-Fawzaan käsittelee ensimmäisenä witr -rukouksen aiheena, sillä tämä viiden pakollisen rukouksen ulkopuolinen rukous on niin rohkaistu…"
 ---
 {% raw %}

@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Istikhara-johdatuksen-pyynt%C3%B6rukous/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Pyyntörukouksia - Dhikr & Dua"
+aihe: "Dhikr ja dua"
 kuvaus: "Johdatuksen pyyntörukousta rohkaistaan tekemään vaikean päätöksen tullessa. Muslimi pyytää johdatusta oikean valinnan suhteen Allahilta, joka tietää parhaiten. Istikhara tehdään vilpittömästi päätöksen teon jälkeen, kun…"
 ---
 {% raw %}

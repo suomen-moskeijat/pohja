@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Pit%C3%A4%C3%A4k%C3%B6-suuta-liikuttaa-ja-%C3%A4%C3%A4nt%C3%A4-kuulua-palvontateoissa/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Suun heiluttamisen pakollisuus palvontateoissa Usko on islamilaisen ymmärryksen mukaan jotain, mikä näkyy henkilön raajoissa ja lausunnoissa. Pelkkä uskominen ei riitä, vaan henkilön on toimittava uskon mukaisesti ja…"
 ---
 {% raw %}

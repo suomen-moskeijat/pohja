@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Islamilainen-kalenteri-ja-sen-kuukaudet/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilainen kalenteri ja erityiset päivät"
+aihe: "Juhlat"
 kuvaus: "Islamilainen kalenteri perustuu kuu vuoteen ja jokainen uusi kuukausi alkaa uudenkuun myötä. Yksi kuukausi lasketaan siis kuun kierrosta. Sama kuukausi ei ala kaikkialla samana päivänä, sillä uusikuu tulee näkyviin eri…"
 ---
 {% raw %}

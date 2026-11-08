@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Matkustaminen-ilman-mahramia/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Naisena matkustaminen ilman mahramia on kiellettyä Koraanin ja sunnan oppineiden yksimielisyydellä. Poikkeuksena Imam Ash-Shaafii salli pakolliselle pyhiinvaellukselle menemisen ilman mahramia, mutta toisten oppineiden…"
 ---
 {% raw %}

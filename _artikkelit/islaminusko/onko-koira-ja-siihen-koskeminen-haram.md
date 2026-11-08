@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Onko-koira-ja-siihen-koskeminen-haram/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Koiran on Allahin luoma eläin kuin kaikki muutkin eläimet ja jokaista luomusta on kohdeltava hyvin, lukuunottamatta joitakin ötököitä ja pieniä eläimiä, kuten torakoita ja rottia, joita on sallittua tappaa (ks. Sahih…"
 ---
 {% raw %}

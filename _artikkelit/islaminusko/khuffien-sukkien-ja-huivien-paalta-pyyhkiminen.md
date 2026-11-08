@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Khuffien-sukkien-ja-huivien-p%C3%A4%C3%A4lt%C3%A4-pyyhkiminen/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "(Tekstin päälähde on Shaykh Saalih al-Fawzaanin Al-Mulahkkas ul-Fiqhii) Joskus rukouspesua saattaa olla hankaloittamassa joko kengät, sukat, tai päähineet ja on tapauksia, joissa näiden päältä pyyhkiminen on sallittua…"
 ---
 {% raw %}

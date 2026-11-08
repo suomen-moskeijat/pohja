@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Kohtalon-y%C3%B6-ja-Ramadanin-10-viimeist%C3%A4-y%C3%B6t%C3%A4/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilainen kalenteri ja erityiset päivät"
+aihe: "Juhlat"
 kuvaus: "Mikä on kohtalon yö ja sen hyvyys? Allah sanoi: \"Totisesti, Me lähetimme sen ( Koraanin) alas kohtalon yönä. Ja mikä saa sinut tietämään, mikä on kohtalon yö? Kohtalon yö on parempi, kuin tuhat kuukautta. Enkelit ja…"
 ---
 {% raw %}

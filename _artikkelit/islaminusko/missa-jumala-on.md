@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Miss%C3%A4-Jumala-on/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Kuka on Allah?"
+aihe: "Islamin perusteet"
 kuvaus: "Koraanin ja sunnan mukainen vastaus tähän kysymyksen on, että Allah sijaitsee taivaiden yläpuolella, Hänen valtaistuimensa yläpuolella. Hän sanoo: “Armeliain on noussut (istawaa) Hänen valtaistuimensa yläpuolelle…"
 ---
 {% raw %}

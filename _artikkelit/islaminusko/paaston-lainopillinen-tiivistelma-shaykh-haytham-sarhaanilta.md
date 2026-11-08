@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Paaston-lainopillinen-tiivistelm%C3%A4-Shaykh-Haytham-Sarhaanilta/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: ""
+aihe: "Muut"
 kuvaus: "Tämä teksti on lyhyt tiivistelmä paaston tärkeimmistä pilareista ja huomioitavista lainopillisista asioista. Teksti on käännetty Shaykh Haytham Sarhaanin pyynnöstä ja valvonnan alla. Paasto jaetaan kahteen osaan:"
 ---
 {% raw %}

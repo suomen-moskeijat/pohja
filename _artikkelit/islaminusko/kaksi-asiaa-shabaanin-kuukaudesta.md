@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Kaksi-asiaa-Shabaanin-kuukaudesta/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilainen kalenteri ja erityiset päivät"
+aihe: "Juhlat"
 kuvaus: "1. Sha’baanin kuukauden paasto Aisha sanoi: ”Jumalan sanasaattajalla ‎ﷺ oli tapana paastota, niin että sanoimme, ettei hän tule koskaan rikkomaan hänen paastoaan. Ja hän ei paastonnut, kunnes sanoimme, että hän ei tule…"
 ---
 {% raw %}

@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Mit%C3%A4-k%C3%A4y-lapselle-joka-kuolee/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Kysymykset ja vastaukset"
+aihe: "Kysymykset"
 kuvaus: "Lapsella tarkoitetaan henkilöä, joka ei ole saavuttanut murrosikää. Jos lapsi kuolee, niin tällainen katastrofi on suuri koettelemus vanhemmille, mutta se voi olla jotain, mikä johdattaa heitä lähemmäs Jumalaa…"
 ---
 {% raw %}

@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Onko-mies-parempi-kuin-nainen/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Nykypäivän yleinen stereotypia islamia kohtaan liittyy yleensä miesten ja naisten väliseen tasa-arvoon. Moni ajattelee naisten aseman olevan huonompi islamissa kuin miesten, vaikkei tämä pidä tekstien ja eletyn…"
 ---
 {% raw %}

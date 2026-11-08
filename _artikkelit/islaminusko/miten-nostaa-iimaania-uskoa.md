@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Miten-nostaa-iimaania-uskoa/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Koraanin ja sunnan oppineet ovat yksimielisiä siitä, että iimaan, eli usko on asia, joka nousee ja laskee ja se nousee hyvillä teoilla ja laskee huonoilla teoilla. Ibn Taymiyyah sanoi: \"Ja että usko lisääntyy…"
 ---
 {% raw %}

@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Kysymyksi%C3%A4-avioehdokkaalle/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Islamilaiset etiketit ja käytös"
+aihe: "Käytös ja tavat"
 kuvaus: "Islamissa sopivuus selvitetään ennen avioliiton solmimista ja kaksinkeskeisen ajan viettämista. Kumpikin puoliso voi tutustua toisiinsa asiallisesti avioliittoon johtavien aiheiden parissa niin, että prosessissa on…"
 ---
 {% raw %}

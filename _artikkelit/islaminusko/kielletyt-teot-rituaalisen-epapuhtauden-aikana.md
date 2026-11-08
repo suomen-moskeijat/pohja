@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Kielletyt-teot-rituaalisen-ep%C3%A4puhtauden-aikana/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "(Tekstin päälähde on Shaykh Saalih al-Fawzaanin Al-Mulakhhas ul-Fiqhii) Uskovaisilla on tekoja, joita on kiellettyä tehdä ilman rituaalista puhtautta. Rituaalista epäpuhtautta on suurta ja erikseen pientä."
 ---
 {% raw %}

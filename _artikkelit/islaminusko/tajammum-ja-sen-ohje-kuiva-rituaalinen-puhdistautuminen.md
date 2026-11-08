@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Tajammum-ja-sen-ohje-kuiva-rituaalinen-puhdistautuminen/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: ""
+aihe: "Muut"
 kuvaus: "(Tekstin päälähde on Shaykh Saalih al-Fawzaanin Al-Mulahkkas ul-Fiqhii) Rituaalinen epäpuhtauden tila on ensisijaisesti poistettava vedellä aiemmin käytyjen ohjeiden mukaisesti. Rukouspesu…"
 ---
 {% raw %}

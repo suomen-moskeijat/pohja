@@ -711,10 +711,10 @@ html[dir="rtl"] .u-seur__palkki span { background: linear-gradient(-90deg, var(-
 .u-hakukentta { display: flex; align-items: center; gap: 10px; padding: 0 16px; min-height: 52px; background: var(--pinta); border: 1px solid var(--raja); border-radius: 999px; color: var(--hieno); box-shadow: var(--varjo-1); }
 .u-hakukentta:focus-within { border-color: var(--kulta); outline: 2px solid color-mix(in srgb, var(--kulta) 40%, transparent); outline-offset: 1px; }
 .u-hakukentta input { flex: 1; min-width: 0; border: 0; background: none; font: inherit; font-size: 16px; color: var(--teksti); padding: 12px 0; outline: none; }
-.u-aiheet { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; -webkit-mask: linear-gradient(90deg, #000 88%, transparent); mask: linear-gradient(90deg, #000 88%, transparent); }
-html[dir="rtl"] .u-aiheet { -webkit-mask: linear-gradient(270deg, #000 88%, transparent); mask: linear-gradient(270deg, #000 88%, transparent); }
-.u-aiheet::-webkit-scrollbar { display: none; }
-@media (min-width: 900px) { .u-aiheet { flex-wrap: wrap; overflow: visible; -webkit-mask: none; mask: none; } }
+/* Aiheet riveinä: kaikki näkyvät kerralla, ei sivuttaisvetoa */
+.u-aiheet { display: flex; flex-wrap: wrap; gap: 6px; }
+@media (max-width: 599px) { .u-aihe { min-height: 36px; padding: 6px 12px; font-size: 14px; } }
+.u-aihe small { margin-inline-start: 4px; font-weight: 500; opacity: .65; }
 .u-aihe { flex: none; min-height: 40px; padding: 8px 14px; border: 1px solid var(--raja); border-radius: 999px; background: var(--pinta); color: var(--paa); font: 600 14px/1.2 var(--ft); cursor: pointer; white-space: nowrap; }
 .u-aihe[aria-pressed="true"] { background: var(--paa); border-color: var(--paa); color: #fff; }
 .u-artikkelilista { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }

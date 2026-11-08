@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Onko-islamissa-kuukautiset-h%C3%A4pe%C3%A4/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: "Fiqh (lainopilliset asiat), ohjeet ja säädökset"
+aihe: "Ohjeet"
 kuvaus: "Islamissa naisen kuukautiset eivät ole häpeällinen asia tai rangaistus naiselle, joka tekee hänestä epäpuhtaan ihmisen, johon ei saa koskea. Kuukautisiin liittyy tiettyjä säädöksiä ja jopa vapautuksia ja Jumala tietää…"
 ---
 {% raw %}

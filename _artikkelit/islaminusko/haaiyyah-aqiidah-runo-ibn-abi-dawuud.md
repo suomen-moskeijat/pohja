@@ -6,7 +6,7 @@ lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Haaiyyah-Aqiidah-runo-Ibn-Abi-Dawuud/"
 oikeudet: "© Asiya Rosa, islaminusko.fi. Sisältöä saa jakaa ja kopioida ei-kaupallisiin sekä voittoa tavoittelemattomiin tarkoituksiin."
 kirjoittaja: ""
-aihe: ""
+aihe: "Muut"
 kuvaus: "Koraanista ja sunnasta kiinni pitäminen ‎ Pidä tiukasti kiinni Allaahin köydestä ja seuraa johdatusta, äläkä ole innovoija (uskonnossa), jotta voisit menestyä. Ja harjoita uskontoasi Allahin Kirjan ja sunnan mukaisesti…"
 ---
 {% raw %}
