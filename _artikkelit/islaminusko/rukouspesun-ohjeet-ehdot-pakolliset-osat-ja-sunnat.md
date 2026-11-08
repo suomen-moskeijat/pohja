@@ -1,6 +1,6 @@
 ---
 title: "Rukouspesun ohjeet, ehdot, pakolliset osat ja sunnat"
-paiva: "2023-05-09"
+paiva: 2023-05-09
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Rukouspesun-ohjeet-ehdot-pakolliset-osat-ja-sunnat/"

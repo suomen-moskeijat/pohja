@@ -1,6 +1,6 @@
 ---
 title: "Älä kärsi!"
-paiva: "2021-11-27"
+paiva: 2021-11-27
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/%C3%84l%C3%A4-k%C3%A4rsi/"

@@ -1,6 +1,6 @@
 ---
 title: "Viiden päivittäisen rukouksen säädös"
-paiva: "2025-02-13"
+paiva: 2025-02-13
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Viiden-p%C3%A4ivitt%C3%A4isen-rukouksen-s%C3%A4%C3%A4d%C3%B6s/"

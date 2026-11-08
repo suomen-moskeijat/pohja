@@ -258,7 +258,8 @@ def tuo(lahde):
         etu = {"title": a["title"], "paiva": a["paiva"], "lahde": lahde, "lahde_nimi": asetus["nimi"],
                "lahde_url": a["lahde_url"], "oikeudet": asetus["oikeudet"], "kirjoittaja": a["kirjoittaja"],
                "aihe": a["aihe"], "kuvaus": a["kuvaus"]}
-        sisalto = "---\n" + "".join(f"{k}: {json.dumps(v, ensure_ascii=False)}\n" for k, v in etu.items()) + \
+        # paiva ilman lainausmerkkejä (YAML-päivämäärä), kuten Pages CMS tallentaa: lajittelu toimii yhdessä
+        sisalto = "---\n" + "".join(f"{k}: {v if k == 'paiva' else json.dumps(v, ensure_ascii=False)}\n" for k, v in etu.items()) + \
                   "---\n{% raw %}\n" + a["runko"].replace("{% endraw %}", "") + "\n{% endraw %}\n"
         vanha = open(polku, encoding="utf-8").read() if os.path.exists(polku) else None
         if vanha != sisalto:

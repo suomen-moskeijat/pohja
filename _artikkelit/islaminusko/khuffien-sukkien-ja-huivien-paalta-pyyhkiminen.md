@@ -1,6 +1,6 @@
 ---
 title: "Khuffien, sukkien ja huivien päältä pyyhkiminen"
-paiva: "2023-05-09"
+paiva: 2023-05-09
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Khuffien-sukkien-ja-huivien-p%C3%A4%C3%A4lt%C3%A4-pyyhkiminen/"

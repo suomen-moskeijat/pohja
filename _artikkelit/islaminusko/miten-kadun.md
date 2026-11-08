@@ -1,6 +1,6 @@
 ---
 title: "Miten kadun?"
-paiva: "2023-05-10"
+paiva: 2023-05-10
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Miten-kadun/"

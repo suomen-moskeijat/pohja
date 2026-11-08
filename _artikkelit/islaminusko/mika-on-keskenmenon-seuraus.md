@@ -1,6 +1,6 @@
 ---
 title: "Mikä on keskenmenon seuraus?"
-paiva: "2023-10-17"
+paiva: 2023-10-17
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Mik%C3%A4-on-keskenmenon-seuraus/"

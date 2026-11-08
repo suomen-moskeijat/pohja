@@ -1,6 +1,6 @@
 ---
 title: "Aqiidaan ja bida'an liittyviä termejä ja selityksiä"
-paiva: "2022-05-21"
+paiva: 2022-05-21
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Aqiidaan-ja-bidaan-liittyvi%C3%A4-termej%C3%A4-ja-selityksi%C3%A4/"

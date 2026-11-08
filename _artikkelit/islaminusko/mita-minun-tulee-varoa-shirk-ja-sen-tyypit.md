@@ -1,6 +1,6 @@
 ---
 title: "Mitä minun tulee varoa? - Shirk ja sen tyypit"
-paiva: "2022-01-25"
+paiva: 2022-01-25
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Mit%C3%A4-minun-tulee-varoa-Shirk-ja-sen-tyypit/"

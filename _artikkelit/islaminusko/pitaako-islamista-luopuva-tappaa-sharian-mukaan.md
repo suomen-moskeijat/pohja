@@ -1,6 +1,6 @@
 ---
 title: "Pitääkö islamista luopuva tappaa sharian mukaan?"
-paiva: "2023-09-26"
+paiva: 2023-09-26
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Pit%C3%A4%C3%A4k%C3%B6-islamista-luopuva-tappaa-sharian-mukaan/"

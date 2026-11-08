@@ -1,6 +1,6 @@
 ---
 title: "Laa ilaaha illAllah'n ehdot"
-paiva: "2021-10-23"
+paiva: 2021-10-23
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Laa-ilaaha-illAllahn-ehdot/"

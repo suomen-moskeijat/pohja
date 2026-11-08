@@ -1,6 +1,6 @@
 ---
 title: "Miten hurskaat edeltäjät opiskelivat?"
-paiva: "2023-04-30"
+paiva: 2023-04-30
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Miten-hurskaat-edelt%C3%A4j%C3%A4t-opiskelivat/"

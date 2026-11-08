@@ -1,6 +1,6 @@
 ---
 title: "Neljä shirkin periaatetta"
-paiva: "2022-09-13"
+paiva: 2022-09-13
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Nelj%C3%A4-shirkin-periaatetta/"

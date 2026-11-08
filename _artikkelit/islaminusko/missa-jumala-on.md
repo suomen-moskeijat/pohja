@@ -1,6 +1,6 @@
 ---
 title: "Missä Jumala on?"
-paiva: "2021-09-11"
+paiva: 2021-09-11
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Miss%C3%A4-Jumala-on/"

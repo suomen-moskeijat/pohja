@@ -1,6 +1,6 @@
 ---
 title: "Kohtalon yö ja Ramadanin 10 viimeistä yötä"
-paiva: "2022-04-19"
+paiva: 2022-04-19
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Kohtalon-y%C3%B6-ja-Ramadanin-10-viimeist%C3%A4-y%C3%B6t%C3%A4/"

@@ -1,6 +1,6 @@
 ---
 title: "Välttäkää at-taghuut! Mitä ovat at-taghuut?"
-paiva: "2021-09-22"
+paiva: 2021-09-22
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/V%C3%A4ltt%C3%A4k%C3%A4%C3%A4-at-taghuut-Mit%C3%A4-ovat-at-taghuut/"

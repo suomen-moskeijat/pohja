@@ -1,6 +1,6 @@
 ---
 title: "10 asiaa, jotka mitätöivät henkilön islamin"
-paiva: "2022-10-11"
+paiva: 2022-10-11
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/10-asiaa-jotka-mit%C3%A4t%C3%B6iv%C3%A4t-henkil%C3%B6n-islamin/"

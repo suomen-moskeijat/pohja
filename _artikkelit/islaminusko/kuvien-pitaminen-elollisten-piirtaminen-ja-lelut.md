@@ -1,6 +1,6 @@
 ---
 title: "Kuvien pitäminen, elollisten piirtäminen ja lelut"
-paiva: "2023-05-16"
+paiva: 2023-05-16
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Kuvien-pit%C3%A4minen-elollisten-piirt%C3%A4minen-ja-lelut/"

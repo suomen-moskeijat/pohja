@@ -1,6 +1,6 @@
 ---
 title: "Elämän tarkoitus"
-paiva: "2026-02-01"
+paiva: 2026-02-01
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/El%C3%A4m%C3%A4n-tarkoitus/"

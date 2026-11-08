@@ -1,6 +1,6 @@
 ---
 title: "Haukottamisen säädös"
-paiva: "2022-11-01"
+paiva: 2022-11-01
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Haukottamisen-s%C3%A4%C3%A4d%C3%B6s/"

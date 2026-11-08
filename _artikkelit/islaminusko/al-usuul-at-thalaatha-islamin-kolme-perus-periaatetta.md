@@ -1,6 +1,6 @@
 ---
 title: "Al-Usuul at-Thalaatha - Islamin kolme perus periaatetta"
-paiva: "2022-08-29"
+paiva: 2022-08-29
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Al-Usuul-at-Thalaatha-Islamin-kolme-perus-periaatetta/"

@@ -1,6 +1,6 @@
 ---
 title: "Kulmien nyppiminen ja tatuoinnit"
-paiva: "2023-03-01"
+paiva: 2023-03-01
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Kulmien-nyppiminen-ja-tatuoinnit/"

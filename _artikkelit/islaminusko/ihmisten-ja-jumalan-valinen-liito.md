@@ -1,6 +1,6 @@
 ---
 title: "Ihmisten ja Jumalan välinen liito"
-paiva: "2022-12-14"
+paiva: 2022-12-14
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Ihmisten-ja-Jumalan-v%C3%A4linen-liito/"

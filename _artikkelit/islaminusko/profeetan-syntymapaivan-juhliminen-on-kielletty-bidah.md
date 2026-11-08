@@ -1,6 +1,6 @@
 ---
 title: "Profeetan ‎ﷺ syntymäpäivän juhliminen on kielletty bida'h"
-paiva: "2021-10-21"
+paiva: 2021-10-21
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Profeetan-%EF%B7%BA-syntym%C3%A4p%C3%A4iv%C3%A4n-juhliminen-on-kielletty-bidah/"

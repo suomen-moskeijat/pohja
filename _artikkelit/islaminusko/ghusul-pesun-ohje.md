@@ -1,6 +1,6 @@
 ---
 title: "Ghusul-pesun ohje"
-paiva: "2021-10-03"
+paiva: 2021-10-03
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Ghusul-pesun-ohje/"

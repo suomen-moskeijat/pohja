@@ -1,6 +1,6 @@
 ---
 title: "20 rivin runo profeetan ﷺ elämänkerrasta"
-paiva: "2023-09-23"
+paiva: 2023-09-23
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/20-rivin-runo-profeetan-%EF%B7%BA-el%C3%A4m%C3%A4nkerrasta/"

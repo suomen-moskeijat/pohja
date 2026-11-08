@@ -1,6 +1,6 @@
 ---
 title: "Uskon pilarit"
-paiva: "2021-10-14"
+paiva: 2021-10-14
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Uskon-pilarit/"

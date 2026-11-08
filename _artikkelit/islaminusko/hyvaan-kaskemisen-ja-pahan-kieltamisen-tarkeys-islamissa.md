@@ -1,6 +1,6 @@
 ---
 title: "Hyvään käskemisen ja pahan kieltämisen tärkeys islamissa"
-paiva: "2023-01-13"
+paiva: 2023-01-13
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Hyv%C3%A4%C3%A4n-k%C3%A4skemisen-ja-pahan-kielt%C3%A4misen-t%C3%A4rkeys-islamissa/"

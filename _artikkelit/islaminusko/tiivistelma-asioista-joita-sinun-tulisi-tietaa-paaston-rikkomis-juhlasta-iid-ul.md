@@ -1,6 +1,6 @@
 ---
 title: "Tiivistelmä asioista joita sinun tulisi tietää paaston rikkomis -juhlasta (‘Iid ul-fitr) sekä iid-rukouksen ohje"
-paiva: "2024-04-09"
+paiva: 2024-04-09
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Tiivistelm%C3%A4-asioista-joita-sinun-tulisi-tiet%C3%A4%C3%A4-paaston-rikkomis-juhlasta-Iid-ul-fitr-sek%C3%A4-iid-rukouksen-ohje/"

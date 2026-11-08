@@ -1,6 +1,6 @@
 ---
 title: "Dhul-hijjan kuukauden 10 päivää, arafa-päivä, uhraus ja uhrauksen juhla"
-paiva: "2023-06-12"
+paiva: 2023-06-12
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Dhul-hijjan-kuukauden-10-p%C3%A4iv%C3%A4%C3%A4-arafa-p%C3%A4iv%C3%A4-uhraus-ja-uhrauksen-juhla/"

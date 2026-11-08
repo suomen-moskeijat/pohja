@@ -1,6 +1,6 @@
 ---
 title: "Salliiko islam naisen hakkaamisen?"
-paiva: "2023-02-12"
+paiva: 2023-02-12
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Salliiko-islam-naisen-hakkaamisen/"

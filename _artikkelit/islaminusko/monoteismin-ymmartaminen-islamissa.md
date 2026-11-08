@@ -1,6 +1,6 @@
 ---
 title: "Monoteismin ymmärtäminen islamissa"
-paiva: "2026-11-05"
+paiva: 2026-11-05
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Monoteismin-ymm%C3%A4rt%C3%A4minen-islamissa/"

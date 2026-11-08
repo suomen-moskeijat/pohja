@@ -1,6 +1,6 @@
 ---
 title: "Kielletyt teot rituaalisen epäpuhtauden aikana"
-paiva: "2023-04-01"
+paiva: 2023-04-01
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Kielletyt-teot-rituaalisen-ep%C3%A4puhtauden-aikana/"

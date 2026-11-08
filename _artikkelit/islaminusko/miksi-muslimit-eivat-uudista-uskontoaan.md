@@ -1,6 +1,6 @@
 ---
 title: "Miksi muslimit eivät uudista uskontoaan?"
-paiva: "2021-12-09"
+paiva: 2021-12-09
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Miksi-muslimit-eiv%C3%A4t-uudista-uskontoaan/"

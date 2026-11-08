@@ -1,6 +1,6 @@
 ---
 title: "Hyvän seuran tärkeys ja ystävyys islamissa"
-paiva: "2023-10-18"
+paiva: 2023-10-18
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Hyv%C3%A4n-seuran-t%C3%A4rkeys-ja-yst%C3%A4vyys-islamissa/"

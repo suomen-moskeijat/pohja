@@ -1,6 +1,6 @@
 ---
 title: "Voiko vapaaehtoisia päiviä paastota jos ramadanina menetettyjä ei olla korvattu?"
-paiva: "2023-01-19"
+paiva: 2023-01-19
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Voiko-vapaaehtoisia-p%C3%A4ivi%C3%A4-paastota-jos-ramadanina-menetettyj%C3%A4-ei-olla-korvattu/"

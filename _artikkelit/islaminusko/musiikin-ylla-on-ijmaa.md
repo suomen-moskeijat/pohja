@@ -1,6 +1,6 @@
 ---
 title: "Musiikin yllä on 'ijmaa"
-paiva: "2021-10-06"
+paiva: 2021-10-06
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Musiikin-yll%C3%A4-on-ijmaa/"

@@ -1,6 +1,6 @@
 ---
 title: "Muharramin kuukausi ja Ashura-päivä"
-paiva: "2023-07-19"
+paiva: 2023-07-19
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Muharramin-kuukausi-ja-Ashura-p%C3%A4iv%C3%A4/"

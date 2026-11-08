@@ -1,6 +1,6 @@
 ---
 title: "Profeetta Muhammadin ﷺ elämä"
-paiva: "2024-03-07"
+paiva: 2024-03-07
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Profeetta-Muhammadin-%EF%B7%BA-el%C3%A4m%C3%A4/"

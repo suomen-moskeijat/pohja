@@ -1,6 +1,6 @@
 ---
 title: "Fitrah (luonnollinen taipumus uskoa Jumalaan)"
-paiva: "2023-10-19"
+paiva: 2023-10-19
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Fitrah-luonnollinen-taipumus-uskoa-Jumalaan/"

@@ -1,6 +1,6 @@
 ---
 title: "Tämä maailma ei ole mitään verrattuna tuonpuoleiseen"
-paiva: "2025-01-13"
+paiva: 2025-01-13
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/T%C3%A4m%C3%A4-maailma-ei-ole-mit%C3%A4%C3%A4n-verrattuna-tuonpuoleiseen/"

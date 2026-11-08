@@ -1,6 +1,6 @@
 ---
 title: "Pitääkö suuta liikuttaa ja ääntä kuulua palvontateoissa?"
-paiva: "2022-07-01"
+paiva: 2022-07-01
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Pit%C3%A4%C3%A4k%C3%B6-suuta-liikuttaa-ja-%C3%A4%C3%A4nt%C3%A4-kuulua-palvontateoissa/"

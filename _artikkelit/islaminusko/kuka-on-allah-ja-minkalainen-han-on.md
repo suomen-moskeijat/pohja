@@ -1,6 +1,6 @@
 ---
 title: "Kuka on Allah ja minkälainen Hän on?"
-paiva: "2021-12-05"
+paiva: 2021-12-05
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Kuka-on-Allah-ja-mink%C3%A4lainen-H%C3%A4n-on/"

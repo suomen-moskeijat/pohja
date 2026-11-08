@@ -1,6 +1,6 @@
 ---
 title: "Harmaan alueen asiat ja koulukunta-erojen kunnioittaminen islamissa"
-paiva: "2021-09-21"
+paiva: 2021-09-21
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Harmaan-alueen-asiat-ja-koulukunta-erojen-kunnioittaminen-islamissa/"

@@ -1,6 +1,6 @@
 ---
 title: "Asiat, joita muslimi tekee, jotka saattavat vaikuttaa epäkunnioittavilta"
-paiva: "2021-10-23"
+paiva: 2021-10-23
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Asiat-joita-muslimi-tekee-jotka-saattavat-vaikuttaa-ep%C3%A4kunnioittavilta/"

@@ -1,6 +1,6 @@
 ---
 title: "Miksi islam jakaa naiset ja miehet eri kokoontumisiin?"
-paiva: "2021-11-20"
+paiva: 2021-11-20
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Miksi-islam-jakaa-naiset-ja-miehet-eri-kokoontumisiin/"

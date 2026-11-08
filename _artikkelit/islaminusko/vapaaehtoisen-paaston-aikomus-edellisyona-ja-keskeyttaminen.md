@@ -1,6 +1,6 @@
 ---
 title: "Vapaaehtoisen paaston aikomus edellisyönä ja keskeyttäminen"
-paiva: "2022-06-01"
+paiva: 2022-06-01
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Vapaaehtoisen-paaston-aikomus-edellisy%C3%B6n%C3%A4-ja-keskeytt%C3%A4minen/"

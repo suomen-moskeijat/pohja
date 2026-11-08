@@ -1,6 +1,6 @@
 ---
 title: "Tasapaino luotettavimman mielipiteen etsimisessä ja sokeasti seuraamisessa (taqliid)"
-paiva: "2026-05-01"
+paiva: 2026-05-01
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Tasapaino-luotettavimman-mielipiteen-etsimisess%C3%A4-ja-sokeasti-seuraamisessa-taqliid/"

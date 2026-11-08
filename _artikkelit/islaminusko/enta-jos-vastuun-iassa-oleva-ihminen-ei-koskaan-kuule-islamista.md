@@ -1,6 +1,6 @@
 ---
 title: "Entä jos vastuun iässä oleva ihminen ei koskaan kuule islamista?"
-paiva: "2023-10-19"
+paiva: 2023-10-19
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Ent%C3%A4-jos-vastuun-i%C3%A4ss%C3%A4-oleva-ihminen-ei-koskaan-kuule-islamista/"

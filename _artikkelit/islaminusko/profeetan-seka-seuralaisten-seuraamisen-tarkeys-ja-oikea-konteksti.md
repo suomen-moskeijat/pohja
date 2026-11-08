@@ -1,6 +1,6 @@
 ---
 title: "Profeetan ﷺ sekä seuralaisten seuraamisen tärkeys ja oikea konteksti"
-paiva: "2021-09-21"
+paiva: 2021-09-21
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Profeetan-%EF%B7%BA-sek%C3%A4-seuralaisten-seuraamisen-t%C3%A4rkeys-ja-oikea-konteksti/"

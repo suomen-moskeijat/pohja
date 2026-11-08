@@ -1,6 +1,6 @@
 ---
 title: "Ystävällisyys ja lempeys Koraanissa ja sunnassa"
-paiva: "2022-12-08"
+paiva: 2022-12-08
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Yst%C3%A4v%C3%A4llisyys-ja-lempeys-Koraanissa-ja-sunnassa/"

@@ -1,6 +1,6 @@
 ---
 title: "Asiaa kasvohuivista siitä kysyvälle"
-paiva: "2026-09-16"
+paiva: 2026-09-16
 lahde: "islaminusko"
 lahde_nimi: "islaminusko.fi"
 lahde_url: "https://www.islaminusko.fi/Lue-lis%C3%A4%C3%A4-islamista/Asiaa-kasvohuivista-siit%C3%A4-kysyv%C3%A4lle/"
