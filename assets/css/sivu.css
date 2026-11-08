@@ -548,13 +548,15 @@ html[lang="ar"] .u-alku__tunniste { letter-spacing: 0; font-size: 14px; }
 html[lang="ar"] .u-seur__otsikko { letter-spacing: 0; font-size: 14px; }
 .u-seur__huomenna { padding: 2px 8px; border-radius: 999px; background: var(--pinta); font-size: 11.5px; letter-spacing: .04em; }
 .u-seur__huomenna[hidden] { display: none; }
-.u-seur__rivi { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-top: 6px; }
+.u-seur__rivi { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-top: 6px; }
 .u-seur__paa { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 10px; min-width: 0; color: var(--paa); }
 .u-seur__nimi { font: 800 30px/1.1 var(--fo); }
 .u-seur__klo { font: 800 30px/1.1 var(--fo); font-variant-numeric: tabular-nums; }
-.u-seur__jaljella { display: grid; justify-items: end; flex: none; text-align: end; }
+.u-seur__jaljella { display: grid; justify-items: end; flex: none; text-align: end; position: relative; }
 .u-seur__jaljella b { font: 700 18px/1.1 var(--fo); font-variant-numeric: tabular-nums; color: var(--paa); }
 .u-seur__jaljella small { font-size: 12.5px; color: var(--hieno); }
+.u-seur__jaljella small { position: absolute; top: 100%; inset-inline-end: 0; white-space: nowrap; }
+.u-seur__iqamah[hidden] + .u-seur__palkki { margin-top: 30px; }
 .u-seur__iqamah { margin-top: 4px !important; font-size: 14px; color: var(--hieno); }
 .u-seur__iqamah b { font-weight: 700; color: var(--paa); }
 .u-seur__iqamah[hidden] { display: none; }
