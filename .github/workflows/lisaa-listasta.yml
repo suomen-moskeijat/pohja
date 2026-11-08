@@ -8,6 +8,10 @@ on:
       vain:
         description: "Vain nämä repot (pilkulla eroteltuina). Tyhjä = kaikki listan moskeijat, joilla ei vielä ole sivua."
         required: false
+      tuo_sivut:
+        description: "Tuo moskeijan nettisivulta logo, värit, kuvat ja tekstit (jos listassa on nettisivu)"
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -17,9 +21,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Kuvankäsittely (logon värit, kuvien pienennys)
+        run: pip install --quiet pillow || true
       - name: Luo sivut
         env:
           MOSKEIJA_AVAIN: ${{ secrets.MOSKEIJA_AVAIN }}
           ORG: ${{ github.repository_owner }}
           SYOTE_VAIN: ${{ inputs.vain }}
+          SYOTE_TUO: ${{ inputs.tuo_sivut }}
         run: python3 .github/scripts/lisaa_listasta.py

@@ -6,8 +6,8 @@
 Luo sivun jokaiselle listan moskeijalle, jolla ei vielä ole repoa ja jonka tila on tyhjä.
 Sivut ovat ehdotuksia: keltainen palkki "Ehdotus – tämä ei ole moskeijan virallinen sivu",
 eivät näy Googlessa. Mukaan tulevat vain listan julkiset tiedot (nimi, osoite, puhelin,
-sähköposti, linkit). Moskeijan omaa sivustoa (logo, kuvat, tekstit) EI tuoda ennen kuin
-moskeija on lähtenyt mukaan – silloin ajetaan Lisää moskeija nettisivu-kentän kanssa.
+sähköposti, linkit). --tuo-sivut tuo lisäksi moskeijan nettisivulta logon, värit, kuvat ja
+tekstit (vain ehdotukseen; jos moskeija ei halua sivua, repo poistetaan).
 """
 import argparse
 import csv
@@ -37,6 +37,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--vain", default=os.environ.get("SYOTE_VAIN", ""), help="pilkulla erotellut repojen nimet")
     ap.add_argument("--kuiva", help="kirjoita tiedostot kansioon, älä luo mitään")
+    ap.add_argument("--tuo-sivut", action="store_true", default=os.environ.get("SYOTE_TUO", "").lower() == "true",
+                    help="tuo moskeijan nettisivulta logo, värit, kuvat ja tekstit (ehdotukseen)")
     a = ap.parse_args()
     vain = {x.strip() for x in a.vain.split(",") if x.strip()}
     org, avain = os.environ.get("ORG", "suomen-moskeijat"), os.environ.get("MOSKEIJA_AVAIN", "")
@@ -54,7 +56,8 @@ def main():
             continue
         komento = [sys.executable, os.path.join(POHJA, ".github/scripts/lisaa_moskeija.py"),
                    "--nimi", r["nimi"], "--kaupunki", r["kaupunki"], "--osoite", r["osoite"], "--repo", repo,
-                   "--puhelin", r["puhelin"], "--sahkoposti", r["sahkoposti"], "--linkki", r["nettisivu"],
+                   "--puhelin", r["puhelin"], "--sahkoposti", r["sahkoposti"],
+                   "--nettisivu" if (a.tuo_sivut and r["nettisivu"].strip()) else "--linkki", r["nettisivu"],
                    "--facebook", r["facebook"], "--ehdotus"]
         if a.kuiva:
             komento += ["--kuiva", os.path.join(a.kuiva, repo)]
