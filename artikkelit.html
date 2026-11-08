@@ -1,0 +1,35 @@
+---
+layout: sivu
+title: Artikkelit
+permalink: /artikkelit/
+---
+{%- comment -%}
+  Artikkelit: moskeijan omat (_artikkelit/*.md, Pages CMS) ja valitut yhteiset lähteet
+  (artikkelit.lahteet, esim. islaminusko). Haku ja aiheet toimivat selaimessa.
+{%- endcomment -%}
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- assign kaikki = site.artikkelit | sort: 'paiva' | reverse -%}
+{%- assign aiheet = kaikki | map: 'aihe' | compact | uniq | sort -%}
+{% include osat/sivuhero.html avain="nav_artikkelit" johdanto_avain="artikkelit_johdanto" %}
+<div class="u-kehys u-sivu" data-artikkelit>
+  {% if kaikki.size > 0 %}
+  <div class="u-artikkelit__haku">
+    <label class="u-hakukentta">{% include ikoni-ph.html nimi="haku" koko=20 %}<span class="u-nakymaton">{% include k.html a="hae_artikkeleista" %}</span>
+      <input type="search" data-artikkelit-haku autocomplete="off" placeholder="{{ site.data.kaannokset.hae_artikkeleista.fi }}" data-paikka-en="{{ site.data.kaannokset.hae_artikkeleista.en }}" data-paikka-ar="{{ site.data.kaannokset.hae_artikkeleista.ar }}" data-paikka-so="{{ site.data.kaannokset.hae_artikkeleista.so }}">
+    </label>
+    {% if aiheet.size > 1 %}
+    <div class="u-aiheet" role="group" aria-label="Aiheet">
+      <button type="button" class="u-aihe" aria-pressed="true" data-aihe="">{% include k.html a="kaikki_aiheet" %}</button>
+      {% for ai in aiheet %}{% if ai != "" %}<button type="button" class="u-aihe" aria-pressed="false" data-aihe="{{ ai | escape }}" lang="fi">{{ ai }}</button>{% endif %}{% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  <ul class="u-artikkelilista" data-artikkelit-lista data-erä="12">
+    {% for a in kaikki %}{% include osat/artikkelikortti.html a=a %}{% endfor %}
+  </ul>
+  <p class="u-tyhja" data-artikkelit-tyhja hidden>{% include k.html a="ei_hakutuloksia" %}</p>
+  <div class="u-artikkelit__lisaa"><button type="button" class="u-nappi u-nappi--reuna" data-artikkelit-lisaa hidden>{% include k.html a="nayta_lisaa" %}</button></div>
+  {% else %}
+  <div class="u-tyhja"><span class="u-ikoni">{% include ikoni-ph.html nimi="kirja" koko=26 %}</span><p>{% include k.html a="ei_artikkeleita" %}</p></div>
+  {% endif %}
+</div>

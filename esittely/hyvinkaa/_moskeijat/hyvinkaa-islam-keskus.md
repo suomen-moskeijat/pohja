@@ -160,4 +160,7 @@ galleria:
   - /tiedostot/hyvinkaa-islam-keskus/luento.jpg
   - /tiedostot/hyvinkaa-islam-keskus/yhteiso-2.jpg
   - /tiedostot/hyvinkaa-islam-keskus/rukoussali.jpg
+
+artikkelit:
+  lahteet: [islaminusko]
 ---

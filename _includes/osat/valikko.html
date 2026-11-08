@@ -6,7 +6,7 @@
 {%- assign m = include.moskeija -%}
 {%- assign j = '/' | relative_url -%}
 {%- assign _omat = site.sivut | where: "valikossa", true | sort: "jarjestys", "last" -%}
-{%- capture _linkit -%}rukousajat:nav_rukousajat,meista:nav_meista,palvelut:nav_palvelut,tapahtumat:nav_tapahtumat,OMAT,yhteystiedot:nav_yhteystiedot{% if include.tapa == "ala" %},lahjoita:nav_lahjoita{% endif %}{%- endcapture -%}
+{%- capture _linkit -%}rukousajat:nav_rukousajat,meista:nav_meista,palvelut:nav_palvelut,tapahtumat:nav_tapahtumat,artikkelit:nav_artikkelit,OMAT,yhteystiedot:nav_yhteystiedot{% if include.tapa == "ala" %},lahjoita:nav_lahjoita{% endif %}{%- endcapture -%}
 {%- assign _linkit = _linkit | split: "," -%}
 {%- for _l in _linkit -%}
   {%- if _l == "OMAT" -%}
@@ -25,6 +25,7 @@
   {%- assign _o = _l | split: ":" -%}{%- assign _sivu = _o[0] -%}{%- assign _avain = _o[1] -%}
   {%- if m.valikko_piilota contains _sivu -%}{%- continue -%}{%- endif -%}
   {%- if _sivu == "lahjoita" and m.lahjoitus == nil -%}{%- continue -%}{%- endif -%}
+  {%- if _sivu == "artikkelit" and site.artikkelit.size == 0 -%}{%- continue -%}{%- endif -%}
   {%- capture _nyt -%}{% if page.url contains _sivu %} aria-current="page"{% endif %}{%- endcapture -%}
   {%- case include.tapa -%}
   {%- when "mobiili" -%}<a class="u-mv-linkki" href="{{ j }}{{ _sivu }}/"{{ _nyt }}>{% include k.html a=_avain %}<span class="u-nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span></a>

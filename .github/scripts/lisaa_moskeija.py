@@ -154,6 +154,10 @@ alku:
   kuva: ""
   napit: [toiminta, yhteys]
 
+# Yhteiset artikkelit (islaminusko.fi, lähdemerkinnällä). Tyhjä lista = vain omat artikkelit.
+artikkelit:
+  lahteet: [islaminusko]
+
 # Valikosta piilotettavat sivut, esim. [tapahtumat]. Lahjoita näkyy, kun lahjoitustiedot on lisätty.
 valikko_piilota: []
 galleria: []

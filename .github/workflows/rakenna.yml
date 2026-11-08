@@ -56,6 +56,10 @@ jobs:
           (cd moskeija && tar --exclude=.git --exclude=.github -cf - .) | (cd sivu && tar -xf -)
           cat pohja/_config.yml moskeija/_config.yml > sivu/_config.yml
 
+      - name: Valitse yhteiset artikkelit (artikkelit.lahteet)
+        working-directory: sivu
+        run: python3 .github/scripts/artikkelit.py --karsi .
+
       - name: Hae Instagram-julkaisut
         working-directory: sivu
         run: python3 .github/scripts/instagram.py

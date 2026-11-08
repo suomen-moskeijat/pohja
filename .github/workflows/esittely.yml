@@ -33,6 +33,7 @@ jobs:
             (cd esittely/$nimi && tar -cf - .) | (cd $d && tar -xf -)
             cat _config.yml esittely/$nimi/_config.yml > $d/_config.yml
             printf '\nbaseurl: "/pohja/%s"\nnoindex: true\n' "$nimi" >> $d/_config.yml
+            python3 $d/.github/scripts/artikkelit.py --karsi $d
             (cd $d && python3 .github/scripts/instagram.py; python3 .github/scripts/rukousajat.py; python3 .github/scripts/somet.py) || true
           done
 

@@ -439,4 +439,35 @@
       el.setAttribute(attr, base + el.getAttribute(attr));
     });
   }
+
+  /* ---------- Artikkelit: haku, aiheet ja "Näytä lisää" ---------- */
+  kaikki('[data-artikkelit]').forEach(function (juuri) {
+    var haku = juuri.querySelector('[data-artikkelit-haku]'), lisaa = juuri.querySelector('[data-artikkelit-lisaa]');
+    var tyhja = juuri.querySelector('[data-artikkelit-tyhja]'), lista = juuri.querySelector('[data-artikkelit-lista]');
+    if (!lista) return;
+    var kortit = kaikki('[data-artikkeli]', lista), era = parseInt(lista.getAttribute('data-erä'), 10) || 12, naytetaan = era, aihe = '';
+    function paikka() { if (haku) haku.placeholder = haku.getAttribute('data-paikka-' + kieli()) || haku.getAttribute('placeholder'); }
+    function paivita() {
+      var q = haku ? haku.value.trim().toLowerCase() : '', osuvat = 0;
+      kortit.forEach(function (k) {
+        var ok = (!aihe || k.getAttribute('data-aihe') === aihe) && (!q || k.getAttribute('data-haku').indexOf(q) !== -1);
+        if (ok) osuvat++;
+        k.hidden = !ok || (!q && osuvat > naytetaan);
+      });
+      if (tyhja) tyhja.hidden = osuvat > 0;
+      if (lisaa) lisaa.hidden = !!q || osuvat <= naytetaan;
+    }
+    if (haku) haku.addEventListener('input', paivita);
+    if (lisaa) lisaa.addEventListener('click', function () { naytetaan += era; paivita(); });
+    kaikki('[data-aihe]', juuri).forEach(function (b) {
+      if (b.tagName !== 'BUTTON') return;
+      b.addEventListener('click', function () {
+        aihe = b.getAttribute('data-aihe'); naytetaan = era;
+        kaikki('button[data-aihe]', juuri).forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        paivita();
+      });
+    });
+    document.addEventListener('kielivaihto', paikka);
+    paikka(); paivita();
+  });
 })();

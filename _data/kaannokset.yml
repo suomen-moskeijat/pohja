@@ -187,3 +187,14 @@ telegramissa:       { fi: "Telegramissa", en: "On Telegram", ar: "على تيل�
 tg_liity:           { fi: "Liity", en: "Join", ar: "انضم", so: "Ku biir" }
 tg_lue:             { fi: "Lue Telegramissa", en: "Read on Telegram", ar: "اقرأ على تيليجرام", so: "Ka akhri Telegram" }
 myos_somessa:       { fi: "Löydät meidät myös", en: "Also find us on", ar: "تجدوننا أيضاً على", so: "Sidoo kale nagu hel" }
+artikkelit_johdanto: { fi: "Kirjoituksia islamista suomeksi: perusteet, rukous, paasto, juhlat ja hyvät tavat.", en: "Writings about Islam in Finnish: the basics, prayer, fasting, celebrations and good manners.", ar: "مقالات عن الإسلام باللغة الفنلندية: الأساسيات والصلاة والصيام والأعياد والآداب.", so: "Qoraallo ku saabsan Islaamka oo af-Finnish ah: aasaaska, salaadda, soonka, ciidaha iyo akhlaaqda." }
+hae_artikkeleista:  { fi: "Hae artikkeleista", en: "Search articles", ar: "ابحث في المقالات", so: "Ka raadi maqaallada" }
+kaikki_aiheet:      { fi: "Kaikki", en: "All", ar: "الكل", so: "Dhammaan" }
+nayta_lisaa:        { fi: "Näytä lisää", en: "Show more", ar: "عرض المزيد", so: "Muuji wax badan" }
+ei_hakutuloksia:    { fi: "Hakusanalla ei löytynyt artikkeleita.", en: "No articles match your search.", ar: "لا توجد مقالات مطابقة.", so: "Maqaal ku habboon lama helin." }
+artikkeli_lahde:    { fi: "Artikkeli on julkaistu alun perin sivustolla", en: "This article was first published on", ar: "نُشر هذا المقال أولاً على موقع", so: "Maqaalkan waxaa markii hore lagu daabacay" }
+lue_alkuperainen:   { fi: "Lue alkuperäinen", en: "Read the original", ar: "اقرأ الأصل", so: "Akhri asalka" }
+kaannos_huom:       { fi: "Käännökset ovat suuntaa antavia. Jos huomaat virheen, ilmoita siitä alkuperäiselle sivustolle.", en: "Translations are indicative. If you notice an error, please report it to the original website.", ar: "الترجمات تقريبية. إن وجدت خطأً فأبلغ الموقع الأصلي.", so: "Turjumaaduhu waa qiyaas. Haddii aad aragto qalad, u sheeg bogga asalka ah." }
+kirjoittaja:        { fi: "Kirjoittaja", en: "Author", ar: "الكاتب", so: "Qoraaga" }
+artikkeli_kieli:    { fi: "", en: "The article is in Finnish.", ar: "المقال باللغة الفنلندية.", so: "Maqaalku waa af-Finnish." }
+lisaa_aiheesta:     { fi: "Lisää samasta aiheesta", en: "More on this topic", ar: "المزيد حول هذا الموضوع", so: "Wax dheeraad ah oo mawduucan ku saabsan" }

@@ -54,6 +54,10 @@ alku:
   kuva: ""            # kun tausta: kuva, esim. /tiedostot/sali.jpg
   napit: [lapsi, toiminta]
 
+# Yhteiset artikkelit (islaminusko.fi, lähdemerkinnällä). Tyhjä lista = vain omat artikkelit.
+artikkelit:
+  lahteet: [islaminusko]
+
 # Sivut, joita ei ole käytössä (piilotetaan valikosta), esim. [tapahtumat, lahjoita]
 valikko_piilota: []
 galleria: []          # omat kuvat, esim. /tiedostot/sali.jpg

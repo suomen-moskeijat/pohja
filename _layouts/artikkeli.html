@@ -1,0 +1,41 @@
+---
+layout: sivu
+---
+{%- comment -%} Yksittäinen artikkeli (_artikkelit/). Yhteisistä lähteistä tuoduissa lähdemerkintä ja linkki alkuperäiseen. {%- endcomment -%}
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+<section class="u-sivuhero u-artikkelihero">
+  <div class="u-kuvio" aria-hidden="true"></div>
+  <div class="u-kehys">
+    <p class="u-eyebrow u-eyebrow--vaalea"><a href="{{ '/artikkelit/' | relative_url }}">{% include k.html a="nav_artikkelit" %}</a>{% if page.aihe and page.aihe != "" %} · <span lang="fi">{{ page.aihe }}</span>{% endif %}</p>
+    <h1 lang="fi" dir="auto">{{ page.title }}</h1>
+    <p class="u-sivuhero__johdanto"><time datetime="{{ page.paiva | date: '%Y-%m-%d' }}" dir="ltr">{{ page.paiva | date: '%-d.%-m.%Y' }}</time>{% if page.lahde_nimi %} · {{ page.lahde_nimi }}{% elsif page.kirjoittaja and page.kirjoittaja != "" %} · {{ page.kirjoittaja }}{% endif %}</p>
+  </div>
+</section>
+<div class="u-kehys u-sivu u-sivu--kapea">
+  <p class="u-artikkeli__kieli">{% include k.html a="artikkeli_kieli" %}</p>
+  <article class="u-kortti u-artikkeli u-artikkeli--pitka" lang="fi">
+    {% if page.kuva and page.kuva != "" %}<img class="u-artikkeli__kuva" src="{{ page.kuva | relative_url }}" alt="" loading="lazy">{% endif %}
+    <div class="u-proosa u-proosa--iso">{{ content }}</div>
+  </article>
+  {% if page.lahde_url %}
+  <aside class="u-kortti u-lahdemerkinta">
+    <span class="u-ikoni">{% include ikoni-ph.html nimi="kirja" koko=22 %}</span>
+    <div>
+      <p>{% include k.html a="artikkeli_lahde" %} <strong>{{ page.lahde_nimi }}</strong>.</p>
+      <p class="u-lahdemerkinta__pieni">{{ page.oikeudet }} {% include k.html a="kaannos_huom" %}</p>
+      <a class="u-linkki" href="{{ page.lahde_url }}" target="_blank" rel="noopener">{% include k.html a="lue_alkuperainen" %} <span class="u-flip" aria-hidden="true">→</span></a>
+    </div>
+  </aside>
+  {% endif %}
+  {%- if page.aihe and page.aihe != "" -%}
+  {%- assign samat = site.artikkelit | where: 'aihe', page.aihe | sort: 'paiva' | reverse -%}
+  {%- if samat.size > 1 %}
+  <section class="u-osio u-osio--tiivis">
+    <div class="u-osio__yla"><h2>{% include k.html a="lisaa_aiheesta" %}</h2><a class="u-linkki" href="{{ '/artikkelit/' | relative_url }}">{% include k.html a="kaikki_artikkelit" %} <span class="u-flip" aria-hidden="true">→</span></a></div>
+    <ul class="u-artikkelilista u-artikkelilista--pieni">
+      {%- assign n = 0 -%}{%- for a in samat -%}{%- if a.url == page.url -%}{%- continue -%}{%- endif -%}{%- if n >= 3 -%}{%- break -%}{%- endif -%}{%- assign n = n | plus: 1 -%}{% include osat/artikkelikortti.html a=a %}{%- endfor -%}
+    </ul>
+  </section>
+  {%- endif -%}
+  {%- endif %}
+</div>

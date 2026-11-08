@@ -46,6 +46,17 @@ rukousajat: true
 </section>
 {% endif %}
 
+{%- assign _uusimmat = site.artikkelit | sort: 'paiva' | reverse -%}
+{% if _uusimmat.size > 0 %}{% unless m.valikko_piilota contains "artikkelit" %}
+<section class="u-osio u-kehys">
+  <div class="u-osio__yla">
+    <h2>{% include k.html a="uusimmat_artikkelit" %}</h2>
+    <a class="u-linkki" href="{{ '/artikkelit/' | relative_url }}">{% include k.html a="kaikki_artikkelit" %} <span class="u-flip" aria-hidden="true">→</span></a>
+  </div>
+  <ul class="u-artikkelilista u-artikkelilista--pieni">{% for a in _uusimmat limit: 3 %}{% include osat/artikkelikortti.html a=a %}{% endfor %}</ul>
+</section>
+{% endunless %}{% endif %}
+
 {% if m.meista_lyhyt or m.meista %}
 <section class="u-osio u-kehys u-meista">
   <div class="u-meista__teksti">

@@ -12,6 +12,9 @@ collections:
   tapahtumat:
     output: true
     permalink: /tapahtumat/:name/
+  artikkelit:
+    output: true      # omat artikkelit (_artikkelit/) ja valitut yhteiset lähteet
+    permalink: /artikkelit/:name/
   sivut:
     output: true      # moskeijan omat sivut (_sivut/), esim. kirjat, lähteet, artikkelit
     permalink: /:name/
@@ -19,6 +22,8 @@ collections:
 defaults:
   - scope: { path: "", type: tapahtumat }
     values: { layout: tapahtuma }
+  - scope: { path: "", type: artikkelit }
+    values: { layout: artikkeli }
   - scope: { path: "", type: sivut }
     values: { layout: oma }
 

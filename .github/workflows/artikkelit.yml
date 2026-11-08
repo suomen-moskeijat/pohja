@@ -1,0 +1,32 @@
+# Päivittää yhteiset artikkelit (_artikkelit/<lähde>/) kerran viikossa.
+# Moskeijat valitsevat lähteet kentässä artikkelit.lahteet; sivut päivittyvät
+# seuraavassa tunnin julkaisuajossa.
+name: Päivitä yhteiset artikkelit
+
+on:
+  schedule:
+    - cron: "23 3 * * 1"     # maanantaisin
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: artikkelit
+  cancel-in-progress: false
+
+jobs:
+  paivita:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Hae islaminusko.fi
+        run: python3 .github/scripts/artikkelit.py --tuo islaminusko
+      - name: Tallenna muutokset
+        run: |
+          git add _artikkelit
+          if git diff --cached --quiet; then echo "Ei muutoksia."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Yhteiset artikkelit päivitetty"
+          git push
