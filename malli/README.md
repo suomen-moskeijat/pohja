@@ -13,6 +13,8 @@ haku tulevat yhteisestä pohjasta: https://github.com/suomen-moskeijat/pohja
 
 ## Näin muokkaat sivua (ilman koodia)
 
+Kaikki ohjeet: https://suomen-moskeijat.github.io/pohja/ohjeet/
+
 1. Avaa https://app.pagescms.org ja kirjaudu GitHub-tunnuksella.
    (Tunnuksella pitää olla oikeus tähän repoon: pyydä ylläpitäjää lisäämään sinut.)
 2. Valitse repo **REPO**.

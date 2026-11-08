@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>{{ site.title }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Manrope:wght@400;600;700&display=swap">
+  <style>
+    :root { --paa: #3f2717; --kulta: #c9a46a; --kerma: #faf6ee; --raja: #ebe3da; --hieno: #6f5b4c; --pinta: #fff; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 76px; -webkit-text-size-adjust: 100%; }
+    body { margin: 0; font: 16px/1.65 "Manrope", system-ui, sans-serif; color: #2b1a0e; background: var(--kerma); }
+    .yla { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: rgb(255 255 255 / .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--raja); }
+    .yla strong { font: 700 16px/1.2 "Sora", sans-serif; color: var(--paa); flex: 1; }
+    .yla button { min-height: 40px; padding: 8px 14px; border: 1px solid var(--raja); border-radius: 999px; background: var(--pinta); font: 600 14px "Manrope", sans-serif; color: var(--paa); cursor: pointer; }
+    .asettelu { display: grid; gap: 24px; max-width: 1180px; margin: 0 auto; padding: 20px 16px 80px; }
+    @media (min-width: 1000px) { .asettelu { grid-template-columns: 290px minmax(0, 1fr); } .yla button { display: none; } }
+    nav.sisallys { display: none; }
+    nav.sisallys.auki { display: block; }
+    @media (min-width: 1000px) { nav.sisallys { display: block; position: sticky; top: 84px; align-self: start; max-height: calc(100vh - 100px); overflow: auto; } }
+    nav.sisallys { background: var(--pinta); border: 1px solid var(--raja); border-radius: 18px; padding: 14px; font-size: 14px; }
+    nav.sisallys a { display: block; padding: 6px 10px; border-radius: 10px; color: var(--paa); text-decoration: none; }
+    nav.sisallys a:hover, nav.sisallys a.nyt { background: var(--kerma); }
+    nav.sisallys .t2 { font-weight: 700; margin-top: 8px; }
+    nav.sisallys .t3 { padding-inline-start: 22px; color: var(--hieno); }
+    .haku { width: 100%; min-height: 44px; margin-bottom: 8px; padding: 8px 14px; border: 1px solid var(--raja); border-radius: 999px; font: inherit; }
+    main { min-width: 0; background: var(--pinta); border: 1px solid var(--raja); border-radius: 22px; padding: 22px 18px; }
+    @media (min-width: 700px) { main { padding: 36px 44px; } }
+    h1, h2, h3 { font-family: "Sora", sans-serif; color: var(--paa); line-height: 1.25; }
+    h1 { font-size: clamp(28px, 6vw, 40px); margin: 0 0 12px; }
+    h2 { font-size: clamp(22px, 4.6vw, 30px); margin: 40px 0 10px; padding-top: 16px; border-top: 3px solid var(--kulta); }
+    h3 { font-size: 19px; margin: 28px 0 8px; }
+    a { color: #8a5a1c; overflow-wrap: anywhere; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 15px; display: block; overflow-x: auto; }
+    th, td { text-align: left; vertical-align: top; padding: 9px 10px; border-bottom: 1px solid var(--raja); }
+    th { background: var(--kerma); }
+    code { font-size: 14px; background: var(--kerma); padding: 1px 6px; border-radius: 6px; }
+    pre { background: #2b1a0e; color: #f6eedf; padding: 14px 16px; border-radius: 14px; overflow-x: auto; }
+    pre code { background: none; color: inherit; padding: 0; }
+    blockquote { margin: 14px 0; padding: 10px 16px; background: var(--kerma); border-inline-start: 4px solid var(--kulta); border-radius: 0 12px 12px 0; }
+    ul.task-list, li.task-list-item { list-style: none; }
+    hr { border: 0; border-top: 1px solid var(--raja); margin: 28px 0; }
+    .piilossa { display: none !important; }
+  </style>
+</head>
+<body>
+  <header class="yla"><strong>Ohjeet: moskeijoiden nettisivut</strong><button type="button" id="avaa" aria-expanded="false" aria-controls="sisallys">Sisällys</button></header>
+  <div class="asettelu">
+    <nav class="sisallys" id="sisallys" aria-label="Sisällys"><input class="haku" id="haku" type="search" placeholder="Hae ohjeista…" autocomplete="off"></nav>
+    <main id="sisalto">{{ content }}</main>
+  </div>
+  <script>
+    (function () {
+      var nav = document.getElementById('sisallys'), main = document.getElementById('sisalto');
+      var otsikot = main.querySelectorAll('h2, h3'), linkit = [];
+      otsikot.forEach(function (h) {
+        if (!h.id) return;
+        var a = document.createElement('a'); a.href = '#' + h.id; a.textContent = h.textContent; a.className = h.tagName === 'H2' ? 't2' : 't3';
+        a.addEventListener('click', function () { if (innerWidth < 1000) { nav.classList.remove('auki'); document.getElementById('avaa').setAttribute('aria-expanded', 'false'); } });
+        nav.appendChild(a); linkit.push([h, a]);
+      });
+      document.getElementById('avaa').addEventListener('click', function () { var auki = nav.classList.toggle('auki'); this.setAttribute('aria-expanded', auki); });
+      // haku: näyttää vain osumat sisällyksessä ja korostaa ensimmäisen
+      document.getElementById('haku').addEventListener('input', function () {
+        var q = this.value.trim().toLowerCase();
+        linkit.forEach(function (p) {
+          var h = p[0], teksti = h.textContent, n = h.nextElementSibling;
+          while (n && !/^H[23]$/.test(n.tagName)) { teksti += ' ' + n.textContent; n = n.nextElementSibling; }
+          p[1].classList.toggle('piilossa', !!q && teksti.toLowerCase().indexOf(q) < 0);
+        });
+      });
+      // nykyinen kohta korostetaan sisällyksessä
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (e) { e.forEach(function (x) { if (x.isIntersecting) linkit.forEach(function (p) { p[1].classList.toggle('nyt', p[0] === x.target); }); }); }, { rootMargin: '-80px 0px -70% 0px' });
+        linkit.forEach(function (p) { io.observe(p[0]); });
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+# Ohjesivu: rakennetaan tiedostosta OHJEET.md (esittely.yml kopioi sen tänne nimellä index.md)
+title: "Ohjeet – moskeijoiden nettisivut"
+url: "https://suomen-moskeijat.github.io"
+baseurl: "/pohja/ohjeet"
+markdown: kramdown
+kramdown:
+  input: GFM
+  transliterated_header_ids: true
+  hard_wrap: false
+defaults:
+  - scope: { path: "" }
+    values: { layout: ohje }

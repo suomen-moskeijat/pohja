@@ -1,5 +1,8 @@
 # Suomen moskeijat – sivupohja
 
+> **Kaikki ohjeet yhdessä paikassa:** [OHJEET.md](OHJEET.md) · verkossa https://suomen-moskeijat.github.io/pohja/ohjeet/
+> (moskeijan muokkaajille ja ylläpitäjille)
+
 Yhteinen pohja kaikkien moskeijoiden nettisivuille. Jokaisella moskeijalla on oma repo,
 jossa ovat vain sen omat tiedot (nimi, osoite, logo, tekstit, tapahtumat). Ulkoasu,
 rukousaikojen ja iqamah-aikojen haku sekä Instagram-julkaisut tulevat tästä pohjasta.
@@ -24,7 +27,8 @@ Masjidboxissa ei tyhjennä sivua.
 1. **Actions → Lisää moskeija → Run workflow**
    (https://github.com/suomen-moskeijat/pohja/actions/workflows/lisaa-moskeija.yml)
 2. Täytä lomake:
-   - **kaupunki** (pakollinen)
+   - **nettisivu**: moskeijan nykyinen sivu. Sieltä haetaan logo, värit, yhteystiedot, somet, kuvat ja tekstit
+   - **kaupunki** (ei tarvita, jos nettisivulla on osoite)
    - **Mawaqit- tai Masjidbox-linkki**, jos moskeija käyttää niitä (linkin tai upotuskoodin
      voi liittää sellaisenaan) – silloin nimi, koordinaatit, Jumuah, rukousajat, iqamah
      (ja Mawaqitista kuvat) tulevat automaattisesti

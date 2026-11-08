@@ -39,6 +39,17 @@ jobs:
 
       - uses: actions/configure-pages@v5
 
+      - name: Kokoa ohjeet (OHJEET.md)
+        run: |
+          mkdir -p koottu/ohjeet && cp -r esittely/ohjeet/. koottu/ohjeet/
+          printf -- '---\n---\n' > koottu/ohjeet/index.md && cat OHJEET.md >> koottu/ohjeet/index.md
+
+      - name: Rakenna ohjeet
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./koottu/ohjeet
+          destination: ./_site/ohjeet
+
       - name: Rakenna Masjid Sunnah
         uses: actions/jekyll-build-pages@v1
         with:
@@ -62,6 +73,7 @@ jobs:
           <h1>Suomen moskeijat – esimerkkisivut</h1>
           <p>Sama pohja, jokaiselle moskeijalle oma sivu.</p>
           <p><a href="masjid-sunnah/">Masjid Sunnah Helsinki</a><br><small>Rukousajat Masjidboxista, Instagram, lasten opetus</small></p>
+          <p><a href="ohjeet/"><b>Ohjeet</b></a><br><small>Muokkaajille ja ylläpitäjille: kaikki ohjeet yhdessä paikassa</small></p>
           <p><a href="hyvinkaa/">Hyvinkää Islam Keskus</a><br><small>Lisätty Mawaqit-linkillä: rukousajat ja kuvat Mawaqitista; YouTube ja Telegram esimerkkikanavina</small></p>
           </body>
           HTML
