@@ -34,6 +34,8 @@ AVAINSANAT = {
     "toiminta": r"toimin|palvel|opetus|koulu|madrasa|tapahtum|event|ohjelma|kurssi|services",
     "lahjoitus": r"lahjoi|donat|tue-|tuki|support",
 }
+# WordPress-teemojen esimerkkisisältö ja sivut, jotka pohjassa ovat jo valmiina (rukousajat)
+DEMO = r"sample-page|hello-world|lorem|capital-markets|tax-consult|business-consult|finance-manag|resources-no-sidebar|elementor-|social-media-platforms|^shop$|^cart$|rukous-?ajat|prayer-?times|namaz-?vakit"
 OHITA_SIVUT = r"my-account|cart|checkout|ostoskori|kassa|login|wp-admin|privacy|tietosuoja|cookie|evaste|feed|xmlrpc|tag/|category/|author/|page/\d"
 OHITA_KUVAT = r"logo|icon|favicon|avatar|emoji|sprite|placeholder|arrow|unsplash|pexels|pixabay|stock|shutterstock|adobestock|gemini|chatgpt|dall-?e|ai-generated|banner-ad|\.svg|data:"
 
@@ -320,7 +322,7 @@ def tuo(osoite, kuvakansio=None, enintaan_kuvia=6):
     if wp:
         valmiit = AVAINSANAT["meista"] + "|" + AVAINSANAT["yhteys"] + "|" + AVAINSANAT["lahjoitus"] + "|koti|home|etusivu|front"
         for s in wp["sivut"]:
-            if re.search(OHITA_SIVUT, s["slug"]) or re.search(valmiit, s["slug"] + " " + s["nimi"], re.I):
+            if re.search(OHITA_SIVUT, s["slug"]) or re.search(DEMO, s["slug"], re.I) or re.search(valmiit, s["slug"] + " " + s["nimi"], re.I):
                 continue
             h = tiivista(siivoa(s["html"], perus.rstrip("/")))
             if len(teksti(h)) >= 120:
@@ -329,6 +331,8 @@ def tuo(osoite, kuvakansio=None, enintaan_kuvia=6):
                 tulos["omat_sivut"].append({"slug": slug, "nimi": nimi, "html": h, "url": s["url"]})
         tulos["artikkelit"] = []
         for s in wp["kirjoitukset"]:
+            if re.search(DEMO, s["slug"], re.I) or re.search(r"(?i)lorem ipsum", s["html"]):
+                continue
             h = tiivista(siivoa(s["html"], perus.rstrip("/")))
             if len(teksti(h)) >= 120:
                 tulos["artikkelit"].append({"slug": s["slug"], "nimi": s["nimi"], "html": h, "paiva": s["paiva"],

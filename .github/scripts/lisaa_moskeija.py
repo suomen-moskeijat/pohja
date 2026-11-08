@@ -120,6 +120,10 @@ def tuo_nettisivu(osoite):
         return {}
 
 
+# Tuoduista omista sivuista valikkoon vain toimintaa kuvaavat (muut näkyvät sivulla, kun ne lisätään valikkoon CMS:ssä)
+VALIKKOON = re.compile(r"(?i)ohjelma|kirjasto|l[äa]hte|resurss|opetus|koulu|madrasa|kurssi|programme|program|library|school|courses|visits|vierail")
+
+
 def lisaa_tuodut_tiedostot(t, d):
     """Logo, kuvat, omat sivut ja artikkelit vanhalta sivulta uuden repon tiedostoiksi."""
     kansio, slug = d.get("_kansio"), t["slug"]
@@ -135,7 +139,7 @@ def lisaa_tuodut_tiedostot(t, d):
         t["galleria"].append("/" + polku)
     for i, s in enumerate(d.get("omat_sivut", [])):
         lisat[f"_sivut/{s['slug']}.md"] = (
-            f"---\ntitle: {yaml_str(s['nimi'])}\nvalikossa: {'true' if i < 2 else 'false'}\njarjestys: {i + 1}\n"
+            f"---\ntitle: {yaml_str(s['nimi'])}\nvalikossa: {'true' if VALIKKOON.search(s['slug'] + ' ' + s['nimi']) else 'false'}\njarjestys: {i + 1}\n"
             f"# Tuotu vanhalta sivulta: {s['url']} – tarkista\n---\n{{% raw %}}\n{s['html']}\n{{% endraw %}}\n")
     for a in d.get("artikkelit", []):
         lisat[f"_artikkelit/{a['paiva']}-{a['slug'][:60]}.md"] = (
