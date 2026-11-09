@@ -2,9 +2,10 @@
 {%- assign m = include.moskeija -%}
 <ul class="u-toiminta">
   {% for c in m.kortit %}
-  {%- assign polku = c.linkki | default: '/palvelut/' | remove_first: '/' -%}
+  {%- assign _l = c.linkki | default: '/palvelut/' -%}{%- assign _ulk = _l | slice: 0, 4 -%}
+  {%- if _ulk == 'http' -%}{%- assign _href = _l -%}{%- else -%}{%- assign _href = '/' | append: _l | replace: '//', '/' | relative_url -%}{%- endif -%}
   <li>
-    <a class="u-toiminta__kohta" href="{{ '/' | append: polku | relative_url }}">
+    <a class="u-toiminta__kohta" href="{{ _href }}"{% if _ulk == 'http' %} target="_blank" rel="noopener"{% endif %}>
       <span class="u-ikoni">{% include ikoni-ph.html nimi=c.kuvake koko=24 %}</span>
       <span class="u-toiminta__teksti">
         <strong>{% include kt.html arvo=c.nimi %}</strong>
