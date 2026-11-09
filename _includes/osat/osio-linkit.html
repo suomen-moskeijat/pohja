@@ -1,0 +1,16 @@
+{%- comment -%} Linkkikortit (kirjat, lähteet, tiedostot, lomakkeet). Parametri: o {%- endcomment -%}
+{%- assign o = include.o -%}
+{%- if o.linkit.size > 0 -%}
+<section class="u-osio u-kehys">
+  {% if o.otsikko %}<div class="u-osio__yla"><h2>{% include kt.html arvo=o.otsikko %}</h2></div>{% endif %}
+  <ul class="u-linkit">
+    {% for l in o.linkit %}{% assign _ulk = l.osoite | default: "" | slice: 0, 4 %}{% assign _kuvake = l.kuvake | default: "kirja" %}
+    <li><a class="u-kortti u-linkkikortti" href="{% include osat/linkki-href.html l=l.osoite %}"{% if _ulk == 'http' %} target="_blank" rel="noopener"{% endif %}>
+      <span class="u-ikoni">{% include ikoni-ph.html nimi=_kuvake koko=24 %}</span>
+      <span class="u-linkkikortti__teksti"><strong>{% include kt.html arvo=l.nimi %}</strong>{% if l.kuvaus %}<small>{% include kt.html arvo=l.kuvaus %}</small>{% endif %}</span>
+      <span class="u-linkkikortti__nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span>
+    </a></li>
+    {% endfor %}
+  </ul>
+</section>
+{%- endif -%}

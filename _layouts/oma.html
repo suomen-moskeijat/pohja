@@ -5,7 +5,7 @@ layout: sivu
   Moskeijan oma sivu (_sivut/<nimi>.md): esim. kirjat, hyvät lähteet, artikkelit.
   Kentät: title (suomeksi), otsikko_en/_ar/_so, johdanto, kuva, valikossa, jarjestys,
   teksti (sivun sisältö suomeksi, markdown) ja teksti_en/_ar/_so, linkit (kortteina:
-  nimi, kuvaus, osoite, kuvake: kirja | maailma | toista | kirja …).
+  nimi, kuvaus, osoite, kuvake: kirja | maailma | toista | kirja …) ja osiot (kuten etusivulla).
 {%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {%- capture _otsikko -%}{% include sivunimi.html sivu=page %}{%- endcapture -%}
@@ -35,3 +35,4 @@ layout: sivu
   </ul>
   {% endif %}
 </div>
+{% if page.osiot.size > 0 %}{% include osat/osiot.html osiot=page.osiot moskeija=m %}{% endif %}

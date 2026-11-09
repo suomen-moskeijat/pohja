@@ -1,0 +1,8 @@
+{%- comment -%} Valitut kuvat ruudukkona (esim. tapahtuman kuvat, tilat). Parametri: o {%- endcomment -%}
+{%- assign o = include.o -%}
+{%- if o.kuvat.size > 0 -%}
+<section class="u-osio u-kehys">
+  {% if o.otsikko %}<div class="u-osio__yla"><h2>{% include kt.html arvo=o.otsikko %}</h2></div>{% endif %}
+  <div class="u-galleria">{% for kuva in o.kuvat %}<a href="{{ kuva | relative_url }}" target="_blank" rel="noopener"><img src="{{ kuva | relative_url }}" alt="" loading="lazy"></a>{% endfor %}</div>
+</section>
+{%- endif -%}
