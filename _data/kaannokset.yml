@@ -29,6 +29,7 @@ ota_yhteytta:       { fi: "Ota yhteyttä", en: "Contact us", ar: "تواصل م�
 # --- Meistä ---
 meista_otsikko:     { fi: "Tietoa meistä", en: "About us", ar: "من نحن", so: "Annaga" }
 missio_otsikko:     { fi: "Missio ja visio", en: "Mission and vision", ar: "الرسالة والرؤية", so: "Hadafka iyo aragtida" }
+ukk_otsikko:        { fi: "Usein kysyttyä", en: "Frequently asked questions", ar: "أسئلة شائعة", so: "Su'aalaha badanaa la is weydiiyo" }
 toimintamme:        { fi: "Toimintamme", en: "Our activities", ar: "أنشطتنا", so: "Hawlahayaga" }
 galleria:           { fi: "Kuvagalleria", en: "Photo gallery", ar: "معرض الصور", so: "Sawirro" }
 kielet:             { fi: "Kielet", en: "Languages", ar: "اللغات", so: "Luqadaha" }

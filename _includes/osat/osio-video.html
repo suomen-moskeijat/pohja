@@ -1,0 +1,16 @@
+{%- comment -%} Etusivun YouTube-video (youtube-nocookie, latautuu vasta kun vierailija vierittää). Parametri: o {%- endcomment -%}
+{%- assign o = include.o -%}
+{%- assign _u = o.osoite | default: "" -%}
+{%- assign _id = "" -%}
+{%- if _u contains "youtu.be/" -%}{%- assign _id = _u | split: "youtu.be/" | last | split: "?" | first -%}
+{%- elsif _u contains "/shorts/" -%}{%- assign _id = _u | split: "/shorts/" | last | split: "?" | first -%}
+{%- elsif _u contains "/live/" -%}{%- assign _id = _u | split: "/live/" | last | split: "?" | first -%}
+{%- elsif _u contains "/embed/" -%}{%- assign _id = _u | split: "/embed/" | last | split: "?" | first -%}
+{%- elsif _u contains "v=" -%}{%- assign _id = _u | split: "v=" | last | split: "&" | first -%}{%- endif -%}
+{%- if _id != "" -%}
+<section class="u-osio u-kehys">
+  {% if o.otsikko %}<div class="u-osio__yla"><h2>{% include kt.html arvo=o.otsikko %}</h2></div>{% endif %}
+  <div class="u-video"><iframe src="https://www.youtube-nocookie.com/embed/{{ _id | uri_escape }}" title="{% if o.otsikko %}{{ o.otsikko.fi | default: o.otsikko | escape }}{% else %}YouTube{% endif %}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+  {% if o.teksti %}<div class="u-proosa u-video__teksti">{% include kt.html arvo=o.teksti md=true tagi="div" %}</div>{% endif %}
+</section>
+{%- endif -%}

@@ -470,6 +470,11 @@
     document.addEventListener('kielivaihto', paikka);
     paikka(); paivita();
   });
+  // Ilmoituspalkki: piilotetaan, jos päivä ei ole ilmoituksen voimassaoloajalla (sivu rakennetaan kerran tunnissa)
+  kaikki('[data-ilmoitus]').forEach(function (el) {
+    var d = new Date(), t = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+    el.hidden = t < el.getAttribute('data-alkaa') || t > el.getAttribute('data-loppuu');
+  });
   // Hallintapaneelin esikatselu: paneeli näyttää sivun kehyksessä ja lähettää värit, taustan ja
   // tekstin postMessagella. Vain ulkoasu muuttuu selaimessa; mitään ei tallenneta.
   if (window.parent !== window) {

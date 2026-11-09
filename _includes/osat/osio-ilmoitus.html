@@ -1,0 +1,13 @@
+{%- comment -%} Etusivun korostettu ilmoitus (esim. Eid-rukous, ramadan). Parametri: o {%- endcomment -%}
+{%- assign o = include.o -%}
+{%- assign _ulk = o.linkki | default: "" | slice: 0, 4 -%}
+<section class="u-osio u-kehys">
+  <div class="u-ilmoitusosio{% if o.tyyli == "tarkea" %} u-ilmoitusosio--tarkea{% endif %}" role="note">
+    <span class="u-ikoni">{% include ikoni-ph.html nimi="tahti" koko=22 %}</span>
+    <div>
+      {% if o.otsikko %}<h2>{% include kt.html arvo=o.otsikko %}</h2>{% endif %}
+      {% if o.teksti %}<div class="u-proosa">{% include kt.html arvo=o.teksti md=true tagi="div" %}</div>{% endif %}
+      {% if o.linkki and o.linkki != "" %}<a class="u-linkki" href="{% include osat/linkki-href.html l=o.linkki %}"{% if _ulk == "http" %} target="_blank" rel="noopener"{% endif %}>{% if o.linkin_teksti %}{% include kt.html arvo=o.linkin_teksti %}{% else %}{% include k.html a="lue_lisaa" %}{% endif %} <span class="u-flip" aria-hidden="true">→</span></a>{% endif %}
+    </div>
+  </div>
+</section>

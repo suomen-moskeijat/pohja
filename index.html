@@ -21,6 +21,16 @@ rukousajat: true
   </div>
 </section>
 
+{%- comment -%}
+  Etusivun osiot: moskeija voi järjestää, poistaa ja lisätä osioita (etusivu: [{osio: …}, …],
+  hallintapaneeli → Etusivun osiot). Ilman listaa näytetään oletusjärjestys.
+{%- endcomment -%}
+{%- assign _oletus = "toiminta,lapset,tapahtumat,artikkelit,meista,galleria,somet,lahjoitus,vierailu" | split: "," -%}
+{%- if m.etusivu and m.etusivu.size > 0 -%}{%- assign _osiot = m.etusivu -%}{%- else -%}{%- assign _osiot = _oletus -%}{%- endif -%}
+{%- for o in _osiot -%}
+{%- if o.osio -%}{%- assign _t = o.osio -%}{%- else -%}{%- assign _t = o -%}{%- endif -%}
+{%- case _t -%}
+{%- when "toiminta" %}
 {% if m.kortit.size > 0 %}
 <section class="u-osio u-kehys">
   <div class="u-osio__yla">
@@ -30,9 +40,9 @@ rukousajat: true
   {% include osat/toiminta.html moskeija=m %}
 </section>
 {% endif %}
-
+{%- when "lapset" %}
 <div class="u-kehys">{% include osat/lapset.html moskeija=m %}</div>
-
+{%- when "tapahtumat" %}
 {%- assign tanaan = site.time | date: '%Y-%m-%d' -%}
 {%- assign tulevia = 0 -%}
 {%- for t in site.tapahtumat -%}{%- assign loppu = t.paiva_loppuu | default: t.paiva | date: '%Y-%m-%d' -%}{%- if loppu >= tanaan -%}{%- assign tulevia = tulevia | plus: 1 -%}{%- endif -%}{%- endfor -%}
@@ -45,7 +55,7 @@ rukousajat: true
   {% include osat/tapahtumat.html maara=3 moskeija=m %}
 </section>
 {% endif %}
-
+{%- when "artikkelit" %}
 {%- assign _uusimmat = site.artikkelit | sort: 'paiva' | reverse -%}
 {% if _uusimmat.size > 0 %}{% unless m.valikko_piilota contains "artikkelit" %}
 <section class="u-osio u-kehys">
@@ -56,7 +66,7 @@ rukousajat: true
   <ul class="u-artikkelilista u-artikkelilista--pieni">{% for a in _uusimmat limit: 3 %}{% include osat/artikkelikortti.html a=a %}{% endfor %}</ul>
 </section>
 {% endunless %}{% endif %}
-
+{%- when "meista" %}
 {% if m.meista_lyhyt or m.meista %}
 <section class="u-osio u-kehys u-meista">
   <div class="u-meista__teksti">
@@ -74,13 +84,23 @@ rukousajat: true
   {% endif %}
 </section>
 {% endif %}
-
+{%- when "galleria" %}
 {% include osat/galleria.html moskeija=m kehys=true %}
-
+{%- when "somet" %}
 {% include osat/somet.html moskeija=m %}
-
+{%- when "lahjoitus" %}
 <div class="u-kehys">{% include osat/lahjoitus.html moskeija=m %}</div>
-
+{%- when "vierailu" %}
 <section class="u-osio u-kehys">
   {% include osat/vierailu.html moskeija=m %}
 </section>
+{%- when "teksti" %}
+{% include osat/osio-teksti.html o=o %}
+{%- when "ilmoitus" %}
+{% include osat/osio-ilmoitus.html o=o %}
+{%- when "video" %}
+{% include osat/osio-video.html o=o %}
+{%- when "ukk" %}
+{% include osat/osio-ukk.html o=o %}
+{%- endcase -%}
+{%- endfor %}

@@ -1,0 +1,3 @@
+{%- comment -%} Linkin osoite: ulkoinen (https://…) sellaisenaan, oma polku sivuston alle. Parametri: l {%- endcomment -%}
+{%- assign _lh = include.l | default: "" -%}{%- assign _lu = _lh | slice: 0, 4 -%}{%- assign _lm = _lh | slice: 0, 7 -%}
+{%- if _lu == "http" or _lm == "mailto:" or _lu == "tel:" -%}{{ _lh }}{%- else -%}{{ _lh | relative_url }}{%- endif -%}

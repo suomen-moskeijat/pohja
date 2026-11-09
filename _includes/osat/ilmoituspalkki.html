@@ -1,0 +1,18 @@
+{%- comment -%}
+  Koko sivuston ilmoituspalkki (ilmoitus: { teksti, linkki, alkaa, loppuu }). Näkyy kaikilla sivuilla
+  ylhäällä. Vanhentunut ilmoitus jää pois rakennuksessa, ja selain piilottaa sen päivämäärien mukaan.
+{%- endcomment -%}
+{%- assign _il = include.moskeija.ilmoitus -%}
+{%- if _il and _il.teksti -%}
+{%- assign _nyt = site.time | date: '%Y-%m-%d' -%}
+{%- assign _alku = _il.alkaa | date: '%Y-%m-%d' | default: '0000-01-01' -%}
+{%- assign _loppu = _il.loppuu | date: '%Y-%m-%d' | default: '9999-12-31' -%}
+{%- if _loppu >= _nyt -%}
+{%- assign _ulk = _il.linkki | default: "" | slice: 0, 4 -%}
+<div class="u-ilmoituspalkki" role="note" data-ilmoitus data-alkaa="{{ _alku }}" data-loppuu="{{ _loppu }}"{% if _alku > _nyt %} hidden{% endif %}>
+  {% include ikoni-ph.html nimi="tahti" koko=16 %}
+  <span>{% include kt.html arvo=_il.teksti %}</span>
+  {% if _il.linkki and _il.linkki != "" %}<a href="{% include osat/linkki-href.html l=_il.linkki %}"{% if _ulk == "http" %} target="_blank" rel="noopener"{% endif %}>{% include k.html a="lue_lisaa" %} <span class="u-flip" aria-hidden="true">→</span></a>{% endif %}
+</div>
+{%- endif -%}
+{%- endif -%}

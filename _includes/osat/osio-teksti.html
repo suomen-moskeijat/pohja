@@ -1,0 +1,14 @@
+{%- comment -%} Etusivun oma tekstiosio: otsikko, teksti, valinnainen kuva ja nappi. Parametri: o {%- endcomment -%}
+{%- assign o = include.o -%}
+{%- assign _kuva = o.kuva | default: "" -%}
+{%- assign _ulk = o.nappi_linkki | default: "" | slice: 0, 4 -%}
+<section class="u-osio u-kehys">
+  <div class="u-tekstiosio{% if _kuva != "" %} u-tekstiosio--kuva{% if o.kuvan_paikka == "vasen" %} u-tekstiosio--vasen{% endif %}{% endif %}{% if o.tausta == "vari" %} u-tekstiosio--vari{% elsif o.tausta == "vaalea" %} u-tekstiosio--vaalea{% endif %}">
+    <div class="u-tekstiosio__teksti">
+      {% if o.otsikko %}<h2>{% include kt.html arvo=o.otsikko %}</h2>{% endif %}
+      {% if o.teksti %}<div class="u-proosa">{% include kt.html arvo=o.teksti md=true tagi="div" %}</div>{% endif %}
+      {% if o.nappi_teksti and o.nappi_linkki %}<div class="u-napit"><a class="u-nappi {% if o.tausta == "vari" %}u-nappi--kulta{% else %}u-nappi--tumma{% endif %}" href="{% include osat/linkki-href.html l=o.nappi_linkki %}"{% if _ulk == "http" %} target="_blank" rel="noopener"{% endif %}>{% include kt.html arvo=o.nappi_teksti %}</a></div>{% endif %}
+    </div>
+    {% if _kuva != "" %}<img class="u-tekstiosio__kuva" src="{{ _kuva | relative_url }}" alt="" loading="lazy">{% endif %}
+  </div>
+</section>

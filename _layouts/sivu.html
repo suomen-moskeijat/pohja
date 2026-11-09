@@ -51,6 +51,7 @@
 <body>
   <a class="u-ohita" href="#sisalto">{% include k.html a="siirry_sisaltoon" %}</a>
   {% if m.ehdotus %}<div class="u-luonnos u-luonnos--ehdotus" role="status">{% include ikoni-ph.html nimi="kello" koko=16 %} <span>{% include k.html a="ehdotus_palkki" %}</span></div>{% elsif m.luonnos %}<div class="u-luonnos" role="status">{% include ikoni-ph.html nimi="kello" koko=16 %} <span>{% include k.html a="luonnos_palkki" %}</span></div>{% endif %}
+  {% include osat/ilmoituspalkki.html moskeija=m %}
   {% include osat/yla.html moskeija=m %}
 
   <main id="sisalto">
