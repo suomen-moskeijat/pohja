@@ -208,6 +208,7 @@ some:
   whatsapp_kanava: {yaml_str(t['some'].get('whatsapp_kanava'))}
 
 teema:
+  vari: oma           # valmis värimaailma (esim. smaragdi, sininen) tai oma = alla olevat värikoodit
   logo: {yaml_str(t['logo'])}            # ilman logoa yläpalkissa näkyy moskeijan nimi
   hero: vaalea
   # Omat värit (tyhjä = pohjan kulta-ruskea){' – arvattu logosta, tarkista' if t['teema'] else ''}

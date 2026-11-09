@@ -47,15 +47,15 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 | Tilanne | Kuka | Mitä tehdään |
 |---|---|---|
 | Haluan näyttää moskeijalle, millainen sivu heille tulisi | ylläpitäjä | Katso hakemistosta, onko heillä ehdotussivu. Jos ei, lisää heidät `moskeijat.csv`:hen ja aja **Luo ehdotussivut listasta** (Osa 2, kohta 3a). Lähetä linkki. |
-| Moskeija haluaa lähteä mukaan | ylläpitäjä | 1) Pages CMS → Moskeijat → poista **Ehdotus**. 2) Jos heillä on vanha nettisivu: kysy lupa ja tuo tiedot (Osa 2, kohta 3b). 3) Kysy muokkaajien GitHub-tunnukset → **Lisää muokkaaja**. Sivu on nyt luonnos. |
-| Moskeija on tarkistanut sivun ja hyväksyy sen | muokkaaja tai ylläpitäjä | Pages CMS → Moskeijat → poista **Luonnos** → Save. Sivu on julkinen noin 2 minuutissa. |
+| Moskeija haluaa lähteä mukaan | ylläpitäjä | 1) Pages CMS → Moskeijan tiedot → poista **Ehdotus**. 2) Jos heillä on vanha nettisivu: kysy lupa ja tuo tiedot (Osa 2, kohta 3b). 3) Kysy muokkaajien GitHub-tunnukset → **Lisää muokkaaja**. Sivu on nyt luonnos. |
+| Moskeija on tarkistanut sivun ja hyväksyy sen | muokkaaja tai ylläpitäjä | Pages CMS → Moskeijan tiedot → poista **Luonnos** → Save. Sivu on julkinen noin 2 minuutissa. |
 | Moskeija ei halua sivua | ylläpitäjä | Arkistoi repo (repo → Settings → Archive) tai poista se, ja merkitse `moskeijat.csv`:hen tila `ei`. Sivu poistuu hakemistosta. |
 | Uusi moskeija, joka ei ole listalla | ylläpitäjä | **Lisää moskeija** -lomake (nimi, kaupunki, Mawaqit- tai Masjidbox-linkki, nettisivu luvalla). |
 | Moskeija haluaa muokata tekstejä tai lisätä tapahtuman | muokkaaja | Pages CMS (Osa 1). |
 | Uusi henkilö haluaa muokkausoikeuden | ylläpitäjä | GitHub-tunnus → Actions → **Lisää muokkaaja** (repo + tunnus). |
 | Henkilö lopettaa | ylläpitäjä | moskeijan repo → Settings → Collaborators → Remove. |
 | Rukousajat ovat väärin | muokkaaja | Tarkista Masjidbox tai Mawaqit. Jos moskeija ei käytä kumpaakaan, ylläpitäjä valitsee lähteen (Osa 2, kohta 7). |
-| Moskeija ottaa Mawaqitin tai Masjidboxin käyttöön | ylläpitäjä | Pages CMS → Moskeijat → Rukousajat: lähde ja tunnus. |
+| Moskeija ottaa Mawaqitin tai Masjidboxin käyttöön | ylläpitäjä | Pages CMS → Moskeijan tiedot → Rukousajat: lähde ja tunnus. |
 | Moskeija haluaa oman osoitteen (esim. moskeija.fi) | ylläpitäjä | Osa 2, kohta 8. Tee vasta, kun sivu on julkaistu. |
 | Sivu ei päivity tai näyttää rikkinäiseltä | ylläpitäjä | Osa 2, kohta 10 (Actions-loki). |
 | Haluan muuttaa ulkoasua kaikille | ylläpitäjä | Muutos pohjaan → tarkista esittelysivulta → kaikki päivittyvät tunnin sisällä. |
@@ -86,7 +86,7 @@ Kun olet kirjautunut ja valinnut moskeijasi, vasemmalla on valikko:
 
 | Valikossa | Mitä siellä tehdään |
 |---|---|
-| **Moskeijat** | moskeijan tiedot: yhteystiedot, Jumua, tekstit eri kielillä, etusivun tausta ja napit, valikko, lahjoitustiedot, somet, värit ja logo |
+| **Moskeijan tiedot** | moskeijan tiedot: yhteystiedot, Jumua, tekstit eri kielillä, etusivun tausta ja napit, valikko, lahjoitustiedot, somet, värit ja logo |
 | **Tapahtumat** | tulevat tapahtumat (menneet katoavat sivulta itsestään) |
 | **Artikkelit** | moskeijan omat kirjoitukset ja tiedotteet |
 | **Omat sivut** | lisäsivut, esim. kirjasto, hyvät lähteet, viikko-ohjelma |
@@ -109,7 +109,7 @@ Muokkaa kenttää ja paina lopuksi **Save** (Tallenna).
 4. **Save.** Kolme uusinta näkyy etusivulla, ja kaikki löytyvät Artikkelit-sivulta haun ja aiheiden kautta.
 
 **Yhteiset artikkelit:** sivulla on valmiina noin 110 suomenkielistä artikkelia islaminusko.fi:stä
-(lähde mainitaan jokaisessa). Ne saa pois tai takaisin kohdasta **Moskeijat → Yhteiset artikkelit**.
+(lähde mainitaan jokaisessa). Ne saa pois tai takaisin kohdasta **Moskeijan tiedot → Yhteiset artikkelit**.
 
 ### 5. Oma sivu (kirjasto, lähteet, viikko-ohjelma …)
 
@@ -118,9 +118,21 @@ Muokkaa kenttää ja paina lopuksi **Save** (Tallenna).
 3. Kirjoita **sisältö** ja lisää halutessasi **linkit kortteina** (nimi, kuvaus, osoite tai PDF-tiedosto, kuvake).
 4. **Näytä valikossa** päälle, niin sivu tulee valikkoon. **Järjestys** määrää paikan valikossa.
 
-### 6. Etusivun yläosa: tausta ja napit
+### 6. Kokeile ulkoasua ennen valintaa: /esikatselu/
 
-**Moskeijat → Etusivun yläosa**
+Avaa oma sivusi ja lisää osoitteen perään **`/esikatselu/`**, esim.
+`https://suomen-moskeijat.github.io/hyvinkaa-islam-keskus/esikatselu/`.
+Napauta värimaailmaa ja taustaa: etusivu vaihtuu heti puhelimen kokoisessa ikkunassa.
+Sivu kertoo myös, mistä saman valinnan tekee Pages CMS:ssä. Esikatselu ei muuta mitään.
+
+**Värimaailmat** (valitaan nimellä, värikoodeja ei tarvita): Kulta-ruskea, Smaragdinvihreä,
+Metsänvihreä ja kulta, Turkoosi, Sininen, Yönsininen ja kulta, Persiansininen, Violetti,
+Viininpunainen, Terrakotta, Oliivinvihreä, Grafiitti ja kulta, sekä *Nykyiset värit (logon mukaan)*.
+Valinta: **Moskeijan tiedot → Ulkoasu: värit ja logo → Värit**.
+
+### 6b. Etusivun yläosa: tausta ja napit
+
+**Moskeijan tiedot → Etusivun yläosa**
 
 | Tausta | Miltä näyttää |
 |---|---|
@@ -144,7 +156,7 @@ Muokkaa kenttää ja paina lopuksi **Save** (Tallenna).
 
 ### 7. Valikko
 
-**Moskeijat → Piilota valikosta**: valitse sivut, joita moskeijallanne ei ole, esim. *tapahtumat*.
+**Moskeijan tiedot → Piilota valikosta**: valitse sivut, joita moskeijallanne ei ole, esim. *tapahtumat*.
 **Lahjoita** on piilossa automaattisesti, kunnes lahjoitustiedot on lisätty.
 
 ### 8. Tekstit eri kielillä
@@ -155,9 +167,9 @@ Arabia näkyy automaattisesti oikealta vasemmalle.
 
 ### 9. Kuvat ja logo
 
-- **Logo:** Moskeijat → Ulkoasu → Logo. Jos logossa on tummaa tekstiä, lisää myös **vaalea logo**
+- **Logo:** Moskeijan tiedot → Ulkoasu → Logo. Jos logossa on tummaa tekstiä, lisää myös **vaalea logo**
   alapalkkia varten (tumma tausta).
-- **Kuvagalleria:** Moskeijat → Kuvagalleria. Käytä omia valokuvia. Kuvapankkien kuvia saa käyttää vain luvalla.
+- **Kuvagalleria:** Moskeijan tiedot → Kuvagalleria. Käytä omia valokuvia. Kuvapankkien kuvia saa käyttää vain luvalla.
 - Lapsista ja ihmisistä otettuihin kuviin kysytään lupa.
 - Mawaqitissa olevat moskeijan kuvat tulevat sivulle automaattisesti.
 
@@ -173,17 +185,17 @@ Rukousajat tulevat automaattisesti, eikä niitä tarvitse muokata sivulla:
 | **laskenta** | muualla sijainnista samalla tavalla kuin rukousajat.fi |
 
 Ajat päivittyvät kerran tunnissa. **Iqamah:** jos lähde ei kerro iqamahia, käytetään moskeijan
-oletusminuutteja (Moskeijat → Rukousajat → Iqamah oletus).
+oletusminuutteja (Moskeijan tiedot → Rukousajat → Iqamah oletus).
 
 ### 11. Somet
 
 - **Instagram, YouTube ja Telegram:** uusimmat julkaisut näkyvät sivulla automaattisesti ("Seuraa meitä").
 - **Facebook, TikTok, X, Snapchat, WhatsApp-kanava:** näkyvät kuvakkeina.
-- Lisää osoitteet kohtaan **Moskeijat → Some**.
+- Lisää osoitteet kohtaan **Moskeijan tiedot → Some**.
 
 ### 12. Lahjoitukset ja lomakkeet
 
-- **Lahjoitustiedot:** Moskeijat → Lahjoitus (saaja, tilinumero, viite, MobilePay tai verkkomaksun linkki).
+- **Lahjoitustiedot:** Moskeijan tiedot → Lahjoitus (saaja, tilinumero, viite, MobilePay tai verkkomaksun linkki).
 - **Lomakkeet** (lasten opetus, Kysy moskeijalta) avautuvat valmiina WhatsApp-viestinä tai
   sähköpostina. Ilman WhatsAppia viesti lähtee sähköpostilla.
 
@@ -247,7 +259,7 @@ suomen-moskeijat/<moskeija>       ← yhden moskeijan tiedot + julkaisu.yml, jok
 2. **Tarkista** sivu itse tarkistuslistalla (alla).
 3. **Lähetä linkki moskeijalle**, esim. `https://suomen-moskeijat.github.io/<moskeija>/`.
    He katsovat sivun puhelimella ja kertovat korjaukset, tai korjaavat itse Pages CMS:ssä.
-4. **Hyväksyntä:** Pages CMS → Moskeijat → poista valinta **Luonnos** → Save.
+4. **Hyväksyntä:** Pages CMS → Moskeijan tiedot → poista valinta **Luonnos** → Save.
    Palkki katoaa noin 2 minuutissa, ja Google saa näyttää sivun.
 5. Myöhemmin halutessa **oma verkkotunnus** (kohta 8).
 

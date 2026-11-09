@@ -6,7 +6,7 @@ permalink: /sitemap.xml
 {%- comment -%} Sivukartta hakukoneille. Yhteisistä lähteistä tuodut artikkelit eivät ole mukana (alkuperäinen on muualla). {%- endcomment %}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
-{%- for p in site.html_pages %}{% if p.url contains "404" %}{% continue %}{% endif %}
+{%- for p in site.html_pages %}{% if p.url contains "404" or p.sitemap == false %}{% continue %}{% endif %}
   {%- assign _nimi = p.url | remove: "/" -%}{% if m.valikko_piilota contains _nimi %}{% continue %}{% endif %}{% if _nimi == "lahjoita" and m.lahjoitus == nil %}{% continue %}{% endif %}{% if _nimi == "artikkelit" and site.artikkelit.size == 0 %}{% continue %}{% endif %}
   <url><loc>{{ site.url }}{{ p.url | relative_url }}</loc>{% if p.url == "/" %}<priority>1.0</priority>{% endif %}</url>
 {%- endfor %}

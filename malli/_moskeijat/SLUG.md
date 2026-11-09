@@ -36,6 +36,7 @@ some:
 
 # ===== Ulkoasu (valinnainen) =====
 teema:
+  vari: oma           # valmis värimaailma (esim. smaragdi, sininen) tai oma
   logo: ""            # esim. /tiedostot/logo.png – ilman logoa näytetään nimi
   logo_vaalea: ""     # valinnainen: vaalea versio alapalkin tummalle taustalle
   hero: vaalea

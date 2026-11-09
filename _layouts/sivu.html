@@ -5,15 +5,18 @@
 {%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {%- assign t = m.teema -%}
+{%- assign _vt = nil -%}{%- if t.vari and t.vari != "" and t.vari != "oma" -%}{%- assign _vt = site.data.teemat[t.vari] -%}{%- endif -%}
+{%- if _vt -%}{%- assign _p = _vt.paa -%}{%- assign _pt = _vt.paa_tumma -%}{%- assign _k = _vt.korostus -%}{%- assign _kv = _vt.korostus_vaalea -%}
+{%- else -%}{%- assign _p = t.paa -%}{%- assign _pt = t.paa_tumma -%}{%- assign _k = t.korostus -%}{%- assign _kv = t.korostus_vaalea -%}{%- endif -%}
 {%- assign v = site.time | date: '%s' -%}
 {%- assign juuri = '/' | relative_url -%}
 <html lang="{{ site.kielet | first | default: 'fi' }}" dir="ltr">
 <head>
   <meta charset="utf-8">
-  {% if site.noindex or m.luonnos or m.ehdotus %}<meta name="robots" content="noindex">{% endif %}
+  {% if site.noindex or m.luonnos or m.ehdotus or page.noindex %}<meta name="robots" content="noindex">{% endif %}
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 {% include seo.html moskeija=m %}
-  <meta name="theme-color" content="{{ t.paa_tumma | default: '#2b1a0e' }}">
+  <meta name="theme-color" content="{{ _pt | default: '#2b1a0e' }}">
     <script>
     (function () {
       var sallitut = {{ site.kielet | jsonify }}, k = null;
@@ -28,12 +31,12 @@
   <link rel="stylesheet" href="{{ t.fontit_url | default: 'https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Kufi+Arabic:wght@500;600;700&display=swap' }}">
   {% if page.layout == "artikkeli" %}<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&amp;display=swap">{% endif %}
   <link rel="stylesheet" href="{{ '/assets/css/sivu.css' | relative_url }}?v={{ v }}">
-  {%- comment -%} Moskeijan omat värit ja fontit (vain annetut korvaavat oletukset) {%- endcomment -%}
+  {%- comment -%} Värit: valmis värimaailma (teema.vari, _data/teemat.yml) tai ylläpitäjän omat värikoodit (vari: oma tai tyhjä) {%- endcomment -%}
   {%- capture _teema -%}
-    {%- if t.paa and t.paa != "" -%}--paa: {{ t.paa }}; --teksti: {{ t.paa_tumma | default: t.paa }};{%- endif -%}
-    {%- if t.paa_tumma and t.paa_tumma != "" -%}--paa-tumma: {{ t.paa_tumma }};{%- endif -%}
-    {%- if t.korostus and t.korostus != "" -%}--kulta: {{ t.korostus }}; --kulta-teksti: color-mix(in srgb, {{ t.korostus }} 45%, {{ t.paa | default: '#3f2717' }});{%- endif -%}
-    {%- if t.korostus_vaalea and t.korostus_vaalea != "" -%}--kulta-vaalea: {{ t.korostus_vaalea }};{%- endif -%}
+    {%- if _p and _p != "" -%}--paa: {{ _p }}; --teksti: {{ _pt | default: _p }};{%- endif -%}
+    {%- if _pt and _pt != "" -%}--paa-tumma: {{ _pt }};{%- endif -%}
+    {%- if _k and _k != "" -%}--kulta: {{ _k }}; --kulta-teksti: color-mix(in srgb, {{ _k }} 45%, {{ _p | default: '#3f2717' }});{%- endif -%}
+    {%- if _kv and _kv != "" -%}--kulta-vaalea: {{ _kv }};{%- endif -%}
     {%- if t.tausta and t.tausta != "" -%}--tausta: {{ t.tausta }};{%- endif -%}
     {%- if t.raja and t.raja != "" -%}--raja: {{ t.raja }};{%- endif -%}
     {%- if t.hieno and t.hieno != "" -%}--hieno: {{ t.hieno }};{%- endif -%}

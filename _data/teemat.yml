@@ -1,0 +1,15 @@
+# Valmiit värimaailmat. Moskeija valitsee nimen Pages CMS:ssä (Ulkoasu → Värit),
+# ja sivulla /esikatselu/ näkee, miltä sivu näyttää kullakin värillä.
+# paa = otsikot ja tumma tausta, korostus = napit ja koristeet, korostus_vaalea = vaaleat pinnat.
+kulta:      { nimi: "Kulta-ruskea (oletus)", paa: "#3f2717", paa_tumma: "#2b1a0e", korostus: "#debb86", korostus_vaalea: "#faf1df" }
+smaragdi:   { nimi: "Smaragdinvihreä",       paa: "#0f3d2e", paa_tumma: "#0a2a20", korostus: "#5fbf8f", korostus_vaalea: "#e6f5ec" }
+metsa:      { nimi: "Metsänvihreä ja kulta", paa: "#1f3a2c", paa_tumma: "#13261c", korostus: "#d6b36a", korostus_vaalea: "#f8f1df" }
+turkoosi:   { nimi: "Turkoosi",              paa: "#013f3c", paa_tumma: "#022b29", korostus: "#3fb8c4", korostus_vaalea: "#e3f4f5" }
+sininen:    { nimi: "Sininen",               paa: "#12305a", paa_tumma: "#0b1f3d", korostus: "#6aa5dc", korostus_vaalea: "#e7f0fa" }
+yo:         { nimi: "Yönsininen ja kulta",   paa: "#14213d", paa_tumma: "#0b1427", korostus: "#e0b75e", korostus_vaalea: "#fbf3df" }
+persia:     { nimi: "Persiansininen",        paa: "#1c3f73", paa_tumma: "#11284c", korostus: "#4fb0d4", korostus_vaalea: "#e5f3f8" }
+violetti:   { nimi: "Violetti",              paa: "#3b2364", paa_tumma: "#26163f", korostus: "#b39ddb", korostus_vaalea: "#f1ecfa" }
+viini:      { nimi: "Viininpunainen",        paa: "#5a1a2b", paa_tumma: "#3c0f1c", korostus: "#d9a87a", korostus_vaalea: "#f8eee6" }
+terrakotta: { nimi: "Terrakotta",            paa: "#5a2e1f", paa_tumma: "#3d1d13", korostus: "#e39a6c", korostus_vaalea: "#fbede4" }
+oliivi:     { nimi: "Oliivinvihreä",         paa: "#3b4a1e", paa_tumma: "#263012", korostus: "#b9c47c", korostus_vaalea: "#f2f5e4" }
+grafiitti:  { nimi: "Grafiitti ja kulta",    paa: "#2b2f33", paa_tumma: "#1a1d20", korostus: "#cfaa6a", korostus_vaalea: "#f6f1e7" }

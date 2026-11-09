@@ -1,0 +1,94 @@
+---
+layout: sivu
+title: Kokeile ulkoasua
+permalink: /esikatselu/
+noindex: true
+sitemap: false
+---
+{%- comment -%}
+  Muokkaajille: kokeile värejä ja etusivun taustaa omalla sivulla ennen kuin valitset ne
+  Pages CMS:ssä. Ei näy valikossa eikä hakukoneissa. Osoite: <sivu>/esikatselu/
+{%- endcomment -%}
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- assign t = m.teema -%}
+{%- assign _kuva = m.alku.kuva -%}
+{%- if _kuva == nil or _kuva == "" -%}{%- assign _kuva = m.galleria | first -%}{%- endif -%}
+{%- if _kuva == nil or _kuva == "" -%}{%- assign _kuva = site.data.kuvat[m.slug].kuvat | first -%}{%- endif -%}
+{%- assign _nyt = t.vari | default: "" -%}
+<section class="u-sivuhero">
+  <div class="u-kehys">
+    <h1>Kokeile ulkoasua</h1>
+    <p class="u-sivuhero__johdanto">Napauta väriä tai taustaa. Oikealla (puhelimessa alla) näet heti, miltä etusivu näyttäisi. Kun löydät sopivan, valitse sama Pages CMS:ssä. Tämä sivu ei muuta mitään.</p>
+  </div>
+</section>
+<div class="u-kehys u-sivu u-esik" data-esik data-kuva="{% if _kuva and _kuva != '' %}{{ _kuva | relative_url }}{% endif %}">
+  <div class="u-esik__valinnat">
+    <h2>1. Värit</h2>
+    <div class="u-esik__varit" role="group" aria-label="Värit">
+      <button type="button" class="u-esik__vari" aria-pressed="{% if _nyt == '' or _nyt == 'oma' %}true{% else %}false{% endif %}" data-vari="oma" data-nimi="Nykyiset värit (logon mukaan)"><span class="u-esik__nayte u-esik__nayte--nyt" aria-hidden="true"></span><span>Nykyiset värit</span></button>
+      {%- for _v in site.data.teemat -%}{%- assign _a = _v[0] -%}{%- assign _d = _v[1] -%}
+      <button type="button" class="u-esik__vari" aria-pressed="{% if _nyt == _a %}true{% else %}false{% endif %}" data-vari="{{ _a }}" data-nimi="{{ _d.nimi }}" data-paa="{{ _d.paa }}" data-pt="{{ _d.paa_tumma }}" data-k="{{ _d.korostus }}" data-kv="{{ _d.korostus_vaalea }}">
+        <span class="u-esik__nayte" style="--a: {{ _d.paa }}; --b: {{ _d.korostus }}; --c: {{ _d.korostus_vaalea }}" aria-hidden="true"></span><span>{{ _d.nimi }}</span>
+      </button>
+      {%- endfor -%}
+    </div>
+    <h2>2. Etusivun tausta</h2>
+    <div class="u-esik__taustat" role="group" aria-label="Tausta">
+      <button type="button" class="u-esik__tausta" aria-pressed="false" data-tausta="kuvio"><b>Kuvio</b><small>vaalea kuviotausta (oletus)</small></button>
+      <button type="button" class="u-esik__tausta" aria-pressed="false" data-tausta="kuva"{% if _kuva == nil or _kuva == "" %} disabled{% endif %}><b>Kuva</b><small>{% if _kuva and _kuva != "" %}oma valokuva tummennettuna{% else %}lisää ensin kuva galleriaan{% endif %}</small></button>
+      <button type="button" class="u-esik__tausta" aria-pressed="false" data-tausta="vari"><b>Väri</b><small>moskeijan pääväri</small></button>
+    </div>
+    <div class="u-esik__ohje" data-esik-ohje>
+      <p><b>Näin otat valinnan käyttöön:</b></p>
+      <ol>
+        <li>Avaa <a href="https://app.pagescms.org" target="_blank" rel="noopener">Pages CMS</a> ja valitse moskeijasi.</li>
+        <li><b>Moskeijan tiedot</b> → <b>Ulkoasu: värit ja logo</b> → <b>Värit</b>: <span data-esik-valittu-vari>valitse väri yllä</span></li>
+        <li><b>Etusivun yläosa: tausta ja napit</b> → <b>Tausta</b>: <span data-esik-valittu-tausta>valitse tausta yllä</span></li>
+        <li><b>Save</b>. Sivu päivittyy noin 2 minuutissa.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="u-esik__puhelin">
+    <iframe src="{{ '/' | relative_url }}" title="Etusivun esikatselu" data-esik-kehys loading="eager"></iframe>
+  </div>
+</div>
+<script>
+(function () {
+  var juuri = document.querySelector('[data-esik]'), kehys = juuri.querySelector('[data-esik-kehys]');
+  var kuva = juuri.getAttribute('data-kuva'), vari = null, tausta = null;
+  function doc() { try { return kehys.contentDocument; } catch (e) { return null; } }
+  function kayta() {
+    var d = doc(); if (!d || !d.documentElement) return;
+    var r = d.documentElement.style;
+    if (vari === 'oma') { ['--paa', '--teksti', '--paa-tumma', '--kulta', '--kulta-vaalea', '--kulta-teksti'].forEach(function (x) { r.removeProperty(x); }); }
+    else if (vari) {
+      r.setProperty('--paa', vari.paa); r.setProperty('--teksti', vari.pt); r.setProperty('--paa-tumma', vari.pt);
+      r.setProperty('--kulta', vari.k); r.setProperty('--kulta-vaalea', vari.kv);
+      r.setProperty('--kulta-teksti', 'color-mix(in srgb, ' + vari.k + ' 45%, ' + vari.paa + ')');
+    }
+    var alku = d.querySelector('.u-alku');
+    if (alku && tausta) {
+      alku.classList.remove('u-alku--kuva', 'u-alku--vari');
+      if (tausta === 'kuva' && kuva) { alku.classList.add('u-alku--kuva'); alku.style.setProperty('--alku-kuva', 'url("' + kuva + '")'); }
+      if (tausta === 'vari') alku.classList.add('u-alku--vari');
+    }
+  }
+  kehys.addEventListener('load', kayta);
+  juuri.querySelectorAll('[data-vari]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      vari = b.dataset.vari === 'oma' ? 'oma' : { paa: b.dataset.paa, pt: b.dataset.pt, k: b.dataset.k, kv: b.dataset.kv };
+      juuri.querySelectorAll('[data-vari]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+      juuri.querySelector('[data-esik-valittu-vari]').innerHTML = '<b>' + b.dataset.nimi + '</b>';
+      kayta();
+    });
+  });
+  juuri.querySelectorAll('[data-tausta]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      tausta = b.dataset.tausta;
+      juuri.querySelectorAll('[data-tausta]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+      juuri.querySelector('[data-esik-valittu-tausta]').innerHTML = '<b>' + b.querySelector('b').textContent + '</b>' + (tausta === 'kuva' ? ' (ja kuva kohtaan Taustakuva)' : '');
+      kayta();
+    });
+  });
+})();
+</script>
