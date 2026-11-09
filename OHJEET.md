@@ -226,6 +226,21 @@ tiedot Googlelle, sivukartta ja jakokuvat. Nämä kannattaa lisäksi tehdä itse
 
 ## Osa 2: Ylläpitäjälle
 
+> **Kaikki ylläpito onnistuu hallintapaneelista** (Ylläpito-välilehdet). GitHubia ei tarvita arjessa:
+>
+> | Välilehti | Mitä siellä tehdään |
+> |---|---|
+> | 🕌 Moskeijat | Kaikki sivut, tila (julkaistu / luonnos / ehdotus), avaa ja muokkaa, + Uusi moskeija |
+> | 🚀 Julkaisut | Jokaisen sivun viimeisin päivitys ✅/❌, julkaise uudelleen tai kaikki kerralla |
+> | 📋 Moskeijalista | Suomen moskeijat (moskeijat.csv): lisää moskeija, luo ehdotussivut napista |
+> | 🔤 Yhteiset tekstit | Valikot, napit ja otsikot kaikilla sivuilla neljällä kielellä |
+> | 🎨 Värimaailmat | Valmiit värit, joista moskeijat valitsevat – muokkaa tai lisää uusia |
+> | 🛡️ Ylläpitäjät · 📜 Muutokset · 🐞 Virheloki | Oikeudet, kaikki muutokset ja virheet |
+>
+> Moskeijan sivulla (Avaa → ⚙️ Ylläpitäjän toiminnot): julkaise uudelleen, muuta ehdotukseksi tai **poista moskeija**
+> (kirjoita tunnus vahvistukseksi; jos moskeija ei halua sivua, se merkitään listaan eikä sivua luoda uudelleen).
+> Alla olevat GitHub-ohjeet ovat varalla ja pohjan kehittämistä varten.
+
 ### 1. Kokonaisuus
 
 ```

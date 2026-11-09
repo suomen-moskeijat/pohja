@@ -1,0 +1,41 @@
+# Poistaa moskeijan sivun ja repon. Käynnistetään hallintapaneelista (Ylläpito → moskeija → Poista)
+# tai käsin. Jos moskeija ei halua sivua, listaan merkitään tila "ei", jottei sivua luoda uudelleen.
+name: Poista moskeija
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: "Poistettavan moskeijan repo (esim. masjid-esimerkki)"
+        required: true
+      syy:
+        description: "ei = moskeija ei halua sivua (merkitään listaan, ei luoda uudelleen)"
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: moskeijalista
+  cancel-in-progress: false
+
+jobs:
+  poista:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Poista repo
+        env:
+          MOSKEIJA_AVAIN: ${{ secrets.MOSKEIJA_AVAIN }}
+          ORG: ${{ github.repository_owner }}
+          REPO: ${{ inputs.repo }}
+          SYY: ${{ inputs.syy }}
+        run: python3 .github/scripts/poista_moskeija.py
+      - name: Tallenna lista
+        run: |
+          if ! git diff --quiet moskeijat.csv; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -am "Moskeijalista: ${{ inputs.repo }} poistettu"
+            git push
+          fi
