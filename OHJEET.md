@@ -315,6 +315,17 @@ python3 .github/scripts/lisaa_moskeija.py --kuiva /tmp/kokeilu --nettisivu https
 
 ### 4. Muokkaajat
 
+**Suositus: hallintapaneeli.** Muokkaajat eivät tarvitse GitHub-tunnusta. He kirjautuvat sähköpostiin tulevalla koodilla.
+
+- Paneelin koodi ja käyttöönotto-ohje ovat yksityisessä repossa `suomen-moskeijat/hallinta` (README).
+- **Ylläpitäjä** näkee kaikki moskeijat. Avaa moskeija → **Käyttäjät** → kutsu moskeijan pääkäyttäjä sähköpostilla.
+- **Pääkäyttäjä** kutsuu itse omat muokkaajansa. Muokkaaja pääsee vain oman moskeijansa tapahtumiin, tiedotteisiin ja kuviin.
+- **Pääkäyttäjä julkaisee sivun** paneelin etusivulla: *Sivu on luonnos → Julkaise sivu*.
+- Paneelin esikatselu näyttää värit, taustan ja esittelytekstin heti moskeijan oikealla sivulla.
+- **Historia:** kuka muutti mitä, ja muutoksen voi perua yhdellä napilla.
+
+Vanha tapa (GitHub-tunnus ja Pages CMS) toimii yhä:
+
 - **Uusi moskeija:** kenttä *muokkaajat* lomakkeessa.
 - **Myöhemmin:** pohja → Actions → **Lisää muokkaaja** (repo ja tunnukset), tai
   moskeijan repo → Settings → Collaborators → Add people → **Write**.

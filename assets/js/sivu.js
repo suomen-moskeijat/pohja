@@ -470,4 +470,37 @@
     document.addEventListener('kielivaihto', paikka);
     paikka(); paivita();
   });
+  // Hallintapaneelin esikatselu: paneeli näyttää sivun kehyksessä ja lähettää värit, taustan ja
+  // tekstin postMessagella. Vain ulkoasu muuttuu selaimessa; mitään ei tallenneta.
+  if (window.parent !== window) {
+    var SALLITUT = /^(https:\/\/hallinta(\.[a-z0-9-]+)*\.(workers\.dev|fi|com|org)|http:\/\/(localhost|127\.0\.0\.1):\d+)$/;
+    var VARI = /^#[0-9a-f]{6}$/i, KUVA = /^https:\/\/[A-Za-z0-9._~\/%-]+$/;
+    window.addEventListener('message', function (e) {
+      var d = e.data;
+      if (!SALLITUT.test(e.origin) || !d || d.tyyppi !== 'moskeija-esikatselu') return;
+      var r = document.documentElement.style;
+      if ('teema' in d) {
+        var t = d.teema;
+        if (t && VARI.test(t.paa) && VARI.test(t.paa_tumma) && VARI.test(t.korostus) && VARI.test(t.korostus_vaalea)) {
+          r.setProperty('--paa', t.paa); r.setProperty('--teksti', t.paa_tumma); r.setProperty('--paa-tumma', t.paa_tumma);
+          r.setProperty('--kulta', t.korostus); r.setProperty('--kulta-vaalea', t.korostus_vaalea);
+          r.setProperty('--kulta-teksti', 'color-mix(in srgb, ' + t.korostus + ' 45%, ' + t.paa + ')');
+        } else ['--paa', '--teksti', '--paa-tumma', '--kulta', '--kulta-vaalea', '--kulta-teksti'].forEach(function (x) { r.removeProperty(x); });
+      }
+      var alku = document.querySelector('.u-alku');
+      if (alku && d.tausta) {
+        alku.classList.remove('u-alku--kuva', 'u-alku--vari');
+        if (d.tausta === 'kuva' && KUVA.test(d.kuva || '')) { alku.classList.add('u-alku--kuva'); alku.style.setProperty('--alku-kuva', 'url("' + d.kuva + '")'); }
+        if (d.tausta === 'vari') alku.classList.add('u-alku--vari');
+      }
+      function teksti(valitsin, arvo) {
+        if (typeof arvo !== 'string') return;
+        var el = document.querySelector(valitsin); if (!el) return;
+        var fi = el.querySelector('[data-l="fi"]');
+        (fi || el).textContent = arvo;
+      }
+      teksti('.u-alku__esittely', d.esittely);
+      teksti('.u-alku__tunniste', d.tunniste);
+    });
+  }
 })();
