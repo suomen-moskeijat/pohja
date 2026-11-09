@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Moskeijan hallinta – malli</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+  :root { --paa: #1f3a2c; --paa-t: #13261c; --k: #c9a46a; --kv: #f6efe1; --tausta: #f6f4ef; --pinta: #fff; --raja: #e6e0d6; --hieno: #6b6458; --ok: #1e7a45; --vaara: #b3261e; --r: 16px; }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; font: 16px/1.5 Manrope, system-ui, sans-serif; color: #1d1b17; background: var(--tausta); }
+  h1, h2, h3 { font-family: Sora, sans-serif; color: var(--paa); line-height: 1.2; margin: 0; }
+  h1 { font-size: clamp(24px, 5vw, 32px); } h2 { font-size: 20px; } h3 { font-size: 16px; }
+  a { color: inherit; }
+  button, input, textarea, select { font: inherit; }
+  .malli { padding: 8px 16px; background: #fff4d6; color: #6b4e00; font-size: 13.5px; text-align: center; border-bottom: 1px solid #f0d58a; }
+  .yla { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: var(--pinta); border-bottom: 1px solid var(--raja); }
+  .yla .nimi { flex: 1; min-width: 0; }
+  .yla .nimi b { display: block; font-family: Sora, sans-serif; color: var(--paa); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .yla .nimi small { color: var(--hieno); }
+  .kehys { max-width: 1180px; margin: 0 auto; padding: 20px 16px 80px; }
+  .nappi { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 10px 18px; border: 0; border-radius: 999px; background: var(--paa); color: #fff; font-weight: 700; cursor: pointer; text-decoration: none; }
+  .nappi.toissijainen { background: var(--pinta); color: var(--paa); border: 1.5px solid var(--raja); }
+  .nappi.pieni { min-height: 38px; padding: 6px 14px; font-size: 14px; }
+  .nappi.vaara { background: var(--pinta); color: var(--vaara); border: 1.5px solid #f1c9c6; }
+  .nappi.leveä { width: 100%; }
+  .kortti { background: var(--pinta); border: 1px solid var(--raja); border-radius: var(--r); padding: 18px; }
+  .sirut { display: flex; flex-wrap: wrap; gap: 6px; }
+  .siru { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 700; }
+  .siru.luonnos { background: #fff4d6; color: #6b4e00; } .siru.ehdotus { background: #eee8f8; color: #4b3684; } .siru.julkaistu { background: #e3f4e8; color: var(--ok); }
+  .valinta { min-height: 40px; padding: 6px 14px; border: 1.5px solid var(--raja); border-radius: 999px; background: var(--pinta); color: var(--paa); font-weight: 600; cursor: pointer; }
+  .valinta[aria-pressed="true"] { background: var(--paa); color: #fff; border-color: var(--paa); }
+  label.kentta { display: grid; gap: 6px; margin-bottom: 14px; font-weight: 700; color: var(--paa); }
+  label.kentta small { font-weight: 500; color: var(--hieno); }
+  input[type=text], input[type=email], input[type=date], input[type=time], input[type=tel], textarea, select { width: 100%; min-height: 48px; padding: 10px 14px; border: 1.5px solid var(--raja); border-radius: 12px; background: #fff; color: #1d1b17; }
+  textarea { min-height: 110px; resize: vertical; }
+  input:focus, textarea:focus, select:focus { outline: 3px solid color-mix(in srgb, var(--k) 45%, transparent); border-color: var(--k); }
+  .ohje { color: var(--hieno); font-size: 14px; margin: 4px 0 0; }
+  [hidden] { display: none !important; }
+
+  /* Kirjautuminen */
+  .kirjaudu { max-width: 420px; margin: 8vh auto; padding: 0 16px; }
+  .kirjaudu .kortti { padding: 26px; display: grid; gap: 14px; }
+  .koodi { letter-spacing: .5em; text-align: center; font-size: 22px !important; font-weight: 700; }
+  .roolit { display: grid; gap: 8px; }
+  .rooli { display: grid; gap: 2px; padding: 12px 14px; border: 1.5px solid var(--raja); border-radius: 14px; background: #fff; text-align: start; cursor: pointer; }
+  .rooli b { color: var(--paa); } .rooli small { color: var(--hieno); }
+
+  /* Koti */
+  .tervetuloa { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+  .ruudut { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  @media (min-width: 760px) { .ruudut { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .ruutu { display: grid; gap: 6px; align-content: start; min-height: 120px; padding: 18px; border: 1px solid var(--raja); border-radius: var(--r); background: var(--pinta); text-align: start; cursor: pointer; transition: transform .15s, border-color .15s; }
+  .ruutu:hover { transform: translateY(-2px); border-color: var(--k); }
+  .ruutu .ik { font-size: 26px; } .ruutu b { font-family: Sora, sans-serif; color: var(--paa); font-size: 17px; } .ruutu small { color: var(--hieno); font-size: 13.5px; }
+  .lista { list-style: none; margin: 0; padding: 0; } .lista li { display: flex; flex-wrap: wrap; gap: 6px 12px; justify-content: space-between; align-items: center; padding: 12px 0; border-top: 1px solid var(--raja); }
+  .lista li:first-child { border-top: 0; } .lista small { color: var(--hieno); }
+
+  /* Muokkausnäkymä: lomake + esikatselu */
+  .muokkaus { display: grid; gap: 20px; align-items: start; }
+  @media (min-width: 1000px) { .muokkaus { grid-template-columns: minmax(0, 1fr) 390px; } .esikatselu { position: sticky; top: 76px; } }
+  .takaisin { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px; padding: 0; border: 0; background: none; color: var(--hieno); font-weight: 600; cursor: pointer; }
+  .esikatselu { display: grid; gap: 8px; justify-items: center; }
+  .esikatselu .otsake { font-size: 13px; color: var(--hieno); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .puhelin { width: min(100%, 390px); padding: 10px; border-radius: 34px; background: #1b1b1b; }
+  .puhelin iframe { display: block; width: 100%; height: min(72vh, 700px); border: 0; border-radius: 26px; background: #fff; }
+  .puhelin .sisalto { border-radius: 26px; background: #f7f6f2; padding: 16px; min-height: 360px; }
+  .alapalkki { position: sticky; bottom: 0; display: flex; gap: 10px; justify-content: flex-end; padding: 12px 0 0; background: linear-gradient(transparent, var(--tausta) 30%); }
+  .pudotus { display: grid; place-items: center; gap: 6px; min-height: 120px; padding: 18px; border: 2px dashed var(--raja); border-radius: var(--r); background: #fff; color: var(--hieno); text-align: center; cursor: pointer; }
+  .pudotus.paalla { border-color: var(--k); background: var(--kv); }
+  .kuvat { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 14px; }
+  .kuvat figure { position: relative; margin: 0; } .kuvat img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 12px; }
+  .kuvat button { position: absolute; top: 6px; right: 6px; width: 34px; height: 34px; border: 0; border-radius: 50%; background: rgb(0 0 0 / .6); color: #fff; cursor: pointer; }
+  .varit { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+  .vari { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 10px; border: 2px solid var(--raja); border-radius: 14px; background: #fff; font-weight: 600; font-size: 14px; color: var(--paa); text-align: start; cursor: pointer; }
+  .vari[aria-pressed="true"] { border-color: var(--paa); box-shadow: 0 0 0 3px var(--kv); }
+  .nayte { flex: none; width: 32px; height: 32px; border-radius: 50%; background: conic-gradient(var(--a) 0 50%, var(--b) 50% 80%, var(--c) 80% 100%); }
+  .tapahtumakortti { display: flex; gap: 14px; align-items: center; padding: 14px; background: #fff; border: 1px solid var(--raja); border-radius: 16px; }
+  .tapahtumakortti time { display: grid; place-items: center; width: 58px; height: 62px; border-radius: 12px; background: var(--kv); color: var(--paa); font-weight: 800; line-height: 1.1; }
+  .tapahtumakortti time small { font-weight: 600; font-size: 12px; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); padding: 12px 18px; border-radius: 14px; background: var(--paa-t); color: #fff; box-shadow: 0 12px 30px rgb(0 0 0 / .25); font-weight: 600; z-index: 50; max-width: calc(100% - 32px); }
+  .taulu { width: 100%; border-collapse: collapse; font-size: 14.5px; } .taulu th, .taulu td { padding: 10px 8px; border-bottom: 1px solid var(--raja); text-align: start; vertical-align: middle; }
+  .taulu th { font-size: 12.5px; color: var(--hieno); text-transform: uppercase; letter-spacing: .05em; }
+  .vaiheet { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; } .vaiheet li { display: flex; gap: 10px; align-items: center; color: var(--hieno); } .vaiheet li.valmis { color: var(--paa); font-weight: 600; }
+  .tilastot { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 16px 0; } .tilastot div { padding: 14px; border-radius: 14px; background: #fff; border: 1px solid var(--raja); } .tilastot b { display: block; font-family: Sora, sans-serif; font-size: 26px; color: var(--paa); }
+  .kutsurivi { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; align-items: end; }
+  @media (max-width: 640px) { .piilo-puh { display: none; } .kutsurivi { grid-template-columns: 1fr; } .kutsurivi .nappi { width: 100%; } }
+</style>
+</head>
+<body>
+<div class="malli">🧪 <b>Malli</b> – näin hallintapaneeli toimisi. Mitään ei tallenneta. Esikatselu käyttää Hyvinkään oikeaa sivua.</div>
+
+<!-- ===================== KIRJAUTUMINEN ===================== -->
+<section id="v-kirjaudu" class="kirjaudu">
+  <div class="kortti">
+    <h1>Kirjaudu</h1>
+    <div data-vaihe="1">
+      <label class="kentta">Sähköposti <input type="email" id="sposti" placeholder="nimi@esimerkki.fi" autocomplete="email"></label>
+      <button class="nappi leveä" data-toiminto="laheta">Lähetä kirjautumiskoodi</button>
+      <p class="ohje">Saat sähköpostiin 6-numeroisen koodin. Salasanaa ei tarvita.</p>
+    </div>
+    <div data-vaihe="2" hidden>
+      <p>Lähetimme koodin osoitteeseen <b data-sposti></b>.</p>
+      <label class="kentta">Koodi <input type="text" class="koodi" inputmode="numeric" maxlength="6" placeholder="••••••" id="koodi"></label>
+      <label style="display:flex;gap:8px;align-items:center;margin-bottom:12px"><input type="checkbox" checked> Muista tämä laite 30 päivää</label>
+      <button class="nappi leveä" data-toiminto="koodi">Kirjaudu</button>
+      <p class="ohje">Mallissa mikä tahansa koodi käy.</p>
+    </div>
+    <div data-vaihe="3" hidden>
+      <h2>Kokeile roolina</h2>
+      <p class="ohje" style="margin-bottom:10px">Oikeassa paneelissa rooli tulee kutsusta. Mallissa voit valita.</p>
+      <div class="roolit">
+        <button class="rooli" data-rooli="muokkaaja"><b>Muokkaaja</b><small>Esim. opettaja tai someaktiivi: tapahtumat, tiedotteet ja kuvat</small></button>
+        <button class="rooli" data-rooli="paakayttaja"><b>Moskeijan pääkäyttäjä</b><small>Esim. hallituksen jäsen: kaikki oman moskeijan tiedot ja oman moskeijan käyttäjät</small></button>
+        <button class="rooli" data-rooli="yllapitaja"><b>Ylläpitäjä</b><small>Me: kaikki moskeijat, uudet moskeijat ja käyttäjät</small></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== YLÄPALKKI ===================== -->
+<header class="yla" id="yla" hidden>
+  <div class="nimi"><b data-mosk-nimi>Hyvinkää Islam Keskus</b><small data-rooli-nimi></small></div>
+  <a class="nappi toissijainen pieni piilo-puh" href="../../hyvinkaa-islam-keskus/" target="_blank" rel="noopener">Avaa sivu ↗</a>
+  <button class="nappi toissijainen pieni" data-toiminto="ulos">Kirjaudu ulos</button>
+</header>
+
+<main class="kehys" id="sovellus" hidden>
+
+  <!-- ===================== KOTI ===================== -->
+  <section data-nakyma="koti">
+    <div class="tervetuloa">
+      <div><h1>Assalamu alaikum 👋</h1><p class="ohje">Mitä haluat tehdä tänään?</p></div>
+      <span class="siru luonnos">● Luonnos – moskeija tarkistaa</span>
+    </div>
+    <div class="ruudut">
+      <button class="ruutu" data-mene="tapahtuma"><span class="ik">📅</span><b>Lisää tapahtuma</b><small>Esim. avoimet ovet, Eid-rukous</small></button>
+      <button class="ruutu" data-mene="tiedote"><span class="ik">📝</span><b>Kirjoita tiedote</b><small>Uutinen tai artikkeli</small></button>
+      <button class="ruutu" data-mene="kuvat"><span class="ik">🖼️</span><b>Kuvat</b><small>Lisää tai poista kuvia</small></button>
+      <button class="ruutu" data-mene="tiedot" data-vain="paakayttaja yllapitaja"><span class="ik">🕌</span><b>Moskeijan tiedot</b><small>Esittely, yhteystiedot, Jumua</small></button>
+      <button class="ruutu" data-mene="ulkoasu" data-vain="paakayttaja yllapitaja"><span class="ik">🎨</span><b>Ulkoasu</b><small>Värit ja etusivun tausta</small></button>
+      <button class="ruutu" data-mene="kayttajat" data-vain="paakayttaja yllapitaja"><span class="ik">👥</span><b>Käyttäjät</b><small>Kutsu muokkaajia</small></button>
+      <button class="ruutu" data-mene="yllapito" data-vain="yllapitaja"><span class="ik">🗂️</span><b>Kaikki moskeijat</b><small>Ylläpitäjän näkymä</small></button>
+    </div>
+    <div class="kortti" style="margin-top:18px">
+      <h2 style="margin-bottom:6px">Viimeisimmät muutokset</h2>
+      <ul class="lista" data-historia></ul>
+    </div>
+  </section>
+
+  <!-- ===================== TAPAHTUMA ===================== -->
+  <section data-nakyma="tapahtuma" hidden>
+    <button class="takaisin" data-mene="koti">← Takaisin</button>
+    <div class="muokkaus">
+      <div class="kortti">
+        <h1 style="margin-bottom:14px">Lisää tapahtuma</h1>
+        <label class="kentta">Tapahtuman nimi <small>Esim. Avoimet ovet</small><input type="text" data-sid="t-nimi" value="Avoimet ovet"></label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <label class="kentta">Päivä <input type="date" data-sid="t-pv" value="2026-12-05"></label>
+          <label class="kentta">Kellonaika <input type="time" data-sid="t-klo" value="14:00"></label>
+        </div>
+        <label class="kentta">Kuvaus <small>Esim. Tervetuloa tutustumaan moskeijaan. Tarjolla teetä.</small><textarea data-sid="t-kuvaus">Tervetuloa tutustumaan moskeijaan! Tarjolla teetä ja keskustelua.</textarea></label>
+        <div class="pudotus" data-pudotus="t-kuva">📷 <b>Lisää juliste tai kuva</b><small>Raahaa tähän tai napauta</small></div>
+        <div class="alapalkki"><button class="nappi" data-julkaise="Tapahtuma julkaistu">Julkaise tapahtuma</button></div>
+      </div>
+      <div class="esikatselu"><span class="otsake">Näin se näkyy sivulla</span>
+        <div class="puhelin"><div class="sisalto">
+          <h3 style="margin-bottom:10px">Tulevat tapahtumat</h3>
+          <div class="tapahtumakortti"><time><span data-e="t-paiva">5</span><small data-e="t-kk">12/2026</small></time><div><b data-e="t-nimi">Avoimet ovet</b><br><small data-e="t-klo">klo 14:00</small></div></div>
+          <img data-e="t-kuva" alt="" style="width:100%;border-radius:14px;margin-top:10px" hidden>
+          <p data-e="t-kuvaus" style="color:#555;font-size:14px"></p>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TIEDOTE ===================== -->
+  <section data-nakyma="tiedote" hidden>
+    <button class="takaisin" data-mene="koti">← Takaisin</button>
+    <div class="muokkaus">
+      <div class="kortti">
+        <h1 style="margin-bottom:14px">Kirjoita tiedote</h1>
+        <label class="kentta">Otsikko <small>Esim. Ramadanin aikataulu 2027</small><input type="text" data-sid="a-otsikko" value="Ramadanin aikataulu 2027"></label>
+        <div class="kentta" style="display:grid;gap:6px;margin-bottom:14px"><b style="color:var(--paa)">Aihe</b>
+          <div class="sirut" data-aiheet>
+            <button class="valinta" aria-pressed="true">Tiedotteet</button><button class="valinta" aria-pressed="false">Juhlat</button><button class="valinta" aria-pressed="false">Ohjeet</button><button class="valinta" aria-pressed="false">Islamin perusteet</button><button class="valinta" aria-pressed="false">+ Uusi aihe</button>
+          </div></div>
+        <label class="kentta">Teksti <textarea data-sid="a-teksti" style="min-height:180px">Ramadan alkaa arviolta 8.2.2027. Tarawih-rukoukset joka ilta Ishan jälkeen. Iftar perjantaisin moskeijalla – tervetuloa koko perhe!</textarea></label>
+        <div class="alapalkki"><button class="nappi toissijainen" data-julkaise="Tallennettu luonnokseksi">Tallenna luonnos</button><button class="nappi" data-julkaise="Tiedote julkaistu">Julkaise</button></div>
+      </div>
+      <div class="esikatselu"><span class="otsake">Näin se näkyy sivulla</span>
+        <div class="puhelin"><div class="sisalto">
+          <div style="background:#fff;border:1px solid var(--raja);border-radius:18px;padding:16px">
+            <small style="color:var(--k);font-weight:700" data-e="a-aihe">Tiedotteet</small> <small style="float:right;color:#777" data-e="a-pvm"></small>
+            <h3 style="margin:6px 0" data-e="a-otsikko"></h3>
+            <p style="color:#555;font-size:14px;margin:0" data-e="a-teksti"></p>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== KUVAT ===================== -->
+  <section data-nakyma="kuvat" hidden>
+    <button class="takaisin" data-mene="koti">← Takaisin</button>
+    <div class="kortti">
+      <h1 style="margin-bottom:6px">Kuvat</h1>
+      <p class="ohje" style="margin-bottom:14px">Kuvat pienennetään ja niistä poistetaan sijaintitiedot automaattisesti. Kysy lupa ihmisiltä, jotka näkyvät kuvissa.</p>
+      <div class="pudotus" data-pudotus="galleria">📷 <b>Lisää kuvia</b><small>Raahaa tähän tai napauta – useita kerralla</small></div>
+      <div class="kuvat" data-galleria></div>
+      <div class="alapalkki"><button class="nappi" data-julkaise="Kuvat päivitetty">Julkaise muutokset</button></div>
+    </div>
+  </section>
+
+  <!-- ===================== TIEDOT ===================== -->
+  <section data-nakyma="tiedot" hidden>
+    <button class="takaisin" data-mene="koti">← Takaisin</button>
+    <div class="muokkaus">
+      <div class="kortti">
+        <h1 style="margin-bottom:14px">Moskeijan tiedot</h1>
+        <label class="kentta">Esittely etusivulla <small>1–2 lausetta. Muutos näkyy heti oikealla.</small><textarea data-sid="m-esittely">Emme ole vain rukoushuone. Olemme naapureita, ystäviä ja hyvinkääläisiä. Tervetuloa kaikille – uskonnosta riippumatta.</textarea></label>
+        <label class="kentta">Pieni teksti nimen yläpuolella <small>Esim. kaupunginosa</small><input type="text" data-sid="m-tunniste" value="Hyvinkää"></label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <label class="kentta">Puhelin <input type="tel" placeholder="+358 40 123 4567"></label>
+          <label class="kentta">WhatsApp <input type="tel" placeholder="+358 40 123 4567"></label>
+        </div>
+        <label class="kentta">Perjantairukous <small>Tyhjä = haetaan Mawaqitista</small><input type="text" value="12.30"></label>
+        <details style="margin:4px 0 14px"><summary style="cursor:pointer;font-weight:700;color:var(--paa)">🌐 Muut kielet (valinnainen)</summary>
+          <p class="ohje">Paina "Käännä", niin tekoäly ehdottaa englannin, arabian ja somalin. Tarkista ennen julkaisua.</p>
+          <button class="nappi toissijainen pieni" data-julkaise="Käännösehdotukset lisätty – tarkista">✨ Käännä</button>
+        </details>
+        <div class="alapalkki"><button class="nappi" data-julkaise="Tiedot päivitetty">Julkaise</button></div>
+      </div>
+      <div class="esikatselu"><span class="otsake">Esikatselu: oikea sivu</span><div class="puhelin"><iframe data-kehys title="Esikatselu"></iframe></div></div>
+    </div>
+  </section>
+
+  <!-- ===================== ULKOASU ===================== -->
+  <section data-nakyma="ulkoasu" hidden>
+    <button class="takaisin" data-mene="koti">← Takaisin</button>
+    <div class="muokkaus">
+      <div class="kortti">
+        <h1 style="margin-bottom:14px">Ulkoasu</h1>
+        <h2 style="margin-bottom:10px">Värit</h2>
+        <div class="varit" data-varit></div>
+        <h2 style="margin:18px 0 10px">Etusivun tausta</h2>
+        <div class="sirut" data-taustat><button class="valinta" aria-pressed="true" data-tausta="kuvio">Kuvio</button><button class="valinta" aria-pressed="false" data-tausta="kuva">Oma kuva</button><button class="valinta" aria-pressed="false" data-tausta="vari">Väri</button></div>
+        <h2 style="margin:18px 0 10px">Logo</h2>
+        <div class="pudotus" data-pudotus="logo">🖼️ <b>Vaihda logo</b><small>PNG läpinäkyvällä taustalla on paras</small></div>
+        <div class="alapalkki"><button class="nappi" data-julkaise="Ulkoasu päivitetty">Julkaise</button></div>
+      </div>
+      <div class="esikatselu"><span class="otsake">Esikatselu: oikea sivu</span><div class="puhelin"><iframe data-kehys title="Esikatselu"></iframe></div></div>
+    </div>
+  </section>
+
+  <!-- ===================== KÄYTTÄJÄT ===================== -->
+  <section data-nakyma="kayttajat" hidden>
+    <button class="takaisin" data-mene="koti">← Takaisin</button>
+    <div class="kortti">
+      <h1 style="margin-bottom:6px">Käyttäjät</h1>
+      <p class="ohje" style="margin-bottom:14px">Kutsu muokkaajia sähköpostilla. He kirjautuvat koodilla, eikä tunnuksia tarvitse luoda.</p>
+      <div class="kutsurivi">
+        <label class="kentta" style="margin:0">Sähköposti <input type="email" data-kutsu-sposti placeholder="nimi@esimerkki.fi"></label>
+        <label class="kentta" style="margin:0">Rooli <select data-kutsu-rooli><option value="muokkaaja">Muokkaaja</option><option value="paakayttaja">Pääkäyttäjä</option></select></label>
+        <button class="nappi" data-toiminto="kutsu">Kutsu</button>
+      </div>
+      <p class="ohje"><b>Muokkaaja</b>: tapahtumat, tiedotteet ja kuvat. <b>Pääkäyttäjä</b>: kaikki tiedot ja käyttäjät.</p>
+      <ul class="lista" data-kayttajat style="margin-top:10px"></ul>
+    </div>
+  </section>
+
+  <!-- ===================== YLLÄPITO ===================== -->
+  <section data-nakyma="yllapito" hidden>
+    <button class="takaisin" data-mene="koti">← Takaisin</button>
+    <div class="tervetuloa"><h1>Kaikki moskeijat</h1><button class="nappi" data-mene="uusi">+ Lisää moskeija</button></div>
+    <div class="tilastot"><div><b>33</b>moskeijaa</div><div><b>2</b>luonnosta</div><div><b>31</b>ehdotusta</div><div><b>0</b>julkaistu</div></div>
+    <div class="kortti" style="overflow-x:auto">
+      <input type="text" placeholder="Hae moskeijaa tai kaupunkia…" data-haku style="margin-bottom:10px">
+      <table class="taulu"><thead><tr><th>Moskeija</th><th>Kaupunki</th><th>Tila</th><th class="piilo-puh">Muokkaajat</th><th></th></tr></thead><tbody data-moskeijat></tbody></table>
+    </div>
+  </section>
+
+  <!-- ===================== UUSI MOSKEIJA ===================== -->
+  <section data-nakyma="uusi" hidden>
+    <button class="takaisin" data-mene="yllapito">← Takaisin</button>
+    <div class="kortti" style="max-width:640px">
+      <h1 style="margin-bottom:14px">Lisää moskeija</h1>
+      <label class="kentta">Moskeijan nykyinen nettisivu, Mawaqit- tai Masjidbox-linkki <small>Esim. hyvinkaaislamkeskus.fi</small><input type="text" data-uusi-url placeholder="https://…"></label>
+      <label class="kentta">Pääkäyttäjän sähköposti <small>Hänelle lähtee kutsu, kun sivu on valmis</small><input type="email" placeholder="hallitus@moskeija.fi"></label>
+      <div class="sirut" data-ryhma style="margin-bottom:14px"><button class="valinta" aria-pressed="true">Ehdotus</button><button class="valinta" aria-pressed="false">Luonnos (moskeija mukana)</button></div>
+      <button class="nappi" data-toiminto="luo">Luo sivu</button>
+      <ul class="vaiheet" data-vaiheet></ul>
+    </div>
+  </section>
+</main>
+
+<div class="toast" data-toast hidden></div>
+
+<script>
+(function () {
+  var SIVU = '../../hyvinkaa-islam-keskus/';
+  var rooli = null;
+  var ROOLIT = { muokkaaja: 'Muokkaaja', paakayttaja: 'Moskeijan pääkäyttäjä', yllapitaja: 'Ylläpitäjä' };
+  var VARIT = [['oma','Nykyiset värit','#013f3c','#3fb8c4','#e3f4f5','#022b29'],['kulta','Kulta-ruskea','#3f2717','#debb86','#faf1df','#2b1a0e'],['smaragdi','Smaragdinvihreä','#0f3d2e','#5fbf8f','#e6f5ec','#0a2a20'],['metsa','Metsänvihreä ja kulta','#1f3a2c','#d6b36a','#f8f1df','#13261c'],['sininen','Sininen','#12305a','#6aa5dc','#e7f0fa','#0b1f3d'],['yo','Yönsininen ja kulta','#14213d','#e0b75e','#fbf3df','#0b1427'],['persia','Persiansininen','#1c3f73','#4fb0d4','#e5f3f8','#11284c'],['violetti','Violetti','#3b2364','#b39ddb','#f1ecfa','#26163f'],['viini','Viininpunainen','#5a1a2b','#d9a87a','#f8eee6','#3c0f1c'],['terrakotta','Terrakotta','#5a2e1f','#e39a6c','#fbede4','#3d1d13'],['oliivi','Oliivinvihreä','#3b4a1e','#b9c47c','#f2f5e4','#263012'],['grafiitti','Grafiitti ja kulta','#2b2f33','#cfaa6a','#f6f1e7','#1a1d20']];
+  var KUVAT = ['yhteiso-1.jpg','rukous.jpg','luento.jpg','yhteiso-2.jpg','rukoussali.jpg'];
+  var historia = [['Eid al-Adha -rukous lisätty tapahtumiin','Ahmed (muokkaaja) · eilen'],['Esittelyteksti päivitetty','Sinä · 3 päivää sitten'],['2 kuvaa lisätty galleriaan','Fatima (muokkaaja) · viikko sitten']];
+  var kayttajat = [['hallitus@hyvinkaaislamkeskus.fi','paakayttaja','aktiivinen'],['ahmed@esimerkki.fi','muokkaaja','aktiivinen'],['fatima@esimerkki.fi','muokkaaja','kutsuttu – ei vielä kirjautunut']];
+  var MOSKEIJAT = [['Masjid Sunnah Helsinki','Helsinki','luonnos',1],['Hyvinkää Islam Keskus','Hyvinkää','luonnos',3],['Helsinki Islamic Center','Helsinki','ehdotus',0],['Masjid Al-Nuur','Espoo','ehdotus',0],['Olari Masjid','Espoo','ehdotus',0],['As-Salam Islamic Center','Vantaa','ehdotus',0],['Tampere Islamic Society','Tampere','ehdotus',0],['Turun Islamilainen Yhdyskunta','Turku','ehdotus',0],['Vaasan moskeija','Vaasa','ehdotus',0],['Masjid An-Nur Jyväskylä','Jyväskylä','ehdotus',0]];
+  var $ = function (s, j) { return (j || document).querySelector(s); }, $$ = function (s, j) { return Array.prototype.slice.call((j || document).querySelectorAll(s)); };
+  function toast(t) { var e = $('[data-toast]'); e.textContent = '✓ ' + t + ' (malli – ei tallennettu)'; e.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function () { e.hidden = true; }, 2800); }
+
+  // ---------- kirjautuminen ----------
+  function vaihe(n) { $$('[data-vaihe]').forEach(function (v) { v.hidden = v.dataset.vaihe != n; }); }
+  $('[data-toiminto="laheta"]').onclick = function () { $('[data-sposti]').textContent = $('#sposti').value || 'nimi@esimerkki.fi'; vaihe(2); $('#koodi').focus(); };
+  $('[data-toiminto="koodi"]').onclick = function () { vaihe(3); };
+  $$('[data-rooli]').forEach(function (b) { b.onclick = function () { kirjaudu(b.dataset.rooli); }; });
+  function kirjaudu(r) {
+    rooli = r; $('#v-kirjaudu').hidden = true; $('#yla').hidden = false; $('#sovellus').hidden = false;
+    $('[data-rooli-nimi]').textContent = ROOLIT[r] + (r === 'yllapitaja' ? ' · kaikki moskeijat' : '');
+    $$('[data-vain]').forEach(function (e) { e.hidden = e.dataset.vain.split(' ').indexOf(r) < 0; });
+    $('[data-mosk-nimi]').textContent = r === 'yllapitaja' ? 'Suomen moskeijat' : 'Hyvinkää Islam Keskus';
+    mene('koti');
+  }
+  $('[data-toiminto="ulos"]').onclick = function () { location.hash = ''; location.reload(); };
+
+  // ---------- navigointi ----------
+  function mene(n) {
+    $$('[data-nakyma]').forEach(function (v) { v.hidden = v.dataset.nakyma !== n; });
+    window.scrollTo(0, 0);
+    if (n === 'tiedot' || n === 'ulkoasu') { var k = $('[data-nakyma="' + n + '"] [data-kehys]'); if (!k.src) { k.src = SIVU; k.onload = paivitaKehys; } else paivitaKehys(); }
+  }
+  document.addEventListener('click', function (e) { var b = e.target.closest('[data-mene]'); if (b) mene(b.dataset.mene); var j = e.target.closest('[data-julkaise]'); if (j) { toast(j.dataset.julkaise); historia.unshift([j.dataset.julkaise, 'Sinä · juuri nyt']); piirraHistoria(); } });
+
+  function piirraHistoria() { $('[data-historia]').innerHTML = historia.slice(0, 5).map(function (h) { return '<li><span>' + h[0] + '<br><small>' + h[1] + '</small></span><button class="nappi toissijainen pieni" onclick="this.textContent=\'Peruttu\';this.disabled=true">↩︎ Peru</button></li>'; }).join(''); }
+  piirraHistoria();
+
+  // ---------- tapahtuma ja tiedote: esikatselu ----------
+  var KK = ['tammi','helmi','maalis','huhti','touko','kesä','heinä','elo','syys','loka','marras','joulu'];
+  function paivitaTapahtuma() {
+    var pv = ($('[data-sid="t-pv"]').value || '2026-12-05').split('-');
+    $('[data-e="t-nimi"]').textContent = $('[data-sid="t-nimi"]').value || 'Tapahtuman nimi';
+    $('[data-e="t-paiva"]').textContent = +pv[2]; $('[data-e="t-kk"]').textContent = +pv[1] + '/' + pv[0];
+    $('[data-e="t-klo"]').textContent = 'klo ' + ($('[data-sid="t-klo"]').value || '');
+    $('[data-e="t-kuvaus"]').textContent = $('[data-sid="t-kuvaus"]').value;
+  }
+  function paivitaTiedote() {
+    $('[data-e="a-otsikko"]').textContent = $('[data-sid="a-otsikko"]').value || 'Otsikko';
+    $('[data-e="a-teksti"]').textContent = $('[data-sid="a-teksti"]').value;
+    var d = new Date(); $('[data-e="a-pvm"]').textContent = d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear();
+  }
+  $$('[data-sid^="t-"]').forEach(function (i) { i.addEventListener('input', paivitaTapahtuma); }); paivitaTapahtuma();
+  $$('[data-sid^="a-"]').forEach(function (i) { i.addEventListener('input', paivitaTiedote); }); paivitaTiedote();
+  $$('[data-aiheet] .valinta').forEach(function (b) { b.onclick = function () { if (b.textContent.indexOf('+') === 0) { var u = prompt('Uusi aihe'); if (!u) return; b.insertAdjacentHTML('beforebegin', '<button class="valinta" aria-pressed="false">' + u + '</button>'); return b.previousElementSibling.click(); } $$('[data-aiheet] .valinta').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); $('[data-e="a-aihe"]').textContent = b.textContent; }; });
+  document.addEventListener('click', function (e) { var b = e.target.closest('[data-aiheet] .valinta'); if (b && !b.onclick) { $$('[data-aiheet] .valinta').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); $('[data-e="a-aihe"]').textContent = b.textContent; } });
+
+  // ---------- kuvat: raahaus ----------
+  function lisaaKuva(src, kohde) { var g = $('[data-galleria]'); if (kohde === 't-kuva') { var i = $('[data-e="t-kuva"]'); i.src = src; i.hidden = false; return; } if (kohde === 'logo') { toast('Logo vaihdettu esikatseluun'); return; } g.insertAdjacentHTML('afterbegin', '<figure><img src="' + src + '" alt=""><button aria-label="Poista" onclick="this.parentNode.remove()">✕</button></figure>'); }
+  KUVAT.forEach(function (k) { lisaaKuva(SIVU + 'tiedostot/hyvinkaa-islam-keskus/' + k, 'galleria'); });
+  $$('[data-pudotus]').forEach(function (p) {
+    var inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*'; inp.multiple = true; inp.hidden = true; p.appendChild(inp);
+    function tiedostot(f) { Array.prototype.forEach.call(f, function (t) { var r = new FileReader(); r.onload = function () { lisaaKuva(r.result, p.dataset.pudotus); }; r.readAsDataURL(t); }); }
+    p.onclick = function (e) { if (e.target !== inp) inp.click(); }; inp.onchange = function () { tiedostot(inp.files); };
+    p.ondragover = function (e) { e.preventDefault(); p.classList.add('paalla'); }; p.ondragleave = function () { p.classList.remove('paalla'); };
+    p.ondrop = function (e) { e.preventDefault(); p.classList.remove('paalla'); tiedostot(e.dataTransfer.files); };
+  });
+
+  // ---------- tiedot ja ulkoasu: oikea sivu esikatseluna ----------
+  var valittuVari = null, valittuTausta = null;
+  function kehykset() { return $$('[data-kehys]').map(function (k) { try { return k.contentDocument; } catch (e) { return null; } }).filter(Boolean); }
+  function paivitaKehys() {
+    kehykset().forEach(function (d) {
+      var es = d.querySelector('.u-alku__esittely [data-l="fi"]') || d.querySelector('.u-alku__esittely'); if (es) es.textContent = $('[data-sid="m-esittely"]').value;
+      var tu = d.querySelector('.u-alku__tunniste [data-l="fi"]'); if (tu) tu.textContent = $('[data-sid="m-tunniste"]').value;
+      var r = d.documentElement.style;
+      if (valittuVari) { r.setProperty('--paa', valittuVari[2]); r.setProperty('--teksti', valittuVari[5]); r.setProperty('--paa-tumma', valittuVari[5]); r.setProperty('--kulta', valittuVari[3]); r.setProperty('--kulta-vaalea', valittuVari[4]); r.setProperty('--kulta-teksti', 'color-mix(in srgb, ' + valittuVari[3] + ' 45%, ' + valittuVari[2] + ')'); }
+      var a = d.querySelector('.u-alku'); if (a && valittuTausta) { a.classList.remove('u-alku--kuva', 'u-alku--vari'); if (valittuTausta === 'kuva') { a.classList.add('u-alku--kuva'); a.style.setProperty('--alku-kuva', 'url("' + SIVU + 'tiedostot/hyvinkaa-islam-keskus/rukous.jpg")'); } if (valittuTausta === 'vari') a.classList.add('u-alku--vari'); }
+    });
+  }
+  $$('[data-sid^="m-"]').forEach(function (i) { i.addEventListener('input', paivitaKehys); });
+  $('[data-varit]').innerHTML = VARIT.map(function (v, n) { return '<button class="vari" aria-pressed="' + (n === 0) + '" data-v="' + n + '"><span class="nayte" style="--a:' + v[2] + ';--b:' + v[3] + ';--c:' + v[4] + '"></span>' + v[1] + '</button>'; }).join('');
+  $$('[data-v]').forEach(function (b) { b.onclick = function () { valittuVari = VARIT[+b.dataset.v]; $$('[data-v]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); paivitaKehys(); }; });
+  $$('[data-tausta]').forEach(function (b) { b.onclick = function () { valittuTausta = b.dataset.tausta; $$('[data-tausta]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); paivitaKehys(); }; });
+
+  $$('[data-ryhma] .valinta').forEach(function (b) { b.onclick = function () { $$('.valinta', b.parentNode).forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); }; });
+
+  // ---------- käyttäjät ----------
+  function piirraKayttajat() { $('[data-kayttajat]').innerHTML = kayttajat.map(function (k, i) { return '<li><span><b>' + k[0] + '</b><br><small>' + ROOLIT[k[1]] + ' · ' + k[2] + '</small></span><button class="nappi vaara pieni" data-poista="' + i + '">Poista</button></li>'; }).join(''); $$('[data-poista]').forEach(function (b) { b.onclick = function () { kayttajat.splice(+b.dataset.poista, 1); piirraKayttajat(); toast('Käyttöoikeus poistettu'); }; }); }
+  piirraKayttajat();
+  $('[data-toiminto="kutsu"]').onclick = function () { var s = $('[data-kutsu-sposti]').value.trim(); if (!s) return $('[data-kutsu-sposti]').focus(); kayttajat.push([s, $('[data-kutsu-rooli]').value, 'kutsuttu – kutsu lähetetty sähköpostiin']); $('[data-kutsu-sposti]').value = ''; piirraKayttajat(); toast('Kutsu lähetetty: ' + s); };
+
+  // ---------- ylläpito ----------
+  function piirraMoskeijat(q) { q = (q || '').toLowerCase(); $('[data-moskeijat]').innerHTML = MOSKEIJAT.filter(function (m) { return !q || (m[0] + ' ' + m[1]).toLowerCase().indexOf(q) >= 0; }).map(function (m) { return '<tr><td><b>' + m[0] + '</b></td><td>' + m[1] + '</td><td><span class="siru ' + m[2] + '">' + { luonnos: 'Luonnos', ehdotus: 'Ehdotus', julkaistu: 'Julkaistu' }[m[2]] + '</span></td><td class="piilo-puh">' + m[3] + '</td><td><button class="nappi toissijainen pieni" data-mene="koti">Avaa</button></td></tr>'; }).join('') + '<tr><td colspan="5"><small>… ja 23 muuta</small></td></tr>'; }
+  piirraMoskeijat(); $('[data-haku]').oninput = function () { piirraMoskeijat(this.value); };
+  $('[data-toiminto="luo"]').onclick = function () {
+    var url = $('[data-uusi-url]').value || 'hyvinkaaislamkeskus.fi', v = ['Haetaan tiedot sivulta ' + url, 'Nimi, osoite ja sähköposti löytyivät', 'Logo ja värit löytyivät', '6 valokuvaa ja 2 sivua tuotu', 'Rukousajat: Mawaqit', 'Sivu luotu ehdotuksena – esikatselu valmis'], ul = $('[data-vaiheet]');
+    ul.innerHTML = v.map(function (t) { return '<li>⏳ ' + t + '</li>'; }).join('');
+    $$('li', ul).forEach(function (li, i) { setTimeout(function () { li.classList.add('valmis'); li.textContent = '✅ ' + v[i]; if (i === v.length - 1) toast('Moskeija lisätty'); }, 600 * (i + 1)); });
+  };
+})();
+</script>
+</body>
+</html>

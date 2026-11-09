@@ -70,6 +70,9 @@ jobs:
           ORG: ${{ github.repository_owner }}
         run: python3 .github/scripts/hakemisto.py index.html && sudo cp index.html _site/index.html
 
+      - name: Hallintapaneelin malli
+        run: sudo mkdir -p _site/hallinta && sudo cp esittely/hallinta/index.html _site/hallinta/index.html
+
       - uses: actions/upload-pages-artifact@v3
 
   julkaise:

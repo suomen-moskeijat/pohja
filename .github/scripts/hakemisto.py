@@ -112,7 +112,7 @@ h1{{font-size:clamp(26px,6vw,36px);margin:0 0 6px}} h2{{font-size:18px;margin:26
 </style></head><body><div class="k">
 <h1>Suomen moskeijoiden nettisivut</h1>
 <p class="selite">Kaikki sivut ja niiden tila. <b>Ehdotus</b> = esimerkkisivu, moskeija ei vielä mukana · <b>Luonnos</b> = moskeija tarkistaa · <b>Julkaistu</b> = valmis ja Googlessa.</p>
-<div class="yla"><a href="ohjeet/">Ohjeet</a><a class="toinen" href="https://github.com/{ORG}/pohja/actions">Lisää moskeija (Actions)</a><a class="toinen" href="https://app.pagescms.org">Pages CMS</a></div>
+<div class="yla"><a href="ohjeet/">Ohjeet</a><a class="toinen" href="hallinta/">Hallintapaneeli (malli)</a><a class="toinen" href="https://github.com/{ORG}/pohja/actions">Lisää moskeija (Actions)</a><a class="toinen" href="https://app.pagescms.org">Pages CMS</a></div>
 <div class="suodatin"><button type="button" data-suodatin="" aria-pressed="true">Kaikki {len(rivit)}</button>{napit}</div>
 {''.join(kaupungit)}
 <p class="selite" style="margin-top:28px">Esimerkit: <a href="masjid-sunnah/">Masjid Sunnah</a> · <a href="hyvinkaa/">Hyvinkää</a>. Päivittyy automaattisesti.</p>
