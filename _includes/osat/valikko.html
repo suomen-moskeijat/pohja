@@ -1,10 +1,45 @@
 {%- comment -%}
   Valikon linkit. Parametrit: moskeija, tapa (yla | mobiili | ala).
-  Moskeija voi piilottaa sivuja (valikko_piilota: [tapahtumat, lahjoita, …]) ja lisätä
-  omia sivujaan (_sivut/, valikossa: true, järjestys kentällä jarjestys).
+  Uusi tapa (hallintapaneeli → Sivut → Valikko): moskeijan tiedoissa lista
+    valikko: [{sivu: rukousajat}, {oma: hyvat-lahteet}, {nimi: {fi: …}, linkki: https://…}]
+  joka määrää järjestyksen ja sisällön. Ilman listaa: oletusjärjestys, valikko_piilota ja
+  omat sivut (valikossa: true, jarjestys).
 {%- endcomment -%}
 {%- assign m = include.moskeija -%}
 {%- assign j = '/' | relative_url -%}
+{%- if m.valikko and m.valikko.size > 0 -%}
+{%- assign _lahjoita_listassa = false -%}
+{%- for o in m.valikko -%}
+  {%- assign _href = "" -%}{%- assign _ulk = false -%}{%- assign _nyt = "" -%}{%- assign _nimi = "" -%}
+  {%- if o.sivu -%}
+    {%- if m.valikko_piilota contains o.sivu -%}{%- continue -%}{%- endif -%}
+    {%- if o.sivu == "lahjoita" -%}{%- assign _lahjoita_listassa = true -%}{%- if m.lahjoitus == nil -%}{%- continue -%}{%- endif -%}{%- endif -%}
+    {%- if o.sivu == "artikkelit" and site.artikkelit.size == 0 -%}{%- continue -%}{%- endif -%}
+    {%- assign _href = j | append: o.sivu | append: "/" -%}
+    {%- assign _avain = "nav_" | append: o.sivu -%}
+    {%- capture _nimi -%}{% if o.nimi %}{% include kt.html arvo=o.nimi %}{% else %}{% include k.html a=_avain %}{% endif %}{%- endcapture -%}
+    {%- if page.url contains o.sivu -%}{%- assign _nyt = ' aria-current="page"' -%}{%- endif -%}
+  {%- elsif o.oma -%}
+    {%- assign p = site.sivut | where: "slug", o.oma | first -%}
+    {%- unless p -%}{%- continue -%}{%- endunless -%}
+    {%- assign _href = p.url | relative_url -%}
+    {%- capture _nimi -%}{% if o.nimi %}{% include kt.html arvo=o.nimi %}{% else %}{% include sivunimi.html sivu=p %}{% endif %}{%- endcapture -%}
+    {%- if page.url == p.url -%}{%- assign _nyt = ' aria-current="page"' -%}{%- endif -%}
+  {%- elsif o.linkki -%}
+    {%- capture _href -%}{% include osat/linkki-href.html l=o.linkki %}{%- endcapture -%}
+    {%- assign _alku = o.linkki | slice: 0, 4 -%}{%- if _alku == "http" -%}{%- assign _ulk = true -%}{%- endif -%}
+    {%- capture _nimi -%}{% include kt.html arvo=o.nimi %}{%- endcapture -%}
+  {%- endif -%}
+  {%- if _href == "" -%}{%- continue -%}{%- endif -%}
+  {%- capture _kohde -%}{% if _ulk %} target="_blank" rel="noopener"{% endif %}{%- endcapture -%}
+  {%- case include.tapa -%}
+  {%- when "mobiili" -%}<a class="u-mv-linkki" href="{{ _href }}"{{ _nyt }}{{ _kohde }}>{{ _nimi }}<span class="u-nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span></a>
+  {%- when "ala" -%}<li><a href="{{ _href }}"{{ _kohde }}>{{ _nimi }}</a></li>
+  {%- else -%}<a href="{{ _href }}"{{ _nyt }}{{ _kohde }}>{{ _nimi }}</a>
+  {%- endcase -%}
+{%- endfor -%}
+{%- if include.tapa == "ala" and _lahjoita_listassa == false and m.lahjoitus -%}{%- unless m.valikko_piilota contains "lahjoita" -%}<li><a href="{{ j }}lahjoita/">{% include k.html a="nav_lahjoita" %}</a></li>{%- endunless -%}{%- endif -%}
+{%- else -%}
 {%- assign _omat = site.sivut | where: "valikossa", true | sort: "jarjestys", "last" -%}
 {%- capture _linkit -%}rukousajat:nav_rukousajat,meista:nav_meista,palvelut:nav_palvelut,tapahtumat:nav_tapahtumat,artikkelit:nav_artikkelit,OMAT,yhteystiedot:nav_yhteystiedot{% if include.tapa == "ala" %},lahjoita:nav_lahjoita{% endif %}{%- endcapture -%}
 {%- assign _linkit = _linkit | split: "," -%}
@@ -33,3 +68,4 @@
   {%- else -%}<a href="{{ j }}{{ _sivu }}/"{{ _nyt }}>{% include k.html a=_avain %}</a>
   {%- endcase -%}
 {%- endfor -%}
+{%- endif -%}
