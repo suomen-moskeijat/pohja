@@ -21,7 +21,9 @@
     (function () {
       var sallitut = {{ site.kielet | jsonify }}, k = null;
       try { k = localStorage.getItem('kieli'); } catch (e) {}
-      if (sallitut.indexOf(k) < 0) { var n = (navigator.language || '').slice(0, 2); k = sallitut.indexOf(n) >= 0 ? n : sallitut[0]; }
+      // Hakukone- ja tekoälybotit näkevät sivun pääkielellä (suomi), eivät selaimensa kielellä
+      var botti = /bot|crawl|spider|slurp|bingpreview|facebookexternalhit|embedly|google-inspectiontool|chrome-lighthouse/i.test(navigator.userAgent || '');
+      if (sallitut.indexOf(k) < 0) { var n = botti ? '' : (navigator.language || '').slice(0, 2); k = sallitut.indexOf(n) >= 0 ? n : sallitut[0]; }
       document.documentElement.lang = k;
       document.documentElement.dir = k === 'ar' ? 'rtl' : 'ltr';
     })();
@@ -42,6 +44,9 @@
     {%- if t.hieno and t.hieno != "" -%}--hieno: {{ t.hieno }};{%- endif -%}
     {%- if t.fontti_otsikot and t.fontti_otsikot != "" -%}--fontti-otsikot: {{ t.fontti_otsikot }};{%- endif -%}
     {%- if t.fontti_teksti and t.fontti_teksti != "" -%}--fontti-teksti: {{ t.fontti_teksti }};{%- endif -%}
+    {%- comment -%} Kulmat (teema.kulmat: suora = enintään 3 px) ja ylälaidan varjo (teema.varjo: kevyt) {%- endcomment -%}
+    {%- if t.kulmat == "suora" -%}--kulma: 3px; --r-s: 3px; --r-m: 3px; --r-l: 3px;{%- endif -%}
+    {%- if t.varjo == "kevyt" -%}--yla-varjo: .28;{%- endif -%}
     {%- comment -%} Taustakuviot alueittain (teema.kuvio_yla / kuvio_ala / kuvio_nosto, _data/kuviot.yml; "ei" = ei kuviota) {%- endcomment -%}
     {%- assign _alueet = "yla,ala,nosto" | split: "," -%}
     {%- for _alue in _alueet -%}

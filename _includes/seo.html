@@ -39,6 +39,10 @@
   <meta property="og:description" content="{{ kuvaus | escape }}">
   <meta property="og:url" content="{{ osoite_nyt }}">
   <meta property="og:locale" content="fi_FI">
+  {%- for _l in site.kielet %}{% if _l != "fi" %}
+  <meta property="og:locale:alternate" content="{% case _l %}{% when 'en' %}en_GB{% when 'ar' %}ar_AR{% when 'so' %}so_SO{% endcase %}">{% endif %}{% endfor %}
+  {% unless site.noindex or m.luonnos or m.ehdotus or page.noindex %}<meta name="robots" content="max-image-preview:large, max-snippet:-1">{% endunless %}
+  <link rel="alternate" type="text/markdown" title="llms.txt" href="{{ '/llms.txt' | relative_url }}">
   {% if kuva and kuva != "" %}<meta property="og:image" content="{{ kuva }}">
   <meta name="twitter:card" content="summary_large_image">{% endif %}
 {%- comment -%} schema.org: moskeija (kaikilla sivuilla), tapahtuma ja oma artikkeli {%- endcomment -%}
@@ -62,9 +66,36 @@
     "address": { "@type": "PostalAddress", "streetAddress": {{ _katu | jsonify }},{% if _posti.size == 5 %} "postalCode": {{ _posti | jsonify }},{% endif %} "addressLocality": {{ m.kaupunki | jsonify }}, "addressCountry": "FI" },
     {% if m.sijainti.lat and m.sijainti.lat != 0 %}"geo": { "@type": "GeoCoordinates", "latitude": {{ m.sijainti.lat }}, "longitude": {{ m.sijainti.lon }} },
     "hasMap": {{ "https://www.google.com/maps/search/?api=1&query=" | append: m.sijainti.lat | append: "," | append: m.sijainti.lon | jsonify }},{% endif %}
+    "isAccessibleForFree": true,
+    "publicAccess": true,
     "sameAs": {{ _somet | jsonify }}
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org", "@type": "WebSite",
+    "@id": {{ kotisivu | append: "#sivusto" | jsonify }},
+    "url": {{ kotisivu | jsonify }}, "name": {{ m.title | jsonify }},
+    "inLanguage": {{ site.kielet | jsonify }},
+    "publisher": { "@id": {{ kotisivu | append: "#moskeija" | jsonify }} }
+  }
+  </script>
+  {%- if page.url != "/" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org", "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": {{ m.title | jsonify }}, "item": {{ kotisivu | jsonify }} },
+      {%- if page.collection == "tapahtumat" or page.collection == "artikkelit" %}
+      { "@type": "ListItem", "position": 2, "name": {% if page.collection == "tapahtumat" %}"Tapahtumat"{% else %}"Artikkelit"{% endif %}, "item": {{ kotisivu | append: page.collection | append: "/" | jsonify }} },
+      { "@type": "ListItem", "position": 3, "name": {{ page.title | default: otsikko | jsonify }}, "item": {{ osoite_nyt | jsonify }} }
+      {%- else %}
+      { "@type": "ListItem", "position": 2, "name": {{ page.title | default: otsikko | jsonify }}, "item": {{ osoite_nyt | jsonify }} }
+      {%- endif %}
+    ]
+  }
+  </script>
+  {%- endif %}
   {%- if page.collection == "tapahtumat" %}
   <script type="application/ld+json">
   {

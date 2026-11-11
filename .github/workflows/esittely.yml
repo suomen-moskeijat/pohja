@@ -37,6 +37,25 @@ jobs:
             (cd $d && python3 .github/scripts/instagram.py; python3 .github/scripts/rukousajat.py; python3 .github/scripts/somet.py) || true
           done
 
+      # Vertailukopio: Hyvinkään oikeat tiedot + kokeiltavat ulkoasuasetukset (suorat kulmat, kevyempi varjo).
+      # Verrataan oikeaan sivuun: https://suomen-moskeijat.github.io/hyvinkaa-islam-keskus/
+      - name: Hae Hyvinkään tiedot vertailua varten
+        uses: actions/checkout@v4
+        with:
+          repository: suomen-moskeijat/hyvinkaa-islam-keskus
+          path: vertailu/hyvinkaa
+
+      - name: Kokoa vertailukopio (hyvinkaa-uusi)
+        run: |
+          d=koottu/hyvinkaa-uusi; mkdir -p $d
+          tar --exclude=.git --exclude=.github/workflows --exclude=malli --exclude=testi --exclude=esittely --exclude=koottu --exclude=vertailu -cf - . | (cd $d && tar -xf -)
+          (cd vertailu/hyvinkaa && tar --exclude=.git --exclude=.github --exclude=_config.yml -cf - .) | (cd $d && tar -xf -)
+          cat _config.yml vertailu/hyvinkaa/_config.yml > $d/_config.yml
+          printf '\nbaseurl: "/pohja/hyvinkaa-uusi"\nnoindex: true\n' >> $d/_config.yml
+          sed -i 's/^teema:.*/teema:\n  kulmat: suora\n  varjo: kevyt/' $d/_moskeijat/*.md
+          python3 $d/.github/scripts/artikkelit.py --karsi $d
+          (cd $d && python3 .github/scripts/instagram.py; python3 .github/scripts/rukousajat.py; python3 .github/scripts/somet.py) || true
+
       - uses: actions/configure-pages@v5
 
       - name: Kokoa ohjeet (OHJEET.md)
@@ -62,6 +81,13 @@ jobs:
         with:
           source: ./koottu/hyvinkaa
           destination: ./_site/hyvinkaa
+          future: true
+
+      - name: Rakenna Hyvinkään vertailukopio
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./koottu/hyvinkaa-uusi
+          destination: ./_site/hyvinkaa-uusi
           future: true
 
       - name: Etusivu (kaikki moskeijat ja niiden tila)

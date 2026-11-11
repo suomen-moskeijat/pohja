@@ -6,3 +6,4 @@ permalink: /robots.txt
 User-agent: *
 {% if site.noindex or m.luonnos or m.ehdotus %}Disallow: /{% else %}Allow: /{% endif %}
 Sitemap: {{ site.url }}{{ '/sitemap.xml' | relative_url }}
+# Tekoälyhauille tiivis kuvaus: {{ site.url }}{{ '/llms.txt' | relative_url }}

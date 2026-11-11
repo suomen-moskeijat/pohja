@@ -1,0 +1,97 @@
+---
+layout: null
+permalink: /llms.txt
+sitemap: false
+---
+{%- comment -%}
+  llms.txt (https://llmstxt.org): tiivis Markdown-kuvaus moskeijasta tekoälyhakuja ja -avustajia varten
+  (ChatGPT, Claude, Perplexity, Googlen tekoälyvastaukset). Kootaan moskeijan tiedoista automaattisesti.
+{%- endcomment -%}
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- assign juuri = site.url | append: site.baseurl -%}
+{%- assign wa = m.whatsapp | default: "" -%}{%- if m.yhteydenotto.whatsapp == "piilossa" -%}{%- assign wa = "" -%}{%- endif -%}
+# {{ m.title }}
+
+> {{ m.esittely.fi | default: m.esittely | default: m.meista_lyhyt.fi | strip_html | normalize_whitespace }}
+
+{{ m.title }} – moskeija, {{ m.kaupunki }}. Sivusto: {{ juuri }}/ (suomeksi{% if site.kielet contains "en" %}, englanniksi{% endif %}{% if site.kielet contains "ar" %}, arabiaksi{% endif %}{% if site.kielet contains "so" %}, somaliksi{% endif %}).
+
+## Perustiedot
+
+- Nimi: {{ m.title }}{% if m.nimi_en %} (englanniksi: {{ m.nimi_en }}){% endif %}{% if m.nimi_ar %} (arabiaksi: {{ m.nimi_ar }}){% endif %}
+- Osoite: {{ m.osoite }}
+{%- if m.sijainti.lat and m.sijainti.lat != 0 %}
+- Sijainti kartalla: https://www.google.com/maps/search/?api=1&query={{ m.sijainti.lat }},{{ m.sijainti.lon }}
+{%- endif %}
+{%- if m.puhelin and m.puhelin != "" %}
+- Puhelin: {{ m.puhelin }}
+{%- endif %}
+{%- if wa != "" %}
+- WhatsApp: {{ wa }}
+{%- endif %}
+{%- if m.sahkoposti and m.sahkoposti != "" %}
+- Sähköposti: {{ m.sahkoposti }}
+{%- endif %}
+{%- if m.juma and m.juma != "" %}
+- Perjantairukous (jumu'a): klo {{ m.juma }}
+{%- endif %}
+- Päivittäiset rukousajat ja iqamah-ajat: {{ juuri }}/rukousajat/
+- Kaikki ovat tervetulleita tutustumaan moskeijaan uskonnosta riippumatta.
+
+## Toiminta
+{% for p in m.palvelut %}
+- {{ p.nimi.fi | default: p.nimi }}{% if p.kuvaus %}: {{ p.kuvaus.fi | default: p.kuvaus | strip_html | normalize_whitespace }}{% endif %}
+{%- endfor %}
+{%- if m.lasten_opetus.kaytossa %}
+- Lasten opetus: {{ m.lasten_opetus.teksti.fi | default: m.lasten_opetus.teksti | strip_html | normalize_whitespace }} Ilmoittautuminen: {{ juuri }}/palvelut/lasten-opetus/
+{%- endif %}
+
+## Sivut
+
+- [Etusivu]({{ juuri }}/): seuraava rukous, toiminta ja ajankohtaiset asiat
+- [Rukousajat]({{ juuri }}/rukousajat/): päivän ja kuukauden rukousajat
+{%- unless m.valikko_piilota contains "meista" %}
+- [Meistä]({{ juuri }}/meista/): {{ m.meista_lyhyt.fi | default: m.meista_lyhyt | default: "moskeijan esittely" | strip_html | normalize_whitespace | truncate: 200 }}
+{%- endunless %}
+{%- unless m.valikko_piilota contains "palvelut" %}
+- [Opetus ja palvelut]({{ juuri }}/palvelut/)
+{%- endunless %}
+{%- unless m.valikko_piilota contains "tapahtumat" %}
+- [Tapahtumat]({{ juuri }}/tapahtumat/)
+{%- endunless %}
+- [Yhteystiedot]({{ juuri }}/yhteystiedot/): osoite, kartta ja yhteydenotto
+{%- if m.lahjoitus %}{% unless m.valikko_piilota contains "lahjoita" %}
+- [Lahjoita]({{ juuri }}/lahjoita/): {{ m.lahjoitus.teksti.fi | default: m.lahjoitus.teksti | strip_html | normalize_whitespace | truncate: 160 }}
+{%- endunless %}{% endif %}
+{%- for s in site.sivut %}
+- [{{ s.title }}]({{ juuri }}{{ s.url }}){% if s.johdanto %}: {{ s.johdanto.fi | default: s.johdanto | strip_html | normalize_whitespace | truncate: 160 }}{% endif %}
+{%- endfor %}
+
+{%- assign _nyt = site.time | date: "%Y-%m-%d" -%}
+{%- assign _tulevat = site.tapahtumat | where_exp: "t", "t.paiva" | sort: "paiva" -%}
+{%- capture _tap -%}{%- for t in _tulevat -%}{%- assign _p = t.paiva | date: "%Y-%m-%d" -%}{%- if _p >= _nyt %}
+- {{ t.paiva | date: "%-d.%-m.%Y" }}{% if t.alkaa and t.alkaa != "" %} klo {{ t.alkaa }}{% endif %}: [{{ t.title }}]({{ juuri }}{{ t.url }}){% endif -%}{%- endfor -%}{%- endcapture -%}
+{%- if _tap != "" %}
+
+## Tulevat tapahtumat
+{{ _tap }}
+{%- endif %}
+
+{%- assign _omat = site.artikkelit | where_exp: "a", "a.lahde_url == nil" | sort: "paiva" | reverse -%}
+{%- if _omat.size > 0 %}
+
+## Tiedotteet ja artikkelit
+{% for a in _omat limit: 20 %}
+- [{{ a.title }}]({{ juuri }}{{ a.url }}){% if a.paiva %} ({{ a.paiva | date: "%-d.%-m.%Y" }}){% endif %}
+{%- endfor %}
+{%- endif %}
+{%- if m.nimi_en and m.esittely.en %}
+
+## In English
+
+{{ m.nimi_en }} is a mosque in {{ m.kaupunki }}, Finland. {{ m.esittely.en | strip_html | normalize_whitespace }} Address: {{ m.osoite }}.{% if m.juma and m.juma != "" %} Friday prayer (jumu'ah) at {{ m.juma | replace: ".", ":" }}.{% endif %} Prayer times: {{ juuri }}/rukousajat/
+{%- endif %}
+
+## Optional
+
+- [Sivukartta]({{ juuri }}/sitemap.xml)
