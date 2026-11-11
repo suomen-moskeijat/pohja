@@ -400,22 +400,29 @@
       }
       var rivit = [lomake.dataset.aihe, ''], nahty = {};
       Array.prototype.forEach.call(lomake.elements, function (el) {
-        if (!el.name || el.name === 'hyvaksyn' || nahty[el.name]) return;
+        if (!el.name || el.name === 'hyvaksyn' || el.name.charAt(0) === '_' || nahty[el.name]) return;
         if (el.type === 'radio') { nahty[el.name] = 1; var v = lomake.querySelector('[name="' + el.name + '"]:checked'); if (v) rivit.push(kentanNimi(el) + ': ' + v.value); return; }
         if (el.value.trim()) rivit.push(kentanNimi(el) + ': ' + el.value.trim());
       });
-      var teksti = rivit.join('\n'), osoite = lomake.dataset.osoite;
-      if (osoite) {
+      var teksti = rivit.join('\n'), osoite = lomake.dataset.osoite, wa = lomake.dataset.wa, sp = lomake.dataset.sahkoposti;
+      // Lähetystapa (hallintapaneelista): sahkoposti, whatsapp, molemmat (kävijä valitsee) tai tyhjä (WhatsApp jos numero, muuten sähköposti)
+      var tapa = lomake.dataset.tapa || '';
+      if (tapa === 'molemmat') { var valittu = lomake.querySelector('[name="_tapa"]:checked'); tapa = valittu ? valittu.value : 'sahkoposti'; }
+      if (tapa === 'whatsapp' && !wa) tapa = 'sahkoposti';
+      if (tapa === 'sahkoposti' && !osoite && !sp) tapa = 'whatsapp';
+      if (!tapa) tapa = osoite ? 'palvelu' : wa ? 'whatsapp' : 'sahkoposti';
+      if (tapa === 'sahkoposti' && osoite) tapa = 'palvelu';
+      if (tapa === 'palvelu') {
         viesti(lomake, 'lahetetaan');
-        var data = new FormData(lomake); data.append('_subject', lomake.dataset.aihe);
+        var data = new FormData(lomake); data.delete('_tapa'); data.append('_subject', lomake.dataset.aihe);
         fetch(osoite, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
           .then(function (v) { if (!v.ok) throw new Error(v.status); viesti(lomake, 'kiitos'); lomake.reset(); lomake.classList.remove('on-tarkistettu'); })
           .catch(function () { viesti(lomake, 'lahetysvirhe'); });
-      } else if (lomake.dataset.wa) {
-        window.open('https://wa.me/' + lomake.dataset.wa + '?text=' + encodeURIComponent(teksti), '_blank', 'noopener');
+      } else if (tapa === 'whatsapp' && wa) {
+        window.open('https://wa.me/' + wa + '?text=' + encodeURIComponent(teksti), '_blank', 'noopener');
         viesti(lomake, 'whatsapp');
-      } else if (lomake.dataset.sahkoposti) {
-        location.href = 'mailto:' + lomake.dataset.sahkoposti + '?subject=' + encodeURIComponent(lomake.dataset.aihe) + '&body=' + encodeURIComponent(teksti);
+      } else if (sp) {
+        location.href = 'mailto:' + sp + '?subject=' + encodeURIComponent(lomake.dataset.aihe) + '&body=' + encodeURIComponent(teksti);
         viesti(lomake, 'sahkoposti');
       } else {
         viesti(lomake, 'lahetysvirhe');
@@ -492,6 +499,13 @@
           r.setProperty('--kulta-teksti', 'color-mix(in srgb, ' + t.korostus + ' 45%, ' + t.paa + ')');
         } else ['--paa', '--teksti', '--paa-tumma', '--kulta', '--kulta-vaalea', '--kulta-teksti'].forEach(function (x) { r.removeProperty(x); });
       }
+      // Taustakuviot alueittain: paneeli lähettää kuvion data-osoitteena, "ei" tai null (oletus)
+      if (d.kuviot && typeof d.kuviot === 'object') ['yla', 'ala', 'nosto'].forEach(function (a) {
+        var v = d.kuviot[a];
+        if (v === 'ei') r.setProperty('--kuvio-' + a, 'linear-gradient(transparent, transparent)');
+        else if (typeof v === 'string' && /^data:image\/svg\+xml;base64,[A-Za-z0-9+\/=]+$/.test(v)) r.setProperty('--kuvio-' + a, 'url("' + v + '")');
+        else if (a in d.kuviot) r.removeProperty('--kuvio-' + a);
+      });
       var alku = document.querySelector('.u-alku');
       if (alku && d.tausta) {
         alku.classList.remove('u-alku--kuva', 'u-alku--vari');

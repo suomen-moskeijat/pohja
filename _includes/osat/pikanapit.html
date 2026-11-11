@@ -5,6 +5,8 @@
 {%- endcomment -%}
 {%- assign m = include.moskeija -%}
 {%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+{%- comment -%} Moskeija voi piilottaa pikanapin tai kaikki WhatsApp-napit (yhteydenotto.whatsapp) {%- endcomment -%}
+{%- if m.yhteydenotto.whatsapp == "piilossa" or m.yhteydenotto.whatsapp == "ei_pikanappia" -%}{%- assign wa = "" -%}{%- endif -%}
 {%- assign puh = m.puhelin | default: "" | remove: " " -%}
 {%- if wa != "" -%}
 <div class="u-pikanapit" data-pikanapit>

@@ -3,6 +3,7 @@
 {%- assign j = '/' | relative_url -%}
 {%- assign s = m.some -%}
 {%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+{%- if m.yhteydenotto.whatsapp == "piilossa" -%}{%- assign wa = "" -%}{%- endif -%}
 <footer class="u-ala">
   <div class="u-kuvio" aria-hidden="true"></div>
   <div class="u-kehys u-ala__ruudukko">

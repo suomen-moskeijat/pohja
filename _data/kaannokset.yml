@@ -175,6 +175,10 @@ sulje:              { fi: "Sulje", en: "Close", ar: "إغلاق", so: "Xir" }
 toiminta_kielet:    { fi: "Toimintaa kielillä", en: "Activities in", ar: "الأنشطة باللغات", so: "Hawlaha luqadaha" }
 kysyttavaa:         { fi: "Kysyttävää?", en: "Questions?", ar: "لديك سؤال؟", so: "Su'aal ma qabtaa?" }
 kysy_whatsapp:      { fi: "Vastaamme nopeimmin WhatsAppissa tai puhelimitse.", en: "We reply fastest on WhatsApp or by phone.", ar: "نرد بشكل أسرع عبر واتساب أو الهاتف.", so: "Sida ugu dhakhsaha badan waxaan uga jawaabnaa WhatsApp ama taleefan." }
+kysy_puhelin:       { fi: "Vastaamme mielellämme puhelimitse.", en: "We are happy to answer by phone.", ar: "يسعدنا الرد عبر الهاتف.", so: "Waxaan ku faraxsanahay inaan taleefanka kaga jawaabno." }
+lahetystapa:        { fi: "Miten haluat lähettää viestin?", en: "How would you like to send it?", ar: "كيف تريد إرسال الرسالة؟", so: "Sidee baad rabtaa inaad u dirto?" }
+lahetys_sahkoposti: { fi: "Sähköpostilla", en: "By email", ar: "بالبريد الإلكتروني", so: "Iimayl ahaan" }
+lahetys_whatsapp:   { fi: "WhatsAppilla", en: "On WhatsApp", ar: "عبر واتساب", so: "WhatsApp ahaan" }
 paivan_ajat:        { fi: "Päivän rukousajat", en: "Today's prayer times", ar: "مواقيت اليوم", so: "Waqtiyada maanta" }
 kieli_suomi:        { fi: "suomi", en: "Finnish", ar: "الفنلندية", so: "Finnish" }
 kieli_arabia:       { fi: "arabia", en: "Arabic", ar: "العربية", so: "Carabi" }

@@ -1,0 +1,12 @@
+# Taustakuviot. Moskeija valitsee hallintapaneelissa (Ulkoasu → Taustakuviot) kuvion erikseen
+# yläosaan, alapalkkiin ja korostettuihin nostoihin (lahjoitus, lasten opetus).
+# Uuden kuvion voi lisätä paneelissa (Ylläpito → Taustat ja kuviot) tai lisäämällä SVG-tiedoston
+# kansioon assets/kuviot/ ja rivin tähän. Kuvion väri tulee moskeijan teemasta, joten SVG:n värillä ei ole väliä.
+ruusuke:         { nimi: "Ruusuke (oletus)",   tiedosto: ruusuke.svg }
+kahdeksankulmio: { nimi: "Kahdeksankulmiot",   tiedosto: kahdeksankulmio.svg }
+tahti:           { nimi: "Tähdet",             tiedosto: tahti.svg }
+ristikko:        { nimi: "Tähtiristikko",      tiedosto: ristikko.svg }
+ympyrat:         { nimi: "Ympyrät",            tiedosto: ympyrat.svg }
+kaaret:          { nimi: "Kaaret",             tiedosto: kaaret.svg }
+kennot:          { nimi: "Kennot",             tiedosto: kennot.svg }
+pisteet:         { nimi: "Pisteet",            tiedosto: pisteet.svg }

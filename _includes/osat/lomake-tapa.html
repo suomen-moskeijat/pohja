@@ -1,0 +1,23 @@
+{%- comment -%}
+  Lomakkeen lähetystapa (yhteydenotto.lomakkeet hallintapaneelissa):
+  sahkoposti = lomakepalveluun tai sähköpostiin, whatsapp = WhatsApp-viestinä,
+  molemmat = kävijä valitsee, tyhjä = WhatsApp jos numero on, muuten sähköposti.
+  Asettaa muuttujat _tapa (data-tapa) ja _tapavalinta (kävijän valinta, kun molemmat ovat käytössä).
+{%- endcomment -%}
+{%- assign _m = include.moskeija -%}
+{%- assign _tapa = _m.yhteydenotto.lomakkeet | default: "" -%}
+{%- if _tapa == "" and _m.yhteydenotto.whatsapp == "piilossa" -%}{%- assign _tapa = "sahkoposti" -%}{%- endif -%}
+{%- assign _wa = _m.whatsapp | default: "" | remove: " " -%}
+{%- assign _sp = _m.lomake_osoite | default: _m.sahkoposti | default: "" -%}
+{%- if _tapa == "molemmat" -%}{%- if _wa == "" or _sp == "" -%}{%- assign _tapa = "" -%}{%- endif -%}{%- endif -%}
+{%- capture _tapavalinta -%}
+{%- if _tapa == "molemmat" -%}
+<div class="u-kentta u-lomake__tapa" role="radiogroup">
+    <span>{% include k.html a="lahetystapa" %}</span>
+    <div class="u-valinnat">
+      <label class="u-valinta"><input type="radio" name="_tapa" value="sahkoposti" checked><span>{% include ikoni-ph.html nimi="posti" koko=18 %} {% include k.html a="lahetys_sahkoposti" %}</span></label>
+      <label class="u-valinta"><input type="radio" name="_tapa" value="whatsapp"><span>{% include osat/somekuvake.html nimi="wa" koko=18 %} {% include k.html a="lahetys_whatsapp" %}</span></label>
+    </div>
+  </div>
+{%- endif -%}
+{%- endcapture -%}

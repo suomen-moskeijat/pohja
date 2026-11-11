@@ -42,6 +42,14 @@
     {%- if t.hieno and t.hieno != "" -%}--hieno: {{ t.hieno }};{%- endif -%}
     {%- if t.fontti_otsikot and t.fontti_otsikot != "" -%}--fontti-otsikot: {{ t.fontti_otsikot }};{%- endif -%}
     {%- if t.fontti_teksti and t.fontti_teksti != "" -%}--fontti-teksti: {{ t.fontti_teksti }};{%- endif -%}
+    {%- comment -%} Taustakuviot alueittain (teema.kuvio_yla / kuvio_ala / kuvio_nosto, _data/kuviot.yml; "ei" = ei kuviota) {%- endcomment -%}
+    {%- assign _alueet = "yla,ala,nosto" | split: "," -%}
+    {%- for _alue in _alueet -%}
+      {%- assign _avain = "kuvio_" | append: _alue -%}{%- assign _ku = t[_avain] -%}
+      {%- if _ku == "ei" -%}--kuvio-{{ _alue }}: linear-gradient(transparent, transparent);
+      {%- elsif _ku and site.data.kuviot[_ku] -%}--kuvio-{{ _alue }}: url('{{ "/assets/kuviot/" | append: site.data.kuviot[_ku].tiedosto | relative_url }}');
+      {%- endif -%}
+    {%- endfor -%}
   {%- endcapture -%}
   {% if _teema != "" %}<style>:root { {{ _teema }} }</style>{% endif %}
   {% if page.kartta %}<link rel="stylesheet" href="{{ '/assets/vendor/leaflet/leaflet.css' | relative_url }}">{% endif %}

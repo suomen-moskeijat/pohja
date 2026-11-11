@@ -1,7 +1,8 @@
 {%- comment -%} Lasten opetukseen ilmoittautuminen. {%- endcomment -%}
 {%- assign m = include.moskeija -%}
 {%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
-<form class="u-kortti u-lomake" data-lomake data-osoite="{{ m.lomake_osoite }}" data-wa="{{ wa }}" data-sahkoposti="{{ m.sahkoposti }}" data-aihe="{{ site.data.kaannokset.ilmoittautuminen_aihe.fi }}" novalidate>
+{%- include osat/lomake-tapa.html moskeija=m -%}
+<form class="u-kortti u-lomake" data-lomake data-osoite="{{ m.lomake_osoite }}" data-wa="{{ wa }}" data-tapa="{{ _tapa }}" data-sahkoposti="{{ m.sahkoposti }}" data-aihe="{{ site.data.kaannokset.ilmoittautuminen_aihe.fi }}" novalidate>
   <fieldset>
     <legend><span class="u-lomake__nro">1</span>{% include k.html a="huoltajan_tiedot" %}</legend>
     <label class="u-kentta"><span>{% include k.html a="huoltajan_nimi" %} *</span><input name="huoltaja" required autocomplete="name"></label>
@@ -32,6 +33,7 @@
     <label class="u-kentta"><span>{% include k.html a="lisatiedot_valinnainen" %}</span><textarea name="lisatiedot" rows="3"></textarea></label>
   </fieldset>
   <label class="u-hyvaksy"><input type="checkbox" name="hyvaksyn" required><span>{% include k.html a="hyvaksyn_tietosuoja" %} <a href="{{ '/tietosuoja/' | relative_url }}">{% include k.html a="tietosuoja" %}</a></span></label>
+  {{ _tapavalinta }}
   {% include osat/lomakeviestit.html %}
   <button type="submit" class="u-nappi u-nappi--kulta u-nappi--levea">{% include k.html a="laheta_ilmoittautuminen" %}</button>
   <p class="u-hieno u-lomake__huom">{% include k.html a="tietosuoja_huom" %}</p>

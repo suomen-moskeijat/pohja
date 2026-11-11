@@ -2,6 +2,7 @@
 {%- assign m = include.moskeija -%}
 {%- assign j = '/' | relative_url -%}
 {%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+{%- if m.yhteydenotto.whatsapp == "piilossa" -%}{%- assign wa = "" -%}{%- endif -%}
 {%- assign _lahjoita = false -%}{%- if m.lahjoitus -%}{%- assign _lahjoita = true -%}{%- endif -%}{%- if m.valikko_piilota contains "lahjoita" -%}{%- assign _lahjoita = false -%}{%- endif -%}
 <header class="u-yla" data-yla>
   <div class="u-kehys u-yla__sisalto">

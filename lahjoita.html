@@ -6,6 +6,7 @@ permalink: /lahjoita/
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {%- assign l = m.lahjoitus -%}
 {%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+{%- if m.yhteydenotto.whatsapp == "piilossa" -%}{%- assign wa = "" -%}{%- endif -%}
 {% include osat/sivuhero.html avain="lahjoita_otsikko" johdanto=l.teksti %}
 <div class="u-kehys u-sivu u-sivu--kapea">
   <div class="u-kortti u-lahjoitustiedot">

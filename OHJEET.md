@@ -130,6 +130,13 @@ Metsänvihreä ja kulta, Turkoosi, Sininen, Yönsininen ja kulta, Persiansininen
 Viininpunainen, Terrakotta, Oliivinvihreä, Grafiitti ja kulta, sekä *Nykyiset värit (logon mukaan)*.
 Valinta: **Moskeijan tiedot → Ulkoasu: värit ja logo → Värit**.
 
+**Taustakuviot alueittain** (hallintapaneeli → Ulkoasu): kuvio valitaan erikseen sivujen yläosaan,
+alapalkkiin ja nostoihin (lahjoitus, lasten opetus), tai "Ei kuviota". Kuvion väri tulee värimaailmasta.
+
+**Lomakkeiden lähetys ja WhatsApp-napit** (hallintapaneeli → Sivut ja osiot → Yhteystiedot):
+lomakkeiden viestit sähköpostiin, WhatsAppiin tai kävijän valinnan mukaan, ja WhatsApp-napit
+näkyviin, ilman kulman pikanappia tai kokonaan piiloon.
+
 ### 6b. Etusivun yläosa: tausta ja napit
 
 **Moskeijan tiedot → Etusivun yläosa**
@@ -235,6 +242,7 @@ tiedot Googlelle, sivukartta ja jakokuvat. Nämä kannattaa lisäksi tehdä itse
 > | 📋 Moskeijalista | Suomen moskeijat (moskeijat.csv): lisää moskeija, luo ehdotussivut napista |
 > | 🔤 Yhteiset tekstit | Valikot, napit ja otsikot kaikilla sivuilla neljällä kielellä |
 > | 🎨 Värimaailmat | Valmiit värit, joista moskeijat valitsevat – muokkaa tai lisää uusia |
+> | 🖼️ Taustat ja kuviot | Valmiit taustakuvat (etusivun yläosa) ja taustakuviot – lisää uusia tai poista (`_data/taustakuvat.yml`, `_data/kuviot.yml`) |
 > | 🛡️ Ylläpitäjät · 📜 Muutokset · 🐞 Virheloki | Oikeudet, kaikki muutokset ja virheet |
 >
 > Moskeijan sivulla (Avaa → ⚙️ Ylläpitäjän toiminnot): julkaise uudelleen, muuta ehdotukseksi tai **poista moskeija**

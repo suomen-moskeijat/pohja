@@ -1,6 +1,7 @@
 {%- comment -%} Tervetuloa käymään: osoite, napit ja kartta. Parametri: otsikko (false = ei otsikkoa) {%- endcomment -%}
 {%- assign m = include.moskeija -%}
 {%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+{%- if m.yhteydenotto.whatsapp == "piilossa" -%}{%- assign wa = "" -%}{%- endif -%}
 {%- assign la = m.sijainti.lat -%}{%- assign lo = m.sijainti.lon -%}
 <div class="u-vierailu">
   <div class="u-vierailu__tiedot">
