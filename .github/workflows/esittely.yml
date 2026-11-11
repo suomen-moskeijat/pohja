@@ -52,7 +52,7 @@ jobs:
           (cd vertailu/hyvinkaa && tar --exclude=.git --exclude=.github --exclude=_config.yml -cf - .) | (cd $d && tar -xf -)
           cat _config.yml vertailu/hyvinkaa/_config.yml > $d/_config.yml
           printf '\nbaseurl: "/pohja/hyvinkaa-uusi"\nnoindex: true\n' >> $d/_config.yml
-          sed -i 's/^teema:.*/teema:\n  kulmat: suora\n  varjo: kevyt/' $d/_moskeijat/*.md
+          sed -i 's/^teema:.*/teema:\n  kulma: 3\n  varjo_voimakkuus: 55/' $d/_moskeijat/*.md
           python3 $d/.github/scripts/artikkelit.py --karsi $d
           (cd $d && python3 .github/scripts/instagram.py; python3 .github/scripts/rukousajat.py; python3 .github/scripts/somet.py) || true
 

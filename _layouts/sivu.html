@@ -44,18 +44,14 @@
     {%- if t.hieno and t.hieno != "" -%}--hieno: {{ t.hieno }};{%- endif -%}
     {%- if t.fontti_otsikot and t.fontti_otsikot != "" -%}--fontti-otsikot: {{ t.fontti_otsikot }};{%- endif -%}
     {%- if t.fontti_teksti and t.fontti_teksti != "" -%}--fontti-teksti: {{ t.fontti_teksti }};{%- endif -%}
-    {%- comment -%} Kulmat (teema.kulmat) ja ylälaidan varjo (teema.varjo); tyhjä = pohjan oletus (pyöreä, tavallinen) {%- endcomment -%}
-    {%- case t.kulmat -%}
-      {%- when "terava" -%}--kulma: 0px; --r-s: 0px; --r-m: 0px; --r-l: 0px;
-      {%- when "suora" -%}--kulma: 3px; --r-s: 3px; --r-m: 3px; --r-l: 3px;
-      {%- when "pieni" -%}--kulma: 6px; --r-s: 6px; --r-m: 6px; --r-l: 6px;
-      {%- when "keski" -%}--kulma: 12px; --r-s: 8px; --r-m: 12px; --r-l: 16px;
-    {%- endcase -%}
-    {%- case t.varjo -%}
-      {%- when "ei" -%}--yla-varjo: 0;
-      {%- when "kevyt" -%}--yla-varjo: .28;
-      {%- when "voimakas" -%}--yla-varjo: .8;
-    {%- endcase -%}
+    {%- comment -%} Kulmat (teema.kulma, px) ja ylälaidan varjo (teema.varjo_voimakkuus, %); tyhjä = pohjan oletus.
+      Vanhat valinnat (teema.kulmat / teema.varjo) toimivat edelleen. {%- endcomment -%}
+    {%- assign _kulma = t.kulma -%}
+    {%- if _kulma == nil or _kulma == "" -%}{%- case t.kulmat -%}{%- when "terava" -%}{%- assign _kulma = 0 -%}{%- when "suora" -%}{%- assign _kulma = 3 -%}{%- when "pieni" -%}{%- assign _kulma = 6 -%}{%- when "keski" -%}{%- assign _kulma = 12 -%}{%- endcase -%}{%- endif -%}
+    {%- if _kulma != nil and _kulma != "" -%}{%- assign _kulma = _kulma | plus: 0 | at_least: 0 | at_most: 40 -%}--kulma: {{ _kulma }}px; --r-s: {{ _kulma }}px; --r-m: {{ _kulma }}px; --r-l: {{ _kulma }}px;{%- endif -%}
+    {%- assign _varjo = t.varjo_voimakkuus -%}
+    {%- if _varjo == nil or _varjo == "" -%}{%- case t.varjo -%}{%- when "ei" -%}{%- assign _varjo = 0 -%}{%- when "kevyt" -%}{%- assign _varjo = 55 -%}{%- when "voimakas" -%}{%- assign _varjo = 160 -%}{%- endcase -%}{%- endif -%}
+    {%- if _varjo != nil and _varjo != "" -%}{%- assign _varjo = _varjo | plus: 0 | at_least: 0 | at_most: 200 | times: 0.005 -%}--yla-varjo: {{ _varjo }};{%- endif -%}
     {%- comment -%} Taustakuviot alueittain (teema.kuvio_yla / kuvio_ala / kuvio_nosto, _data/kuviot.yml; "ei" = ei kuviota) {%- endcomment -%}
     {%- assign _alueet = "yla,ala,nosto" | split: "," -%}
     {%- for _alue in _alueet -%}

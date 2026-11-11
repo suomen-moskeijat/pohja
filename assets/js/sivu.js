@@ -499,10 +499,9 @@
           r.setProperty('--kulta-teksti', 'color-mix(in srgb, ' + t.korostus + ' 45%, ' + t.paa + ')');
         } else ['--paa', '--teksti', '--paa-tumma', '--kulta', '--kulta-vaalea', '--kulta-teksti'].forEach(function (x) { r.removeProperty(x); });
       }
-      // Kulmat ja ylälaidan varjo (teema.kulmat / teema.varjo)
-      var KULMAT = { terava: [0, 0, 0, 0], suora: [3, 3, 3, 3], pieni: [6, 6, 6, 6], keski: [12, 8, 12, 16] }, VARJOT = { ei: '0', kevyt: '.28', voimakas: '.8' };
-      if ('kulmat' in d) ['--kulma', '--r-s', '--r-m', '--r-l'].forEach(function (x, i) { var k = KULMAT[d.kulmat]; if (k) r.setProperty(x, k[i] + 'px'); else r.removeProperty(x); });
-      if ('varjo' in d) { if (VARJOT[d.varjo]) r.setProperty('--yla-varjo', VARJOT[d.varjo]); else r.removeProperty('--yla-varjo'); }
+      // Kulmat (px) ja ylälaidan varjo (%); null = pohjan oletus
+      if ('kulma' in d) ['--kulma', '--r-s', '--r-m', '--r-l'].forEach(function (x) { var n = Number(d.kulma); if (d.kulma !== null && d.kulma !== '' && isFinite(n)) r.setProperty(x, Math.min(40, Math.max(0, n)) + 'px'); else r.removeProperty(x); });
+      if ('varjo' in d) { var v = Number(d.varjo); if (d.varjo !== null && d.varjo !== '' && isFinite(v)) r.setProperty('--yla-varjo', String(Math.min(200, Math.max(0, v)) * 0.005)); else r.removeProperty('--yla-varjo'); }
       // Taustakuviot alueittain: paneeli lähettää kuvion data-osoitteena, "ei" tai null (oletus)
       if (d.kuviot && typeof d.kuviot === 'object') ['yla', 'ala', 'nosto'].forEach(function (a) {
         var v = d.kuviot[a];
