@@ -500,8 +500,9 @@
         } else ['--paa', '--teksti', '--paa-tumma', '--kulta', '--kulta-vaalea', '--kulta-teksti'].forEach(function (x) { r.removeProperty(x); });
       }
       // Kulmat ja ylälaidan varjo (teema.kulmat / teema.varjo)
-      if ('kulmat' in d) ['--kulma', '--r-s', '--r-m', '--r-l'].forEach(function (x) { if (d.kulmat === 'suora') r.setProperty(x, '3px'); else r.removeProperty(x); });
-      if ('varjo' in d) { if (d.varjo === 'kevyt') r.setProperty('--yla-varjo', '.28'); else r.removeProperty('--yla-varjo'); }
+      var KULMAT = { terava: [0, 0, 0, 0], suora: [3, 3, 3, 3], pieni: [6, 6, 6, 6], keski: [12, 8, 12, 16] }, VARJOT = { ei: '0', kevyt: '.28', voimakas: '.8' };
+      if ('kulmat' in d) ['--kulma', '--r-s', '--r-m', '--r-l'].forEach(function (x, i) { var k = KULMAT[d.kulmat]; if (k) r.setProperty(x, k[i] + 'px'); else r.removeProperty(x); });
+      if ('varjo' in d) { if (VARJOT[d.varjo]) r.setProperty('--yla-varjo', VARJOT[d.varjo]); else r.removeProperty('--yla-varjo'); }
       // Taustakuviot alueittain: paneeli lähettää kuvion data-osoitteena, "ei" tai null (oletus)
       if (d.kuviot && typeof d.kuviot === 'object') ['yla', 'ala', 'nosto'].forEach(function (a) {
         var v = d.kuviot[a];

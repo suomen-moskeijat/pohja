@@ -44,9 +44,18 @@
     {%- if t.hieno and t.hieno != "" -%}--hieno: {{ t.hieno }};{%- endif -%}
     {%- if t.fontti_otsikot and t.fontti_otsikot != "" -%}--fontti-otsikot: {{ t.fontti_otsikot }};{%- endif -%}
     {%- if t.fontti_teksti and t.fontti_teksti != "" -%}--fontti-teksti: {{ t.fontti_teksti }};{%- endif -%}
-    {%- comment -%} Kulmat (teema.kulmat: suora = enintään 3 px) ja ylälaidan varjo (teema.varjo: kevyt) {%- endcomment -%}
-    {%- if t.kulmat == "suora" -%}--kulma: 3px; --r-s: 3px; --r-m: 3px; --r-l: 3px;{%- endif -%}
-    {%- if t.varjo == "kevyt" -%}--yla-varjo: .28;{%- endif -%}
+    {%- comment -%} Kulmat (teema.kulmat) ja ylälaidan varjo (teema.varjo); tyhjä = pohjan oletus (pyöreä, tavallinen) {%- endcomment -%}
+    {%- case t.kulmat -%}
+      {%- when "terava" -%}--kulma: 0px; --r-s: 0px; --r-m: 0px; --r-l: 0px;
+      {%- when "suora" -%}--kulma: 3px; --r-s: 3px; --r-m: 3px; --r-l: 3px;
+      {%- when "pieni" -%}--kulma: 6px; --r-s: 6px; --r-m: 6px; --r-l: 6px;
+      {%- when "keski" -%}--kulma: 12px; --r-s: 8px; --r-m: 12px; --r-l: 16px;
+    {%- endcase -%}
+    {%- case t.varjo -%}
+      {%- when "ei" -%}--yla-varjo: 0;
+      {%- when "kevyt" -%}--yla-varjo: .28;
+      {%- when "voimakas" -%}--yla-varjo: .8;
+    {%- endcase -%}
     {%- comment -%} Taustakuviot alueittain (teema.kuvio_yla / kuvio_ala / kuvio_nosto, _data/kuviot.yml; "ei" = ei kuviota) {%- endcomment -%}
     {%- assign _alueet = "yla,ala,nosto" | split: "," -%}
     {%- for _alue in _alueet -%}
