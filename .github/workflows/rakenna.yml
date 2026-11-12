@@ -87,6 +87,12 @@ jobs:
             sivu/tiedostot/*/mawaqit
           key: haetut-${{ github.run_id }}
 
+      # Gallerioiden pienet kuvat (nopeampi sivu puhelimella)
+      - name: Pienennä gallerian kuvat
+        run: |
+          python3 -m pip install --quiet pillow || true
+          python3 sivu/.github/scripts/pienet.py sivu
+
       - uses: actions/configure-pages@v5
 
       - name: Rakenna sivu (Jekyll)

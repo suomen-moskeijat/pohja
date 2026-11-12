@@ -30,6 +30,7 @@ defaults:
 markdown: kramdown
 
 exclude:
+  - moskeijat.csv       # moskeijalista on pohjan ylläpitoa varten, ei moskeijan sivulle
   - README.md
   - OHJE.md
   - OHJEET.md

@@ -48,6 +48,7 @@
   <meta property="og:locale:alternate" content="{% case _l %}{% when 'en' %}en_GB{% when 'ar' %}ar_AR{% when 'so' %}so_SO{% endcase %}">{% endif %}{% endfor %}
   {% unless site.noindex or m.luonnos or m.ehdotus or page.noindex %}<meta name="robots" content="max-image-preview:large, max-snippet:-1">{% endunless %}
   <link rel="alternate" type="text/markdown" title="llms.txt" href="{{ '/llms.txt' | relative_url }}">
+  <link rel="alternate" type="application/atom+xml" title="{{ m.title | escape }}: tiedotteet ja tapahtumat" href="{{ '/feed.xml' | relative_url }}">
   {% if m.seo.google and m.seo.google != "" %}<meta name="google-site-verification" content="{{ m.seo.google | escape }}">{% endif %}
   {% if m.seo.bing and m.seo.bing != "" %}<meta name="msvalidate.01" content="{{ m.seo.bing | escape }}">{% endif %}
   {% if kuva and kuva != "" %}<meta property="og:image" content="{{ kuva }}">
@@ -74,6 +75,10 @@
     "address": { "@type": "PostalAddress", "streetAddress": {{ _katu | jsonify }},{% if _posti.size == 5 %} "postalCode": {{ _posti | jsonify }},{% endif %} "addressLocality": {{ m.kaupunki | jsonify }}, "addressCountry": "FI" },
     {% if m.sijainti.lat and m.sijainti.lat != 0 %}"geo": { "@type": "GeoCoordinates", "latitude": {{ m.sijainti.lat }}, "longitude": {{ m.sijainti.lon }} },
     "hasMap": {{ "https://www.google.com/maps/search/?api=1&query=" | append: m.sijainti.lat | append: "," | append: m.sijainti.lon | jsonify }},{% endif %}
+    {%- if page.url == "/" -%}{%- assign _nyt = site.time | date: "%Y-%m-%d" -%}{%- assign _tt = site.tapahtumat | sort: "paiva" -%}
+    {%- capture _tulevat -%}{%- assign _n = 0 -%}{%- for t in _tt -%}{%- assign _p = t.paiva | date: "%Y-%m-%d" -%}{%- if _p >= _nyt and _n < 5 -%}{%- assign _n = _n | plus: 1 -%}{%- if _n > 1 -%},{%- endif -%}{ "@type": "Event", "name": {{ t.title | jsonify }}, "startDate": {{ _p | jsonify }}, "url": {{ site.url | append: site.baseurl | append: t.url | jsonify }}, "location": { "@id": {{ kotisivu | append: "#moskeija" | jsonify }} } }{%- endif -%}{%- endfor -%}{%- endcapture -%}
+    {%- if _tulevat != "" %}
+    "event": [{{ _tulevat }}],{% endif -%}{%- endif %}
     "isAccessibleForFree": true,
     "publicAccess": true,
     "sameAs": {{ _somet | jsonify }}

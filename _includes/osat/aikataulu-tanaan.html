@@ -1,0 +1,15 @@
+{%- comment -%}
+  Rakennushetken päivän ja kuukauden virallinen aikataulu (moskeijan _data/aikataulut/<kansio>/VVVV-KK.csv).
+  Sivu rakennetaan kerran tunnissa, joten ajat ovat HTML:ssä valmiina myös hakukoneille ja tekoälyhauille,
+  jotka eivät aja JavaScriptiä. Asettaa: _at_kk (kuukauden rivit), _at_rivi (tämän päivän rivi), _at_pvm.
+{%- endcomment -%}
+{%- assign _at_m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- assign _at_kansio = _at_m.rukousajat.aikataulu | default: _at_m.slug -%}
+{%- assign _at_avain = site.time | date: "%Y-%m" -%}
+{%- assign _at_pv = site.time | date: "%-d" -%}
+{%- assign _at_pvm = site.time | date: "%Y-%m-%d" -%}
+{%- assign _at_kk = nil -%}{%- assign _at_rivi = nil -%}
+{%- if _at_kansio and site.data.aikataulut and site.data.aikataulut[_at_kansio] -%}
+  {%- assign _at_kk = site.data.aikataulut[_at_kansio][_at_avain] -%}
+  {%- for _x in _at_kk -%}{%- assign _xp = _x.pv | append: "" -%}{%- if _xp == _at_pv -%}{%- assign _at_rivi = _x -%}{%- endif -%}{%- endfor -%}
+{%- endif -%}

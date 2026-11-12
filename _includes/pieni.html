@@ -1,0 +1,3 @@
+{%- comment -%} Gallerian pieni kuva (tiedostot/**/pienet/, ks. .github/scripts/pienet.py). Muut osoitteet sellaisenaan. {%- endcomment -%}
+{%- assign _pk = include.kuva | default: "" -%}
+{%- if site.pienet and _pk contains "/tiedostot/" -%}{%- assign _po = _pk | split: "/" -%}{%- assign _pn = _po | last -%}{%- assign _pkansio = _pk | remove_first: _pn | append: "pienet/" | append: _pn -%}{{ _pkansio | relative_url }}{%- elsif _pk contains "://" -%}{{ _pk }}{%- else -%}{{ _pk | relative_url }}{%- endif -%}

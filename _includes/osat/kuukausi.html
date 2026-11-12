@@ -3,11 +3,23 @@
 <section class="kk" data-kk>
   <header class="kk__yla">
     <button type="button" class="kk__siirto" data-kk-siirto="-1" aria-label="{{ site.data.kaannokset.edellinen_kuukausi.fi }}">{% include ikoni-ph.html nimi="vasen" koko=20 luokka="u-flip" %}</button>
-    <h2 class="kk__nimi" data-kk-nimi aria-live="polite">&nbsp;</h2>
+    {%- include osat/aikataulu-tanaan.html -%}
+    {%- assign _kuut = "tammikuu,helmikuu,maaliskuu,huhtikuu,toukokuu,kesäkuu,heinäkuu,elokuu,syyskuu,lokakuu,marraskuu,joulukuu" | split: "," -%}
+    {%- assign _kk_i = site.time | date: "%-m" | minus: 1 -%}
+    <h2 class="kk__nimi" data-kk-nimi aria-live="polite">{% if _at_kk %}{{ _kuut[_kk_i] }} {{ site.time | date: "%Y" }}{% else %}&nbsp;{% endif %}</h2>
     <button type="button" class="kk__siirto" data-kk-siirto="1" aria-label="{{ site.data.kaannokset.seuraava_kuukausi.fi }}">{% include ikoni-ph.html nimi="oikea" koko=20 luokka="u-flip" %}</button>
   </header>
   <div class="kk__kaari">
-    <table class="kk__taulu" data-kk-taulu></table>
+    <table class="kk__taulu" data-kk-taulu>
+      {%- if _at_kk %}
+      {%- assign _vp = "ma,ti,ke,to,pe,la,su" | split: "," %}
+      <thead><tr><th scope="col">Päivä</th><th scope="col">Fajr</th><th scope="col">Nousu</th><th scope="col">Dhuhr</th><th scope="col">Asr</th><th scope="col">Maghrib</th><th scope="col">Isha</th></tr></thead><tbody>
+      {%- for x in _at_kk %}{%- assign _d = _at_avain | append: "-" | append: x.pv -%}{%- assign _wd = _d | date: "%u" | minus: 1 -%}{%- assign _xp = x.pv | append: "" %}
+      <tr{% if _xp == _at_pv %} class="kk__tanaan" aria-current="date"{% elsif _wd == 4 %} class="kk__pe"{% endif %}><th scope="row"><small>{{ _vp[_wd] }}</small> {{ x.pv }}</th><td>{{ x.fajr }}</td><td class="kk__nousu">{{ x.auringonnousu }}</td><td>{{ x.dhuhr }}</td><td>{{ x.asr }}</td><td>{{ x.maghrib }}</td><td>{{ x.isha }}</td></tr>
+      {%- endfor %}
+      </tbody>
+      {%- endif %}
+    </table>
   </div>
   <footer class="kk__ala">
     <p class="u-hieno" data-kk-lahde-virallinen hidden>{% include k.html a="aikataulu_virallinen" %}</p>

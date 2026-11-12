@@ -2,6 +2,7 @@
   Päivän rukousajat: seuraava rukous (aika, laskuri, edistyminen) ja päivän taulukko
   (adhan + iqamah). Vaatii sivulle u/rukousdata.html:n. Parametri: linkki (true = "Koko aikataulu")
 {%- endcomment -%}
+{%- include osat/aikataulu-tanaan.html -%}
 <section class="rk" data-rk aria-label="{{ site.data.kaannokset.rukousajat.fi }}">
   <div class="rk__seuraava">
     <p class="rk__eyebrow">{% include k.html a="seuraava_rukous" %}</p>
@@ -11,9 +12,15 @@
   </div>
   <table class="rk__taulu">
     <caption class="u-nakymaton">{% include k.html a="paivan_ajat" %}</caption>
-    <thead><tr><th scope="col"><span data-rk-pvm></span></th><th scope="col">{% include k.html a="adhan" %}</th><th scope="col">{% include k.html a="iqamah" %}</th></tr></thead>
+    <thead><tr><th scope="col"><span data-rk-pvm>{% if _at_rivi %}{{ site.time | date: "%-d.%-m.%Y" }}{% endif %}</span></th><th scope="col">{% include k.html a="adhan" %}</th><th scope="col">{% include k.html a="iqamah" %}</th></tr></thead>
+    {%- assign _r = _at_rivi -%}
     <tbody data-rk-rivit>
-      <tr><th>Fajr</th><td>–</td><td>–</td></tr><tr><th>Dhuhr</th><td>–</td><td>–</td></tr><tr><th>Asr</th><td>–</td><td>–</td></tr><tr><th>Maghrib</th><td>–</td><td>–</td></tr><tr><th>Isha</th><td>–</td><td>–</td></tr>
+      <tr><th scope="row">Fajr<span class="rk__ar" lang="ar">الفجر</span></th><td>{{ _r.fajr | default: "–" }}</td><td>{{ _r.iqamah_fajr }}</td></tr>
+      <tr class="rk__rivi--muu"><th scope="row"><span data-l="fi">Auringonnousu</span><span data-l="en">Sunrise</span><span data-l="ar">الشروق</span><span data-l="so">Qorrax ka soo bax</span><span class="rk__ar" lang="ar">الشروق</span></th><td>{{ _r.auringonnousu | default: "–" }}</td><td></td></tr>
+      <tr><th scope="row">Dhuhr<span class="rk__ar" lang="ar">الظهر</span></th><td>{{ _r.dhuhr | default: "–" }}</td><td>{{ _r.iqamah_dhuhr }}</td></tr>
+      <tr><th scope="row">Asr<span class="rk__ar" lang="ar">العصر</span></th><td>{{ _r.asr | default: "–" }}</td><td>{{ _r.iqamah_asr }}</td></tr>
+      <tr><th scope="row">Maghrib<span class="rk__ar" lang="ar">المغرب</span></th><td>{{ _r.maghrib | default: "–" }}</td><td>{{ _r.iqamah_maghrib }}</td></tr>
+      <tr><th scope="row">Isha<span class="rk__ar" lang="ar">العشاء</span></th><td>{{ _r.isha | default: "–" }}</td><td>{{ _r.iqamah_isha }}</td></tr>
     </tbody>
   </table>
   <footer class="rk__ala">

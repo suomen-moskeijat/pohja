@@ -1,0 +1,20 @@
+---
+layout: sivu
+title: Sivua ei löytynyt
+permalink: /404.html
+noindex: true
+sitemap: false
+---
+{%- comment -%} GitHub Pages näyttää tämän, kun osoitetta ei ole. Ohjaa tärkeimmille sivuille (ei umpikujaa). {%- endcomment -%}
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{% include osat/sivuhero.html avain="sivua_ei_loydy" johdanto_avain="sivua_ei_loydy_teksti" %}
+<div class="u-kehys u-sivu u-sivu--kapea">
+  <nav class="u-kortti" aria-label="{{ site.data.kaannokset.sivua_ei_loydy.fi }}">
+    <ul class="u-linkit">
+      <li><a class="u-kortti u-linkkikortti" href="{{ '/' | relative_url }}"><span class="u-linkkikortti__teksti"><strong>{% include k.html a="etusivulle" %}</strong></span><span class="u-linkkikortti__nuoli u-flip" aria-hidden="true">→</span></a></li>
+      <li><a class="u-kortti u-linkkikortti" href="{{ '/rukousajat/' | relative_url }}"><span class="u-linkkikortti__teksti"><strong>{% include k.html a="rukousajat" %}</strong></span><span class="u-linkkikortti__nuoli u-flip" aria-hidden="true">→</span></a></li>
+      <li><a class="u-kortti u-linkkikortti" href="{{ '/tapahtumat/' | relative_url }}"><span class="u-linkkikortti__teksti"><strong>{% include k.html a="nav_tapahtumat" %}</strong></span><span class="u-linkkikortti__nuoli u-flip" aria-hidden="true">→</span></a></li>
+      <li><a class="u-kortti u-linkkikortti" href="{{ '/yhteystiedot/' | relative_url }}"><span class="u-linkkikortti__teksti"><strong>{% include k.html a="yhteystiedot" %}</strong></span><span class="u-linkkikortti__nuoli u-flip" aria-hidden="true">→</span></a></li>
+    </ul>
+  </nav>
+</div>

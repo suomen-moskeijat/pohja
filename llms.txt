@@ -36,6 +36,10 @@ sitemap: false
 - Perjantairukous (jumu'a): klo {{ m.juma }}
 {%- endif %}
 - Päivittäiset rukousajat ja iqamah-ajat: {{ juuri }}/rukousajat/
+{%- include osat/aikataulu-tanaan.html -%}
+{%- if _at_rivi %}
+- Rukousajat tänään {{ site.time | date: "%-d.%-m.%Y" }} (adhan / iqamah): Fajr {{ _at_rivi.fajr }}{% if _at_rivi.iqamah_fajr != "" and _at_rivi.iqamah_fajr %} / {{ _at_rivi.iqamah_fajr }}{% endif %}, auringonnousu {{ _at_rivi.auringonnousu }}, Dhuhr {{ _at_rivi.dhuhr }}{% if _at_rivi.iqamah_dhuhr != "" and _at_rivi.iqamah_dhuhr %} / {{ _at_rivi.iqamah_dhuhr }}{% endif %}, Asr {{ _at_rivi.asr }}{% if _at_rivi.iqamah_asr != "" and _at_rivi.iqamah_asr %} / {{ _at_rivi.iqamah_asr }}{% endif %}, Maghrib {{ _at_rivi.maghrib }}{% if _at_rivi.iqamah_maghrib != "" and _at_rivi.iqamah_maghrib %} / {{ _at_rivi.iqamah_maghrib }}{% endif %}, Isha {{ _at_rivi.isha }}{% if _at_rivi.iqamah_isha != "" and _at_rivi.iqamah_isha %} / {{ _at_rivi.iqamah_isha }}{% endif %}. Koko kuukausi: {{ juuri }}/llms-full.txt
+{%- endif %}
 - Kaikki ovat tervetulleita tutustumaan moskeijaan uskonnosta riippumatta.
 
 ## Toiminta
@@ -94,4 +98,6 @@ sitemap: false
 
 ## Optional
 
+- [Koko sisältö tekstinä (esittely, toiminta, usein kysyttyä, kuukauden rukousajat)]({{ juuri }}/llms-full.txt)
 - [Sivukartta]({{ juuri }}/sitemap.xml)
+- [Tiedotteet ja tapahtumat syötteenä]({{ juuri }}/feed.xml)

@@ -1,0 +1,125 @@
+---
+layout: null
+permalink: /llms-full.txt
+sitemap: false
+---
+{%- comment -%}
+  llms-full.txt: koko sivuston olennainen sisältö yhtenä Markdown-tekstinä tekoälyhauille
+  (esittely, toiminta, lasten opetus, lahjoitus, usein kysyttyä, omat sivut, tapahtumat, kuukauden rukousajat).
+{%- endcomment -%}
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- assign juuri = site.url | append: site.baseurl -%}
+{%- capture fi_ -%}{%- endcapture -%}
+# {{ m.title }} – moskeija, {{ m.kaupunki }}
+
+> {{ m.esittely.fi | default: m.esittely | strip_html | normalize_whitespace }}
+
+Lähde: {{ juuri }}/ · Päivitetty {{ site.time | date: "%-d.%-m.%Y klo %H.%M" }} · Tiivis versio: {{ juuri }}/llms.txt
+
+## Yhteystiedot
+
+- Osoite: {{ m.osoite }}
+{%- if m.puhelin and m.puhelin != "" %}
+- Puhelin: {{ m.puhelin }}
+{%- endif %}
+{%- if m.sahkoposti and m.sahkoposti != "" %}
+- Sähköposti: {{ m.sahkoposti }}
+{%- endif %}
+{%- if m.juma and m.juma != "" %}
+- Perjantairukous (jumu'a): klo {{ m.juma }}
+{%- endif %}
+{%- if m.sijainti.lat and m.sijainti.lat != 0 %}
+- Kartta: https://www.google.com/maps/search/?api=1&query={{ m.sijainti.lat }},{{ m.sijainti.lon }}
+{%- endif %}
+{%- for s in m.some %}{%- assign _u = s[1] -%}{%- if _u and _u != "" and s[0] != "instagram_julkaisut" and s[0] != "upotuskoodi" and s[0] != "youtube_kanava_id" %}
+- {{ s[0] | capitalize }}: {{ _u }}
+{%- endif %}{%- endfor %}
+{%- if m.meista %}
+
+## Meistä
+
+{{ m.meista.fi | default: m.meista | strip_html | normalize_whitespace }}
+{%- endif %}
+{%- if m.missio %}
+
+{{ m.missio.fi | default: m.missio | strip_html | normalize_whitespace }}
+{%- endif %}
+
+## Toiminta
+{% if m.palvelut_esittely %}
+{{ m.palvelut_esittely.fi | default: m.palvelut_esittely | strip_html | normalize_whitespace }}
+{% endif %}
+{%- for p in m.palvelut %}
+- **{{ p.nimi.fi | default: p.nimi }}**{% if p.kuvaus %}: {{ p.kuvaus.fi | default: p.kuvaus | strip_html | normalize_whitespace }}{% endif %}
+{%- endfor %}
+{%- if m.lasten_opetus.kaytossa %}
+
+### Lasten opetus
+
+{{ m.lasten_opetus.teksti.fi | default: m.lasten_opetus.teksti | strip_html | normalize_whitespace }} Ilmoittautuminen: {{ juuri }}/palvelut/lasten-opetus/
+{%- endif %}
+{%- if m.lahjoitus %}
+
+## Lahjoitukset
+
+{{ m.lahjoitus.teksti.fi | default: m.lahjoitus.teksti | strip_html | normalize_whitespace }}{% if m.lahjoitus.saaja and m.lahjoitus.saaja != "" %} Saaja: {{ m.lahjoitus.saaja }}.{% endif %}{% if m.lahjoitus.tilinumero and m.lahjoitus.tilinumero != "" %} Tilinumero: {{ m.lahjoitus.tilinumero }}.{% endif %} Lisätietoja: {{ juuri }}/lahjoita/
+{%- endif %}
+{%- comment -%} Usein kysytyt kysymykset etusivulta ja omilta sivuilta {%- endcomment -%}
+{%- capture _ukk -%}
+{%- for o in m.etusivu %}{% if o.osio == "ukk" %}{% for q in o.kysymykset %}
+**{{ q.kysymys.fi | default: q.kysymys | strip_html | normalize_whitespace }}**
+{{ q.vastaus.fi | default: q.vastaus | strip_html | normalize_whitespace }}
+{% endfor %}{% endif %}{% endfor -%}
+{%- for s in site.sivut %}{% for o in s.osiot %}{% if o.osio == "ukk" %}{% for q in o.kysymykset %}
+**{{ q.kysymys.fi | default: q.kysymys | strip_html | normalize_whitespace }}**
+{{ q.vastaus.fi | default: q.vastaus | strip_html | normalize_whitespace }}
+{% endfor %}{% endif %}{% endfor %}{% endfor -%}
+{%- endcapture -%}
+{%- if _ukk != "" %}
+
+## Usein kysyttyä
+{{ _ukk }}
+{%- endif %}
+{%- for s in site.sivut %}{% assign _teksti = s.content | strip_html | normalize_whitespace %}{% if _teksti != "" or s.linkit.size > 0 %}
+
+## {{ s.title }}
+
+{% if s.johdanto %}{{ s.johdanto.fi | default: s.johdanto | strip_html | normalize_whitespace }} {% endif %}{{ _teksti | truncatewords: 400 }}
+{%- for l in s.linkit %}
+- [{{ l.nimi.fi | default: l.nimi }}]({{ l.osoite }}){% if l.kuvaus %}: {{ l.kuvaus.fi | default: l.kuvaus }}{% endif %}
+{%- endfor %}
+
+Sivu: {{ juuri }}{{ s.url }}
+{%- endif %}{% endfor %}
+{%- assign _nyt = site.time | date: "%Y-%m-%d" -%}
+{%- capture _tap -%}{%- assign _tt = site.tapahtumat | sort: "paiva" -%}{%- for t in _tt -%}{%- assign _p = t.paiva | date: "%Y-%m-%d" -%}{%- if _p >= _nyt %}
+- **{{ t.paiva | date: "%-d.%-m.%Y" }}{% if t.alkaa and t.alkaa != "" %} klo {{ t.alkaa }}{% endif %} – {{ t.title }}**{% if t.paikka %} ({{ t.paikka }}){% endif %}: {{ t.content | strip_html | normalize_whitespace | truncatewords: 60 }} {{ juuri }}{{ t.url }}{% endif -%}{%- endfor -%}{%- endcapture -%}
+{%- if _tap != "" %}
+
+## Tulevat tapahtumat
+{{ _tap }}
+{%- endif %}
+{%- include osat/aikataulu-tanaan.html -%}
+{%- if _at_kk %}
+
+## Rukousajat {{ site.time | date: "%-m/%Y" }} (adhan; iqamah suluissa)
+
+| Päivä | Fajr | Auringonnousu | Dhuhr | Asr | Maghrib | Isha |
+|---|---|---|---|---|---|---|
+{% for x in _at_kk %}| {{ x.pv }}.{{ site.time | date: "%-m." }} | {{ x.fajr }}{% if x.iqamah_fajr and x.iqamah_fajr != "" %} ({{ x.iqamah_fajr }}){% endif %} | {{ x.auringonnousu }} | {{ x.dhuhr }}{% if x.iqamah_dhuhr and x.iqamah_dhuhr != "" %} ({{ x.iqamah_dhuhr }}){% endif %} | {{ x.asr }}{% if x.iqamah_asr and x.iqamah_asr != "" %} ({{ x.iqamah_asr }}){% endif %} | {{ x.maghrib }}{% if x.iqamah_maghrib and x.iqamah_maghrib != "" %} ({{ x.iqamah_maghrib }}){% endif %} | {{ x.isha }}{% if x.iqamah_isha and x.iqamah_isha != "" %} ({{ x.iqamah_isha }}){% endif %} |
+{% endfor %}
+Perjantaisin Dhuhrin sijaan perjantairukous (jumu'a){% if m.juma and m.juma != "" %} klo {{ m.juma }}{% endif %}. Ajantasaiset ajat: {{ juuri }}/rukousajat/
+{%- else %}
+
+## Rukousajat
+
+Päivittäiset rukousajat: {{ juuri }}/rukousajat/ (lasketaan moskeijan sijainnin mukaan).
+{%- endif %}
+{%- assign _omat = site.artikkelit | where_exp: "a", "a.lahde_url == nil" | sort: "paiva" | reverse -%}
+{%- if _omat.size > 0 %}
+
+## Tiedotteet
+{% for a in _omat limit: 15 %}
+- **{{ a.title }}** ({{ a.paiva | date: "%-d.%-m.%Y" }}): {{ a.content | strip_html | normalize_whitespace | truncatewords: 50 }} {{ juuri }}{{ a.url }}
+{%- endfor %}
+{%- endif %}

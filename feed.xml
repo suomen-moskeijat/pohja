@@ -1,0 +1,29 @@
+---
+layout: null
+permalink: /feed.xml
+sitemap: false
+---
+<?xml version="1.0" encoding="UTF-8"?>
+{%- comment -%} Atom-syöte: moskeijan omat tiedotteet ja tapahtumat (uutislukijat, hakukoneet ja tekoälyhaut). {%- endcomment -%}
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- assign juuri = site.url | append: site.baseurl -%}
+{%- assign _omat = site.artikkelit | where_exp: "a", "a.lahde_url == nil" -%}
+{%- assign _kaikki = _omat | concat: site.tapahtumat | sort: "paiva" | reverse %}
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fi">
+  <title>{{ m.title | xml_escape }}</title>
+  <subtitle>Tiedotteet ja tapahtumat</subtitle>
+  <link href="{{ juuri }}/feed.xml" rel="self"/>
+  <link href="{{ juuri }}/"/>
+  <id>{{ juuri }}/</id>
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+  <author><name>{{ m.title | xml_escape }}</name></author>
+{%- for e in _kaikki limit: 30 %}
+  <entry>
+    <title>{% if e.collection == "tapahtumat" %}{{ e.paiva | date: "%-d.%-m.%Y" }}: {% endif %}{{ e.title | xml_escape }}</title>
+    <link href="{{ juuri }}{{ e.url }}"/>
+    <id>{{ juuri }}{{ e.url }}</id>
+    <updated>{{ e.paiva | default: site.time | date_to_xmlschema }}</updated>
+    <summary>{{ e.content | strip_html | normalize_whitespace | truncatewords: 60 | xml_escape }}</summary>
+  </entry>
+{%- endfor %}
+</feed>
