@@ -3,6 +3,8 @@
 lang: fi
 kielet: [fi, en, ar, so]
 timezone: Europe/Helsinki
+# Lomakkeiden suora sähköpostilähetys (hallintapaneelin palvelin toimittaa viestin moskeijan sähköpostiin)
+lomake_api: https://hallinta.atifiwais.workers.dev/api/lomake
 future: true          # tapahtumat ovat tulevaisuudessa
 hakemisto_url: ""
 

@@ -55,6 +55,7 @@ jobs:
         run: |
           (cd moskeija && tar --exclude=.git --exclude=.github -cf - .) | (cd sivu && tar -xf -)
           cat pohja/_config.yml moskeija/_config.yml > sivu/_config.yml
+          printf '\nrepo: "%s"\n' "${GITHUB_REPOSITORY#*/}" >> sivu/_config.yml
 
       - name: Valitse yhteiset artikkelit (artikkelit.lahteet)
         working-directory: sivu

@@ -10,6 +10,10 @@
 {%- assign _wa = _m.whatsapp | default: "" | remove: " " -%}
 {%- assign _sp = _m.lomake_osoite | default: _m.sahkoposti | default: "" -%}
 {%- if _tapa == "molemmat" -%}{%- if _wa == "" or _sp == "" -%}{%- assign _tapa = "" -%}{%- endif -%}{%- endif -%}
+{%- comment -%} Suora lähetys palvelimen kautta: repo (julkaisu lisää site.repo; muuten baseurlista) {%- endcomment -%}
+{%- assign _repo = site.repo | default: site.baseurl | remove: "/" -%}
+{%- capture _lomake_attr -%}{% if site.lomake_api and _repo != "" %} data-api="{{ site.lomake_api }}" data-repo="{{ _repo }}"{% endif %}{%- endcapture -%}
+{%- capture _ansa -%}<label class="u-nakymaton" aria-hidden="true">Jätä tyhjäksi <input type="text" name="_sivu" tabindex="-1" autocomplete="off"></label>{%- endcapture -%}
 {%- capture _tapavalinta -%}
 {%- if _tapa == "molemmat" -%}
 <div class="u-kentta u-lomake__tapa" role="radiogroup">

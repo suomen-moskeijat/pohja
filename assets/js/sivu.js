@@ -396,6 +396,7 @@
     return ((fi && fi.textContent) || el.name).replace('*', '').trim();
   }
   kaikki('[data-lomake]').forEach(function (lomake) {
+    var avattu = Date.now();
     lomake.addEventListener('submit', function (e) {
       e.preventDefault();
       lomake.classList.add('on-tarkistettu');
@@ -418,6 +419,22 @@
       if (tapa === 'sahkoposti' && !osoite && !sp) tapa = 'whatsapp';
       if (!tapa) tapa = osoite ? 'palvelu' : wa ? 'whatsapp' : 'sahkoposti';
       if (tapa === 'sahkoposti' && osoite) tapa = 'palvelu';
+      else if (tapa === 'sahkoposti' && lomake.dataset.api && sp) tapa = 'suora';
+      function avaaSahkoposti() {
+        location.href = 'mailto:' + sp + '?subject=' + encodeURIComponent(lomake.dataset.aihe) + '&body=' + encodeURIComponent(teksti);
+        viesti(lomake, 'sahkoposti');
+      }
+      if (tapa === 'suora') {
+        // Suoraan moskeijan sähköpostiin palvelimen kautta; jos se ei onnistu, avataan sähköpostiohjelma varalle
+        viesti(lomake, 'lahetetaan');
+        var ansa = lomake.querySelector('[name="_sivu"]'), email = lomake.querySelector('input[type="email"]');
+        fetch(lomake.dataset.api, { method: 'POST', headers: { 'content-type': 'text/plain;charset=UTF-8' }, body: JSON.stringify({
+          repo: lomake.dataset.repo, aihe: lomake.dataset.aihe, rivit: rivit.slice(2), vastaus: email ? email.value.trim() : '', hp: ansa ? ansa.value : '', aika: Date.now() - avattu,
+        }) })
+          .then(function (v) { if (!v.ok) throw new Error(v.status); viesti(lomake, 'kiitos'); lomake.reset(); lomake.classList.remove('on-tarkistettu'); avattu = Date.now(); })
+          .catch(function () { avaaSahkoposti(); });
+        return;
+      }
       if (tapa === 'palvelu') {
         viesti(lomake, 'lahetetaan');
         var data = new FormData(lomake); data.delete('_tapa'); data.append('_subject', lomake.dataset.aihe);
