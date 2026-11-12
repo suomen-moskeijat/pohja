@@ -7,7 +7,9 @@
 {%- assign osoite_nyt = site.url | append: site.baseurl | append: page.url -%}
 {%- assign kanoninen = page.lahde_url | default: osoite_nyt -%}
 {%- comment -%} Otsikko {%- endcomment -%}
-{%- if page.url == "/" -%}
+{%- if page.url == "/" and m.seo.otsikko and m.seo.otsikko != "" -%}
+  {%- assign otsikko = m.seo.otsikko -%}
+{%- elsif page.url == "/" -%}
   {%- capture otsikko -%}{{ m.title }} – moskeija, {{ m.kaupunki }}{%- endcapture -%}
 {%- elsif page.url == "/rukousajat/" -%}
   {%- capture otsikko -%}Rukousajat {{ m.kaupunki }} – {{ m.title }}{%- endcapture -%}
@@ -18,6 +20,7 @@
 {%- endif -%}
 {%- comment -%} Kuvaus {%- endcomment -%}
 {%- if page.kuvaus and page.kuvaus != "" -%}{%- assign kuvaus = page.kuvaus -%}
+{%- elsif page.url == "/" and m.seo.kuvaus and m.seo.kuvaus != "" -%}{%- assign kuvaus = m.seo.kuvaus -%}
 {%- elsif page.collection == "tapahtumat" -%}{%- assign kuvaus = page.content | strip_html | strip_newlines | default: page.title -%}
 {%- elsif page.johdanto -%}{%- assign kuvaus = page.johdanto.fi | default: page.johdanto -%}
 {%- elsif page.url == "/rukousajat/" -%}{%- capture kuvaus -%}Rukousajat {{ m.kaupunki }}: päivän fajr-, dhuhr-, asr-, maghrib- ja isha-ajat, iqamah ja perjantairukous. {{ m.title }}, {{ m.osoite }}.{%- endcapture -%}
@@ -25,7 +28,9 @@
 {%- else -%}{%- assign kuvaus = m.esittely.fi | default: m.esittely | default: site.description -%}{%- endif -%}
 {%- assign kuvaus = kuvaus | strip_html | strip_newlines | normalize_whitespace | truncate: 160 -%}
 {%- comment -%} Jakokuva {%- endcomment -%}
-{%- assign kuva = page.kuva | default: m.alku.kuva -%}
+{%- comment -%} Jakokuva: sivun oma kuva → moskeijan jakokuva (Haku ja jakaminen) → etusivun taustakuva vain kun se on käytössä → galleria → logo {%- endcomment -%}
+{%- assign kuva = page.kuva | default: m.seo.kuva -%}
+{%- if kuva == nil or kuva == "" -%}{%- if m.alku.tausta == "kuva" -%}{%- assign kuva = m.alku.kuva -%}{%- endif -%}{%- endif -%}
 {%- if kuva == nil or kuva == "" -%}{%- assign kuva = m.galleria | first -%}{%- endif -%}
 {%- if kuva == nil or kuva == "" -%}{%- assign kuva = site.data.kuvat[m.slug].kuvat | first -%}{%- endif -%}
 {%- if kuva == nil or kuva == "" -%}{%- assign kuva = m.teema.logo -%}{%- endif -%}
@@ -43,7 +48,10 @@
   <meta property="og:locale:alternate" content="{% case _l %}{% when 'en' %}en_GB{% when 'ar' %}ar_AR{% when 'so' %}so_SO{% endcase %}">{% endif %}{% endfor %}
   {% unless site.noindex or m.luonnos or m.ehdotus or page.noindex %}<meta name="robots" content="max-image-preview:large, max-snippet:-1">{% endunless %}
   <link rel="alternate" type="text/markdown" title="llms.txt" href="{{ '/llms.txt' | relative_url }}">
+  {% if m.seo.google and m.seo.google != "" %}<meta name="google-site-verification" content="{{ m.seo.google | escape }}">{% endif %}
+  {% if m.seo.bing and m.seo.bing != "" %}<meta name="msvalidate.01" content="{{ m.seo.bing | escape }}">{% endif %}
   {% if kuva and kuva != "" %}<meta property="og:image" content="{{ kuva }}">
+  <meta property="og:image:alt" content="{{ m.title | escape }}">
   <meta name="twitter:card" content="summary_large_image">{% endif %}
 {%- comment -%} schema.org: moskeija (kaikilla sivuilla), tapahtuma ja oma artikkeli {%- endcomment -%}
 {%- assign _katu = m.osoite | split: "," | first | strip -%}
