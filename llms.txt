@@ -35,6 +35,9 @@ sitemap: false
 {%- if m.juma and m.juma != "" %}
 - Perjantairukous (jumu'a): klo {{ m.juma }}
 {%- endif %}
+{%- if m.seo.google_maps and m.seo.google_maps != "" %}
+- Google Maps: {{ m.seo.google_maps }}
+{%- endif %}
 - Päivittäiset rukousajat ja iqamah-ajat: {{ juuri }}/rukousajat/
 {%- include osat/aikataulu-tanaan.html -%}
 {%- if _at_rivi %}
@@ -93,7 +96,7 @@ sitemap: false
 
 ## In English
 
-{{ m.nimi_en }} is a mosque in {{ m.kaupunki }}, Finland. {{ m.esittely.en | strip_html | normalize_whitespace }} Address: {{ m.osoite }}.{% if m.juma and m.juma != "" %} Friday prayer (jumu'ah) at {{ m.juma | replace: ".", ":" }}.{% endif %} Prayer times: {{ juuri }}/rukousajat/
+{{ m.nimi_en }} is a mosque in {{ m.kaupunki }}, Finland. {{ m.esittely.en | strip_html | normalize_whitespace }} Address: {{ m.osoite }}.{% if m.juma and m.juma != "" %} Friday prayer (jumu'ah) at {{ m.juma | replace: ".", ":" }}.{% endif %} Prayer times: {{ juuri }}/rukousajat/{% if site.kielet contains "en" %} · English version of the website: {{ juuri }}/en/{% endif %}
 {%- endif %}
 
 ## Optional

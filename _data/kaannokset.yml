@@ -175,6 +175,8 @@ sulje:              { fi: "Sulje", en: "Close", ar: "إغلاق", so: "Xir" }
 toiminta_kielet:    { fi: "Toimintaa kielillä", en: "Activities in", ar: "الأنشطة باللغات", so: "Hawlaha luqadaha" }
 kysyttavaa:         { fi: "Kysyttävää?", en: "Questions?", ar: "لديك سؤال؟", so: "Su'aal ma qabtaa?" }
 kysy_whatsapp:      { fi: "Vastaamme nopeimmin WhatsAppissa tai puhelimitse.", en: "We reply fastest on WhatsApp or by phone.", ar: "نرد بشكل أسرع عبر واتساب أو الهاتف.", so: "Sida ugu dhakhsaha badan waxaan uga jawaabnaa WhatsApp ama taleefan." }
+seo_moskeija:       { fi: "moskeija", en: "mosque", ar: "مسجد", so: "masjid" }
+seo_rukousajat_kuvaus: { fi: "Rukousajat {kaupunki}: päivän fajr-, dhuhr-, asr-, maghrib- ja isha-ajat, iqamah ja perjantairukous.", en: "Prayer times in {kaupunki}: today's fajr, dhuhr, asr, maghrib and isha, iqamah times and Friday prayer.", ar: "مواقيت الصلاة في {kaupunki}: الفجر والظهر والعصر والمغرب والعشاء والإقامة وصلاة الجمعة.", so: "Waqtiyada salaadda {kaupunki}: subax, duhur, casar, maqrib iyo cishaa, iqaamada iyo salaadda Jimcaha." }
 sivua_ei_loydy:     { fi: "Sivua ei löytynyt", en: "Page not found", ar: "الصفحة غير موجودة", so: "Bogga lama helin" }
 sivua_ei_loydy_teksti: { fi: "Sivu on ehkä siirretty tai poistettu. Tästä pääset eteenpäin:", en: "The page may have been moved or removed. Continue here:", ar: "ربما نُقلت الصفحة أو حُذفت. تابع من هنا:", so: "Boggan waa la raray ama la tirtiray. Halkan ka sii wad:" }
 etusivulle:         { fi: "Etusivulle", en: "Home page", ar: "الصفحة الرئيسية", so: "Bogga hore" }

@@ -87,11 +87,12 @@ jobs:
             sivu/tiedostot/*/mawaqit
           key: haetut-${{ github.run_id }}
 
-      # Gallerioiden pienet kuvat (nopeampi sivu puhelimella)
-      - name: Pienennä gallerian kuvat
+      # Gallerioiden pienet kuvat (nopeampi sivu puhelimella) ja automaattinen jakokuva (linkin esikatselu)
+      - name: Pienennä gallerian kuvat ja tee jakokuva
         run: |
-          python3 -m pip install --quiet pillow || true
+          python3 -m pip install --quiet pillow pyyaml || true
           python3 sivu/.github/scripts/pienet.py sivu
+          python3 sivu/.github/scripts/jakokuva.py sivu || echo "Jakokuvaa ei voitu tehdä – käytetään muuta kuvaa"
 
       - uses: actions/configure-pages@v5
 
@@ -101,6 +102,10 @@ jobs:
           source: ./sivu
           destination: ./_site
           future: true
+
+      # Kieliversiot omiin osoitteisiin (/en/, /ar/, /so/) ja sivukarttaan – hakukoneet näyttävät oikean kielen
+      - name: Kieliversiot
+        run: sudo python3 sivu/.github/scripts/kieliversiot.py _site
 
       - uses: actions/upload-pages-artifact@v3
 

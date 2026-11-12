@@ -7,8 +7,9 @@
 {%- assign osoite_nyt = site.url | append: site.baseurl | append: page.url -%}
 {%- assign kanoninen = page.lahde_url | default: osoite_nyt -%}
 {%- comment -%} Otsikko {%- endcomment -%}
-{%- if page.url == "/" and m.seo.otsikko and m.seo.otsikko != "" -%}
-  {%- assign otsikko = m.seo.otsikko -%}
+{%- assign _so = m.seo.otsikko.fi | default: m.seo.otsikko -%}{%- assign _sk = m.seo.kuvaus.fi | default: m.seo.kuvaus -%}
+{%- if page.url == "/" and _so and _so != "" -%}
+  {%- assign otsikko = _so -%}
 {%- elsif page.url == "/" -%}
   {%- capture otsikko -%}{{ m.title }} – moskeija, {{ m.kaupunki }}{%- endcapture -%}
 {%- elsif page.url == "/rukousajat/" -%}
@@ -20,7 +21,7 @@
 {%- endif -%}
 {%- comment -%} Kuvaus {%- endcomment -%}
 {%- if page.kuvaus and page.kuvaus != "" -%}{%- assign kuvaus = page.kuvaus -%}
-{%- elsif page.url == "/" and m.seo.kuvaus and m.seo.kuvaus != "" -%}{%- assign kuvaus = m.seo.kuvaus -%}
+{%- elsif page.url == "/" and _sk and _sk != "" -%}{%- assign kuvaus = _sk -%}
 {%- elsif page.collection == "tapahtumat" -%}{%- assign kuvaus = page.content | strip_html | strip_newlines | default: page.title -%}
 {%- elsif page.johdanto -%}{%- assign kuvaus = page.johdanto.fi | default: page.johdanto -%}
 {%- elsif page.url == "/rukousajat/" -%}{%- capture kuvaus -%}Rukousajat {{ m.kaupunki }}: päivän fajr-, dhuhr-, asr-, maghrib- ja isha-ajat, iqamah ja perjantairukous. {{ m.title }}, {{ m.osoite }}.{%- endcapture -%}
@@ -31,6 +32,7 @@
 {%- comment -%} Jakokuva: sivun oma kuva → moskeijan jakokuva (Haku ja jakaminen) → etusivun taustakuva vain kun se on käytössä → galleria → logo {%- endcomment -%}
 {%- assign kuva = page.kuva | default: m.seo.kuva -%}
 {%- if kuva == nil or kuva == "" -%}{%- if m.alku.tausta == "kuva" -%}{%- assign kuva = m.alku.kuva -%}{%- endif -%}{%- endif -%}
+{%- if kuva == nil or kuva == "" -%}{%- if site.jakokuva_auto -%}{%- assign kuva = "/jakokuva.jpg" -%}{%- endif -%}{%- endif -%}
 {%- if kuva == nil or kuva == "" -%}{%- assign kuva = m.galleria | first -%}{%- endif -%}
 {%- if kuva == nil or kuva == "" -%}{%- assign kuva = site.data.kuvat[m.slug].kuvat | first -%}{%- endif -%}
 {%- if kuva == nil or kuva == "" -%}{%- assign kuva = m.teema.logo -%}{%- endif -%}
@@ -47,6 +49,40 @@
   {%- for _l in site.kielet %}{% if _l != "fi" %}
   <meta property="og:locale:alternate" content="{% case _l %}{% when 'en' %}en_GB{% when 'ar' %}ar_AR{% when 'so' %}so_SO{% endcase %}">{% endif %}{% endfor %}
   {% unless site.noindex or m.luonnos or m.ehdotus or page.noindex %}<meta name="robots" content="max-image-preview:large, max-snippet:-1">{% endunless %}
+  {%- comment -%}
+    Kieliversiot omissa osoitteissa (/en/, /ar/, /so/): .github/scripts/kieliversiot.py tekee kopiot julkaisussa.
+    Tässä hreflang-linkit sekä kunkin kielen otsikko ja kuvaus. Ei yhteisiä artikkeleita (vain suomeksi) eikä luonnoksia.
+  {%- endcomment -%}
+  {%- assign _kvo = false -%}
+  {%- if site.kielet.size > 1 and page.noindex == nil and page.url != "/404.html" and page.url != "/esikatselu/" -%}{%- unless page.url contains "/artikkelit/" or page.layout == "artikkeli" -%}{%- assign _kvo = true -%}{%- endunless -%}{%- endif -%}
+  {%- comment -%} Kieliversio vain kielille, joilla etusivun esittely on kirjoitettu (muuten sisältö olisi vain suomeksi) {%- endcomment -%}
+  {%- capture _kvk -%}{%- for _l in site.kielet -%}{%- if forloop.first or m.esittely[_l] -%}{{ _l }},{%- endif -%}{%- endfor -%}{%- endcapture -%}
+  {%- assign _kvk = _kvk | split: "," -%}
+  {%- if _kvk.size < 2 -%}{%- assign _kvo = false -%}{%- endif -%}
+  {%- if _kvo %}
+  {%- for _l in _kvk %}
+  <link rel="alternate" hreflang="{{ _l }}" href="{% if forloop.first %}{{ osoite_nyt }}{% else %}{{ site.url }}{{ site.baseurl }}/{{ _l }}{{ page.url }}{% endif %}">
+  {%- endfor %}
+  <link rel="alternate" hreflang="x-default" href="{{ osoite_nyt }}">
+  {%- assign _sivu = page.url | remove: "/" -%}
+  {%- capture _kieliseo -%}{
+    {%- for _l in _kvk offset: 1 -%}
+    {%- assign _nk = "nimi_" | append: _l -%}{%- assign _n = m[_nk] | default: m.nimi_en | default: m.title -%}
+    {%- assign _mo = site.data.kaannokset.seo_moskeija[_l] | default: site.data.kaannokset.seo_moskeija.en -%}
+    {%- assign _okk = "otsikko_" | append: _l -%}
+    {%- assign _nav = "nav_" | append: _sivu -%}
+    {%- if page.url == "/" -%}{%- assign _t = m.seo.otsikko[_l] | default: "" -%}{%- if _t == "" -%}{%- capture _t -%}{{ _n }} – {{ _mo }}, {{ m.kaupunki }}{%- endcapture -%}{%- endif -%}
+    {%- elsif page.url == "/rukousajat/" -%}{%- capture _t -%}{{ site.data.kaannokset.rukousajat[_l] | default: site.data.kaannokset.rukousajat.en }} {{ m.kaupunki }} – {{ _n }}{%- endcapture -%}
+    {%- else -%}{%- assign _sotsikko = page[_okk] | default: site.data.kaannokset[page.seo_avain][_l] | default: site.data.kaannokset[_nav][_l] | default: page.title -%}{%- capture _t -%}{{ _sotsikko }} – {{ _n }}{%- endcapture -%}{%- endif -%}
+    {%- if page.url == "/" -%}{%- assign _d = m.seo.kuvaus[_l] | default: m.esittely[_l] | default: kuvaus -%}
+    {%- elsif page.url == "/rukousajat/" -%}{%- assign _d = site.data.kaannokset.seo_rukousajat_kuvaus[_l] | default: site.data.kaannokset.seo_rukousajat_kuvaus.en | replace: "{kaupunki}", m.kaupunki -%}
+    {%- else -%}{%- assign _d = page.johdanto[_l] | default: m.esittely[_l] | default: kuvaus -%}{%- endif -%}
+    {{ _l | jsonify }}: { "t": {{ _t | strip_html | strip | jsonify }}, "d": {{ _d | strip_html | strip_newlines | normalize_whitespace | truncate: 160 | jsonify }} }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  }{%- endcapture %}
+  <meta name="kieliversiot" content="{% for _l in _kvk offset: 1 %}{{ _l }}{% unless forloop.last %},{% endunless %}{% endfor %}" data-juuri="{{ site.baseurl }}">
+  <script type="application/json" id="kieliseo">{{ _kieliseo }}</script>
+  {%- endif %}
   <link rel="alternate" type="text/markdown" title="llms.txt" href="{{ '/llms.txt' | relative_url }}">
   <link rel="alternate" type="application/atom+xml" title="{{ m.title | escape }}: tiedotteet ja tapahtumat" href="{{ '/feed.xml' | relative_url }}">
   {% if m.seo.google and m.seo.google != "" %}<meta name="google-site-verification" content="{{ m.seo.google | escape }}">{% endif %}
@@ -58,6 +94,7 @@
 {%- assign _katu = m.osoite | split: "," | first | strip -%}
 {%- assign _posti = m.osoite | split: "," | last | strip | split: " " | first -%}
 {%- capture _somet -%}{%- for _s in m.some -%}{%- assign _u = _s[1] -%}{%- if _u and _u != "" and _s[0] != "instagram_julkaisut" and _s[0] != "upotuskoodi" and _s[0] != "youtube_kanava_id" -%}{{ _u }}|{%- endif -%}{%- endfor -%}{%- if m.nettisivu and m.nettisivu != "" -%}{{ m.nettisivu }}{%- endif -%}{%- endcapture -%}
+{%- if m.seo.google_maps and m.seo.google_maps != "" -%}{%- capture _somet -%}{{ _somet }}{{ m.seo.google_maps }}|{%- endcapture -%}{%- endif -%}
 {%- assign _somet = _somet | split: "|" -%}
   <script type="application/ld+json">
   {
@@ -76,7 +113,7 @@
     {% if m.sijainti.lat and m.sijainti.lat != 0 %}"geo": { "@type": "GeoCoordinates", "latitude": {{ m.sijainti.lat }}, "longitude": {{ m.sijainti.lon }} },
     "hasMap": {{ "https://www.google.com/maps/search/?api=1&query=" | append: m.sijainti.lat | append: "," | append: m.sijainti.lon | jsonify }},{% endif %}
     {%- if page.url == "/" -%}{%- assign _nyt = site.time | date: "%Y-%m-%d" -%}{%- assign _tt = site.tapahtumat | sort: "paiva" -%}
-    {%- capture _tulevat -%}{%- assign _n = 0 -%}{%- for t in _tt -%}{%- assign _p = t.paiva | date: "%Y-%m-%d" -%}{%- if _p >= _nyt and _n < 5 -%}{%- assign _n = _n | plus: 1 -%}{%- if _n > 1 -%},{%- endif -%}{ "@type": "Event", "name": {{ t.title | jsonify }}, "startDate": {{ _p | jsonify }}, "url": {{ site.url | append: site.baseurl | append: t.url | jsonify }}, "location": { "@id": {{ kotisivu | append: "#moskeija" | jsonify }} } }{%- endif -%}{%- endfor -%}{%- endcapture -%}
+    {%- capture _tulevat -%}{%- assign _n = 0 -%}{%- for t in _tt -%}{%- assign _tpvm = t.paiva | date: "%Y-%m-%d" -%}{%- if _tpvm >= _nyt and _n < 5 -%}{%- assign _n = _n | plus: 1 -%}{%- if _n > 1 -%},{%- endif -%}{ "@type": "Event", "name": {{ t.title | jsonify }}, "startDate": {{ _tpvm | jsonify }}, "url": {{ site.url | append: site.baseurl | append: t.url | jsonify }}, "location": { "@id": {{ kotisivu | append: "#moskeija" | jsonify }} } }{%- endif -%}{%- endfor -%}{%- endcapture -%}
     {%- if _tulevat != "" %}
     "event": [{{ _tulevat }}],{% endif -%}{%- endif %}
     "isAccessibleForFree": true,

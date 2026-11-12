@@ -31,7 +31,13 @@
       if (auki) { var valittu = lista.querySelector('[aria-checked="true"]') || lista.querySelector('button'); if (valittu) valittu.focus(); }
     });
     kaikki('[data-kieli]', v).forEach(function (b) {
-      b.addEventListener('click', function () { tallenna('kieli', b.dataset.kieli); asetaKieli(b.dataset.kieli); sulje(); nappi.focus(); });
+      b.addEventListener('click', function () {
+        tallenna('kieli', b.dataset.kieli);
+        var alt = document.querySelector('link[rel="alternate"][hreflang="' + b.dataset.kieli + '"]');
+        var polku = alt ? new URL(alt.href).pathname : null;
+        if (polku && polku !== location.pathname && window.top === window) { location.href = polku + location.search + location.hash; return; }
+        asetaKieli(b.dataset.kieli); sulje(); nappi.focus();
+      });
     });
     document.addEventListener('click', function (e) { if (!v.contains(e.target)) sulje(); });
     v.addEventListener('keydown', function (e) { if (e.key === 'Escape') { sulje(); nappi.focus(); } });
