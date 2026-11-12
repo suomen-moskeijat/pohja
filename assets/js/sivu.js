@@ -407,7 +407,7 @@
       }
       var rivit = [lomake.dataset.aihe, ''], nahty = {};
       Array.prototype.forEach.call(lomake.elements, function (el) {
-        if (!el.name || el.name === 'hyvaksyn' || el.name.charAt(0) === '_' || nahty[el.name]) return;
+        if (!el.name || el.name === 'hyvaksyn' || el.name.charAt(0) === '_' || el.name.indexOf('cf-') === 0 || nahty[el.name]) return;
         if (el.type === 'radio') { nahty[el.name] = 1; var v = lomake.querySelector('[name="' + el.name + '"]:checked'); if (v) rivit.push(kentanNimi(el) + ': ' + v.value); return; }
         if (el.value.trim()) rivit.push(kentanNimi(el) + ': ' + el.value.trim());
       });
@@ -430,8 +430,9 @@
         var ansa = lomake.querySelector('[name="_sivu"]'), email = lomake.querySelector('input[type="email"]');
         fetch(lomake.dataset.api, { method: 'POST', headers: { 'content-type': 'text/plain;charset=UTF-8' }, body: JSON.stringify({
           repo: lomake.dataset.repo, aihe: lomake.dataset.aihe, rivit: rivit.slice(2), vastaus: email ? email.value.trim() : '', hp: ansa ? ansa.value : '', aika: Date.now() - avattu,
+          kieli: kieli(), turnstile: (lomake.querySelector('[name="cf-turnstile-response"]') || {}).value || '',
         }) })
-          .then(function (v) { if (!v.ok) throw new Error(v.status); viesti(lomake, 'kiitos'); lomake.reset(); lomake.classList.remove('on-tarkistettu'); avattu = Date.now(); })
+          .then(function (v) { if (!v.ok) throw new Error(v.status); viesti(lomake, 'kiitos'); lomake.reset(); lomake.classList.remove('on-tarkistettu'); avattu = Date.now(); if (window.turnstile) try { window.turnstile.reset(); } catch (e) {} })
           .catch(function () { avaaSahkoposti(); });
         return;
       }

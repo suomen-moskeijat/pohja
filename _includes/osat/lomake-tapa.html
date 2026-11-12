@@ -13,7 +13,10 @@
 {%- comment -%} Suora lähetys palvelimen kautta: repo (julkaisu lisää site.repo; muuten baseurlista) {%- endcomment -%}
 {%- assign _repo = site.repo | default: site.baseurl | remove: "/" -%}
 {%- capture _lomake_attr -%}{% if site.lomake_api and _repo != "" %} data-api="{{ site.lomake_api }}" data-repo="{{ _repo }}"{% endif %}{%- endcapture -%}
-{%- capture _ansa -%}<label class="u-nakymaton" aria-hidden="true">Jätä tyhjäksi <input type="text" name="_sivu" tabindex="-1" autocomplete="off"></label>{%- endcapture -%}
+{%- capture _ansa -%}<label class="u-nakymaton" aria-hidden="true">Jätä tyhjäksi <input type="text" name="_sivu" tabindex="-1" autocomplete="off"></label>
+{%- comment -%} Valinnainen Cloudflare Turnstile -ihmistarkistus (site.turnstile_avain pohjan _config.yml:ssä) {%- endcomment -%}
+{%- if site.turnstile_avain and site.turnstile_avain != "" and _lomake_attr != "" -%}<div class="cf-turnstile" data-sitekey="{{ site.turnstile_avain }}" data-size="flexible" data-appearance="interaction-only"></div><script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>{%- endif -%}
+{%- endcapture -%}
 {%- capture _tapavalinta -%}
 {%- if _tapa == "molemmat" -%}
 <div class="u-kentta u-lomake__tapa" role="radiogroup">
