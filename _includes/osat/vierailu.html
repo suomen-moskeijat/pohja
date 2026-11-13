@@ -20,8 +20,10 @@
   </div>
   {% if la %}
   <div class="u-vierailu__kartta">
-    {%- comment -%} Kartta latautuu OpenStreetMapista vasta napautuksesta (ei kolmannen osapuolen pyyntöjä ilman lupaa) {%- endcomment %}
-    <button type="button" class="u-upotus" data-upota="https://www.openstreetmap.org/export/embed.html?bbox={{ lo | minus: 0.007 }}%2C{{ la | minus: 0.0032 }}%2C{{ lo | plus: 0.007 }}%2C{{ la | plus: 0.0032 }}&amp;layer=mapnik&amp;marker={{ la }}%2C{{ lo }}" data-upota-otsikko="{{ m.osoite | escape }}">
+    {%- comment -%} Google Maps (avaimeton upotus) latautuu vasta napautuksesta – Google asettaa evästeitä, joten ei ilman kävijän toimintaa.
+         Haku moskeijan nimellä ja osoitteella näyttää paikan kortin; ilman katuosoitetta koordinaatit. {%- endcomment %}
+    {%- if m.osoite contains "," -%}{%- capture _kq -%}{{ m.title | append: ", " | append: m.osoite | url_encode }}{%- endcapture -%}{%- else -%}{%- capture _kq -%}{{ la }},{{ lo }}{%- endcapture -%}{%- endif %}
+    <button type="button" class="u-upotus" data-upota="https://maps.google.com/maps?q={{ _kq }}&amp;z=16&amp;output=embed" data-upota-otsikko="{{ m.osoite | escape }}">
       <span class="u-upotus__ikoni">{% include ikoni-ph.html nimi="sijainti" koko=26 %}</span>
       <strong>{% include k.html a="nayta_kartta" %}</strong>
       <small>{% include k.html a="kartta_lahde" %}</small>
