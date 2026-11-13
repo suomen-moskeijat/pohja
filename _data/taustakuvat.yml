@@ -8,3 +8,4 @@ aamunkoitto:  { nimi: "Aamunkoitto",   tiedosto: aamunkoitto.jpg }
 kaarikaytava: { nimi: "Kaarikäytävä",  tiedosto: kaarikaytava.jpg }
 kultakuvio:   { nimi: "Kultainen kuvio", tiedosto: kultakuvio.jpg }
 1: { nimi: "1", tiedosto: 1.jpg }
+3: { nimi: "3", tiedosto: 3.jpg }
