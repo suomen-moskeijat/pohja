@@ -54,7 +54,7 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 | Moskeija haluaa muokata tekstejä tai lisätä tapahtuman | muokkaaja | Pages CMS (Osa 1). |
 | Uusi henkilö haluaa muokkausoikeuden | ylläpitäjä | GitHub-tunnus → Actions → **Lisää muokkaaja** (repo + tunnus). |
 | Henkilö lopettaa | ylläpitäjä | moskeijan repo → Settings → Collaborators → Remove. |
-| Rukousajat ovat väärin | muokkaaja | Tarkista Masjidbox tai Mawaqit. Jos moskeija ei käytä kumpaakaan, ylläpitäjä valitsee lähteen (Osa 2, kohta 7). |
+| Rukousajat ovat väärin | pääkäyttäjä | Paneeli → Rukousajat ja Jumua: tarkista lähde ja seuraavat 7 päivää. Yksittäisen päivän voi korjata kohdassa Muutokset yksittäisiin päiviin. |
 | Moskeija ottaa Mawaqitin tai Masjidboxin käyttöön | ylläpitäjä | Pages CMS → Moskeijan tiedot → Rukousajat: lähde ja tunnus. |
 | Moskeija haluaa oman osoitteen (esim. moskeija.fi) | ylläpitäjä | Osa 2, kohta 8. Tee vasta, kun sivu on julkaistu. |
 | Sivu ei päivity tai näyttää rikkinäiseltä | ylläpitäjä | Osa 2, kohta 10 (Actions-loki). |
@@ -191,8 +191,18 @@ Rukousajat tulevat automaattisesti, eikä niitä tarvitse muokata sivulla:
 | **rukousajat.fi** | Helsinki, Espoo ja Vantaa, jos moskeijalla ei ole omaa palvelua |
 | **laskenta** | muualla sijainnista samalla tavalla kuin rukousajat.fi |
 
-Ajat päivittyvät kerran tunnissa. **Iqamah:** jos lähde ei kerro iqamahia, käytetään moskeijan
-oletusminuutteja (Moskeijan tiedot → Rukousajat → Iqamah oletus).
+Ajat päivittyvät kerran tunnissa. Lisäksi lähteenä voi olla **oma aikataulu**, jonka moskeija kirjoittaa
+tai liittää Excelistä paneelissa kuukausi kerrallaan (tyhjät päivät lasketaan sijainnista).
+
+Paneelissa (Rukousajat ja Jumua) näkyvät **seuraavat 7 päivää** juuri niin kuin ne ovat sivulla, ja
+näkymä päivittyy heti asetuksia muutettaessa. Lisäksi:
+
+- **Iqamah** jokaiselle rukoukselle: minuutteja adhanin jälkeen (käytetään, jos lähde ei kerro iqamahia)
+  tai **kiinteä kellonaika** (esim. Dhuhr 13.30, voittaa aina).
+- **Jumua** ja valinnainen **toinen Jumua**.
+- **Muutokset yksittäisiin päiviin** (esim. juhlapäivä, ramadanin Isha): vain muuttuvat ajat. Menneet
+  päivät poistuvat itsestään. Toimii kaikkien lähteiden kanssa.
+- **Laskentatapa**, **Asr (Shafi/Hanafi)** ja **minuuttikorjaukset**, kun ajat lasketaan sijainnista.
 
 ### 11. Somet
 

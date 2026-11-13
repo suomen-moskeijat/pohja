@@ -173,11 +173,22 @@
     }
     if (asetus.iqamah) {
       VARSINAISET.forEach(function (n) {
-        var lisa = asetus.iqamah[n];
-        if (!tulos.iqamah[n] && lisa != null && tulos[n] instanceof Date && !isNaN(tulos[n])) tulos.iqamah[n] = new Date(tulos[n].getTime() + lisa * 60000);
+        var v = asetus.iqamah[n];
+        if (typeof v === 'string' && /[.:]/.test(v)) { var k = hki(paiva, v); if (k) tulos.iqamah[n] = k; } // kiinteä kellonaika voittaa
+        else if (!tulos.iqamah[n] && v != null && v !== '' && tulos[n] instanceof Date && !isNaN(tulos[n])) tulos.iqamah[n] = new Date(tulos[n].getTime() + Number(v) * 60000);
       });
     }
     if (paiva.getDay() === 5 && asetus.juma) { var j = hki(paiva, asetus.juma); if (j) { tulos.dhuhr = j; tulos.jumua = true; } }
+    // Päiväkohtaiset muutokset (paneeli → Rukousajat → Muutokset yksittäisiin päiviin)
+    var pvm = paiva.getFullYear() + '-' + ('0' + (paiva.getMonth() + 1)).slice(-2) + '-' + ('0' + paiva.getDate()).slice(-2);
+    var mu = (asetus.muutokset || []).filter(function (x) { return String(x.paiva).slice(0, 10) === pvm; })[0];
+    if (mu) {
+      VARSINAISET.forEach(function (n) {
+        if (mu[n]) { var a = hki(paiva, mu[n]); if (a) tulos[n] = a; }
+        if (mu['iqamah_' + n]) { var q = hki(paiva, mu['iqamah_' + n]); if (q) tulos.iqamah[n] = q; }
+      });
+      tulos.muutos = true;
+    }
     return tulos;
   }
 

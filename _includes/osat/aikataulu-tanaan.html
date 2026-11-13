@@ -9,6 +9,7 @@
 {%- assign _at_pv = site.time | date: "%-d" -%}
 {%- assign _at_pvm = site.time | date: "%Y-%m-%d" -%}
 {%- assign _at_kk = nil -%}{%- assign _at_rivi = nil -%}
+{%- assign _at_mu = _at_m.rukousajat.muutokset -%}{%- assign _at_iqa = _at_m.rukousajat.iqamah | default: _at_m.rukousajat.iqamah_oletus -%}
 {%- if _at_kansio and site.data.aikataulut and site.data.aikataulut[_at_kansio] -%}
   {%- assign _at_kk = site.data.aikataulut[_at_kansio][_at_avain] -%}
   {%- for _x in _at_kk -%}{%- assign _xp = _x.pv | append: "" -%}{%- if _xp == _at_pv -%}{%- assign _at_rivi = _x -%}{%- endif -%}{%- endfor -%}

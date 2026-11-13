@@ -5,7 +5,7 @@
   Käyttö: {% capture j %}{% include osat/jumua-aika.html moskeija=m %}{% endcapture %}
 {%- endcomment -%}
 {%- assign _m = include.moskeija -%}
-{%- if _m.juma and _m.juma != "" -%}{{ _m.juma }}||{%- else -%}
+{%- if _m.juma and _m.juma != "" -%}{{ _m.juma }}{% if _m.juma_2 and _m.juma_2 != "" %} · {{ _m.juma_2 }}{% endif %}||{%- else -%}
 {%- assign _kansio = _m.rukousajat.aikataulu | default: _m.slug -%}
 {%- assign _aikataulu = site.data.aikataulut[_kansio] -%}
 {%- assign _tanaan = site.time | date: "%Y-%m-%d" -%}

@@ -14,7 +14,9 @@
   "madhab": {{ r.madhab | default: "Shafi" | jsonify }},
   "leveysaste": {{ r.korkeat_leveysasteet | default: "TwilightAngle" | jsonify }},
   "saadot": { "fajr": {{ s.fajr | default: 0 }}, "sunrise": {{ s.auringonnousu | default: 0 }}, "dhuhr": {{ s.dhuhr | default: 0 }}, "asr": {{ s.asr | default: 0 }}, "maghrib": {{ s.maghrib | default: 0 }}, "isha": {{ s.isha | default: 0 }} },
-  "iqamah": {% if r.iqamah_oletus %}{{ r.iqamah_oletus | jsonify }}{% else %}null{% endif %},
+  "iqamah": {% assign _iq = r.iqamah | default: r.iqamah_oletus %}{% if _iq %}{{ _iq | jsonify }}{% else %}null{% endif %},
   "juma": {{ m.juma | default: "" | jsonify }},
+  "juma2": {{ m.juma_2 | default: "" | jsonify }},
+  "muutokset": {% if r.muutokset %}{{ r.muutokset | jsonify }}{% else %}[]{% endif %},
   "aikataulu": {% if aikataulu %}{{ aikataulu | jsonify }}{% else %}{}{% endif %}
 }</script>

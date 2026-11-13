@@ -1,0 +1,18 @@
+{%- comment -%}
+  Yksi rukousaika valmiiseen HTML:ään (hakukoneet, tekoäly, ensimmäinen näkymä ennen JavaScriptiä).
+  Järjestys: päivän muutos (rukousajat.muutokset) > kiinteä iqamah (rukousajat.iqamah) > aikataulun rivi.
+  Parametrit: r (aikataulun rivi), n (fajr…isha, auringonnousu), iq (true = iqamah), pvm (VVVV-KK-PP),
+  mu (muutokset), iqa (iqamah-asetus), tyhja (teksti, jos aikaa ei ole)
+{%- endcomment -%}
+{%- assign _rkv = "" -%}{%- assign _rkm = nil -%}
+{%- for _rkx in include.mu -%}{%- assign _rkd = _rkx.paiva | date: "%Y-%m-%d" -%}{%- if _rkd == include.pvm -%}{%- assign _rkm = _rkx -%}{%- break -%}{%- endif -%}{%- endfor -%}
+{%- if include.iq -%}
+  {%- assign _rkk = "iqamah_" | append: include.n -%}
+  {%- assign _rki = "" -%}{%- if include.iqa -%}{%- assign _rki = include.iqa[include.n] | append: "" -%}{%- endif -%}
+  {%- if _rkm and _rkm[_rkk] -%}{%- assign _rkv = _rkm[_rkk] -%}
+  {%- elsif _rki contains "." or _rki contains ":" -%}{%- assign _rkv = _rki -%}
+  {%- elsif include.r -%}{%- assign _rkv = include.r[_rkk] -%}{%- endif -%}
+{%- else -%}
+  {%- if _rkm and _rkm[include.n] -%}{%- assign _rkv = _rkm[include.n] -%}{%- elsif include.r -%}{%- assign _rkv = include.r[include.n] -%}{%- endif -%}
+{%- endif -%}
+{{- _rkv | append: "" | replace: ".", ":" | default: include.tyhja -}}

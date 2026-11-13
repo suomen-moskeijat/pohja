@@ -14,8 +14,8 @@
       {%- if _at_kk %}
       {%- assign _vp = "ma,ti,ke,to,pe,la,su" | split: "," %}
       <thead><tr><th scope="col">Päivä</th><th scope="col">Fajr</th><th scope="col">Nousu</th><th scope="col">Dhuhr</th><th scope="col">Asr</th><th scope="col">Maghrib</th><th scope="col">Isha</th></tr></thead><tbody>
-      {%- for x in _at_kk %}{%- assign _d = _at_avain | append: "-" | append: x.pv -%}{%- assign _wd = _d | date: "%u" | minus: 1 -%}{%- assign _xp = x.pv | append: "" %}
-      <tr{% if _xp == _at_pv %} class="kk__tanaan" aria-current="date"{% elsif _wd == 4 %} class="kk__pe"{% endif %}><th scope="row"><small>{{ _vp[_wd] }}</small> {{ x.pv }}</th><td>{{ x.fajr }}</td><td class="kk__nousu">{{ x.auringonnousu }}</td><td>{{ x.dhuhr }}</td><td>{{ x.asr }}</td><td>{{ x.maghrib }}</td><td>{{ x.isha }}</td></tr>
+      {%- for x in _at_kk %}{%- assign _d = _at_avain | append: "-" | append: x.pv -%}{%- assign _wd = _d | date: "%u" | minus: 1 -%}{%- assign _xp = x.pv | append: "" -%}{%- assign _dpv = x.pv | prepend: "0" | slice: -2, 2 -%}{%- assign _dd = _at_avain | append: "-" | append: _dpv %}
+      <tr{% if _xp == _at_pv %} class="kk__tanaan" aria-current="date"{% elsif _wd == 4 %} class="kk__pe"{% endif %}><th scope="row"><small>{{ _vp[_wd] }}</small> {{ x.pv }}</th><td>{% include osat/rk-arvo.html r=x n="fajr" pvm=_dd mu=_at_mu %}</td><td class="kk__nousu">{% include osat/rk-arvo.html r=x n="auringonnousu" pvm=_dd mu=_at_mu %}</td><td>{% include osat/rk-arvo.html r=x n="dhuhr" pvm=_dd mu=_at_mu %}</td><td>{% include osat/rk-arvo.html r=x n="asr" pvm=_dd mu=_at_mu %}</td><td>{% include osat/rk-arvo.html r=x n="maghrib" pvm=_dd mu=_at_mu %}</td><td>{% include osat/rk-arvo.html r=x n="isha" pvm=_dd mu=_at_mu %}</td></tr>
       {%- endfor %}
       </tbody>
       {%- endif %}
