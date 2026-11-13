@@ -10,3 +10,4 @@ kultakuvio:   { nimi: "Kultainen kuvio", tiedosto: kultakuvio.jpg }
 1: { nimi: "1", tiedosto: 1.jpg }
 3: { nimi: "3", tiedosto: 3.jpg }
 4: { nimi: "4", tiedosto: 4.jpg }
+5: { nimi: "5", tiedosto: 5.jpg }
