@@ -338,6 +338,8 @@ html.u-lukittu { overflow: hidden; }
 .u-lahjoitus .u-kuvio { z-index: -1; opacity: .1; }
 .u-lahjoitus h2 { color: #fff; }
 .u-lahjoitus p { max-width: 36em; }
+.u-lahjoitus__lupa { font-size: 13px; color: rgb(255 255 255 / .7); }
+.u-lahjoitustiedot .u-pieni { font-size: 14px; color: var(--hieno, #6b6458); margin: 0; }
 .u-lahjoitus__ikoni { display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; background: color-mix(in srgb, var(--kulta) 18%, transparent); color: var(--kulta); border: 1px solid color-mix(in srgb, var(--kulta) 40%, transparent); }
 @media (min-width: 1024px) { .u-lahjoitus { margin-top: 88px; padding: 56px; } }
 
@@ -829,3 +831,15 @@ html[dir="rtl"] .u-seur__palkki span { background: linear-gradient(-90deg, var(-
 .u-nosto::after, .u-lahjoitus .u-kuvio { -webkit-mask-image: var(--kuvio-nosto, var(--kuvio-oletus)); mask-image: var(--kuvio-nosto, var(--kuvio-oletus)); }
 .u-ala .u-kuvio { -webkit-mask-image: var(--kuvio-ala, var(--kuvio-oletus)); mask-image: var(--kuvio-ala, var(--kuvio-oletus)); }
 .u-lomake__tapa .u-valinta span { display: inline-flex; align-items: center; gap: 6px; }
+
+/* Upotukset napautuksesta (kartta, video) */
+.u-upotus { display: grid; place-content: center; justify-items: center; gap: 6px; width: 100%; height: 100%; min-height: 260px; padding: 20px; border: 0; background: var(--kulta-vaalea); color: var(--paa); font: inherit; text-align: center; cursor: pointer; }
+.u-upotus:hover .u-upotus__ikoni, .u-upotus:focus-visible .u-upotus__ikoni { transform: scale(1.06); }
+.u-upotus__ikoni { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--paa); color: #fff; transition: transform .2s; }
+.u-upotus strong { font-size: 16px; }
+.u-upotus small { color: var(--hieno); font-size: 13px; }
+.u-upotus--video { aspect-ratio: 16 / 9; min-height: 0; background: var(--paa-tumma); color: #fff; border-radius: inherit; }
+.u-upotus--video small { color: rgb(255 255 255 / .7); }
+.u-upotus--video .u-upotus__ikoni { background: #fff; color: var(--paa-tumma); width: 64px; height: 64px; }
+.u-video .u-upotus { position: absolute; inset: 0; aspect-ratio: auto; }
+.u-tietosuoja h2 { margin: 1.6em 0 .5em; font-size: 1.25rem; }

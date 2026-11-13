@@ -1,0 +1,17 @@
+{%- comment -%}
+  Rahankeräyslaki (863/2019): tilinumeron, MobilePayn ja "Lahjoita nyt" -kehotuksen saa näyttää yleisölle
+  vain rahankeräysluvalla tai voimassa olevalla pienkeräysnumerolla. Asettaa:
+  _lupa (true/false), _lupa_nimi (käännösavain), _lupa_numero, _lupa_paattyy.
+  Parametri: moskeija
+{%- endcomment -%}
+{%- assign _lhj = include.moskeija.lahjoitus -%}
+{%- assign _lupa = false -%}{%- assign _lupa_numero = "" -%}{%- assign _lupa_paattyy = "" -%}{%- assign _lupa_nimi = "" -%}
+{%- assign _tanaan = site.time | date: "%Y-%m-%d" -%}
+{%- if _lhj.lupanumero and _lhj.lupanumero != "" -%}
+  {%- assign _lupa = true -%}{%- assign _lupa_numero = _lhj.lupanumero -%}{%- assign _lupa_nimi = "rahankerayslupa" -%}
+{%- elsif _lhj.pienkerays and _lhj.pienkerays != "" -%}
+  {%- assign _pk_loppu = _lhj.paattyy | default: "" | date: "%Y-%m-%d" -%}
+  {%- if _pk_loppu == "" or _pk_loppu >= _tanaan -%}
+    {%- assign _lupa = true -%}{%- assign _lupa_numero = _lhj.pienkerays -%}{%- assign _lupa_paattyy = _pk_loppu -%}{%- assign _lupa_nimi = "pienkeraysnumero" -%}
+  {%- endif -%}
+{%- endif -%}

@@ -7,6 +7,8 @@
 {%- endcomment -%}
 {%- assign m = include.moskeija -%}
 {%- assign j = '/' | relative_url -%}
+{%- include osat/lahjoitus-lupa.html moskeija=m -%}
+{%- assign _nav_lahjoita = "nav_tuki" -%}{%- if _lupa -%}{%- assign _nav_lahjoita = "nav_lahjoita" -%}{%- endif -%}
 {%- if m.valikko and m.valikko.size > 0 -%}
 {%- assign _lahjoita_listassa = false -%}
 {%- for o in m.valikko -%}
@@ -16,7 +18,7 @@
     {%- if o.sivu == "lahjoita" -%}{%- assign _lahjoita_listassa = true -%}{%- if m.lahjoitus == nil -%}{%- continue -%}{%- endif -%}{%- endif -%}
     {%- if o.sivu == "artikkelit" and site.artikkelit.size == 0 -%}{%- continue -%}{%- endif -%}
     {%- assign _href = j | append: o.sivu | append: "/" -%}
-    {%- assign _avain = "nav_" | append: o.sivu -%}
+    {%- assign _avain = "nav_" | append: o.sivu -%}{%- if o.sivu == "lahjoita" -%}{%- assign _avain = _nav_lahjoita -%}{%- endif -%}
     {%- capture _nimi -%}{% if o.nimi %}{% include kt.html arvo=o.nimi %}{% else %}{% include k.html a=_avain %}{% endif %}{%- endcapture -%}
     {%- if page.url contains o.sivu -%}{%- assign _nyt = ' aria-current="page"' -%}{%- endif -%}
   {%- elsif o.oma -%}
@@ -38,7 +40,7 @@
   {%- else -%}<a href="{{ _href }}"{{ _nyt }}{{ _kohde }}>{{ _nimi }}</a>
   {%- endcase -%}
 {%- endfor -%}
-{%- if include.tapa == "ala" and _lahjoita_listassa == false and m.lahjoitus -%}{%- unless m.valikko_piilota contains "lahjoita" -%}<li><a href="{{ j }}lahjoita/">{% include k.html a="nav_lahjoita" %}</a></li>{%- endunless -%}{%- endif -%}
+{%- if include.tapa == "ala" and _lahjoita_listassa == false and m.lahjoitus -%}{%- unless m.valikko_piilota contains "lahjoita" -%}<li><a href="{{ j }}lahjoita/">{% include k.html a=_nav_lahjoita %}</a></li>{%- endunless -%}{%- endif -%}
 {%- else -%}
 {%- assign _omat = site.sivut | where: "valikossa", true | sort: "jarjestys", "last" -%}
 {%- capture _linkit -%}rukousajat:nav_rukousajat,meista:nav_meista,palvelut:nav_palvelut,tapahtumat:nav_tapahtumat,artikkelit:nav_artikkelit,OMAT,yhteystiedot:nav_yhteystiedot{% if include.tapa == "ala" %},lahjoita:nav_lahjoita{% endif %}{%- endcapture -%}
@@ -57,7 +59,7 @@
     {%- endfor -%}
     {%- continue -%}
   {%- endif -%}
-  {%- assign _o = _l | split: ":" -%}{%- assign _sivu = _o[0] -%}{%- assign _avain = _o[1] -%}
+  {%- assign _o = _l | split: ":" -%}{%- assign _sivu = _o[0] -%}{%- assign _avain = _o[1] -%}{%- if _sivu == "lahjoita" -%}{%- assign _avain = _nav_lahjoita -%}{%- endif -%}
   {%- if m.valikko_piilota contains _sivu -%}{%- continue -%}{%- endif -%}
   {%- if _sivu == "lahjoita" and m.lahjoitus == nil -%}{%- continue -%}{%- endif -%}
   {%- if _sivu == "artikkelit" and site.artikkelit.size == 0 -%}{%- continue -%}{%- endif -%}

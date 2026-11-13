@@ -69,7 +69,7 @@ Valinnat ovat valmiita vaihtoehtoja, joten sivu pysyy siistinä, vaikka moskeijo
 | Etusivun yläosan tausta | `alku.tausta` | `kuvio` (vaalea kuvio, oletus), `kuva` (oma valokuva, tummennetaan ja teksti on valkoinen), `vari` (moskeijan pääväri) |
 | Taustakuva | `alku.kuva` | vaakakuva, vähintään 1600 px leveä |
 | Etusivun napit (enintään 2) | `alku.napit` | `lapsi`, `toiminta`, `rukousajat`, `lahjoita`, `yhteys`, `oma` (teksti ja linkki kentässä `alku.oma_nappi`) tai oman sivun nimi, esim. `hyvat-lahteet` |
-| Valikosta piilotettavat sivut | `valikko_piilota` | `rukousajat`, `meista`, `palvelut`, `tapahtumat`, `yhteystiedot`, `lahjoita`. Lahjoita on piilossa myös silloin, kun lahjoitustietoja ei ole |
+| Valikosta piilotettavat sivut | `valikko_piilota` | `rukousajat`, `meista`, `palvelut`, `tapahtumat`, `yhteystiedot`, `lahjoita`. Lahjoita on piilossa myös silloin, kun lahjoitustietoja ei ole. Maksutiedot näkyvät vain kentällä `lahjoitus.lupanumero` tai voimassa olevalla `lahjoitus.pienkerays` (+ `paattyy`) |
 | Omat sivut (kirjat, lähteet, artikkelit…) | kokoelma **Omat sivut** (`_sivut/`) | teksti neljällä kielellä, kuva ja linkkikortit (myös PDF-tiedostot). Näkyy valikossa, kun valinta *Näytä valikossa* on päällä |
 | Artikkelit | kokoelma **Artikkelit** (`_artikkelit/`) | omat artikkelit: otsikko, päivä, aihe, kuvaus, kuva ja teksti. Sivulla /artikkelit/ on haku ja aiheet, ja kolme uusinta näkyy etusivulla |
 | Yhteiset artikkelit | `artikkelit.lahteet` | `islaminusko` = noin 110 suomenkielistä artikkelia islaminusko.fi:stä lähdemerkinnällä (sallittu ei-kaupalliseen käyttöön). Päivittyy viikoittain (Actions → *Päivitä yhteiset artikkelit*). Tyhjä lista = vain omat |

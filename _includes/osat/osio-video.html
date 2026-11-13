@@ -1,4 +1,4 @@
-{%- comment -%} Etusivun YouTube-video (youtube-nocookie, latautuu vasta kun vierailija vierittää). Parametri: o {%- endcomment -%}
+{%- comment -%} Etusivun YouTube-video (youtube-nocookie, latautuu vasta napautuksesta – ei pyyntöjä Googlelle ilman lupaa). Parametri: o {%- endcomment -%}
 {%- assign o = include.o -%}
 {%- assign _u = o.osoite | default: "" -%}
 {%- assign _id = "" -%}
@@ -10,7 +10,11 @@
 {%- if _id != "" -%}
 <section class="u-osio u-kehys">
   {% if o.otsikko %}<div class="u-osio__yla"><h2>{% include kt.html arvo=o.otsikko %}</h2></div>{% endif %}
-  <div class="u-video"><iframe src="https://www.youtube-nocookie.com/embed/{{ _id | uri_escape }}" title="{% if o.otsikko %}{{ o.otsikko.fi | default: o.otsikko | escape }}{% else %}YouTube{% endif %}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+  <div class="u-video"><button type="button" class="u-upotus u-upotus--video" data-upota="https://www.youtube-nocookie.com/embed/{{ _id | uri_escape }}?autoplay=1&amp;rel=0" data-upota-otsikko="{% if o.otsikko %}{{ o.otsikko.fi | default: o.otsikko | escape }}{% else %}YouTube{% endif %}" data-upota-salli="autoplay; encrypted-media; picture-in-picture; fullscreen">
+    <span class="u-upotus__ikoni u-upotus__ikoni--toista" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+    <strong>{% include k.html a="katso_video" %}</strong>
+    <small>{% include k.html a="video_lahde" %}</small>
+  </button></div>
   {% if o.teksti %}<div class="u-proosa u-video__teksti">{% include kt.html arvo=o.teksti md=true tagi="div" %}</div>{% endif %}
 </section>
 {%- endif -%}

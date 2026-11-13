@@ -68,7 +68,7 @@ sitemap: false
 {%- endunless %}
 - [Yhteystiedot]({{ juuri }}/yhteystiedot/): osoite, kartta ja yhteydenotto
 {%- if m.lahjoitus %}{% unless m.valikko_piilota contains "lahjoita" %}
-- [Lahjoita]({{ juuri }}/lahjoita/): {{ m.lahjoitus.teksti.fi | default: m.lahjoitus.teksti | strip_html | normalize_whitespace | truncate: 160 }}
+- [Tuki ja jäsenyys]({{ juuri }}/lahjoita/): {{ m.lahjoitus.teksti.fi | default: m.lahjoitus.teksti | strip_html | normalize_whitespace | truncate: 160 }}
 {%- endunless %}{% endif %}
 {%- for s in site.sivut %}
 - [{{ s.title }}]({{ juuri }}{{ s.url }}){% if s.johdanto %}: {{ s.johdanto.fi | default: s.johdanto | strip_html | normalize_whitespace | truncate: 160 }}{% endif %}

@@ -17,7 +17,7 @@
   {%- when "lapsi" -%}{% if m.lasten_opetus.kaytossa %}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/palvelut/lasten-opetus/' | relative_url }}">{% include ikoni-ph.html nimi="hattu" koko=20 %} {% include k.html a="ilmoita_lapsesi" %}</a>{% endif %}
   {%- when "toiminta" -%}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/palvelut/' | relative_url }}">{% include k.html a="tutustu_toimintaan" %}</a>
   {%- when "rukousajat" -%}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/rukousajat/' | relative_url }}">{% include ikoni-ph.html nimi="kello" koko=20 %} {% include k.html a="katso_rukousajat" %}</a>
-  {%- when "lahjoita" -%}{% if m.lahjoitus and m.valikko_piilota contains "lahjoita" %}{% elsif m.lahjoitus %}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/lahjoita/' | relative_url }}">{% include ikoni-ph.html nimi="sydan" koko=20 %} {% include k.html a="lahjoita_nyt" %}</a>{% endif %}
+  {%- when "lahjoita" -%}{% if m.lahjoitus and m.valikko_piilota contains "lahjoita" %}{% elsif m.lahjoitus %}{% include osat/lahjoitus-lupa.html moskeija=m %}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/lahjoita/' | relative_url }}">{% include ikoni-ph.html nimi="sydan" koko=20 %} {% if _lupa %}{% include k.html a="lahjoita_nyt" %}{% else %}{% include k.html a="nav_tuki" %}{% endif %}</a>{% endif %}
   {%- when "yhteys" -%}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/yhteystiedot/' | relative_url }}">{% include ikoni-ph.html nimi="sijainti" koko=20 %} {% include k.html a="ota_yhteytta" %}</a>
   {%- when "oma" -%}{%- assign _on = a.oma_nappi -%}
     {%- if _on.linkki and _on.linkki != "" -%}{%- assign _ulk = _on.linkki | slice: 0, 4 -%}

@@ -37,10 +37,12 @@
       document.documentElement.dir = k === 'ar' ? 'rtl' : 'ltr';
     })();
   </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  {%- comment -%} Fontit: moskeijan oma valinta (teema.fontit_url) tai pohjan oletus {%- endcomment -%}
-  <link rel="stylesheet" href="{{ t.fontit_url | default: 'https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Noto+Kufi+Arabic:wght@500;600;700&display=swap' }}">
-  {% if page.layout == "artikkeli" %}<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&amp;display=swap">{% endif %}
+  {%- comment -%} Fontit sivuston omalta palvelimelta (ei pyyntöjä Googlelle; assets/fontit). Moskeijan oma valinta: teema.fontit_url {%- endcomment -%}
+  {%- assign _fontit = '/assets/fontit/fontit.css' | relative_url | append: '?v=' | append: v -%}
+  <link rel="preload" href="{{ '/assets/fontit/sora-latin-46cba0e3.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ '/assets/fontit/manrope-latin-58ee1998.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ t.fontit_url | default: _fontit }}">
+  {% if page.layout == "artikkeli" %}<link rel="stylesheet" href="{{ '/assets/fontit/amiri.css' | relative_url }}">{% endif %}
   <link rel="stylesheet" href="{{ '/assets/css/sivu.css' | relative_url }}?v={{ v }}">
   {%- comment -%} Värit: valmis värimaailma (teema.vari, _data/teemat.yml) tai ylläpitäjän omat värikoodit (vari: oma tai tyhjä) {%- endcomment -%}
   {%- capture _teema -%}

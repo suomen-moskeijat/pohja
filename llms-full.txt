@@ -58,11 +58,11 @@ Lähde: {{ juuri }}/ · Päivitetty {{ site.time | date: "%-d.%-m.%Y klo %H.%M" 
 
 {{ m.lasten_opetus.teksti.fi | default: m.lasten_opetus.teksti | strip_html | normalize_whitespace }} Ilmoittautuminen: {{ juuri }}/palvelut/lasten-opetus/
 {%- endif %}
-{%- if m.lahjoitus %}
+{%- if m.lahjoitus %}{% include osat/lahjoitus-lupa.html moskeija=m %}
 
-## Lahjoitukset
+## Tuki ja jäsenyys
 
-{{ m.lahjoitus.teksti.fi | default: m.lahjoitus.teksti | strip_html | normalize_whitespace }}{% if m.lahjoitus.saaja and m.lahjoitus.saaja != "" %} Saaja: {{ m.lahjoitus.saaja }}.{% endif %}{% if m.lahjoitus.tilinumero and m.lahjoitus.tilinumero != "" %} Tilinumero: {{ m.lahjoitus.tilinumero }}.{% endif %} Lisätietoja: {{ juuri }}/lahjoita/
+{{ m.lahjoitus.teksti.fi | default: m.lahjoitus.teksti | strip_html | normalize_whitespace }}{% if m.lahjoitus.saaja and m.lahjoitus.saaja != "" %} Saaja: {{ m.lahjoitus.saaja }}.{% endif %}{% if _lupa and m.lahjoitus.tilinumero and m.lahjoitus.tilinumero != "" %} Tilinumero: {{ m.lahjoitus.tilinumero }}. {% if _lupa_nimi == "rahankerayslupa" %}Rahankeräyslupa{% else %}Pienkeräysnumero{% endif %}: {{ _lupa_numero }}.{% endif %} Lisätietoja: {{ juuri }}/lahjoita/
 {%- endif %}
 {%- comment -%} Usein kysytyt kysymykset etusivulta ja omilta sivuilta {%- endcomment -%}
 {%- capture _ukk -%}

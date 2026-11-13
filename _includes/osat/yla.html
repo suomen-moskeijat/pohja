@@ -4,6 +4,8 @@
 {%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
 {%- if m.yhteydenotto.whatsapp == "piilossa" -%}{%- assign wa = "" -%}{%- endif -%}
 {%- assign _lahjoita = false -%}{%- if m.lahjoitus -%}{%- assign _lahjoita = true -%}{%- endif -%}{%- if m.valikko_piilota contains "lahjoita" -%}{%- assign _lahjoita = false -%}{%- endif -%}
+{%- comment -%} Kultainen Lahjoita-nappi vain rahankeräysluvalla (rahankeräyslaki); muuten sivu löytyy valikosta {%- endcomment -%}
+{%- include osat/lahjoitus-lupa.html moskeija=m -%}{%- unless _lupa -%}{%- assign _lahjoita = false -%}{%- endunless -%}
 <header class="u-yla" data-yla>
   <div class="u-kehys u-yla__sisalto">
     <a class="u-logo" href="{{ j }}" aria-label="{{ m.title }}">

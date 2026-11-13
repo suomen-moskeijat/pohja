@@ -333,6 +333,17 @@
     });
   });
 
+  /* Upotukset (kartta, video): ulkopuolinen sisältö ladataan vasta napautuksesta */
+  kaikki('[data-upota]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var f = document.createElement('iframe');
+      f.src = b.dataset.upota; f.title = b.dataset.upotaOtsikko || '';
+      if (b.dataset.upotaSalli) { f.allow = b.dataset.upotaSalli; f.allowFullscreen = true; }
+      f.referrerPolicy = 'strict-origin-when-cross-origin';
+      b.replaceWith(f);
+    });
+  });
+
   /* YouTube: video sivulla vasta napautuksesta (evästeetön soitin) */
   kaikki('[data-yt]').forEach(function (g) {
     var ikkuna = g.querySelector('[data-yt-ikkuna]'), soitin = g.querySelector('[data-yt-soitin]');

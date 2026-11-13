@@ -1,11 +1,13 @@
-{%- comment -%} Lahjoitusnosto. {%- endcomment -%}
+{%- comment -%} Lahjoitusnosto. Ilman rahankeräyslupaa ei kehoteta lahjoittamaan (ks. lahjoitus-lupa.html). {%- endcomment -%}
 {%- assign m = include.moskeija -%}
 {%- if m.lahjoitus and m.valikko_piilota contains 'lahjoita' -%}{%- elsif m.lahjoitus -%}
+{%- include osat/lahjoitus-lupa.html moskeija=m -%}
 <section class="u-lahjoitus">
   <div class="u-kuvio" aria-hidden="true"></div>
   <span class="u-lahjoitus__ikoni">{% include ikoni-ph.html nimi="sydan" koko=26 %}</span>
-  <h2>{% include k.html a="lahjoita_otsikko" %}</h2>
+  <h2>{% if _lupa %}{% include k.html a="lahjoita_otsikko" %}{% else %}{% include k.html a="tuki_otsikko" %}{% endif %}</h2>
   {% if m.lahjoitus.teksti %}<p>{% include kt.html arvo=m.lahjoitus.teksti %}</p>{% endif %}
-  <a class="u-nappi u-nappi--kulta" href="{{ '/lahjoita/' | relative_url }}">{% include k.html a="lahjoita_nyt" %}</a>
+  <a class="u-nappi u-nappi--kulta" href="{{ '/lahjoita/' | relative_url }}">{% if _lupa %}{% include k.html a="lahjoita_nyt" %}{% else %}{% include k.html a="lue_lisaa" %}{% endif %}</a>
+  {% if _lupa %}<small class="u-lahjoitus__lupa">{% include k.html a="kerayksen_jarjestaja" %}: {{ m.lahjoitus.saaja | default: m.title }} · {% include k.html a=_lupa_nimi %} <span dir="ltr">{{ _lupa_numero }}</span></small>{% endif %}
 </section>
 {%- endif -%}

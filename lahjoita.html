@@ -1,32 +1,38 @@
 ---
 layout: sivu
-title: Lahjoita
+title: Tuki ja jäsenyys
+seo_avain: tuki_otsikko
 permalink: /lahjoita/
 ---
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {%- assign l = m.lahjoitus -%}
 {%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
 {%- if m.yhteydenotto.whatsapp == "piilossa" -%}{%- assign wa = "" -%}{%- endif -%}
-{% include osat/sivuhero.html avain="lahjoita_otsikko" johdanto=l.teksti %}
+{%- include osat/lahjoitus-lupa.html moskeija=m -%}
+{%- if _lupa -%}{% include osat/sivuhero.html avain="lahjoita_otsikko" johdanto=l.teksti %}{%- else -%}{% include osat/sivuhero.html avain="tuki_otsikko" johdanto=l.teksti %}{%- endif %}
 <div class="u-kehys u-sivu u-sivu--kapea">
   <div class="u-kortti u-lahjoitustiedot">
     <span class="u-ikoni u-ikoni--iso">{% include ikoni-ph.html nimi="sydan" koko=28 %}</span>
-    {% if l.tilinumero and l.tilinumero != "" %}
+    {%- if _lupa %}
+    {%- comment -%} Rahankeräyslaki 34 §: järjestäjä, käyttötarkoitus, lupa- tai pienkeräysnumero ja yhteystiedot {%- endcomment %}
     <dl>
-      {% if l.saaja and l.saaja != "" %}<div><dt>{% include k.html a="saaja" %}</dt><dd>{{ l.saaja }}</dd></div>{% endif %}
-      <div><dt>{% include k.html a="tilinumero" %}</dt><dd><code dir="ltr">{{ l.tilinumero }}</code><button type="button" class="u-nappi u-nappi--reuna u-nappi--pieni" data-kopioi="{{ l.tilinumero | remove: ' ' }}">{% include k.html a="kopioi" %}</button></dd></div>
+      <div><dt>{% include k.html a="kerayksen_jarjestaja" %}</dt><dd>{{ l.saaja | default: m.title }}</dd></div>
+      {% if l.kayttotarkoitus %}<div><dt>{% include k.html a="kayttotarkoitus" %}</dt><dd>{% include kt.html arvo=l.kayttotarkoitus %}</dd></div>{% endif %}
+      <div><dt>{% include k.html a=_lupa_nimi %}</dt><dd><span dir="ltr">{{ _lupa_numero }}</span>{% if _lupa_paattyy != "" %} · {% include k.html a="keraus_paattyy" %} <time datetime="{{ _lupa_paattyy }}" dir="ltr">{{ _lupa_paattyy | date: "%-d.%-m.%Y" }}</time>{% endif %}</dd></div>
+      {% if l.tilinumero and l.tilinumero != "" %}<div><dt>{% include k.html a="tilinumero" %}</dt><dd><code dir="ltr">{{ l.tilinumero }}</code><button type="button" class="u-nappi u-nappi--reuna u-nappi--pieni" data-kopioi="{{ l.tilinumero | remove: ' ' }}">{% include k.html a="kopioi" %}</button></dd></div>{% endif %}
       {% if l.viite and l.viite != "" %}<div><dt>{% include k.html a="viite" %}</dt><dd><code dir="ltr">{{ l.viite }}</code></dd></div>{% endif %}
       {% if l.mobilepay and l.mobilepay != "" %}<div><dt>MobilePay</dt><dd><code dir="ltr">{{ l.mobilepay }}</code></dd></div>{% endif %}
     </dl>
-    {% endif %}
     {% if l.linkki and l.linkki != "" %}<a class="u-nappi u-nappi--kulta" href="{{ l.linkki }}" target="_blank" rel="noopener">{% include k.html a="lahjoita_verkossa" %}</a>{% endif %}
-    {% if l.tilinumero == "" or l.tilinumero == nil %}{% unless l.linkki and l.linkki != "" %}
-    <p>{% include k.html a="lahjoitus_kysy" %}</p>
+    <p class="u-pieni">{% include k.html a="kerayksen_yhteystiedot" %} <a href="{{ '/yhteystiedot/' | relative_url }}">{% include k.html a="nav_yhteystiedot" %}</a></p>
+    {%- else %}
+    {%- comment -%} Ilman lupaa: ei tilinumeroa eikä kehotusta lahjoittaa verkossa – vain tietoa ja yhteydenotto {%- endcomment %}
+    <p>{% include k.html a="tuki_kysy" %}</p>
     <div class="u-napit">
       {% if wa != "" %}<a class="u-nappi u-nappi--wa" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" koko=18 %} WhatsApp</a>{% endif %}
       {% if m.puhelin and m.puhelin != "" %}<a class="u-nappi u-nappi--reuna" href="tel:{{ m.puhelin | remove: ' ' }}" dir="ltr">{% include ikoni-ph.html nimi="puhelin" koko=18 %} {{ m.puhelin }}</a>{% endif %}
       {% if m.sahkoposti and m.sahkoposti != "" %}<a class="u-nappi u-nappi--reuna" href="mailto:{{ m.sahkoposti }}">{% include ikoni-ph.html nimi="posti" koko=18 %} {% include k.html a="sahkoposti" %}</a>{% endif %}
     </div>
-    {% endunless %}{% endif %}
+    {%- endif %}
   </div>
 </div>

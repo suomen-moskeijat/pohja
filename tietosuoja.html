@@ -7,12 +7,37 @@ seo_avain: tietosuojaseloste
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {% include osat/sivuhero.html avain="tietosuojaseloste" %}
 <div class="u-kehys u-sivu u-sivu--kapea">
-  <article class="u-kortti u-artikkeli u-proosa">
-    <p><strong>{% include nimi.html moskeija=m %}</strong>{% if m.osoite %}, {{ m.osoite }}{% endif %}</p>
-    <p>{% include k.html a="tietosuoja_1" %}</p>
-    <p>{% include k.html a="tietosuoja_2" %}</p>
-    <p>{% include k.html a="tietosuoja_3" %}</p>
-    <p>{% include k.html a="tietosuoja_5" %}</p>
-    <p>{% include k.html a="tietosuoja_4" %}{% if m.whatsapp and m.whatsapp != "" %} (WhatsApp <span dir="ltr">{{ m.whatsapp }}</span>){% endif %}</p>
+  <article class="u-kortti u-artikkeli u-proosa u-tietosuoja">
+    <p>{% include k.html a="ts_johdanto" %}</p>
+
+    <h2>{% include k.html a="ts_rekisterinpitaja" %}</h2>
+    <p><strong>{{ m.lahjoitus.saaja | default: m.title }}</strong>{% if m.osoite and m.osoite != "" %}<br>{{ m.osoite }}{% endif %}
+      {%- if m.sahkoposti and m.sahkoposti != "" %}<br><a href="mailto:{{ m.sahkoposti }}">{{ m.sahkoposti }}</a>{% endif %}
+      {%- if m.puhelin and m.puhelin != "" %}<br><a href="tel:{{ m.puhelin | remove: ' ' }}" dir="ltr">{{ m.puhelin }}</a>{% endif %}</p>
+
+    <h2>{% include k.html a="ts_mita_otsikko" %}</h2>
+    <ul>
+      <li>{% include k.html a="ts_yhteydenotot" %}</li>
+      {% if m.lasten_opetus.kaytossa %}<li>{% include k.html a="ts_ilmoittautumiset" %}</li>{% endif %}
+    </ul>
+    <p>{% include k.html a="ts_vakaumus" %}</p>
+
+    <h2>{% include k.html a="ts_kulku_otsikko" %}</h2>
+    <p>{% include k.html a="ts_kulku" %}</p>
+    <p>{% include k.html a="ts_palvelut" %}</p>
+    <p>{% include k.html a="ts_tekninen" %}</p>
+
+    <h2>{% include k.html a="ts_selain_otsikko" %}</h2>
+    <p>{% include k.html a="ts_selain" %}</p>
+
+    <h2>{% include k.html a="ts_sailytys_otsikko" %}</h2>
+    <p>{% include k.html a="ts_sailytys" %}</p>
+
+    <h2>{% include k.html a="ts_oikeudet_otsikko" %}</h2>
+    <p>{% include k.html a="ts_oikeudet" %}
+      {%- if m.sahkoposti and m.sahkoposti != "" %} <a href="mailto:{{ m.sahkoposti }}">{{ m.sahkoposti }}</a>{% endif %}
+      {%- if m.whatsapp and m.whatsapp != "" %} · WhatsApp <span dir="ltr">{{ m.whatsapp }}</span>{% endif %}
+      {%- if m.puhelin and m.puhelin != "" %} · <a href="tel:{{ m.puhelin | remove: ' ' }}" dir="ltr">{{ m.puhelin }}</a>{% endif %}</p>
+    <p>{% include k.html a="ts_valitus" %}</p>
   </article>
 </div>

@@ -154,7 +154,7 @@ näkyviin, ilman kulman pikanappia tai kokonaan piiloon.
 | `lapsi` | Ilmoita lapsesi opetukseen |
 | `toiminta` | Tutustu toimintaamme |
 | `rukousajat` | Katso rukousajat |
-| `lahjoita` | Lahjoita nyt |
+| `lahjoita` | Lahjoita nyt (rahankeräysluvalla) tai Tuki ja jäsenyys |
 | `yhteys` | Ota yhteyttä |
 | `oma` | oma teksti ja linkki (kenttä *Oma nappi*), esim. "Liity jäseneksi" |
 | oman sivun nimi | esim. `hyvat-lahteet` |
@@ -164,7 +164,7 @@ näkyviin, ilman kulman pikanappia tai kokonaan piiloon.
 ### 7. Valikko
 
 **Moskeijan tiedot → Piilota valikosta**: valitse sivut, joita moskeijallanne ei ole, esim. *tapahtumat*.
-**Lahjoita** on piilossa automaattisesti, kunnes lahjoitustiedot on lisätty.
+**Lahjoita / Tuki ja jäsenyys** on piilossa automaattisesti, kunnes tiedot on lisätty.
 
 ### 8. Tekstit eri kielillä
 
@@ -202,7 +202,13 @@ oletusminuutteja (Moskeijan tiedot → Rukousajat → Iqamah oletus).
 
 ### 12. Lahjoitukset ja lomakkeet
 
-- **Lahjoitustiedot:** Moskeijan tiedot → Lahjoitus (saaja, tilinumero, viite, MobilePay tai verkkomaksun linkki).
+- **Tuki ja lahjoitukset:** Moskeijan tiedot → Tuki ja lahjoitukset. Rahankeräyslain (863/2019) vuoksi
+  tilinumero, MobilePay, verkkolahjoituksen linkki ja "Lahjoita nyt" -napit näkyvät vain, kun moskeijalla on
+  Poliisihallituksen **rahankeräyslupa** tai voimassa oleva **pienkeräysnumero** (pienkeräyksen päättymispäivän
+  jälkeen maksutiedot piilotetaan itsestään). Silloin sivulla näkyvät myös lain vaatimat tiedot: keräyksen
+  järjestäjä, varojen käyttötarkoitus ja lupanumero. Ilman lupaa sivu on "Tuki ja jäsenyys": moskeijan oma
+  teksti (jäsenyys, lahjoituslipas paikan päällä) ja yhteystiedot. Jäsenmaksu ja lahjoituslipas moskeijan
+  avoimessa tilaisuudessa eivät vaadi lupaa.
 - **Lomakkeet** (lasten opetus, Kysy moskeijalta) avautuvat valmiina WhatsApp-viestinä tai
   sähköpostina. Ilman WhatsAppia viesti lähtee sähköpostilla.
 
