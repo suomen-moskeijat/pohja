@@ -13,7 +13,8 @@
 <html lang="{{ site.kielet | first | default: 'fi' }}" dir="ltr">
 <head>
   <meta charset="utf-8">
-  {% if site.noindex or m.luonnos or m.ehdotus or page.noindex %}<meta name="robots" content="noindex">{% endif %}
+  {%- include osat/hakunakyvyys.html moskeija=m -%}
+  {% if _piilota %}<meta name="robots" content="noindex, nofollow">{% endif %}
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 {% include seo.html moskeija=m %}
   <meta name="theme-color" content="{{ _pt | default: '#2b1a0e' }}">

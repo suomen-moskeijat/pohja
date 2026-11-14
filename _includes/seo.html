@@ -48,7 +48,8 @@
   <meta property="og:locale" content="fi_FI">
   {%- for _l in site.kielet %}{% if _l != "fi" %}
   <meta property="og:locale:alternate" content="{% case _l %}{% when 'en' %}en_GB{% when 'ar' %}ar_AR{% when 'so' %}so_SO{% endcase %}">{% endif %}{% endfor %}
-  {% unless site.noindex or m.luonnos or m.ehdotus or page.noindex %}<meta name="robots" content="max-image-preview:large, max-snippet:-1">{% endunless %}
+  {%- include osat/hakunakyvyys.html moskeija=m -%}
+  {% unless _piilota %}<meta name="robots" content="max-image-preview:large, max-snippet:-1">{% endunless %}
   {%- comment -%}
     Kieliversiot omissa osoitteissa (/en/, /ar/, /so/): .github/scripts/kieliversiot.py tekee kopiot julkaisussa.
     Tässä hreflang-linkit sekä kunkin kielen otsikko ja kuvaus. Ei yhteisiä artikkeleita (vain suomeksi) eikä luonnoksia.

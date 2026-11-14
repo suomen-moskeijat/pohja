@@ -1,0 +1,9 @@
+{%- comment -%}
+  Saako sivu näkyä hakukoneissa? Vain julkaistu moskeijasivu omalla verkkotunnuksella (esim. moskeija.fi).
+  Piilossa: luonnos, ehdotus, github.io-osoite (myös pohjan ohjeet ja esittelykopiot), site.noindex tai page.noindex.
+  Asettaa: _piilota (true/false). Parametri: moskeija
+{%- endcomment -%}
+{%- assign _piilota = false -%}
+{%- if site.noindex or include.moskeija.luonnos or include.moskeija.ehdotus or page.noindex -%}{%- assign _piilota = true -%}{%- endif -%}
+{%- assign _hk_url = site.url | default: "" | downcase -%}
+{%- if _hk_url == "" or _hk_url contains "github.io" or _hk_url contains "localhost" or _hk_url contains "127.0.0.1" -%}{%- assign _piilota = true -%}{%- endif -%}

@@ -4,6 +4,7 @@ permalink: /robots.txt
 ---
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 User-agent: *
-{% if site.noindex or m.luonnos or m.ehdotus %}Disallow: /{% else %}Allow: /{% endif %}
+{%- include osat/hakunakyvyys.html moskeija=m %}
+{% if _piilota %}Disallow: /{% else %}Allow: /{% endif %}
 Sitemap: {{ site.url }}{{ '/sitemap.xml' | relative_url }}
 # Tekoälyhauille tiivis kuvaus: {{ site.url }}{{ '/llms.txt' | relative_url }}
