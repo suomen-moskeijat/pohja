@@ -279,4 +279,6 @@ rm_kalenteriin:     { fi: "Lisää Ramadan kalenteriin", en: "Add Ramadan to you
 rm_koko_aikataulu:  { fi: "Koko Ramadanin aikataulu", en: "Full Ramadan timetable", ar: "إمساكية رمضان كاملة", so: "Jadwalka Ramadaanka oo dhan" }
 rm_tanaan:          { fi: "Tänään", en: "Today", ar: "اليوم", so: "Maanta" }
 eid_toivotus:       { fi: "Siunattua Eid al-Fitr -juhlaa kaikille! Taqabbal Allahu minna wa minkum.", en: "Blessed Eid al-Fitr to everyone! Taqabbal Allahu minna wa minkum.", ar: "عيد فطر مبارك للجميع! تقبّل الله منّا ومنكم.", so: "Ciidul Fidri wanaagsan dhammaan! Taqabbal Allahu minna wa minkum." }
+rukousajat_lahde:   { fi: "Rukousajat", en: "Prayer times", ar: "مواقيت الصلاة", so: "Waqtiyada salaadda" }
+ilmoita_virheesta:  { fi: "Ilmoita virheestä", en: "Report an error", ar: "الإبلاغ عن خطأ", so: "Soo sheeg khalad" }
 

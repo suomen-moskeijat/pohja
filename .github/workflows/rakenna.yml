@@ -41,6 +41,7 @@ jobs:
           path: |
             sivu/_data/instagram
             sivu/_data/aikataulut
+            sivu/_data/haku
             sivu/_data/kuvat
             sivu/_data/youtube
             sivu/_data/telegram
@@ -79,6 +80,7 @@ jobs:
           path: |
             sivu/_data/instagram
             sivu/_data/aikataulut
+            sivu/_data/haku
             sivu/_data/kuvat
             sivu/_data/youtube
             sivu/_data/telegram

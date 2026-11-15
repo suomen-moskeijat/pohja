@@ -204,6 +204,11 @@ näkymä päivittyy heti asetuksia muutettaessa. Lisäksi:
   päivät poistuvat itsestään. Toimii kaikkien lähteiden kanssa.
 - **Laskentatapa**, **Asr (Shafi/Hanafi)** ja **minuuttikorjaukset**, kun ajat lasketaan sijainnista.
 
+**Mistä ajat tulevat ja mitä puuttuu.** Paneelin Rukousajat-sivulla kohdassa "Miten ajat haetaan" näkyy valitun lähteen hakutapa, milloin ajat haettiin viimeksi, mihin päivään asti aikoja on ja mahdollinen virhe. Lähteestä haettuja aikoja ei koskaan lasketa itse: päivät, joita lähde ei ole vielä julkaissut, näkyvät viivana.
+- **Masjidbox:** valitse moskeija hakemalla nimellä. Ajat tulevat Masjidboxin virallisesta rajapinnasta (kuluva ja seuraava kuukausi). Ylläpitäjä lisää rajapinnan avaimen kerran kaikille (Ylläpito → Rukousaikapalvelut, ohjeet sivulla). Ilman avainta ajat luetaan väliaikaisesti julkiselta sivulta (vain 7 päivää). Sivulla näkyy Masjidboxin ehtojen mukaan "Prayer times provided by Masjidbox" ja "Ilmoita virheestä".
+- **Mawaqit:** koko vuoden aikataulu, iqamah ja Jumua julkiselta sivulta, avainta ei tarvita.
+- **rukousajat.fi:** Helsingin vuosiaikataulu; ei iqamahia eikä Jumuaa.
+
 **Ramadan.** Rukousajat-sivulle tulee Ramadan-osio itsestään kolme viikkoa ennen alkua: tämän päivän suhur ja iftar, koko kuukauden aikataulu (tulostettava) ja Eid-rukous. Etusivulla näkyy lyhyt rivi "Ramadan, päivä 5 · Suhur … · Iftar …". Paneelissa (Rukousajat → Ramadan) voi lisätä tarawih-ajan, Eid-rukouksen ajan ja paikan, fitran ja muuta tietoa. Päivät ovat oletuksena arvio (Umm al-Qura); jos moskeija seuraa eri ilmoitusta, täytä alkamis- ja Eid-päivä itse. Ylläpito korjaa yhteiset oletuspäivät tiedostoon `_data/ramadan.yml`.
 
 **Lisää kalenteriin.** Rukousajat- ja Tapahtumat-sivuilla kävijä voi rastia, mitä haluaa puhelimensa kalenteriin (rukousajat, Jumua, tapahtumat, Ramadan), ja tilata sen. Kalenteri päivittyy itsestään: uudet tapahtumat ja muuttuneet ajat tulevat puhelimeen muutaman tunnin sisällä. Moskeijan ei tarvitse tehdä mitään.

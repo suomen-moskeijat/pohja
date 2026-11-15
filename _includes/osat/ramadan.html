@@ -42,6 +42,7 @@
       <tbody></tbody>
     </table>
   </div>
+  {% include osat/rukouslahde.html moskeija=include.moskeija %}
   <p class="u-hieno">{% if _rmm.ajat and _rmm.ajat.size > 0 %}{% include k.html a="ramadan_oma" %}{% else %}{% include k.html a="ramadan_huom" %}{% endif %}</p>
 </section>
 {%- endif -%}

@@ -9,5 +9,6 @@
     <p class="u-seur__iqamah" data-laskuri-iqamah hidden>{% include k.html a="iqamah" %} <b data-laskuri-iqamah-aika dir="ltr"></b></p>
     <div class="u-seur__palkki" aria-hidden="true"><span data-laskuri-palkki></span></div>
   </div>
+  {%- assign _sl_m = site.moskeijat | where: 'slug', site.moskeija | first -%}{% include osat/rukouslahde.html moskeija=_sl_m luokka="u-seur__lahde" %}
   {% unless include.ilman_linkkia %}<a class="u-seur__linkki" href="{{ '/rukousajat/' | relative_url }}">{% include k.html a="koko_aikataulu" %} <span class="u-flip" aria-hidden="true">→</span></a>{% endunless %}
 </div>

@@ -115,7 +115,7 @@ function rukous(jumuaErikseen) {
       const iq = a.iqamah[n];
       const nimi = n === 'dhuhr' && a.jumua ? 'Jumua (perjantairukous)' : RUKOUSNIMI[n];
       t.push({ uid: `rukous-${pvm(p)}-${n}`, alku: a[n], loppu: new Date((ok(iq) && iq > a[n] ? iq.getTime() : a[n].getTime()) + 15 * MIN),
-        nimi, kuvaus: [ok(iq) ? `Iqamah ${klo(iq)}` : '', a.huom || ''].filter(Boolean).join('\n'), paikka });
+        nimi, kuvaus: [ok(iq) ? `Iqamah ${klo(iq)}` : '', a.huom || '', MAININTA].filter(Boolean).join('\n'), paikka });
     }
   }
   return t;
@@ -192,7 +192,7 @@ function ics(lajit, tapaht) {
   const leima = utc(nyt);
   const r = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Suomen moskeijat//Kalenteri//FI', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
     `X-WR-CALNAME:${teksti(`${tiedot.nimi} – ${lajit.map((l) => NIMET[l]).join(', ')}`)}`, `X-WR-TIMEZONE:${TZ}`,
-    `X-WR-CALDESC:${teksti(`${tiedot.nimi}: ${lajit.map((l) => NIMET[l].toLowerCase()).join(', ')}. Päivittyy automaattisesti. ${tiedot.sivu || ''}`)}`,
+    `X-WR-CALDESC:${teksti(`${tiedot.nimi}: ${lajit.map((l) => NIMET[l].toLowerCase()).join(', ')}. Päivittyy automaattisesti. ${tiedot.sivu || ''}${MAININTA ? `\n${MAININTA}` : ''}`)}`,
     'REFRESH-INTERVAL;VALUE=DURATION:PT4H', 'X-PUBLISHED-TTL:PT4H'];
   for (const e of tapaht) {
     r.push('BEGIN:VEVENT', `UID:${e.uid}@${tunnus}.suomenmoskeijat.fi`, `DTSTAMP:${leima}`);
@@ -208,6 +208,8 @@ function ics(lajit, tapaht) {
   return r.map(taita).join('\r\n') + '\r\n';
 }
 
+// Lähteen maininta (Masjidboxin ehto: "Prayer times provided by Masjidbox" myös tulostetuissa/linkittömissä näkymissä)
+const MAININTA = asetus.lahde === 'masjidbox' ? 'Prayer times provided by Masjidbox' : asetus.lahde === 'mawaqit' ? 'Rukousajat: Mawaqit' : asetus.lahde === 'rukousajat' ? 'Rukousajat: rukousajat.fi' : '';
 const LAHTEET = { tapahtumat: tapahtumat(), ramadan: ramadan(), jumua: jumua() };
 const rukousKaikki = rukous(false), rukousIlmanJumuaa = rukous(true);
 let maara = 0;

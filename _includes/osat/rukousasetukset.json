@@ -9,12 +9,13 @@
 {%- if _lahde == "" -%}{%- assign _kd = m.kaupunki | default: "" | downcase -%}{%- if _kd == "helsinki" or _kd == "espoo" or _kd == "vantaa" -%}{%- assign _lahde = "rukousajat" -%}{%- endif -%}{%- endif -%}
 {
   "lahde": {{ _lahde | jsonify }},
+  "haku": {% if site.data.haku and site.data.haku[m.slug] %}{{ site.data.haku[m.slug] | jsonify }}{% else %}null{% endif %},
   "lat": {{ m.sijainti.lat | default: "null" }}, "lon": {{ m.sijainti.lon | default: "null" }},
   "laskentatapa": {{ r.laskentatapa | default: "MuslimWorldLeague" | jsonify }},
   "madhab": {{ r.madhab | default: "Shafi" | jsonify }},
   "leveysaste": {{ r.korkeat_leveysasteet | default: "TwilightAngle" | jsonify }},
   "saadot": { "fajr": {{ s.fajr | default: 0 }}, "sunrise": {{ s.auringonnousu | default: 0 }}, "dhuhr": {{ s.dhuhr | default: 0 }}, "asr": {{ s.asr | default: 0 }}, "maghrib": {{ s.maghrib | default: 0 }}, "isha": {{ s.isha | default: 0 }} },
-  "iqamah": {% assign _iq = r.iqamah | default: r.iqamah_oletus %}{% if _iq %}{{ _iq | jsonify }}{% else %}null{% endif %},
+  "iqamah": {% if _lahde == "masjidbox" %}{% assign _iq = r.iqamah %}{% else %}{% assign _iq = r.iqamah | default: r.iqamah_oletus %}{% endif %}{% if _iq %}{{ _iq | jsonify }}{% else %}null{% endif %},
   "juma": {{ m.juma | default: "" | jsonify }},
   "juma2": {{ m.juma_2 | default: "" | jsonify }},
   "muutokset": {% if r.muutokset %}{{ r.muutokset | jsonify }}{% else %}[]{% endif %},

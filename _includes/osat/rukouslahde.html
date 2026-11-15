@@ -1,0 +1,16 @@
+{%- comment -%}
+  Rukousaikojen lähde näkyviin aikojen yhteyteen. Masjidboxin rajapinnan ehto: "Prayer times provided by Masjidbox"
+  ja "Ilmoita virheestä" -linkki jokaisessa näkymässä, jossa ajat näkyvät. Mawaqit ja rukousajat.fi mainitaan avoimuuden vuoksi.
+  Parametri: moskeija, luokka (valinnainen)
+{%- endcomment -%}
+{%- assign _rl_m = include.moskeija -%}
+{%- assign _rl_h = site.data.haku[_rl_m.slug] -%}
+{%- assign _rl_l = _rl_m.rukousajat.lahde | default: "" -%}
+{%- if _rl_l == "" and _rl_h -%}{%- assign _rl_l = _rl_h.lahde -%}{%- endif -%}
+{%- if _rl_l == "masjidbox" -%}
+<p class="u-rukouslahde {{ include.luokka }}">Prayer times provided by <a href="https://masjidbox.com" target="_blank" rel="noopener">Masjidbox</a>{% if _rl_h.raportti and _rl_h.raportti != "" %} · <a href="{{ _rl_h.raportti }}" target="_blank" rel="noopener">{% include k.html a="ilmoita_virheesta" %}</a>{% endif %}</p>
+{%- elsif _rl_l == "mawaqit" -%}
+<p class="u-rukouslahde {{ include.luokka }}">{% include k.html a="rukousajat_lahde" %}: <a href="https://mawaqit.net/fi/{{ _rl_m.rukousajat.tunnus }}" target="_blank" rel="noopener">Mawaqit</a></p>
+{%- elsif _rl_l == "rukousajat" -%}
+<p class="u-rukouslahde {{ include.luokka }}">{% include k.html a="rukousajat_lahde" %}: <a href="https://www.rukousajat.fi/" target="_blank" rel="noopener">rukousajat.fi</a></p>
+{%- endif -%}
