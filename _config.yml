@@ -40,6 +40,7 @@ markdown: kramdown
 
 exclude:
   - moskeijat.csv       # moskeijalista on pohjan ylläpitoa varten, ei moskeijan sivulle
+  - testit.json         # testattavat muutokset (paneelin Testaus ja julkaisu -sivu), ei sivulle
   - README.md
   - OHJE.md
   - OHJEET.md

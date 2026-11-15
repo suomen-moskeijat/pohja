@@ -55,6 +55,9 @@ def main():
         nimi = r["name"]
         if nimi == "pohja" or r.get("archived"):
             continue
+        # Testimoskeija rakennetaan pohjan testi-haarasta (oma julkaisu.yml), sitä ei korvata mallilla
+        if nimi == "testimoskeija" and a.tiedosto == ".github/workflows/julkaisu.yml":
+            continue
         tila, _ = api("GET", f"/repos/{org}/{nimi}/contents/_moskeijat", avain, sallitut=(404,))
         if tila != 200:
             continue
