@@ -1,4 +1,4 @@
-# Valmiit värimaailmat. Moskeija valitsee nimen Pages CMS:ssä (Ulkoasu → Värit),
+# Valmiit värimaailmat. Moskeija valitsee nimen hallintapaneelissa (Ulkoasu → Värit),
 # ja sivulla /esikatselu/ näkee, miltä sivu näyttää kullakin värillä.
 # paa = otsikot ja tumma tausta, korostus = napit ja koristeet, korostus_vaalea = vaaleat pinnat.
 kulta:      { nimi: "Kulta-ruskea (oletus)", paa: "#3f2717", paa_tumma: "#2b1a0e", korostus: "#debb86", korostus_vaalea: "#faf1df" }

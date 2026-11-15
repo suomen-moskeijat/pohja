@@ -351,7 +351,6 @@ Kun moskeija lähtee mukaan ja antaa luvan, voit tuoda heidän vanhalta sivultaa
 | **mawaqit / masjidbox** | Linkin tai upotuskoodin voi liittää sellaisenaan. Rukousajat, iqamah ja Jumuah tulevat niistä automaattisesti. |
 | **nimi, kaupunki, osoite** | Voi jättää tyhjiksi, jos nettisivu, Mawaqit tai Masjidbox kertoo ne. |
 | **instagram, whatsapp, youtube, telegram** | valinnaisia |
-| **muokkaajat** | GitHub-tunnukset pilkulla eroteltuina. Kutsu vain tähän moskeijaan. |
 | **repo** | valinnainen, oletuksena nimestä |
 
 **Lisäyksen jälkeen tarkista** (paneelissa):
@@ -379,13 +378,7 @@ python3 .github/scripts/lisaa_moskeija.py --kuiva /tmp/kokeilu --nettisivu https
 - Paneelin esikatselu näyttää värit, taustan ja esittelytekstin heti moskeijan oikealla sivulla.
 - **Historia:** kuka muutti mitä, ja muutoksen voi perua yhdellä napilla.
 
-Vanha tapa (GitHub-tunnus ja Pages CMS) toimii yhä:
-
-- **Uusi moskeija:** kenttä *muokkaajat* lomakkeessa.
-- **Myöhemmin:** pohja → Actions → **Lisää muokkaaja** (repo ja tunnukset), tai
-  moskeijan repo → Settings → Collaborators → Add people → **Write**.
-- Muokkaaja näkee ja voi muokata vain oman moskeijansa sivua.
-- Poistaminen: moskeijan repo → Settings → Collaborators → Remove.
+Kaikki muokkaus tapahtuu paneelissa. GitHub-tunnusta ei tarvita, eikä muokkaajia lisätä GitHubiin.
 
 ### 5. Mitä tapahtuu automaattisesti
 
@@ -401,9 +394,9 @@ Jokaisen ajon voi käynnistää myös käsin: Actions → työnkulku → **Run w
 
 - Ulkoasu: `assets/css/sivu.css`. Toiminnot: `assets/js/sivu.js`.
 - Sivut: juuren `*.html`. Osat: `_includes/osat/`. Käännökset: `_data/kaannokset.yml`.
-- Uuden moskeijan malli: `malli/` (myös Pages CMS:n kentät `malli/.pages.yml`).
+- Uuden moskeijan malli: `malli/`. Paneelin kentät: `hallinta`-repon `src/kaavio.js`.
 - **Testaa testimoskeijalla**: https://suomen-moskeijat.github.io/testimoskeija/ (muokkaa paneelissa, ei oikeiden moskeijoiden sivuja).
-- Jos lisäät Pages CMS -kenttiä, kopioi `malli/.pages.yml` myös olemassa oleviin moskeijoihin.
+- Tiedoston voi päivittää tai poistaa kaikista moskeijarepoista: pohja → Actions → **Päivitä tiedosto kaikille**.
 
 ### 7. Rukousaikojen lähteet
 
@@ -457,5 +450,5 @@ pohja/
   malli/                     ← uuden moskeijan tiedostot
   esittely/ohjeet/           ← ohjesivun ulkoasu (hakemisto + ohjeet: /pohja/)
   .github/scripts/           ← haut ja automaatiot (Python, ei riippuvuuksia)
-  .github/workflows/         ← julkaisu, Lisää moskeija, Lisää muokkaaja, artikkelit, esittely
+  .github/workflows/         ← julkaisu, Lisää moskeija, artikkelit, hakemisto ja ohjeet, Päivitä tiedosto kaikille
 ```

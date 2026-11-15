@@ -10,7 +10,7 @@ Tiedot täydennetään automaattisesti:
 - Masjidbox: nimi ja osoite; ajat ja iqamah haetaan julkaisussa.
 - Muuten koordinaatit osoitteesta (OpenStreetMap Nominatim).
 - Nykyinen nettisivu (--nettisivu): logo, värit, yhteystiedot, somet, kuvat, Meistä-teksti,
-  WordPress-sivut ja -kirjoitukset (tuo_sivusto.py). Tarkistetaan Pages CMS:ssä.
+  WordPress-sivut ja -kirjoitukset (tuo_sivusto.py). Tarkistetaan hallintapaneelissa.
 Ympäristömuuttujat GitHubissa: MOSKEIJA_AVAIN (organisaation avain), ORG.
 """
 import argparse
@@ -175,7 +175,7 @@ def tiedostot(t, repo, org):
                         f"meista_lyhyt: {{ fi: {yaml_str(lyhyt[:600])} }}\n"
                         f"meista: {{ fi: {yaml_str(t['meista'])} }}\n")
     md = f"""---
-# Lisätty automaattisesti. Täydennä ja korjaa tietoja Pages CMS:ssä (https://app.pagescms.org).
+# Lisätty automaattisesti. Täydennä ja korjaa tietoja hallintapaneelissa (https://hallinta.suomenmoskeijat.fi/).
 {"ehdotus: true        # esimerkkisivu: moskeija ei ole vielä mukana (palkki: Ehdotus)" + chr(10) if t.get("ehdotus") else ""}luonnos: true        # uusi sivu on luonnos (palkki ylhäällä, ei Googlessa); kun moskeija hyväksyy → false
 title: {yaml_str(t['nimi'])}
 slug: {t['slug']}
@@ -241,7 +241,6 @@ galleria: {json.dumps(t['galleria'], ensure_ascii=False)}
         "_config.yml": config,
         f"_moskeijat/{t['slug']}.md": md,
         "README.md": readme,
-        ".pages.yml": lue(".pages.yml"),
         "_tapahtumat/.gitkeep": "",
         "_sivut/.gitkeep": "",
         "tiedostot/.gitkeep": "",
@@ -292,44 +291,15 @@ def julkaise(t, repo, org, avain, tiedot):
     return f"https://{org.lower()}.github.io/{repo}/"
 
 
-def kutsu_muokkaajat(tunnukset, repo, org, avain):
-    """Kutsuu muokkaajat vain tähän repoon (Write). He eivät näe muiden moskeijoiden repoja muokattavina."""
-    kutsutut = []
-    for tunnus_ in re.split(r"[,\s]+", tunnukset or ""):
-        tunnus_ = tunnus_.strip().lstrip("@")
-        if not re.match(r"^[A-Za-z0-9-]{1,39}$", tunnus_):
-            continue
-        tila, _ = api("PUT", f"/repos/{org}/{repo}/collaborators/{tunnus_}", {"permission": "push"}, avain, sallitut=(404, 422))
-        if tila in (201, 204):
-            kutsutut.append(tunnus_)
-            print(f"  kutsuttu muokkaajaksi: {tunnus_}")
-        else:
-            print(f"  muokkaajaa ei voitu kutsua: {tunnus_} ({tila})", file=sys.stderr)
-    return kutsutut
 
 
 def main():
     p = argparse.ArgumentParser()
-    for k in ["nimi", "kaupunki", "mawaqit", "masjidbox", "osoite", "instagram", "whatsapp", "youtube", "telegram", "repo", "muokkaajat", "nettisivu", "puhelin", "sahkoposti", "facebook", "linkki"]:
+    for k in ["nimi", "kaupunki", "mawaqit", "masjidbox", "osoite", "instagram", "whatsapp", "youtube", "telegram", "repo", "nettisivu", "puhelin", "sahkoposti", "facebook", "linkki"]:
         p.add_argument("--" + k, default=os.environ.get("SYOTE_" + k.upper(), ""))
     p.add_argument("--kuiva", help="kirjoita tiedostot tähän kansioon, älä luo mitään GitHubiin")
     p.add_argument("--ehdotus", action="store_true", help="esimerkkisivu, josta moskeija ei ole vielä päättänyt (palkki: Ehdotus)")
-    p.add_argument("--vain-muokkaajat", action="store_true", help="kutsu muokkaajat olemassa olevaan repoon (--repo)")
     a = p.parse_args()
-    if a.vain_muokkaajat:
-        avain, org = os.environ.get("MOSKEIJA_AVAIN"), os.environ.get("ORG", "suomen-moskeijat")
-        if not (avain and a.repo.strip() and a.muokkaajat.strip()):
-            raise SystemExit("Anna repo ja muokkaajien GitHub-tunnukset (ja MOSKEIJA_AVAIN).")
-        repo = a.repo.strip().split("/")[-1]
-        tila, _ = api("GET", f"/repos/{org}/{repo}", avain=avain, sallitut=(404,))
-        if tila != 200:
-            raise SystemExit(f"Repoa {org}/{repo} ei löydy.")
-        k = kutsu_muokkaajat(a.muokkaajat, repo, org, avain)
-        viesti = f"## Muokkaajat: {org}/{repo}\n\nKutsuttu: {', '.join(k) or 'ei ketään'}. Kutsu tulee sähköpostiin, ja oikeus koskee vain tätä moskeijaa.\n"
-        print(viesti)
-        if os.environ.get("GITHUB_STEP_SUMMARY"):
-            open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8").write(viesti)
-        return
     if not a.nimi.strip() and not (a.mawaqit or a.masjidbox or a.nettisivu):
         raise SystemExit("Anna vähintään moskeijan nimi (tai Mawaqit-, Masjidbox- tai nettisivun linkki).")
     tuotu = tuo_nettisivu(a.nettisivu) if a.nettisivu.strip() else {}
@@ -396,15 +366,13 @@ def main():
     if not avain:
         raise SystemExit("Avain puuttuu: lisää pohja-repon asetuksiin salaisuus MOSKEIJA_AVAIN (ks. README).")
     osoite = julkaise(t, repo, org, avain, tiedot)
-    kutsutut = kutsu_muokkaajat(a.muokkaajat, repo, org, avain)
     yhteenveto = (f"## ✅ {t['nimi']} lisätty\n\n- **Sivu:** {osoite} (valmis noin 2 minuutin päästä)\n"
                   f"- **Repo:** https://github.com/{org}/{repo}\n- **Rukousajat:** {t['lahde'] or 'rukousajat.fi / laskenta'}"
                   f"{' (' + t['tunnus'] + ')' if t['tunnus'] else ''}\n- **Koordinaatit:** {t['lat']}, {t['lon']}\n"
-                  f"- **Muokkaajat:** {', '.join(kutsutut) if kutsutut else 'ei vielä (lisää: repo → Settings → Collaborators → Add people → Write)'}"
-                  f"{' – he saavat kutsun sähköpostiinsa ja hyväksyvät sen' if kutsutut else ''}\n\n"
-                  f"**Sivu on luonnos.** Lähetä linkki moskeijalle tarkistettavaksi. Kun he hyväksyvät sivun, poista Pages CMS:ssä "
-                  f"(Moskeijat → Luonnos) valinta, niin luonnos-palkki katoaa ja Google saa näyttää sivun.\n\n"
-                  f"Täydennä tiedot (osoite, puhelin, logo, tekstit) Pages CMS:ssä: https://app.pagescms.org\n")
+                  f"- **Käyttäjät:** kutsu moskeijan pääkäyttäjä hallintapaneelissa (moskeija → Käyttäjät)\n\n"
+                  f"**Sivu on luonnos.** Lähetä linkki moskeijalle tarkistettavaksi. Kun he hyväksyvät sivun, pääkäyttäjä painaa "
+                  f"paneelin etusivulla Julkaise sivu, niin luonnos-palkki katoaa ja Google saa näyttää sivun.\n\n"
+                  f"Täydennä tiedot (osoite, puhelin, logo, tekstit) hallintapaneelissa: https://hallinta.suomenmoskeijat.fi/\n")
     print(yhteenveto)
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8").write(yhteenveto)

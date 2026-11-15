@@ -4,7 +4,7 @@
     python3 hakemisto.py KOHDE.html
 
 Listaa organisaation moskeijarepot (tila: Julkaistu / Luonnos / Ehdotus) ja listan
-moskeijat.csv moskeijat, joilla ei vielä ole sivua. Linkit: sivu, muokkaus (Pages CMS)
+moskeijat.csv moskeijat, joilla ei vielä ole sivua. Linkit: sivu, muokkaus (hallintapaneeli)
 ja repo. Ajetaan Esittelysivu-työnkulussa (GITHUB_TOKEN lukee repot).
 """
 import csv

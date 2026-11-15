@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Päivittää pohjan mallitiedostot kaikkiin moskeijarepoihin (oletus: Pages CMS -asetukset).
+"""Päivittää tai poistaa pohjan mallitiedoston kaikista moskeijarepoista.
 
-    python3 paivita_kaikki.py [--tiedosto .pages.yml] [--kuiva]
+    python3 paivita_kaikki.py --tiedosto POLKU [--poista] [--kuiva]
 
-Käy läpi organisaation repot, joissa on kansio _moskeijat/, ja kirjoittaa tiedoston
-malli/<tiedosto> repoon, jos sisältö poikkeaa. Ajetaan työnkulussa "Päivitä muokkausnäkymä
-kaikille" automaattisesti, kun malli/.pages.yml muuttuu.
+Käy läpi organisaation repot, joissa on kansio _moskeijat/. Oletuksena kirjoittaa tiedoston
+malli/<tiedosto> repoon, jos sisältö poikkeaa; --poista poistaa tiedoston repoista
+(esim. vanhan Pages CMS -asetuksen .pages.yml). Työnkulku: "Päivitä tiedosto kaikille".
 """
 import argparse
 import base64
@@ -35,13 +35,14 @@ def api(menetelma, polku, avain, data=None, sallitut=()):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--tiedosto", default=".pages.yml")
+    ap.add_argument("--tiedosto", required=True)
+    ap.add_argument("--poista", action="store_true")
     ap.add_argument("--kuiva", action="store_true")
     a = ap.parse_args()
     avain, org = os.environ.get("MOSKEIJA_AVAIN"), os.environ.get("ORG", "suomen-moskeijat")
     if not avain:
         raise SystemExit("MOSKEIJA_AVAIN puuttuu.")
-    uusi = open(os.path.join(POHJA, "malli", a.tiedosto), "rb").read()
+    uusi = None if a.poista else open(os.path.join(POHJA, "malli", a.tiedosto), "rb").read()
     repot, sivu = [], 1
     while True:
         _, osa = api("GET", f"/orgs/{org}/repos?per_page=100&page={sivu}", avain)
@@ -58,6 +59,15 @@ def main():
         if tila != 200:
             continue
         tila, nyk = api("GET", f"/repos/{org}/{nimi}/contents/{a.tiedosto}", avain, sallitut=(404,))
+        if a.poista:
+            if tila != 200:
+                ennallaan.append(nimi)
+                continue
+            if not a.kuiva:
+                api("DELETE", f"/repos/{org}/{nimi}/contents/{a.tiedosto}", avain, {"message": f"Poistettu {a.tiedosto} (muokkaus hallintapaneelissa)", "sha": nyk["sha"]})
+            paivitetty.append(nimi)
+            print(f"  poistettu: {nimi}")
+            continue
         if tila == 200 and base64.b64decode(nyk["content"]) == uusi:
             ennallaan.append(nimi)
             continue
@@ -68,7 +78,7 @@ def main():
             api("PUT", f"/repos/{org}/{nimi}/contents/{a.tiedosto}", avain, data)
         paivitetty.append(nimi)
         print(f"  päivitetty: {nimi}")
-    yht = f"## {a.tiedosto}\n\n**Päivitetty ({len(paivitetty)}):** {', '.join(paivitetty) or '–'}\n\n**Ennallaan ({len(ennallaan)}):** {len(ennallaan)} repoa\n"
+    yht = f"## {a.tiedosto}\n\n**{'Poistettu' if a.poista else 'Päivitetty'} ({len(paivitetty)}):** {', '.join(paivitetty) or '–'}\n\n**Ennallaan ({len(ennallaan)}):** {len(ennallaan)} repoa\n"
     print(yht)
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8").write(yht)

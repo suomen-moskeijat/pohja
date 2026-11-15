@@ -7,7 +7,7 @@ Etsii etusivulta ja tärkeimmiltä alasivuilta (Meistä, Yhteystiedot, Toiminta 
 nimen, kuvauksen, logon, osoitteen, puhelimen, sähköpostin, WhatsAppin, somet,
 perjantairukouksen ajan, Meistä-tekstin ja valokuvat. WordPress-sivuilta haetaan
 lisäksi sivut (omiksi sivuiksi) ja kirjoitukset (moskeijan omiksi artikkeleiksi).
-Tulos on arvaus: tarkista ja täydennä Pages CMS:ssä. Ei pakollisia riippuvuuksia
+Tulos on arvaus: tarkista ja täydennä hallintapaneelissa. Ei pakollisia riippuvuuksia
 (Pillow-kirjasto, jos asennettu: kuvien koko ja logon värit).
 """
 import html

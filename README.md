@@ -36,7 +36,7 @@ Masjidboxissa ei tyhjennä sivua.
    - valinnaisesti Instagram ja WhatsApp
 3. Valmis: ajon yhteenvedossa on sivun osoite. Repo luodaan nimellä
    `suomen-moskeijat/<moskeijan-nimi>` ja sivu julkaistaan noin kahdessa minuutissa.
-4. Täydennä tiedot (osoite, puhelin, logo, tekstit) Pages CMS:ssä: https://app.pagescms.org
+4. Täydennä tiedot (osoite, puhelin, logo, tekstit) hallintapaneelissa: https://hallinta.suomenmoskeijat.fi/
 
 **Kokeilu ilman että mitään luodaan:**
 `python3 .github/scripts/lisaa_moskeija.py --kuiva /tmp/kokeilu --kaupunki Hyvinkää --mawaqit <linkki>`
@@ -59,9 +59,9 @@ Masjidboxissa ei tyhjennä sivua.
    `REPO`, `MOSKEIJAN NIMI` ja osoitetiedot (`_moskeijat/SLUG.md` → `_moskeijat/<slug>.md`).
 2. Repon asetuksista: **Settings → Pages → Source: GitHub Actions**.
 
-## Mitä moskeija voi muokata itse (Pages CMS)
+## Mitä moskeija voi muokata itse (hallintapaneeli)
 
-Kaikki alla oleva muokataan selaimessa osoitteessa https://app.pagescms.org, eikä koodia tarvita.
+Kaikki alla oleva muokataan selaimessa hallintapaneelissa https://hallinta.suomenmoskeijat.fi/, eikä koodia tarvita.
 Valinnat ovat valmiita vaihtoehtoja, joten sivu pysyy siistinä, vaikka moskeijoita on sata.
 
 | Mitä | Kenttä | Vaihtoehdot |
@@ -80,16 +80,10 @@ Esimerkki: testimoskeija (`suomen-moskeijat/testimoskeija`), https://suomen-mosk
 
 ## Muokkaajat: vain oman moskeijan sivu
 
-Jokainen moskeija on oma reponsa. Muokkaaja kutsutaan **vain oman moskeijansa repoon**
-(rooli *Write*), joten hän ei voi muokata muiden moskeijoiden sivuja eikä pohjaa.
-
-- **Uusi moskeija:** kirjoita *Lisää moskeija* -lomakkeen kenttään *muokkaajat* GitHub-tunnukset.
-- **Myöhemmin:** Actions → **Lisää muokkaaja** → repo + tunnukset. Tai repo → Settings →
-  Collaborators → Add people → *Write*.
-- Muokkaajia **ei** lisätä organisaation jäseniksi. Organisaation asetuksissa
-  (Settings → Member privileges → Base permissions) kannattaa pitää *No permission*.
-- Pages CMS -sovellus asennetaan organisaatioon kerran. Jokainen näkee siinä vain ne repot,
-  joihin hänellä on oikeus.
+Käyttäjät kutsutaan hallintapaneelissa sähköpostilla (moskeija → **Käyttäjät**). Muokkaaja pääsee
+vain oman moskeijansa sivuun, eikä hän tarvitse GitHub-tunnusta. Paneeli tallentaa muutokset
+moskeijan repoon omalla GitHub-sovelluksellaan. Muokkaajia **ei** lisätä GitHubiin; organisaation
+asetuksissa (Settings → Member privileges → Base permissions) kannattaa pitää *No permission*.
 
 ## Näkyvyys Googlessa
 
@@ -129,8 +123,8 @@ Kuvakkeet: Phosphor Icons (MIT). Rukousaikojen laskenta: adhan.js (MIT).
 
 Sivusto toimii jokaiselle moskeijalle ilman ylimääräistä työtä. Jos moskeijalla on oma
 rukousaikapalvelu tai kuvia, ne saa käyttöön yhdellä asetuksella. Kaikki asetukset ovat
-moskeijan repon tiedostossa `_moskeijat/<moskeija>.md`, ja niitä voi muokata selaimessa
-Pages CMS:ssä (Moskeijat → moskeija → Rukousajat).
+moskeijan repon tiedostossa `_moskeijat/<moskeija>.md`, ja niitä muokataan hallintapaneelissa
+(moskeija → Rukousajat ja Jumua).
 
 ### 1. Rukousajat: valitse lähde
 
@@ -184,7 +178,7 @@ Puuttuville päiville sivu laskee ajat koordinaateista.
 
 ### 2. Kuvat
 
-- **Omat kuvat:** Pages CMS → Moskeijat → *Kuvagalleria* → lisää kuvat. Ne näkyvät
+- **Omat kuvat:** hallintapaneeli → Kuvat ja tiedostot → lisää galleriaan. Ne näkyvät
   etusivulla ja Meistä-sivulla (enintään 9).
 - **Mawaqitista automaattisesti:** jos `lahde: mawaqit`, moskeijan Mawaqitiin lisäämät
   sisä- ja ulkokuvat ladataan sivustolle ja lisätään galleriaan.

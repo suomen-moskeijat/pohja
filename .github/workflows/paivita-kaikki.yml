@@ -1,11 +1,17 @@
-# Vie pohjan muokkausnäkymän (malli/.pages.yml) kaikkiin moskeijoihin, kun se muuttuu.
-name: Päivitä muokkausnäkymä kaikille
+# Päivittää tai poistaa pohjan mallitiedoston kaikista moskeijarepoista (käsin: Actions → Run workflow).
+name: Päivitä tiedosto kaikille
 
 on:
-  push:
-    branches: [main]
-    paths: ["malli/.pages.yml"]
   workflow_dispatch:
+    inputs:
+      tiedosto:
+        description: "Tiedosto moskeijarepoissa (esim. .github/workflows/julkaisu.yml)"
+        required: true
+        default: ".pages.yml"
+      poista:
+        description: "Poista tiedosto repoista (muuten kopioidaan malli/<tiedosto>)"
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -19,8 +25,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Päivitä .pages.yml kaikkiin moskeijarepoihin
+      - name: Päivitä tai poista tiedosto kaikista moskeijarepoista
         env:
           MOSKEIJA_AVAIN: ${{ secrets.MOSKEIJA_AVAIN }}
           ORG: ${{ github.repository_owner }}
-        run: python3 .github/scripts/paivita_kaikki.py --tiedosto .pages.yml
+          TIEDOSTO: ${{ inputs.tiedosto }}
+          POISTA: ${{ inputs.poista }}
+        run: python3 .github/scripts/paivita_kaikki.py --tiedosto "$TIEDOSTO" $([ "$POISTA" = "true" ] && echo --poista)
