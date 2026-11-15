@@ -2,10 +2,38 @@
   "ohje": "Testattavat muutokset. Kun teet muutoksen testi-haaraan, lisää tähän kohta (id pysyy samana; nosta versio, kun korjaat hylätyn testin). Julkaistut kohdat voi poistaa listasta seuraavassa muutoksessa. Älä kirjoita tänne nimiä tai muita henkilötietoja – repo on julkinen.",
   "testit": [
     {
+      "id": "testaus-helpommaksi",
+      "otsikko": "Testaus helpommaksi (tämä sivu)",
+      "kuvaus": "Testaus ja julkaisu -sivulla on nyt Aloita testaus: testit näytetään yksi kerrallaan. Ei toimi -palautteeseen voi valita kohdan, joka ei toiminut, ja liittää kuvakaappauksen. Laite tunnistetaan automaattisesti. Testaajat saavat sähköpostin uusista testeistä. Kokeile tätä testipaneelissa.",
+      "alue": "paneeli",
+      "versio": 1,
+      "lisatty": "2026-11-15",
+      "kohdat": [
+        "Testipaneelin Testaus ja julkaisu -sivulla näkyy oma tilanne ja Aloita testaus -nappi",
+        "Aloita testaus näyttää yhden testin kerrallaan ja siirtyy kuittauksen jälkeen seuraavaan",
+        "Ei toimi: kohdan valinta, kuvaus ja kuvakaappaus (myös puhelimen kameralla tai kuvagalleriasta) toimivat",
+        "Kuvakaappaus ja valittu kohta näkyvät testin historiassa",
+        "Puhelimella napit ovat isoja ja sivu on helppo käyttää",
+        "Varsinaisessa paneelissa: Ylläpitäjät → Testaajat → Lisää minut testaajaksi toimii"
+      ],
+      "linkit": [
+        {
+          "nimi": "Aloita testaus (testipaneeli)",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/testaus/aloita"
+        },
+        {
+          "nimi": "Testaajat (paneeli)",
+          "url": "https://hallinta.suomenmoskeijat.fi/#/yllapito/yllapitajat"
+        }
+      ]
+    },
+    {
       "id": "palvelut-omat-sivut",
       "otsikko": "Palvelut omina sivuinaan",
       "kuvaus": "Jokaisella palvelulla (esim. janaza, nikah, koraanikoulu) on oma sivu, Palvelut-sivu valikossa ja klikattavat kortit. Paneelissa palvelut ovat omana kohtanaan.",
-      "alue": "sivut", "versio": 1, "lisatty": "2026-11-15",
+      "alue": "sivut",
+      "versio": 1,
+      "lisatty": "2026-11-15",
       "kohdat": [
         "Palvelut-sivu löytyy valikosta ja näyttää kaikki palvelut kortteina",
         "Kortin klikkaus avaa palvelun oman sivun, jossa on kaikki tiedot ja yhteydenotto",
@@ -14,15 +42,23 @@
         "Puhelimella kortit ja palvelusivu näyttävät siisteiltä"
       ],
       "linkit": [
-        { "nimi": "Palvelut-sivu", "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/" },
-        { "nimi": "Paneelin Palvelut", "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut" }
+        {
+          "nimi": "Palvelut-sivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/"
+        },
+        {
+          "nimi": "Paneelin Palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
+        }
       ]
     },
     {
       "id": "toistuvat-tapahtumat",
       "otsikko": "Toistuva toiminta ja viikko-ohjelma",
       "kuvaus": "Tapahtumalle voi valita Kerran tai Joka viikko (viikonpäivät). Viikoittaiset näkyvät viikko-ohjelmana, kertaluontoiset tapahtumalistassa.",
-      "alue": "sivut", "versio": 1, "lisatty": "2026-11-15",
+      "alue": "sivut",
+      "versio": 1,
+      "lisatty": "2026-11-15",
       "kohdat": [
         "Tapahtumat-sivulla näkyy viikko-ohjelma (esim. koraanikoulu ja naisten opintopiiri) erikseen tulevista tapahtumista",
         "Testipaneelissa uusi tapahtuma → Joka viikko → valitse päivät → tallenna → näkyy viikko-ohjelmassa",
@@ -30,15 +66,23 @@
         "Kalenterin tilaus (Lisää kalenteriin) sisältää viikoittaiset toistuvina"
       ],
       "linkit": [
-        { "nimi": "Tapahtumat-sivu", "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/" },
-        { "nimi": "Paneelin Tapahtumat", "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat" }
+        {
+          "nimi": "Tapahtumat-sivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
+        },
+        {
+          "nimi": "Paneelin Tapahtumat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat"
+        }
       ]
     },
     {
       "id": "tapahtumasivu-ilmoittaudu",
       "otsikko": "Tapahtuman oma sivu ja Ilmoittaudu",
       "kuvaus": "Tapahtumasivulla kuvaus ja kuva ovat ensin, tiedot kortissa sivussa. Ilmoittaudu ohjaa yhteystietolomakkeelle, jossa aihe on valmiiksi valittuna (tai omaan linkkiin).",
-      "alue": "sivut", "versio": 1, "lisatty": "2026-11-15",
+      "alue": "sivut",
+      "versio": 1,
+      "lisatty": "2026-11-15",
       "kohdat": [
         "Avoimet ovet -sivulla kuva, muotoiltu kuvaus ja tietokortti näyttävät hyviltä tietokoneella",
         "Puhelimella alareunassa pysyy Ilmoittaudu-palkki, joka katoaa kun tietokortti tulee näkyviin",
@@ -47,15 +91,23 @@
         "Tapahtumalistassa ei näy ylimääräisiä ilmoittautumismerkkejä"
       ],
       "linkit": [
-        { "nimi": "Avoimet ovet", "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/2026-11-28-avoimet-ovet/" },
-        { "nimi": "Koraanikoulu", "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/" }
+        {
+          "nimi": "Avoimet ovet",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/2026-11-28-avoimet-ovet/"
+        },
+        {
+          "nimi": "Koraanikoulu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
+        }
       ]
     },
     {
       "id": "korttityylit",
       "otsikko": "Yhtenäiset kortit ja korttityylit",
       "kuvaus": "Kaikki kortit (tapahtumat, palvelut, artikkelit) näyttävät samalta koko sivustolla. Ulkoasussa voi valita korttien tyylin sekä tapahtumien ja palvelujen asettelun.",
-      "alue": "sivut", "versio": 1, "lisatty": "2026-11-15",
+      "alue": "sivut",
+      "versio": 1,
+      "lisatty": "2026-11-15",
       "kohdat": [
         "Ulkoasu → Korttien tyyli: Pehmeä / Reunus / Varjo / Tausta – esikatselu vaihtuu heti",
         "Tapahtumien asettelu (lista / kortit / tiivis) ja palvelujen asettelu (kortit / ruudukko / lista) vaihtuvat",
@@ -63,15 +115,23 @@
         "Kortit näyttävät samalta eri sivuilla"
       ],
       "linkit": [
-        { "nimi": "Etusivu", "url": "https://suomen-moskeijat.github.io/testimoskeija/" },
-        { "nimi": "Paneelin Ulkoasu", "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/ulkoasu" }
+        {
+          "nimi": "Etusivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        },
+        {
+          "nimi": "Paneelin Ulkoasu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/ulkoasu"
+        }
       ]
     },
     {
       "id": "ramadan-ulkoasu",
       "otsikko": "Ramadan: etusivun hero, tyylit ja Ramadan-julkaisut",
       "kuvaus": "Ramadanin aikana etusivun herossa näkyy päivä isolla ja ajat siististi. Herolle voi valita tyylin ja värin. Ramadan-osiossa näkyvät julkaisut (tarawih, iftar, eid). Testisivulla voi esikatsella ?ramadan=ennen, ?ramadan=5 ja ?ramadan=eid.",
-      "alue": "sivut", "versio": 1, "lisatty": "2026-11-15",
+      "alue": "sivut",
+      "versio": 1,
+      "lisatty": "2026-11-15",
       "kohdat": [
         "Etusivu ?ramadan=5: hero näyttää ramadanpäivän ja ajat väljästi, ei päällekkäin",
         "?ramadan=ennen ja ?ramadan=eid näyttävät oikeat tekstit",
@@ -80,16 +140,27 @@
         "Puhelimella ramadan-osio on luettava"
       ],
       "linkit": [
-        { "nimi": "Etusivu (ramadan 5. päivä)", "url": "https://suomen-moskeijat.github.io/testimoskeija/?ramadan=5" },
-        { "nimi": "Ramadan-osio", "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/?ramadan=5#ramadan" },
-        { "nimi": "Eid", "url": "https://suomen-moskeijat.github.io/testimoskeija/?ramadan=eid" }
+        {
+          "nimi": "Etusivu (ramadan 5. päivä)",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/?ramadan=5"
+        },
+        {
+          "nimi": "Ramadan-osio",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/?ramadan=5#ramadan"
+        },
+        {
+          "nimi": "Eid",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/?ramadan=eid"
+        }
       ]
     },
     {
       "id": "yhteydenottolomake",
       "otsikko": "Yhteydenottolomakkeen kentät ja sivujen johdannot",
       "kuvaus": "Paneelissa voi päättää, mitä kenttiä yhteystietojen alla olevassa lomakkeessa on, sekä kirjoittaa johdantotekstin Yhteystiedot- ja Artikkelit-sivuille.",
-      "alue": "paneeli", "versio": 1, "lisatty": "2026-11-15",
+      "alue": "paneeli",
+      "versio": 1,
+      "lisatty": "2026-11-15",
       "kohdat": [
         "Testipaneelissa kenttiä voi lisätä ja poistaa, ja muutos näkyy sivun lomakkeessa",
         "Aihevaihtoehtoja voi muokata",
@@ -97,15 +168,23 @@
         "Johdantotekstit näkyvät sivuilla"
       ],
       "linkit": [
-        { "nimi": "Yhteystiedot", "url": "https://suomen-moskeijat.github.io/testimoskeija/yhteystiedot/" },
-        { "nimi": "Paneelin sivut", "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut" }
+        {
+          "nimi": "Yhteystiedot",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/yhteystiedot/"
+        },
+        {
+          "nimi": "Paneelin sivut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut"
+        }
       ]
     },
     {
       "id": "ilmoituspalkki",
       "otsikko": "Ilmoituspalkin esikatselu ja poisto",
       "kuvaus": "Ilmoituspalkin voi esikatsella ennen tallennusta ja poistaa kokonaan. Paneeli näyttää, onko palkki nyt näkyvissä.",
-      "alue": "paneeli", "versio": 1, "lisatty": "2026-11-15",
+      "alue": "paneeli",
+      "versio": 1,
+      "lisatty": "2026-11-15",
       "kohdat": [
         "Kirjoita ilmoitus → esikatselu näyttää sen heti",
         "Tallenna → palkki näkyy sivulla muutaman minuutin päästä",
@@ -113,42 +192,57 @@
         "Tila (näkyvissä / ajastettu / ei ilmoitusta) on oikein"
       ],
       "linkit": [
-        { "nimi": "Paneelin Ilmoituspalkki", "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/ilmoitus" }
+        {
+          "nimi": "Paneelin Ilmoituspalkki",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/ilmoitus"
+        }
       ]
     },
     {
       "id": "julkaisun-seuranta",
       "otsikko": "Julkaisun seuranta ja esikatselun päivitys",
       "kuvaus": "Tallennuksen jälkeen paneelin yläkulmassa näkyy, milloin muutos on sivulla. Esikatselu päivittyy itsestään, kun julkaisu valmistuu.",
-      "alue": "paneeli", "versio": 1, "lisatty": "2026-11-15",
+      "alue": "paneeli",
+      "versio": 1,
+      "lisatty": "2026-11-15",
       "kohdat": [
         "Tallenna jokin muutos → näkyy 'Julkaistaan…' ja lopuksi 'Sivu päivitetty'",
         "Esikatselu näyttää uuden version ilman sivun uudelleenlatausta",
         "Jos julkaisu epäonnistuu, paneeli kertoo sen selvästi"
       ],
       "linkit": [
-        { "nimi": "Testipaneeli", "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija" }
+        {
+          "nimi": "Testipaneeli",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija"
+        }
       ]
     },
     {
       "id": "kayttoehdot",
       "otsikko": "Käyttöehdot ja hyväksyntä",
       "kuvaus": "Paneelissa on Käyttöehdot ja tietosuoja -sivu. Moskeijan pääkäyttäjä hyväksyy ehdot yleiskatsauksessa.",
-      "alue": "paneeli", "versio": 1, "lisatty": "2026-11-15",
+      "alue": "paneeli",
+      "versio": 1,
+      "lisatty": "2026-11-15",
       "kohdat": [
         "Kirjautumissivulta pääsee lukemaan ehdot",
         "Ehtojen teksti on selkeää ja yhteystiedot oikein",
         "Pääkäyttäjänä hyväksyntä onnistuu ja näkyy muutoshistoriassa"
       ],
       "linkit": [
-        { "nimi": "Ehdot (testipaneeli)", "url": "https://hallinta-testi.suomenmoskeijat.fi/#/ehdot" }
+        {
+          "nimi": "Ehdot (testipaneeli)",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/ehdot"
+        }
       ]
     },
     {
       "id": "tietoturva-sivut",
       "otsikko": "Tietoturva: sivut toimivat suojausten kanssa",
       "kuvaus": "Sivuille on lisätty suojaus (CSP), joka estää vieraat skriptit. Tarkista, että kaikki toimii edelleen.",
-      "alue": "sivut", "versio": 1, "lisatty": "2026-11-15",
+      "alue": "sivut",
+      "versio": 1,
+      "lisatty": "2026-11-15",
       "kohdat": [
         "Kielivalikko vaihtaa kielen",
         "Lomake lähtee (ihmistarkistus näkyy)",
@@ -157,8 +251,14 @@
         "Kuvat ja upotetut videot näkyvät artikkeleissa"
       ],
       "linkit": [
-        { "nimi": "Etusivu", "url": "https://suomen-moskeijat.github.io/testimoskeija/" },
-        { "nimi": "Yhteystiedot", "url": "https://suomen-moskeijat.github.io/testimoskeija/yhteystiedot/" }
+        {
+          "nimi": "Etusivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        },
+        {
+          "nimi": "Yhteystiedot",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/yhteystiedot/"
+        }
       ]
     }
   ]
