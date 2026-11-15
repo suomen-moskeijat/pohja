@@ -10,9 +10,13 @@
 {%- else -%}{%- assign _p = t.paa -%}{%- assign _pt = t.paa_tumma -%}{%- assign _k = t.korostus -%}{%- assign _kv = t.korostus_vaalea -%}{%- endif -%}
 {%- assign v = site.time | date: '%s' -%}
 {%- assign juuri = '/' | relative_url -%}
-<html lang="{{ site.kielet | first | default: 'fi' }}" dir="ltr">
+<html lang="{{ site.kielet | first | default: 'fi' }}" dir="ltr" data-baseurl="{{ site.baseurl }}">
 <head>
   <meta charset="utf-8">
+  {%- comment -%} Tietoturva: vain sivuston omat skriptit (+ Cloudflare Turnstile lomakkeissa). Ei sisäisiä skriptejä eikä
+  tapahtumankäsittelijöitä, joten muokattuun sisältöön lisätty koodi ei suoritu. {%- endcomment %}
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self' https:; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   {%- include osat/hakunakyvyys.html moskeija=m -%}
   {% if _piilota %}<meta name="robots" content="noindex, nofollow">{% endif %}
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -22,26 +26,7 @@
     <style>{% for _l in site.kielet %}html[lang="{{ _l }}"] [data-l]:not([data-l="{{ _l }}"]){display:none!important}{% endfor %}</style>
     {%- assign _rk_nimet = "fajr,sunrise,dhuhr,asr,maghrib,isha,jumua,huomenna,klo,pv,nousu" | split: "," %}
     <script type="application/json" id="kieli-data">{ {%- for _l in site.kielet -%}{%- assign _kr = site.data.kielet | where: "koodi", _l | first -%}"{{ _l }}": { "locale": {{ _kr.locale | default: _l | jsonify }}, "rtl": {% if _kr.rtl %}true{% else %}false{% endif %}, "nimet": { {%- for _n in _rk_nimet -%}{%- assign _avain = "rk_" | append: _n -%}{%- assign _t = site.data.kaannokset[_avain] -%}"{{ _n }}": {{ _t[_l] | default: _t.en | jsonify }}{% unless forloop.last %},{% endunless %}{%- endfor -%} } }{% unless forloop.last %},{% endunless %}{%- endfor -%} }</script>
-    <script>
-    (function () {
-      var sallitut = {{ site.kielet | jsonify }}, k = null;
-      try { k = localStorage.getItem('kieli'); } catch (e) {}
-      // Hakukone- ja tekoälybotit näkevät sivun pääkielellä (suomi), eivät selaimensa kielellä
-      var botti = /bot|crawl|spider|slurp|bingpreview|facebookexternalhit|embedly|google-inspectiontool|chrome-lighthouse/i.test(navigator.userAgent || '');
-      if (sallitut.indexOf(k) < 0) { var n = botti ? '' : (navigator.language || '').slice(0, 2); k = sallitut.indexOf(n) >= 0 ? n : sallitut[0]; }
-      // Kieliversio omassa osoitteessa (/en/ …): osoitteen kieli voittaa ja tallentuu valinnaksi.
-      // Pääkielen sivulla kävijä, jonka kieli on muu, ohjataan oman kielensä osoitteeseen (ei botteja).
-      var urlKieli = document.documentElement.getAttribute('data-url-kieli');
-      if (urlKieli && sallitut.indexOf(urlKieli) >= 0) { k = urlKieli; try { localStorage.setItem('kieli', k); } catch (e) {} }
-      else if (!botti && k !== sallitut[0] && window.top === window) {
-        var alt = document.querySelector('link[rel="alternate"][hreflang="' + k + '"]');
-        var polku = alt ? new URL(alt.href).pathname : null;
-        if (polku && polku !== location.pathname) { location.replace(polku + location.search + location.hash); }
-      }
-      document.documentElement.lang = k;
-      document.documentElement.dir = {{ site.data.kielet | where: 'rtl', true | map: 'koodi' | jsonify }}.indexOf(k) >= 0 ? 'rtl' : 'ltr';
-    })();
-  </script>
+    <script src="{{ '/assets/js/kieli.js' | relative_url }}?v={{ v }}"></script>
   {%- comment -%} Fontit sivuston omalta palvelimelta (ei pyyntöjä Googlelle; assets/fontit). Moskeijan oma valinta: teema.fontit_url {%- endcomment -%}
   {%- assign _fontit = '/assets/fontit/fontit.css' | relative_url | append: '?v=' | append: v -%}
   <link rel="preload" href="{{ '/assets/fontit/sora-latin-46cba0e3.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
@@ -95,7 +80,6 @@
   {% include osat/ala.html moskeija=m %}
   {% include osat/pikanapit.html moskeija=m %}
 
-  <script>window.SIVU = { baseurl: "{{ site.baseurl }}" };</script>
   {% if page.rukousajat %}<script src="{{ '/assets/vendor/adhan.umd.min.js' | relative_url }}" defer></script>{% endif %}
   <script src="{{ '/assets/js/sivu.js' | relative_url }}?v={{ v }}" defer></script>
 </body>

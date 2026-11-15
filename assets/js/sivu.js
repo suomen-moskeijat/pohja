@@ -125,6 +125,8 @@
     ar: { fajr: 'الفجر', sunrise: 'الشروق', dhuhr: 'الظهر', asr: 'العصر', maghrib: 'المغرب', isha: 'العشاء', jumua: 'الجمعة', huomenna: 'غداً', klo: 'الساعة', pv: 'اليوم', nousu: 'الشروق' },
     so: { fajr: 'Subax', sunrise: 'Qorrax ka soo bax', dhuhr: 'Duhur', asr: 'Casar', maghrib: 'Maqrib', isha: 'Cishaa', jumua: 'Jimce', huomenna: 'berri', klo: 'saacadda', pv: 'Taariikh', nousu: 'Qorrax' }
   };
+  /** HTML-merkit turvallisiksi (innerHTML:llä koottavat taulukot) */
+  function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function N() { var k = kieli(); return NIMET[k] || (KIELIDATA[k] && KIELIDATA[k].nimet) || NIMET.en; }
   var kello = new Intl.DateTimeFormat('en-GB', { timeZone: TZ, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
   function aika(d) { return d instanceof Date && !isNaN(d) ? kello.format(d) : '–'; }
@@ -296,7 +298,7 @@
       kkEl.querySelector('[data-kk-nimi]').textContent = muotoile(eka, { month: 'long', year: 'numeric' });
       var n = N(), taulu = kkEl.querySelector('[data-kk-taulu]');
       var otsikot = ['pv', 'fajr', 'nousu', 'dhuhr', 'asr', 'maghrib', 'isha'];
-      var h = '<thead><tr>' + otsikot.map(function (o) { return '<th scope="col">' + n[o] + '</th>'; }).join('') + '</tr></thead><tbody>';
+      var h = '<thead><tr>' + otsikot.map(function (o) { return '<th scope="col">' + esc(n[o]) + '</th>'; }).join('') + '</tr></thead><tbody>';
       var kaikkiVirallisia = true, puuttuvia = false;
       for (var d = new Date(eka); d.getMonth() === eka.getMonth(); d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1, 12)) {
         var a = ajat(d);
@@ -306,8 +308,8 @@
         if (d.getTime() === tanaan.getTime()) luokat.push('kk__tanaan');
         if (d.getDay() === 5) luokat.push('kk__pe');
         h += '<tr' + (luokat.length ? ' class="' + luokat.join(' ') + '"' : '') + (d.getTime() === tanaan.getTime() ? ' aria-current="date"' : '') + '>' +
-          '<th scope="row"><small>' + muotoile(d, { weekday: 'short' }) + '</small> ' + d.getDate() + '</th>' +
-          '<td>' + aika(a.fajr) + '</td><td class="kk__nousu">' + aika(a.sunrise) + '</td><td>' + aika(a.dhuhr) + '</td><td>' + aika(a.asr) + '</td><td>' + aika(a.maghrib) + '</td><td>' + aika(a.isha) + '</td></tr>';
+          '<th scope="row"><small>' + esc(muotoile(d, { weekday: 'short' })) + '</small> ' + d.getDate() + '</th>' +
+          '<td>' + esc(aika(a.fajr)) + '</td><td class="kk__nousu">' + esc(aika(a.sunrise)) + '</td><td>' + esc(aika(a.dhuhr)) + '</td><td>' + esc(aika(a.asr)) + '</td><td>' + esc(aika(a.maghrib)) + '</td><td>' + esc(aika(a.isha)) + '</td></tr>';
       }
       taulu.innerHTML = h + '</tbody>';
       var v = kkEl.querySelector('[data-kk-lahde-virallinen]'), l = kkEl.querySelector('[data-kk-lahde-laskettu]');
@@ -368,8 +370,8 @@
       for (var j = 0; j < v.n; j++) {
         var d = new Date(v.alku.getFullYear(), v.alku.getMonth(), v.alku.getDate() + j, 12), a = rmAjat(d, el.dataset.tarawih);
         h += '<tr' + (j === v.i ? ' class="kk__tanaan" aria-current="date"' : d.getDay() === 5 ? ' class="kk__pe"' : '') + '><th scope="row">' + (j + 1) + '</th>' +
-          '<td>' + muotoile(d, { weekday: 'short', day: 'numeric', month: 'numeric' }) + '</td><td>' + (a.suhur ? aika(a.suhur) : '–') + '</td><td>' + (a.iftar ? aika(a.iftar) : '–') + '</td>' +
-          (twSarake ? '<td>' + (a.tarawih ? aika(a.tarawih) : '–') + '</td>' : '') + '</tr>';
+          '<td>' + esc(muotoile(d, { weekday: 'short', day: 'numeric', month: 'numeric' })) + '</td><td>' + (a.suhur ? esc(aika(a.suhur)) : '–') + '</td><td>' + (a.iftar ? esc(aika(a.iftar)) : '–') + '</td>' +
+          (twSarake ? '<td>' + (a.tarawih ? esc(aika(a.tarawih)) : '–') + '</td>' : '') + '</tr>';
       }
       tb.innerHTML = h;
     });
@@ -608,7 +610,7 @@
   });
 
   /* ---------- 8. Sisällön kuvat ja linkit (/tiedostot/...) toimimaan alihakemistossa ---------- */
-  var base = (window.SIVU && window.SIVU.baseurl) || '';
+  var base = document.documentElement.getAttribute('data-baseurl') || '';
   if (base) {
     kaikki('.u-proosa [src^="/tiedostot/"], .u-proosa [href^="/tiedostot/"]').forEach(function (el) {
       var attr = el.hasAttribute('src') ? 'src' : 'href';
