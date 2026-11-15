@@ -1,0 +1,30 @@
+{%- comment -%}
+  "Lisää kalenteriin": rastit (rukousajat, Jumua, tapahtumat, Ramadan) → tilattava kalenteri, joka päivittyy itsestään.
+  Tiedostot tekee julkaisuajo (.github/scripts/kalenteri.js). Parametri: valitut (esim. "rukous,jumua")
+{%- endcomment -%}
+{%- assign _val = include.valitut | default: "rukous,jumua" | split: "," -%}
+<section class="u-kortti u-kalenteri" data-kalenteri data-pohja="{{ '/kalenteri/' | absolute_url }}">
+  <div class="u-kalenteri__yla">
+    <span class="u-ikoni">{% include ikoni-ph.html nimi="kalenteri" koko=22 %}</span>
+    <div>
+      <h2>{% include k.html a="kalenteri_otsikko" %}</h2>
+      <p>{% include k.html a="kalenteri_johdanto" %}</p>
+    </div>
+  </div>
+  <fieldset class="u-kalenteri__valinnat">
+    <legend class="u-nakymaton">{% include k.html a="kalenteri_otsikko" %}</legend>
+    {%- assign _lajit = "rukous:kal_rukous,jumua:jumua,tapahtumat:nav_tapahtumat,ramadan:kal_ramadan" | split: "," -%}
+    {%- for _x in _lajit -%}{%- assign _o = _x | split: ":" -%}{%- assign _laji = _o[0] -%}{%- assign _avain = _o[1] %}
+    <label class="u-kalenteri__valinta"><input type="checkbox" value="{{ _laji }}"{% if _val contains _laji %} checked{% endif %}> <span>{% include k.html a=_avain %}</span></label>
+    {%- endfor %}
+  </fieldset>
+  <div class="u-napit">
+    <a class="u-nappi u-nappi--tumma" data-kalenteri-tilaa href="#">{% include k.html a="kal_tilaa" %}</a>
+    <a class="u-nappi u-nappi--reuna" data-kalenteri-google href="#" target="_blank" rel="noopener">{% include k.html a="kal_google" %}</a>
+    <button type="button" class="u-nappi u-nappi--reuna" data-kalenteri-kopioi>{% include k.html a="kal_kopioi" %}</button>
+  </div>
+  <p class="u-kalenteri__viesti" data-kalenteri-viesti role="status" hidden></p>
+  <p class="u-hieno">{% include k.html a="kal_huom" %}</p>
+  <template data-kalenteri-kopioitu>{% include k.html a="kal_kopioitu" %}</template>
+  <template data-kalenteri-valitse>{% include k.html a="kal_valitse" %}</template>
+</section>

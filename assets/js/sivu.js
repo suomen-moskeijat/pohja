@@ -378,6 +378,35 @@
     });
   });
 
+  /* Kalenteritilaus: rastit valitsevat valmiin .ics-tiedoston (julkaisuajo tekee kaikki yhdistelmät) */
+  kaikki('[data-kalenteri]').forEach(function (k) {
+    var JARJESTYS = ['rukous', 'jumua', 'tapahtumat', 'ramadan'];
+    var tilaa = k.querySelector('[data-kalenteri-tilaa]'), google = k.querySelector('[data-kalenteri-google]'), viesti = k.querySelector('[data-kalenteri-viesti]');
+    function osoite() {
+      var valitut = kaikki('input[type=checkbox]', k).filter(function (c) { return c.checked; }).map(function (c) { return c.value; });
+      valitut.sort(function (a, b) { return JARJESTYS.indexOf(a) - JARJESTYS.indexOf(b); });
+      return valitut.length ? k.dataset.pohja + valitut.join('-') + '.ics' : '';
+    }
+    function nayta(mika) { var t = k.querySelector('[data-kalenteri-' + mika + ']'); viesti.innerHTML = t ? t.innerHTML : ''; viesti.hidden = false; }
+    function paivita() {
+      var u = osoite(), w = u.replace(/^https?:/, 'webcal:');
+      [tilaa, google].forEach(function (a) { a.classList.toggle('u-pois', !u); a.setAttribute('aria-disabled', u ? 'false' : 'true'); });
+      tilaa.href = u ? w : '#';
+      google.href = u ? 'https://calendar.google.com/calendar/render?cid=' + encodeURIComponent(w) : '#';
+      if (u) viesti.hidden = true;
+    }
+    kaikki('input[type=checkbox]', k).forEach(function (c) { c.addEventListener('change', paivita); });
+    [tilaa, google].forEach(function (a) { a.addEventListener('click', function (e) { if (!osoite()) { e.preventDefault(); nayta('valitse'); } }); });
+    k.querySelector('[data-kalenteri-kopioi]').addEventListener('click', function () {
+      var u = osoite();
+      if (!u) { nayta('valitse'); return; }
+      var valmis = function () { nayta('kopioitu'); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(u).then(valmis, function () { window.prompt('', u); });
+      else window.prompt('', u);
+    });
+    paivita();
+  });
+
   /* Upotukset (kartta, video): ulkopuolinen sisältö ladataan vasta napautuksesta */
   kaikki('[data-upota]').forEach(function (b) {
     b.addEventListener('click', function () {

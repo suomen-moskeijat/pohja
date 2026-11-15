@@ -255,3 +255,16 @@ rm_pv:              { fi: "Päivä", en: "Day", ar: "اليوم", so: "Maalin" }
 pvm:                { fi: "Päivämäärä", en: "Date", ar: "التاريخ", so: "Taariikh" }
 tulosta:            { fi: "Tulosta", en: "Print", ar: "طباعة", so: "Daabac" }
 ramadan_huom:       { fi: "Suhur päättyy Fajrin aikaan ja iftar on Maghribin aikaan. Ajat tulevat moskeijan rukousajoista.", en: "Suhoor ends at Fajr and iftar is at Maghrib. Times follow the mosque's prayer times.", ar: "ينتهي السحور عند الفجر والإفطار عند المغرب. الأوقات حسب مواقيت صلاة المسجد.", so: "Suxuurku wuxuu dhammaadaa Subaxda, afurkuna waa Maqribka. Waqtiyadu waxay raacaan waqtiyada salaadda masjidka." }
+
+# --- Kalenteritilaus ---
+kalenteri_otsikko:  { fi: "Lisää puhelimen kalenteriin", en: "Add to your phone's calendar", ar: "أضف إلى تقويم هاتفك", so: "Ku dar kalandarka taleefankaaga" }
+kalenteri_johdanto: { fi: "Valitse, mitä haluat kalenteriisi. Se päivittyy itsestään, kun moskeija lisää tapahtumia tai ajat muuttuvat.", en: "Choose what you want in your calendar. It updates by itself when the mosque adds events or times change.", ar: "اختر ما تريده في تقويمك. يتحدّث تلقائيًا عندما يضيف المسجد فعاليات أو تتغير الأوقات.", so: "Dooro waxaad rabto inuu kalandarkaaga ku jiro. Si toos ah ayuu isu cusbooneysiiyaa marka masjidku ku daro dhacdooyin ama waqtiyadu is beddelaan." }
+kal_rukous:         { fi: "Päivittäiset rukousajat", en: "Daily prayer times", ar: "مواقيت الصلاة اليومية", so: "Waqtiyada salaadda maalinlaha ah" }
+kal_ramadan:        { fi: "Ramadan: suhur, iftar ja Eid", en: "Ramadan: suhoor, iftar and Eid", ar: "رمضان: السحور والإفطار والعيد", so: "Ramadaan: suxuur, afur iyo Ciid" }
+kal_tilaa:          { fi: "Tilaa kalenteri (iPhone, Mac, Outlook)", en: "Subscribe (iPhone, Mac, Outlook)", ar: "اشترك (آيفون، ماك، أوتلوك)", so: "Is diiwaangeli (iPhone, Mac, Outlook)" }
+kal_google:         { fi: "Google-kalenteri (Android)", en: "Google Calendar (Android)", ar: "تقويم جوجل (أندرويد)", so: "Google Calendar (Android)" }
+kal_kopioi:         { fi: "Kopioi osoite", en: "Copy link", ar: "نسخ الرابط", so: "Koobiyee xiriirka" }
+kal_kopioitu:       { fi: "Osoite kopioitu. Liitä se kalenterisovelluksen kohtaan \"Lisää kalenteri osoitteesta\".", en: "Link copied. Paste it in your calendar app under \"Add calendar from URL\".", ar: "تم نسخ الرابط. الصقه في تطبيق التقويم ضمن \"إضافة تقويم من رابط\".", so: "Xiriirka waa la koobiyeeyay. Ku dheji barnaamijka kalandarka meesha \"Ku dar kalandar xiriir\"." }
+kal_valitse:        { fi: "Valitse vähintään yksi.", en: "Choose at least one.", ar: "اختر خيارًا واحدًا على الأقل.", so: "Dooro ugu yaraan hal." }
+kal_huom:           { fi: "Puhelin hakee muutokset itse muutaman tunnin välein. Tilauksen voi poistaa milloin tahansa kalenterin asetuksista.", en: "Your phone fetches changes by itself every few hours. You can remove the subscription at any time in your calendar settings.", ar: "يجلب هاتفك التغييرات تلقائيًا كل بضع ساعات. يمكنك إلغاء الاشتراك في أي وقت من إعدادات التقويم.", so: "Taleefankaagu wuxuu isbeddellada keensadaa dhowr saacadood kasta. Waxaad ka saari kartaa is-diiwaangelinta goor kasta dejinta kalandarka." }
+

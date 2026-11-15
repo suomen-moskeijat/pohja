@@ -108,6 +108,10 @@ jobs:
       - name: Kieliversiot
         run: sudo python3 sivu/.github/scripts/kieliversiot.py _site
 
+      # Tilattavat kalenterit (.ics): rukousajat, Jumua, tapahtumat ja Ramadan rastien yhdistelminä
+      - name: Kalenterit
+        run: sudo TZ=Europe/Helsinki node sivu/.github/scripts/kalenteri.js _site || echo "::warning::Kalentereita ei voitu tehdä"
+
       - uses: actions/upload-pages-artifact@v3
 
   julkaise:

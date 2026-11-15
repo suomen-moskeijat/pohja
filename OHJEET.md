@@ -204,6 +204,10 @@ näkymä päivittyy heti asetuksia muutettaessa. Lisäksi:
   päivät poistuvat itsestään. Toimii kaikkien lähteiden kanssa.
 - **Laskentatapa**, **Asr (Shafi/Hanafi)** ja **minuuttikorjaukset**, kun ajat lasketaan sijainnista.
 
+**Ramadan.** Rukousajat-sivulle tulee Ramadan-osio itsestään kolme viikkoa ennen alkua: tämän päivän suhur ja iftar, koko kuukauden aikataulu (tulostettava) ja Eid-rukous. Etusivulla näkyy lyhyt rivi "Ramadan, päivä 5 · Suhur … · Iftar …". Paneelissa (Rukousajat → Ramadan) voi lisätä tarawih-ajan, Eid-rukouksen ajan ja paikan, fitran ja muuta tietoa. Päivät ovat oletuksena arvio (Umm al-Qura); jos moskeija seuraa eri ilmoitusta, täytä alkamis- ja Eid-päivä itse. Ylläpito korjaa yhteiset oletuspäivät tiedostoon `_data/ramadan.yml`.
+
+**Lisää kalenteriin.** Rukousajat- ja Tapahtumat-sivuilla kävijä voi rastia, mitä haluaa puhelimensa kalenteriin (rukousajat, Jumua, tapahtumat, Ramadan), ja tilata sen. Kalenteri päivittyy itsestään: uudet tapahtumat ja muuttuneet ajat tulevat puhelimeen muutaman tunnin sisällä. Moskeijan ei tarvitse tehdä mitään.
+
 ### 11. Somet
 
 - **Instagram, YouTube ja Telegram:** uusimmat julkaisut näkyvät sivulla automaattisesti ("Seuraa meitä").

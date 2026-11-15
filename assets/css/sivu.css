@@ -874,3 +874,19 @@ html[dir="rtl"] .u-seur__palkki span { background: linear-gradient(-90deg, var(-
   html.u-tulosta-ramadan .u-ramadan { border: 0; box-shadow: none; margin: 0; padding: 0; }
   html.u-tulosta-ramadan .kk__kaari { overflow: visible; max-height: none; }
 }
+
+/* ---------- Kalenteritilaus ---------- */
+.u-kalenteri { margin: 28px 0; padding: 22px; display: grid; gap: 16px; }
+.u-kalenteri__yla { display: flex; gap: 14px; align-items: flex-start; }
+.u-kalenteri__yla .u-ikoni { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--kulta-vaalea); color: var(--kulta-teksti); flex: none; }
+.u-kalenteri h2 { margin: 0 0 4px; font: 700 20px/1.25 var(--fo); }
+.u-kalenteri__yla p { margin: 0; color: var(--hieno); }
+.u-kalenteri__valinnat { border: 0; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 8px; }
+.u-kalenteri__valinta { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1.5px solid var(--raja); border-radius: var(--r-s); cursor: pointer; font-weight: 600; min-height: 48px; }
+.u-kalenteri__valinta:has(input:checked) { border-color: var(--kulta); background: var(--kulta-vaalea); }
+.u-kalenteri__valinta input { width: 20px; height: 20px; accent-color: var(--paa); flex: none; margin: 0; }
+.u-kalenteri .u-nappi { white-space: normal; text-align: center; }
+.u-kalenteri .u-pois { opacity: .45; }
+.u-kalenteri__viesti { margin: 0; padding: 10px 14px; border-radius: var(--r-s); background: var(--kulta-vaalea); font-weight: 600; }
+.u-kalenteri > .u-hieno { margin: 0; }
+@media (max-width: 560px) { .u-kalenteri { padding: 18px 16px; } .u-kalenteri .u-napit .u-nappi { width: 100%; } }

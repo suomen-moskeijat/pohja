@@ -1,0 +1,38 @@
+---
+layout: null
+permalink: /kalenteri/tiedot.json
+sitemap: false
+---
+{%- comment -%}
+  Kalenteritilausten lähdetiedot. Julkaisuajo (.github/scripts/kalenteri.js) tekee näistä .ics-tiedostot
+  kansioon /kalenteri/ (rukousajat, Jumua, tapahtumat, Ramadan ja niiden yhdistelmät).
+{%- endcomment -%}
+{%- assign mk = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- include osat/ramadan-tiedot.html moskeija=mk -%}
+{%- assign _rmm = mk.ramadan -%}
+{%- assign _tanaan = site.time | date: "%s" | minus: 2592000 | date: "%Y-%m-%d" -%}
+{
+  "nimi": {{ mk.title | jsonify }},
+  "osoite": {{ mk.osoite | default: "" | jsonify }},
+  "sivu": {{ '/' | absolute_url | jsonify }},
+  "tunnus": {{ site.repo | default: mk.slug | jsonify }},
+  "rukous": {% include osat/rukousasetukset.json moskeija=mk %},
+  "ramadan": {% if _rm_alkaa != "" %}{
+    "alkaa": {{ _rm_alkaa | jsonify }}, "eid": {{ _rm_eid | jsonify }}, "paivia": {{ _rm_paivia }},
+    "tarawih": {{ _rmm.tarawih | default: "" | jsonify }},
+    "eid_aika": {{ _rmm.eid_aika | default: "" | jsonify }}, "eid_aika_2": {{ _rmm.eid_aika_2 | default: "" | jsonify }},
+    "eid_paikka": {% if _rmm.eid_paikka.fi %}{{ _rmm.eid_paikka.fi | jsonify }}{% else %}{{ _rmm.eid_paikka | default: "" | jsonify }}{% endif %}
+  }{% else %}null{% endif %},
+  "tapahtumat": [
+    {%- assign _kaikki = site.tapahtumat | sort: 'paiva' -%}
+    {%- assign _eka = true -%}
+    {%- for t in _kaikki -%}
+    {%- assign _loppu = t.paiva_loppuu | default: t.paiva | date: '%Y-%m-%d' -%}
+    {%- if _loppu < _tanaan -%}{%- continue -%}{%- endif -%}
+    {%- unless _eka %},{% endunless %}{%- assign _eka = false %}
+    { "tunnus": {{ t.slug | default: t.id | slugify | jsonify }}, "nimi": {{ t.title | jsonify }}, "paiva": {{ t.paiva | date: '%Y-%m-%d' | jsonify }}, "paiva_loppuu": {{ t.paiva_loppuu | date: '%Y-%m-%d' | default: "" | jsonify }},
+      "alkaa": {{ t.alkaa | default: "" | jsonify }}, "loppuu": {{ t.loppuu | default: "" | jsonify }}, "paikka": {{ t.paikka | default: "" | jsonify }},
+      "url": {{ t.url | absolute_url | jsonify }}, "kuvaus": {{ t.content | strip_html | normalize_whitespace | truncate: 600 | jsonify }} }
+    {%- endfor %}
+  ]
+}
