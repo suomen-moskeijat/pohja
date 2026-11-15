@@ -20,6 +20,7 @@ sitemap: false
   "ramadan": {% if _rm_alkaa != "" %}{
     "alkaa": {{ _rm_alkaa | jsonify }}, "eid": {{ _rm_eid | jsonify }}, "paivia": {{ _rm_paivia }},
     "tarawih": {{ _rmm.tarawih | default: "" | jsonify }},
+    "ajat": {% include osat/ramadan-ajat.json moskeija=mk %},
     "eid_aika": {{ _rmm.eid_aika | default: "" | jsonify }}, "eid_aika_2": {{ _rmm.eid_aika_2 | default: "" | jsonify }},
     "eid_paikka": {% if _rmm.eid_paikka.fi %}{{ _rmm.eid_paikka.fi | jsonify }}{% else %}{{ _rmm.eid_paikka | default: "" | jsonify }}{% endif %}
   }{% else %}null{% endif %},

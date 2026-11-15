@@ -1,0 +1,3 @@
+{%- comment -%} Ramadanin oma aikataulu JSON-oliona { "VVVV-KK-PP": { "s": suhur, "i": iftar, "t": tarawih } }. Parametri: moskeija {%- endcomment -%}
+{%- assign _rma = include.moskeija.ramadan.ajat -%}
+{ {%- for _r in _rma -%}{%- if _r.paiva -%}"{{ _r.paiva | date: '%Y-%m-%d' }}": { "s": {{ _r.suhur | default: "" | jsonify }}, "i": {{ _r.iftar | default: "" | jsonify }}, "t": {{ _r.tarawih | default: "" | jsonify }} }{% unless forloop.last %},{% endunless %}{%- endif -%}{%- endfor -%} }

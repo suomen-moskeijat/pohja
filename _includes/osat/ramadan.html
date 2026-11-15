@@ -6,7 +6,10 @@
 {%- include osat/ramadan-tiedot.html moskeija=include.moskeija -%}
 {%- if _rm_nakyy -%}
 {%- assign _rmm = include.moskeija.ramadan -%}
-<section class="u-ramadan" id="ramadan" data-rm data-alkaa="{{ _rm_alkaa }}" data-eid="{{ _rm_eid }}" data-paivia="{{ _rm_paivia }}">
+{%- assign _rm_tw = false -%}{%- if _rmm.tarawih and _rmm.tarawih != "" -%}{%- assign _rm_tw = true -%}{%- endif -%}
+{%- for _r in _rmm.ajat -%}{%- if _r.tarawih and _r.tarawih != "" -%}{%- assign _rm_tw = true -%}{%- endif -%}{%- endfor -%}
+<section class="u-ramadan" id="ramadan" data-rm data-alkaa="{{ _rm_alkaa }}" data-eid="{{ _rm_eid }}" data-paivia="{{ _rm_paivia }}" data-tarawih="{{ _rmm.tarawih }}">
+  <script type="application/json" data-rm-ajat>{% include osat/ramadan-ajat.json moskeija=include.moskeija %}</script>
   <header class="u-ramadan__yla">
     <span class="u-ikoni u-ramadan__kuu">{% include ikoni-ph.html nimi="kuu" koko=24 %}</span>
     <div>
@@ -22,6 +25,7 @@
   <div class="u-ramadan__tanaan" data-rm-tanaan hidden>
     <div><small>{% include k.html a="suhur_paattyy" %}</small><b data-rm-suhur dir="ltr">--:--</b></div>
     <div><small>{% include k.html a="iftar" %}</small><b data-rm-iftar dir="ltr">--:--</b></div>
+    {% if _rm_tw %}<div><small>{% include k.html a="tarawih" %}</small><b data-rm-tarawih dir="ltr">--:--</b></div>{% endif %}
   </div>
   {%- assign _eid_ajat = "" -%}
   {%- if _rmm.eid_aika and _rmm.eid_aika != "" -%}{%- assign _eid_ajat = _rmm.eid_aika -%}{%- if _rmm.eid_aika_2 and _rmm.eid_aika_2 != "" -%}{%- assign _eid_ajat = _eid_ajat | append: " · " | append: _rmm.eid_aika_2 -%}{%- endif -%}{%- endif -%}
@@ -34,10 +38,10 @@
   <h3 class="u-ramadan__otsikko">{% include k.html a="ramadan_aikataulu" %}</h3>
   <div class="kk__kaari">
     <table class="kk__taulu u-ramadan__taulu" data-rm-taulu>
-      <thead><tr><th scope="col">{% include k.html a="rm_pv" %}</th><th scope="col">{% include k.html a="pvm" %}</th><th scope="col">{% include k.html a="suhur_paattyy" %}</th><th scope="col">{% include k.html a="iftar" %}</th></tr></thead>
+      <thead><tr><th scope="col">{% include k.html a="rm_pv" %}</th><th scope="col">{% include k.html a="pvm" %}</th><th scope="col">{% include k.html a="suhur_paattyy" %}</th><th scope="col">{% include k.html a="iftar" %}</th>{% if _rm_tw %}<th scope="col" data-rm-tw>{% include k.html a="tarawih" %}</th>{% endif %}</tr></thead>
       <tbody></tbody>
     </table>
   </div>
-  <p class="u-hieno">{% include k.html a="ramadan_huom" %}</p>
+  <p class="u-hieno">{% if _rmm.ajat and _rmm.ajat.size > 0 %}{% include k.html a="ramadan_oma" %}{% else %}{% include k.html a="ramadan_huom" %}{% endif %}</p>
 </section>
 {%- endif -%}

@@ -320,33 +320,72 @@
     });
   });
 
-  // Ramadan: tila (ennen / päivä N / Eid), tämän päivän suhur ja iftar sekä koko kuukauden taulukko
+  // Ramadan: tila (ennen / päivä N / Eid), suhur ja iftar (moskeijan oma aikataulu tai rukousajat), kuukauden taulukko ja etusivun banneri
+  var rmOmat = null;
+  function rmOma() {
+    if (rmOmat) return rmOmat;
+    rmOmat = {};
+    var el = document.querySelector('[data-rm-ajat]');
+    try { if (el) rmOmat = JSON.parse(el.textContent) || {}; } catch (e) { rmOmat = {}; }
+    return rmOmat;
+  }
+  function rmAjat(d, tarawih) { // { suhur, iftar, tarawih } Date-olioina; null jos ei tietoa
+    var oma = rmOma()[pvmAvain(d)] || {}, a = ajat(d) || {};
+    var su = oma.s ? hki(d, oma.s) : a.fajr, ift = oma.i ? hki(d, oma.i) : a.maghrib, tw = oma.t || tarawih;
+    return { suhur: su instanceof Date && !isNaN(su) ? su : null, iftar: ift instanceof Date && !isNaN(ift) ? ift : null, tarawih: tw ? hki(d, tw) : null };
+  }
+  function pvmAvain(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  function rmVaihe(el) {
+    var o = String(el.dataset.alkaa || '').split('-'), n = Number(el.dataset.paivia) || 30;
+    if (o.length !== 3) return null;
+    var alku = new Date(+o[0], o[1] - 1, +o[2], 12), tanaan = helsinginPaiva(new Date());
+    var i = Math.round((tanaan - alku) / 864e5);
+    return { alku: alku, n: n, i: i, tanaan: tanaan, vaihe: i < 0 ? 'ennen' : i < n ? 'aikana' : 'eid' };
+  }
   function piirraRamadan() {
     kaikki('[data-rm]').forEach(function (el) {
-      var o = String(el.dataset.alkaa || '').split('-'), n = Number(el.dataset.paivia) || 30;
-      if (o.length !== 3) return;
-      var alku = new Date(+o[0], o[1] - 1, +o[2], 12), tanaan = helsinginPaiva(new Date());
-      var i = Math.round((tanaan - alku) / 864e5);
-      var vaihe = i < 0 ? 'ennen' : i < n ? 'aikana' : 'eid';
-      kaikki('[data-rm-tila]', el).forEach(function (t) { t.hidden = t.dataset.rmTila !== vaihe; });
+      var v = rmVaihe(el);
+      if (!v) return;
+      kaikki('[data-rm-tila]', el).forEach(function (t) { t.hidden = t.dataset.rmTila !== v.vaihe; });
       var apv = el.querySelector('[data-rm-alkupv]');
-      if (apv) apv.textContent = muotoile(alku, el.hasAttribute('data-rm-lyhyt') ? { weekday: 'short', day: 'numeric', month: 'numeric' } : { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' });
-      var pv = el.querySelector('[data-rm-pv]'); if (pv) pv.textContent = String(i + 1);
-      var t = vaihe === 'aikana' ? ajat(tanaan) : null;
-      var su = el.querySelector('[data-rm-suhur]'), ift = el.querySelector('[data-rm-iftar]'), box = el.querySelector('[data-rm-tanaan]');
-      if (su) su.textContent = t ? aika(t.fajr) : '';
-      if (ift) ift.textContent = t ? aika(t.maghrib) : '';
+      if (apv) apv.textContent = muotoile(v.alku, el.hasAttribute('data-rm-lyhyt') || el.hasAttribute('data-rm-banneri') ? { weekday: 'short', day: 'numeric', month: 'numeric' } : { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' });
+      var pj = el.querySelector('[data-rm-paivia-jaljella]'); if (pj) pj.textContent = String(-v.i);
+      var pv = el.querySelector('[data-rm-pv]'); if (pv) pv.textContent = String(v.i + 1);
+      var t = v.vaihe === 'aikana' ? rmAjat(v.tanaan, el.dataset.tarawih) : null;
+      var su = el.querySelector('[data-rm-suhur]'), ift = el.querySelector('[data-rm-iftar]'), tw = el.querySelector('[data-rm-tarawih]'), box = el.querySelector('[data-rm-tanaan]');
+      if (su) su.textContent = t && t.suhur ? aika(t.suhur) : '–';
+      if (ift) ift.textContent = t && t.iftar ? aika(t.iftar) : '–';
+      if (tw) tw.textContent = t && t.tarawih ? aika(t.tarawih) : '–';
+      var twr = el.querySelector('[data-rm-tarawih-rivi]'); if (twr) twr.hidden = !(t && t.tarawih);
       if (box) box.hidden = !t;
       var tb = el.querySelector('[data-rm-taulu] tbody');
       if (!tb) return;
-      var h = '';
-      for (var j = 0; j < n; j++) {
-        var d = new Date(alku.getFullYear(), alku.getMonth(), alku.getDate() + j, 12), a = ajat(d);
-        if (!a) continue;
-        h += '<tr' + (j === i ? ' class="kk__tanaan" aria-current="date"' : d.getDay() === 5 ? ' class="kk__pe"' : '') + '><th scope="row">' + (j + 1) + '</th>' +
-          '<td>' + muotoile(d, { weekday: 'short', day: 'numeric', month: 'numeric' }) + '</td><td>' + aika(a.fajr) + '</td><td>' + aika(a.maghrib) + '</td></tr>';
+      var twSarake = !!el.querySelector('[data-rm-tw]'), h = '';
+      for (var j = 0; j < v.n; j++) {
+        var d = new Date(v.alku.getFullYear(), v.alku.getMonth(), v.alku.getDate() + j, 12), a = rmAjat(d, el.dataset.tarawih);
+        h += '<tr' + (j === v.i ? ' class="kk__tanaan" aria-current="date"' : d.getDay() === 5 ? ' class="kk__pe"' : '') + '><th scope="row">' + (j + 1) + '</th>' +
+          '<td>' + muotoile(d, { weekday: 'short', day: 'numeric', month: 'numeric' }) + '</td><td>' + (a.suhur ? aika(a.suhur) : '–') + '</td><td>' + (a.iftar ? aika(a.iftar) : '–') + '</td>' +
+          (twSarake ? '<td>' + (a.tarawih ? aika(a.tarawih) : '–') + '</td>' : '') + '</tr>';
       }
       tb.innerHTML = h;
+    });
+    rmLaskuri();
+  }
+  // Etusivun bannerin laskuri: suhurin loppuun, iftariin tai (iftarin jälkeen) huomisen suhurin aika
+  function rmLaskuri() {
+    kaikki('[data-rm-banneri]').forEach(function (el) {
+      var v = rmVaihe(el), l = el.querySelector('[data-rm-laskuri]');
+      if (!v || !l || v.vaihe !== 'aikana') { if (l) l.hidden = true; return; }
+      var nyt = new Date(), t = rmAjat(v.tanaan, el.dataset.tarawih), kohde = null, teksti = '', kortti = '';
+      if (t.suhur && nyt < t.suhur) { kohde = t.suhur; teksti = 'suhur'; kortti = 'suhur'; }
+      else if (t.iftar && nyt < t.iftar) { kohde = t.iftar; teksti = 'iftar'; kortti = 'iftar'; }
+      else if (v.i + 1 < v.n) { var h2 = rmAjat(helsinginPaiva(nyt, 1), el.dataset.tarawih); if (h2.suhur) { kohde = h2.suhur; teksti = 'huomenna'; } }
+      kaikki('[data-rm-kortti]', el).forEach(function (k) { k.classList.toggle('u-rmb__aika--seuraava', k.dataset.rmKortti === kortti); });
+      l.hidden = !kohde;
+      if (!kohde) return;
+      var tp = el.querySelector('[data-rm-teksti-' + teksti + ']');
+      l.querySelector('[data-rm-laskuri-nimi]').innerHTML = tp ? tp.innerHTML : '';
+      l.querySelector('[data-rm-laskuri-aika]').textContent = teksti === 'huomenna' ? aika(kohde) : kesto(kohde - nyt);
     });
   }
   kaikki('[data-rm-tulosta]').forEach(function (b) { b.addEventListener('click', function () { html.classList.add('u-tulosta-ramadan'); window.print(); }); });
@@ -361,6 +400,7 @@
     setInterval(piirraPaiva, 5 * 60000);
     document.addEventListener('kielivaihto', function () { piirraPaiva(); piirraKuukausi(); piirraRamadan(); });
     setInterval(piirraRamadan, 30 * 60000);
+    if (document.querySelector('[data-rm-banneri]')) setInterval(rmLaskuri, 1000);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', kaynnistaRukous);
   else kaynnistaRukous();
@@ -405,6 +445,13 @@
       if (u) viesti.hidden = true;
     }
     kaikki('input[type=checkbox]', k).forEach(function (c) { c.addEventListener('change', paivita); });
+    function rmLinkki() { // etusivun "Lisää Ramadan kalenteriin"
+      if (location.hash !== '#kalenteri-ramadan') return;
+      kaikki('input[type=checkbox]', k).forEach(function (c) { c.checked = c.value === 'ramadan'; }); paivita();
+      setTimeout(function () { k.scrollIntoView({ block: 'center' }); }, 300);
+    }
+    window.addEventListener('hashchange', rmLinkki);
+    setTimeout(rmLinkki, 0);
     [tilaa, google].forEach(function (a) { a.addEventListener('click', function (e) { if (!osoite()) { e.preventDefault(); nayta('valitse'); } }); });
     k.querySelector('[data-kalenteri-kopioi]').addEventListener('click', function () {
       var u = osoite();

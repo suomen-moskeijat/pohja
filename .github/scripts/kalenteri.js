@@ -159,11 +159,12 @@ function ramadan() {
   for (let i = 0; i < n; i++) {
     const p = new Date(alku.getFullYear(), alku.getMonth(), alku.getDate() + i, 12);
     if (p < helsinginPaiva(nyt, -1)) continue;
-    const a = ajat(p);
-    if (!a) continue;
-    if (ok(a.fajr)) t.push({ uid: `ramadan-${pvm(p)}-suhur`, alku: new Date(a.fajr.getTime() - 10 * MIN), loppu: a.fajr, nimi: `Suhur päättyy ${klo(a.fajr)} (Ramadan ${i + 1})`, kuvaus: 'Suhur päättyy Fajrin aikaan.', paikka });
-    if (ok(a.maghrib)) t.push({ uid: `ramadan-${pvm(p)}-iftar`, alku: a.maghrib, loppu: new Date(a.maghrib.getTime() + 20 * MIN), nimi: `Iftar ${klo(a.maghrib)} (Ramadan ${i + 1})`, kuvaus: 'Iftar Maghribin aikaan.', paikka });
-    const tw = r.tarawih ? hki(p, r.tarawih) : null;
+    // Moskeijan oma Ramadan-aikataulu voittaa; muuten suhur = Fajr ja iftar = Maghrib rukousajoista
+    const oma = (r.ajat || {})[pvm(p)] || {}, a = ajat(p) || {};
+    const su = oma.s ? hki(p, oma.s) : a.fajr, ift = oma.i ? hki(p, oma.i) : a.maghrib;
+    if (ok(su)) t.push({ uid: `ramadan-${pvm(p)}-suhur`, alku: new Date(su.getTime() - 10 * MIN), loppu: su, nimi: `Suhur päättyy ${klo(su)} (Ramadan ${i + 1})`, kuvaus: oma.s ? '' : 'Suhur päättyy Fajrin aikaan.', paikka });
+    if (ok(ift)) t.push({ uid: `ramadan-${pvm(p)}-iftar`, alku: ift, loppu: new Date(ift.getTime() + 20 * MIN), nimi: `Iftar ${klo(ift)} (Ramadan ${i + 1})`, kuvaus: oma.i ? '' : 'Iftar Maghribin aikaan.', paikka });
+    const tw = oma.t ? hki(p, oma.t) : r.tarawih ? hki(p, r.tarawih) : null;
     if (tw) t.push({ uid: `ramadan-${pvm(p)}-tarawih`, alku: tw, loppu: new Date(tw.getTime() + 60 * MIN), nimi: `Tarawih (Ramadan ${i + 1})`, kuvaus: '', paikka });
   }
   const eidPaikka = r.eid_paikka || paikka;

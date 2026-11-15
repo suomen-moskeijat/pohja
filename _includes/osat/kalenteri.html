@@ -3,7 +3,7 @@
   Tiedostot tekee julkaisuajo (.github/scripts/kalenteri.js). Parametri: valitut (esim. "rukous,jumua")
 {%- endcomment -%}
 {%- assign _val = include.valitut | default: "rukous,jumua" | split: "," -%}
-<section class="u-kortti u-kalenteri" data-kalenteri data-pohja="{{ '/kalenteri/' | absolute_url }}">
+<section class="u-kortti u-kalenteri" id="kalenteri" data-kalenteri data-pohja="{{ '/kalenteri/' | absolute_url }}">
   <div class="u-kalenteri__yla">
     <span class="u-ikoni">{% include ikoni-ph.html nimi="kalenteri" koko=22 %}</span>
     <div>

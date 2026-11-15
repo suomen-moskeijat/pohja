@@ -1,0 +1,60 @@
+{%- comment -%}
+  Etusivun Ramadan-banneri (näkyy 3 viikkoa ennen alkua – Eid-päivän loppuun): ennen alkua laskuri,
+  Ramadanin aikana päivä N, tämän päivän suhur ja iftar isona ja laskuri seuraavaan, Eid-päivänä Eid Mubarak.
+  Täyttää sivu.js ([data-rm]). Parametri: moskeija
+{%- endcomment -%}
+{%- include osat/ramadan-tiedot.html moskeija=include.moskeija -%}
+{%- if _rm_nakyy -%}
+{%- assign _rmm = include.moskeija.ramadan -%}
+{%- assign _eid_ajat = "" -%}
+{%- if _rmm.eid_aika and _rmm.eid_aika != "" -%}{%- assign _eid_ajat = _rmm.eid_aika -%}{%- if _rmm.eid_aika_2 and _rmm.eid_aika_2 != "" -%}{%- assign _eid_ajat = _eid_ajat | append: " · " | append: _rmm.eid_aika_2 -%}{%- endif -%}{%- endif -%}
+<section class="u-rmb" id="ramadan-etusivu" data-rm data-rm-banneri data-alkaa="{{ _rm_alkaa }}" data-eid="{{ _rm_eid }}" data-paivia="{{ _rm_paivia }}" data-tarawih="{{ _rmm.tarawih }}" aria-labelledby="rmb-otsikko">
+  <script type="application/json" data-rm-ajat>{% include osat/ramadan-ajat.json moskeija=include.moskeija %}</script>
+  <svg class="u-rmb__kuu" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23Z"/></svg>
+  <div class="u-kehys u-rmb__sisus">
+    <div class="u-rmb__teksti">
+      <p class="u-rmb__tunniste"><span lang="ar" dir="rtl">رمضان كريم</span> · {% include k.html a="ramadan" %} {{ _rm_vuosi }}</p>
+      <h2 id="rmb-otsikko" class="u-rmb__otsikko">
+        <span data-rm-tila="ennen">{% include k.html a="ramadan_alkaa" %} <span class="u-rmb__kulta" data-rm-alkupv dir="ltr">{{ _rm_alkaa | date: "%-d.%-m." }}</span></span>
+        <span data-rm-tila="aikana" hidden>{% include k.html a="ramadan_kareem" %} <span class="u-rmb__pv">{% include k.html a="ramadan_paiva" %} <b class="u-rmb__kulta" data-rm-pv dir="ltr"></b><span dir="ltr">/{{ _rm_paivia }}</span></span></span>
+        <span data-rm-tila="eid" hidden>{% include k.html a="eid_mubarak" %}</span>
+      </h2>
+      <p class="u-rmb__lisa" data-rm-tila="ennen">{% unless _rm_vahvistettu %}{% include k.html a="ramadan_arvio" %}{% endunless %}</p>
+      <p class="u-rmb__lisa" data-rm-tila="eid" hidden>{% include k.html a="eid_toivotus" %}</p>
+      <div class="u-napit u-rmb__napit">
+        <a class="u-nappi u-nappi--kulta" href="{{ '/rukousajat/' | relative_url }}#ramadan">{% include k.html a="rm_koko_aikataulu" %} <span class="u-flip" aria-hidden="true">→</span></a>
+        <a class="u-nappi u-nappi--haamu" href="{{ '/rukousajat/' | relative_url }}#kalenteri-ramadan">{% include ikoni-ph.html nimi="kalenteri" koko=18 %} {% include k.html a="rm_kalenteriin" %}</a>
+      </div>
+    </div>
+    <div class="u-rmb__paneeli">
+      <div class="u-rmb__laskuri" data-rm-tila="ennen">
+        <small>{% include k.html a="ramadaniin" %}</small>
+        <p><b data-rm-paivia-jaljella dir="ltr">–</b> <span>{% include k.html a="paivaa" %}</span></p>
+      </div>
+      <div data-rm-tila="aikana" hidden>
+        <div class="u-rmb__ajat">
+          <div class="u-rmb__aika" data-rm-kortti="suhur"><small>{% include k.html a="suhur_paattyy" %}</small><b data-rm-suhur dir="ltr">--:--</b></div>
+          <div class="u-rmb__aika" data-rm-kortti="iftar"><small>{% include k.html a="iftar" %}</small><b data-rm-iftar dir="ltr">--:--</b></div>
+        </div>
+        <div class="u-rmb__laskuri u-rmb__laskuri--pieni" data-rm-laskuri hidden>
+          <small data-rm-laskuri-nimi></small>
+          <p><b data-rm-laskuri-aika dir="ltr">--:--:--</b></p>
+        </div>
+        <p class="u-rmb__tarawih" data-rm-tarawih-rivi hidden>{% include k.html a="tarawih" %} <b data-rm-tarawih dir="ltr"></b></p>
+      </div>
+      <div class="u-rmb__laskuri u-rmb__eid" data-rm-tila="eid" hidden>
+        {%- if _eid_ajat != "" %}
+        <small>{% include k.html a="eid_rukous" %}</small>
+        <p><b dir="ltr">{{ _eid_ajat }}</b></p>
+        {% if _rmm.eid_paikka and _rmm.eid_paikka != "" %}<small>{% include kt.html arvo=_rmm.eid_paikka %}</small>{% endif %}
+        {%- else %}
+        <p class="u-rmb__eid-ar" lang="ar" dir="rtl">عيد مبارك</p>
+        {%- endif %}
+      </div>
+      <template data-rm-teksti-iftar>{% include k.html a="iftariin" %}</template>
+      <template data-rm-teksti-suhur>{% include k.html a="suhuriin" %}</template>
+      <template data-rm-teksti-huomenna>{% include k.html a="huomenna_suhur" %}</template>
+    </div>
+  </div>
+</section>
+{%- endif -%}
