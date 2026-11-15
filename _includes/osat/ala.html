@@ -37,6 +37,9 @@
   </div>
   <div class="u-kehys u-ala__pohja">
     <p>© {{ site.time | date: '%Y' }} {{ m.title }}</p>
+    {%- comment -%} Tekoälymerkintä: kieliversiot, joiden käännöksiä ihminen ei ole tarkistanut (kielirekisterin tila) {%- endcomment -%}
+    {%- capture _kone -%}{%- for _l in site.kielet -%}{%- if _l != "fi" -%}{%- assign _kr = site.data.kielet | where: "koodi", _l | first -%}{%- if _kr.tila != "tarkistettu" -%}{%- assign _kt = site.data.kaannokset.kone_kaannos -%}<span data-l="{{ _l }}">{{ _kt[_l] | default: _kt.en }} <a href="{{ j }}yhteystiedot/">{% include k.html a="ilmoita_virheesta" %}</a></span>{%- endif -%}{%- endif -%}{%- endfor -%}{%- endcapture -%}
+    {%- if _kone != "" %}<p class="u-ala__kaannos">{{ _kone }}</p>{% endif %}
     <p><a href="{{ j }}tietosuoja/">{% include k.html a="tietosuoja" %}</a>{% if site.hakemisto_url and site.hakemisto_url != "" %} · <a href="{{ site.hakemisto_url }}">{% include k.html a="footer_hakemisto" %}</a>{% endif %}</p>
   </div>
 </footer>

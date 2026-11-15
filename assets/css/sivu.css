@@ -938,3 +938,6 @@ html[dir="rtl"] .u-seur__palkki span { background: linear-gradient(-90deg, var(-
 .u-rukouslahde a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .u-seur__lahde { padding: 0 20px 10px; margin: 0; }
 .u-rmb__lahde { color: rgb(255 255 255 / .65); margin: 2px 0 0; }
+
+.u-ala__kaannos { font-size: 13px; opacity: .8; }
+html[lang="fi"] .u-ala__kaannos { display: none; }
