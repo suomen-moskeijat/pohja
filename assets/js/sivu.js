@@ -156,7 +156,10 @@
   }
   var laskin = null;
 
-  // Yhden päivän ajat: { fajr: Date, ..., iqamah: {...}, virallinen, jumua }
+  // Haetun lähteen (Masjidbox, Mawaqit, rukousajat.fi) moskeijalla näytetään vain lähteen ajat: puuttuvia päiviä ei lasketa itse.
+  var HAETUT = ['masjidbox', 'mawaqit', 'rukousajat'];
+  function haettu() { return asetus && HAETUT.indexOf(asetus.lahde) >= 0; }
+  // Yhden päivän ajat: { fajr: Date, ..., iqamah: {...}, virallinen, jumua, puuttuu }
   function ajat(paiva) {
     var tulos = { iqamah: {}, virallinen: false };
     var data = (asetus.aikataulu || {})[kk(paiva)];
@@ -165,6 +168,8 @@
       tulos.virallinen = true;
       RUKOUKSET.forEach(function (n) { tulos[n] = hki(paiva, rivi[CSV[n]]); });
       VARSINAISET.forEach(function (n) { if (rivi['iqamah_' + n]) tulos.iqamah[n] = hki(paiva, rivi['iqamah_' + n]); });
+    } else if (haettu()) {
+      tulos.puuttuu = true; // lähde ei ole vielä julkaissut tätä päivää
     } else {
       if (!laskin) laskin = laskenta();
       if (!laskin) return null;
@@ -178,7 +183,9 @@
         else if (!tulos.iqamah[n] && v != null && v !== '' && tulos[n] instanceof Date && !isNaN(tulos[n])) tulos.iqamah[n] = new Date(tulos[n].getTime() + Number(v) * 60000);
       });
     }
-    if (paiva.getDay() === 5 && asetus.juma) { var j = hki(paiva, asetus.juma); if (j) { tulos.dhuhr = j; tulos.jumua = true; } }
+    // Jumua: lähteen ilmoittama aika voittaa; käsin kirjoitettu aika, jos lähde ei kerro
+    if (paiva.getDay() === 5 && rivi && rivi.jumua === '1') tulos.jumua = true;
+    else if (paiva.getDay() === 5 && asetus.juma && !tulos.puuttuu) { var j = hki(paiva, asetus.juma); if (j) { tulos.dhuhr = j; tulos.jumua = true; } }
     // Päiväkohtaiset muutokset (paneeli → Rukousajat → Muutokset yksittäisiin päiviin)
     var pvm = paiva.getFullYear() + '-' + ('0' + (paiva.getMonth() + 1)).slice(-2) + '-' + ('0' + paiva.getDate()).slice(-2);
     var mu = (asetus.muutokset || []).filter(function (x) { return String(x.paiva).slice(0, 10) === pvm; })[0];
@@ -286,11 +293,11 @@
       var n = N(), taulu = kkEl.querySelector('[data-kk-taulu]');
       var otsikot = ['pv', 'fajr', 'nousu', 'dhuhr', 'asr', 'maghrib', 'isha'];
       var h = '<thead><tr>' + otsikot.map(function (o) { return '<th scope="col">' + n[o] + '</th>'; }).join('') + '</tr></thead><tbody>';
-      var kaikkiVirallisia = true;
+      var kaikkiVirallisia = true, puuttuvia = false;
       for (var d = new Date(eka); d.getMonth() === eka.getMonth(); d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1, 12)) {
         var a = ajat(d);
         if (!a) continue;
-        if (!a.virallinen) kaikkiVirallisia = false;
+        if (a.puuttuu) puuttuvia = true; else if (!a.virallinen) kaikkiVirallisia = false;
         var luokat = [];
         if (d.getTime() === tanaan.getTime()) luokat.push('kk__tanaan');
         if (d.getDay() === 5) luokat.push('kk__pe');
@@ -300,8 +307,10 @@
       }
       taulu.innerHTML = h + '</tbody>';
       var v = kkEl.querySelector('[data-kk-lahde-virallinen]'), l = kkEl.querySelector('[data-kk-lahde-laskettu]');
+      var pu = kkEl.querySelector('[data-kk-lahde-puuttuu]');
       if (v) v.hidden = !kaikkiVirallisia;
       if (l) l.hidden = kaikkiVirallisia;
+      if (pu) pu.hidden = !puuttuvia;
     });
   }
   kaikki('[data-kk-siirto]').forEach(function (b) {

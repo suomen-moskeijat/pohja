@@ -5,7 +5,10 @@
 {%- assign aikataulu = nil -%}
 {%- assign kansio = r.aikataulu | default: m.slug -%}{%- comment -%} oletus: moskeijan slug {%- endcomment -%}
 {%- if kansio and kansio != "" -%}{%- assign aikataulu = site.data.aikataulut[kansio] -%}{%- endif -%}
+{%- assign _lahde = r.lahde | default: "" -%}
+{%- if _lahde == "" -%}{%- assign _kd = m.kaupunki | default: "" | downcase -%}{%- if _kd == "helsinki" or _kd == "espoo" or _kd == "vantaa" -%}{%- assign _lahde = "rukousajat" -%}{%- endif -%}{%- endif -%}
 {
+  "lahde": {{ _lahde | jsonify }},
   "lat": {{ m.sijainti.lat | default: "null" }}, "lon": {{ m.sijainti.lon | default: "null" }},
   "laskentatapa": {{ r.laskentatapa | default: "MuslimWorldLeague" | jsonify }},
   "madhab": {{ r.madhab | default: "Shafi" | jsonify }},

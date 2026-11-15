@@ -32,8 +32,9 @@ sitemap: false
 {%- if m.sahkoposti and m.sahkoposti != "" %}
 - Sähköposti: {{ m.sahkoposti }}
 {%- endif %}
-{%- if m.juma and m.juma != "" %}
-- Perjantairukous (jumu'a): klo {{ m.juma }}
+{%- capture _jl -%}{% include osat/jumua-aika.html moskeija=m %}{%- endcapture -%}{%- assign _jl = _jl | strip | split: "|" -%}
+{%- if _jl[0] and _jl[0] != "" %}
+- Perjantairukous (jumu'a): klo {{ _jl[0] }}
 {%- endif %}
 {%- if m.seo.google_maps and m.seo.google_maps != "" %}
 - Google Maps: {{ m.seo.google_maps }}
@@ -96,7 +97,7 @@ sitemap: false
 
 ## In English
 
-{{ m.nimi_en }} is a mosque in {{ m.kaupunki }}, Finland. {{ m.esittely.en | strip_html | normalize_whitespace }} Address: {{ m.osoite }}.{% if m.juma and m.juma != "" %} Friday prayer (jumu'ah) at {{ m.juma | replace: ".", ":" }}.{% endif %} Prayer times: {{ juuri }}/rukousajat/{% if site.kielet contains "en" %} · English version of the website: {{ juuri }}/en/{% endif %}
+{{ m.nimi_en }} is a mosque in {{ m.kaupunki }}, Finland. {{ m.esittely.en | strip_html | normalize_whitespace }} Address: {{ m.osoite }}.{% if _jl[0] and _jl[0] != "" %} Friday prayer (jumu'ah) at {{ _jl[0] | replace: ".", ":" }}.{% endif %} Prayer times: {{ juuri }}/rukousajat/{% if site.kielet contains "en" %} · English version of the website: {{ juuri }}/en/{% endif %}
 {%- endif %}
 
 ## Optional

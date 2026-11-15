@@ -28,6 +28,8 @@ const CSV = { fajr: 'fajr', sunrise: 'auringonnousu', dhuhr: 'dhuhr', asr: 'asr'
 const RUKOUS_PAIVIA = 60;   // rukousajat näin monelta päivältä eteenpäin (ikkuna liukuu joka julkaisussa)
 const JUMUA_VIIKKOJA = 26;
 const TZ = 'Europe/Helsinki';
+// Näistä lähteistä haetaan valmiit ajat: puuttuvia päiviä ei lasketa itse (sama sääntö kuin sivulla).
+const HAETUT = ['masjidbox', 'mawaqit', 'rukousajat'];
 
 const tiedot = JSON.parse(fs.readFileSync(path.join(KANSIO, 'tiedot.json'), 'utf8'));
 const asetus = tiedot.rukous || {};
@@ -67,6 +69,8 @@ function ajat(paiva) {
     tulos.virallinen = true;
     Object.keys(CSV).forEach((n) => { tulos[n] = hki(paiva, rivi[CSV[n]]); });
     RUKOUKSET.forEach((n) => { if (rivi['iqamah_' + n]) tulos.iqamah[n] = hki(paiva, rivi['iqamah_' + n]); });
+  } else if (HAETUT.includes(asetus.lahde)) {
+    return null; // haettu lähde ei ole vielä julkaissut tätä päivää: ei lasketa itse
   } else {
     if (laskin === undefined) laskin = laskenta();
     if (!laskin) return null;
@@ -79,7 +83,8 @@ function ajat(paiva) {
       if (typeof v === 'string' && /[.:]/.test(v)) { const k = hki(paiva, v); if (k) tulos.iqamah[n] = k; } else if (!tulos.iqamah[n] && v != null && v !== '' && tulos[n] instanceof Date && !isNaN(tulos[n])) tulos.iqamah[n] = new Date(tulos[n].getTime() + Number(v) * 60000);
     });
   }
-  if (paiva.getDay() === 5 && asetus.juma) { const j = hki(paiva, asetus.juma); if (j) { tulos.dhuhr = j; tulos.jumua = true; } }
+  // Jumua: lähteen ilmoittama aika voittaa käsin kirjoitetun
+  if (paiva.getDay() === 5 && rivi && rivi.jumua === '1') { tulos.jumua = true; tulos.jumuaLahteesta = true; } else if (paiva.getDay() === 5 && asetus.juma) { const j = hki(paiva, asetus.juma); if (j) { tulos.dhuhr = j; tulos.jumua = true; } }
   const mu = (asetus.muutokset || []).filter((x) => String(x.paiva).slice(0, 10) === pvm(paiva))[0];
   if (mu) {
     RUKOUKSET.forEach((n) => {
@@ -117,15 +122,15 @@ function rukous(jumuaErikseen) {
 }
 function jumua() {
   const t = [];
-  if (!asetus.juma && !asetus.juma2) return t;
   for (let i = 0, viikkoja = 0; viikkoja < JUMUA_VIIKKOJA && i < 7 * JUMUA_VIIKKOJA + 7; i++) {
     const p = helsinginPaiva(nyt, i);
     if (p.getDay() !== 5) continue;
     viikkoja++;
+    const a1 = ajat(p);
+    if (!a1 || !a1.jumua) continue; // ei Jumua-aikaa (tai lähde ei ole vielä julkaissut päivää)
     const mu = (asetus.muutokset || []).filter((x) => String(x.paiva).slice(0, 10) === pvm(p))[0];
-    [asetus.juma, asetus.juma2].forEach((aika, j) => {
-      const a = hki(p, j === 0 && mu && mu.dhuhr ? mu.dhuhr : aika);
-      if (!a) return;
+    [a1.dhuhr, asetus.juma2 ? hki(p, asetus.juma2) : null].forEach((a, j) => {
+      if (!ok(a)) return;
       t.push({ uid: `jumua-${pvm(p)}-${j + 1}`, alku: a, loppu: new Date(a.getTime() + 45 * MIN), nimi: asetus.juma2 ? `Jumua ${j + 1} (perjantairukous)` : 'Jumua (perjantairukous)', kuvaus: mu && mu.huom ? mu.huom : '', paikka });
     });
   }

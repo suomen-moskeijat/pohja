@@ -25,8 +25,9 @@ Lähde: {{ juuri }}/ · Päivitetty {{ site.time | date: "%-d.%-m.%Y klo %H.%M" 
 {%- if m.sahkoposti and m.sahkoposti != "" %}
 - Sähköposti: {{ m.sahkoposti }}
 {%- endif %}
-{%- if m.juma and m.juma != "" %}
-- Perjantairukous (jumu'a): klo {{ m.juma }}
+{%- capture _jl -%}{% include osat/jumua-aika.html moskeija=m %}{%- endcapture -%}{%- assign _jl = _jl | strip | split: "|" -%}
+{%- if _jl[0] and _jl[0] != "" %}
+- Perjantairukous (jumu'a): klo {{ _jl[0] }}
 {%- endif %}
 {%- if m.sijainti.lat and m.sijainti.lat != 0 %}
 - Kartta: https://www.google.com/maps/search/?api=1&query={{ m.sijainti.lat }},{{ m.sijainti.lon }}
@@ -108,7 +109,7 @@ Sivu: {{ juuri }}{{ s.url }}
 |---|---|---|---|---|---|---|
 {% for x in _at_kk %}{% assign _dpv = x.pv | prepend: "0" | slice: -2, 2 %}{% assign _dd = _at_avain | append: "-" | append: _dpv %}| {{ x.pv }}.{{ site.time | date: "%-m." }} | {% include osat/rk-arvo.html r=x n="fajr" pvm=_dd mu=_at_mu iqa=_at_iqa %}{% capture _q %}{% include osat/rk-arvo.html r=x n="fajr" iq=true pvm=_dd mu=_at_mu iqa=_at_iqa %}{% endcapture %}{% if _q != "" %} ({{ _q }}){% endif %} | {% include osat/rk-arvo.html r=x n="auringonnousu" pvm=_dd mu=_at_mu iqa=_at_iqa %} | {% include osat/rk-arvo.html r=x n="dhuhr" pvm=_dd mu=_at_mu iqa=_at_iqa %}{% capture _q %}{% include osat/rk-arvo.html r=x n="dhuhr" iq=true pvm=_dd mu=_at_mu iqa=_at_iqa %}{% endcapture %}{% if _q != "" %} ({{ _q }}){% endif %} | {% include osat/rk-arvo.html r=x n="asr" pvm=_dd mu=_at_mu iqa=_at_iqa %}{% capture _q %}{% include osat/rk-arvo.html r=x n="asr" iq=true pvm=_dd mu=_at_mu iqa=_at_iqa %}{% endcapture %}{% if _q != "" %} ({{ _q }}){% endif %} | {% include osat/rk-arvo.html r=x n="maghrib" pvm=_dd mu=_at_mu iqa=_at_iqa %}{% capture _q %}{% include osat/rk-arvo.html r=x n="maghrib" iq=true pvm=_dd mu=_at_mu iqa=_at_iqa %}{% endcapture %}{% if _q != "" %} ({{ _q }}){% endif %} | {% include osat/rk-arvo.html r=x n="isha" pvm=_dd mu=_at_mu iqa=_at_iqa %}{% capture _q %}{% include osat/rk-arvo.html r=x n="isha" iq=true pvm=_dd mu=_at_mu iqa=_at_iqa %}{% endcapture %}{% if _q != "" %} ({{ _q }}){% endif %} |
 {% endfor %}
-Perjantaisin Dhuhrin sijaan perjantairukous (jumu'a){% if m.juma and m.juma != "" %} klo {{ m.juma }}{% if m.juma_2 and m.juma_2 != "" %} ja {{ m.juma_2 }}{% endif %}{% endif %}. Ajantasaiset ajat: {{ juuri }}/rukousajat/
+Perjantaisin Dhuhrin sijaan perjantairukous (jumu'a){% if _jl[0] and _jl[0] != "" %} klo {{ _jl[0] }}{% endif %}. Ajantasaiset ajat: {{ juuri }}/rukousajat/
 {%- else %}
 
 ## Rukousajat

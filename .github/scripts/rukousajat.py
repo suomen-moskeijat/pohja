@@ -8,18 +8,19 @@ Moskeijan tiedostossa _moskeijat/<slug>.md, kohdassa rukousajat:
       tunnus: masjid-sunnah-helsinki
 
 - masjidbox: tunnus osoitteesta masjidbox.com/prayer-times/<tunnus>.
-  Haetaan seuraavat 7 päivää (adhan, iqamah, perjantaina Jumuah).
+  Haetaan seuraavat 7 päivää (adhan, iqamah, perjantaina Jumuah); julkinen sivu ei näytä pidemmälle.
 - mawaqit:   tunnus osoitteesta mawaqit.net/fi/<tunnus>.
-  Haetaan kuluva ja kaksi seuraavaa kuukautta (adhan, iqamah, Jumuah) sekä
+  Haetaan vuoden aikataulu (adhan, iqamah, Jumuah) sekä
   moskeijan kuvat (sisä- ja ulkokuva) sivun kuvagalleriaan.
-- rukousajat: rukousajat.fi:n Helsingin aikataulu (kuluva + 2 kuukautta).
+- rukousajat: rukousajat.fi:n Helsingin aikataulu (vuosi eteenpäin).
   Oletus, jos lähdettä ei ole ja kaupunki on Helsinki, Espoo tai Vantaa.
 - taulukko:  aikataulu lisätään itse CSV-tiedostoina, ei haeta mitään.
 - laskenta (tai ei mitään muualla): sivu laskee ajat koordinaateista samoin
   kuin rukousajat.fi muissa kaupungeissa.
 
-Ajat tallennetaan tiedostoihin _data/aikataulut/<slug>/VVVV-KK.csv; muut päivät
-jäävät ennalleen. Mawaqitin kuvat tallennetaan kansioon tiedostot/<slug>/mawaqit/
+Ajat tallennetaan tiedostoihin _data/aikataulut/<slug>/VVVV-KK.csv. Tulevat päivät, joita
+lähde ei kertonut (esim. vanhasta lähteestä tai repoon tallennetusta taulukosta jääneet), poistetaan:
+haetun lähteen moskeijalla näytetään vain lähteen ajat, eikä puuttuvia päiviä lasketa itse. Mawaqitin kuvat tallennetaan kansioon tiedostot/<slug>/mawaqit/
 ja luetteloon _data/kuvat/<slug>.json. Jos haku epäonnistuu, vanhat tiedot jäävät
 voimaan. Ei ulkoisia riippuvuuksia.
 """
@@ -36,7 +37,8 @@ import urllib.request
 
 JUURI = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SARAKKEET = ["pv", "fajr", "auringonnousu", "dhuhr", "asr", "maghrib", "isha",
-             "iqamah_fajr", "iqamah_dhuhr", "iqamah_asr", "iqamah_maghrib", "iqamah_isha"]
+             "iqamah_fajr", "iqamah_dhuhr", "iqamah_asr", "iqamah_maghrib", "iqamah_isha", "jumua"]
+# jumua = "1", kun lähde kertoi perjantaina Jumuan ajan Dhuhrin paikalle (se voittaa käsin kirjoitetun ajan).
 VARSINAISET = ["fajr", "dhuhr", "asr", "maghrib", "isha"]
 SELAIN = {"User-Agent": "Mozilla/5.0 (compatible; MoskeijaSivusto/1.0)"}
 # rukousajat.fi käyttää valmista aikataulua näille kaupungeille, muualla se laskee ajat
@@ -120,6 +122,7 @@ def masjidbox(tunnus):
         if jumuah and kello(jumuah[0]):
             rivi["dhuhr"] = kello(jumuah[0])
             rivi["iqamah_dhuhr"] = kello(iq_jumuah[0]) if iq_jumuah else ""
+            rivi["jumua"] = "1"
         paivat[pvm] = rivi
     if not paivat:
         raise ValueError("aikataulu on tyhjä")
@@ -133,7 +136,7 @@ def lisaa_min(hhmm, minuutit):
     return f"{t // 60:02d}:{t % 60:02d}"
 
 
-def mawaqit(tunnus, kuukausia=3):
+def mawaqit(tunnus, kuukausia=13):
     """{'VVVV-KK-PP': rivi} ja kuvien osoitteet julkisen Mawaqit-sivun confData-tiedoista."""
     sivu = hae("https://mawaqit.net/fi/" + urllib.parse.quote(tunnus)).decode("utf-8", "replace")
     m = re.search(r"(?:let|var|const)\s+confData\s*=\s*(\{.*?\});\s*\n", sivu, re.S)
@@ -166,7 +169,7 @@ def mawaqit(tunnus, kuukausia=3):
                 else:
                     rivi["iqamah_" + n] = ""
             if paiva.weekday() == 4 and re.match(r"^\d{1,2}:\d{2}$", jumua):
-                rivi["dhuhr"], rivi["iqamah_dhuhr"] = jumua.zfill(5), ""
+                rivi["dhuhr"], rivi["iqamah_dhuhr"], rivi["jumua"] = jumua.zfill(5), "", "1"
             paivat[paiva.isoformat()] = rivi
     kuvat = []
     for avain in ("exteriorPicture", "interiorPicture", "image"):
@@ -177,7 +180,7 @@ def mawaqit(tunnus, kuukausia=3):
 
 
 # ---------------------------------------------------------------- rukousajat.fi
-def rukousajat_fi(_kaupunki, kuukausia=3):
+def rukousajat_fi(_kaupunki, kuukausia=13):
     """{'VVVV-KK-PP': rivi} rukousajat.fi:n Helsingin vuosiaikataulusta.
 
     Sivusto ei tarjoa rajapintaa: aikataulu (365 päivää, avain PPKK) on sen
@@ -221,18 +224,31 @@ def tallenna_ajat(slug, paivat):
             continue
         kuukausittain.setdefault(pvm[:7], {})[str(int(pvm[8:10]))] = dict(rivi, pv=str(int(pvm[8:10])))
     muutettu = 0
+    tanaan = datetime.date.today().isoformat()
+    # Kuukaudet, joissa on vanhoja tulevia päiviä mutta joihin lähde ei nyt antanut mitään
+    for polku in glob.glob(os.path.join(kansio, "????-??.csv")):
+        kk = os.path.basename(polku)[:7]
+        if kk not in kuukausittain and kk + "-31" >= tanaan:
+            kuukausittain[kk] = {}
     for kk, rivit in kuukausittain.items():
         polku = os.path.join(kansio, kk + ".csv")
         vanhat = {}
         if os.path.exists(polku):
             with open(polku, encoding="utf-8", newline="") as f:
                 for r in csv.DictReader(f):
-                    vanhat[str(int(r["pv"]))] = {k: r.get(k, "") or "" for k in SARAKKEET}
+                    pv = str(int(r["pv"]))
+                    if f"{kk}-{int(pv):02d}" >= tanaan and pv not in rivit:
+                        muutettu += 1  # lähde ei kertonut tätä tulevaa päivää: ei näytetä vanhaa
+                        continue
+                    vanhat[pv] = {k: r.get(k, "") or "" for k in SARAKKEET}
         for pv, r in rivit.items():
             uusi = {k: r.get(k, "") or "" for k in SARAKKEET}
             if vanhat.get(pv) != uusi:
                 muutettu += 1
             vanhat[pv] = uusi
+        if not vanhat:
+            os.remove(polku) if os.path.exists(polku) else None
+            continue
         ulos = io.StringIO()
         w = csv.DictWriter(ulos, fieldnames=SARAKKEET, lineterminator="\n")
         w.writeheader()
