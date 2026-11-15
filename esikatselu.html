@@ -7,7 +7,7 @@ sitemap: false
 ---
 {%- comment -%}
   Muokkaajille: kokeile värejä ja etusivun taustaa omalla sivulla ennen kuin valitset ne
-  Pages CMS:ssä. Ei näy valikossa eikä hakukoneissa. Osoite: <sivu>/esikatselu/
+  hallintapaneelissa. Ei näy valikossa eikä hakukoneissa. Osoite: <sivu>/esikatselu/
 {%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {%- assign t = m.teema -%}
@@ -18,7 +18,7 @@ sitemap: false
 <section class="u-sivuhero">
   <div class="u-kehys">
     <h1>Kokeile ulkoasua</h1>
-    <p class="u-sivuhero__johdanto">Napauta väriä tai taustaa. Oikealla (puhelimessa alla) näet heti, miltä etusivu näyttäisi. Kun löydät sopivan, valitse sama Pages CMS:ssä. Tämä sivu ei muuta mitään.</p>
+    <p class="u-sivuhero__johdanto">Napauta väriä tai taustaa. Oikealla (puhelimessa alla) näet heti, miltä etusivu näyttäisi. Kun löydät sopivan, valitse sama hallintapaneelissa. Tämä sivu ei muuta mitään.</p>
   </div>
 </section>
 <div class="u-kehys u-sivu u-esik" data-esik data-kuva="{% if _kuva and _kuva != '' %}{{ _kuva | relative_url }}{% endif %}">
@@ -41,10 +41,10 @@ sitemap: false
     <div class="u-esik__ohje" data-esik-ohje>
       <p><b>Näin otat valinnan käyttöön:</b></p>
       <ol>
-        <li>Avaa <a href="https://app.pagescms.org" target="_blank" rel="noopener">Pages CMS</a> ja valitse moskeijasi.</li>
-        <li><b>Moskeijan tiedot</b> → <b>Ulkoasu: värit ja logo</b> → <b>Värit</b>: <span data-esik-valittu-vari>valitse väri yllä</span></li>
-        <li><b>Etusivun yläosa: tausta ja napit</b> → <b>Tausta</b>: <span data-esik-valittu-tausta>valitse tausta yllä</span></li>
-        <li><b>Save</b>. Sivu päivittyy noin 2 minuutissa.</li>
+        <li>Avaa <a href="https://hallinta.suomenmoskeijat.fi/" target="_blank" rel="noopener">hallintapaneeli</a> ja valitse moskeijasi.</li>
+        <li><b>Ulkoasu</b> → <b>Värit</b>: <span data-esik-valittu-vari>valitse väri yllä</span></li>
+        <li><b>Sivut</b> → <b>Etusivu</b> → <b>Yläosan tausta</b>: <span data-esik-valittu-tausta>valitse tausta yllä</span></li>
+        <li><b>Tallenna</b>. Sivu päivittyy noin 2 minuutissa.</li>
       </ol>
     </div>
   </div>

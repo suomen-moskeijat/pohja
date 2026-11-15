@@ -18,10 +18,11 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 | **Kaikki moskeijat ja niiden tila** | https://suomen-moskeijat.github.io/pohja/ | kaikille |
 | **Nämä ohjeet** | https://suomen-moskeijat.github.io/pohja/ohjeet/ | kaikille |
 | **Moskeijan sivu** | `https://suomen-moskeijat.github.io/<moskeija>/` (tai oma verkkotunnus) | kävijöille |
-| **Sivun muokkaus** | https://app.pagescms.org → valitse moskeija | moskeijan muokkaajille |
-| **Uusi moskeija, muokkaajat, ehdotussivut** | https://github.com/suomen-moskeijat/pohja/actions | ylläpitäjille |
+| **Sivun muokkaus (hallintapaneeli)** | https://hallinta.suomenmoskeijat.fi/ | moskeijan pääkäyttäjille ja muokkaajille |
+| **Uusi moskeija, käyttäjät, kielet, tekstit** | hallintapaneeli → Ylläpito | ylläpitäjille |
+| **Automaatiot (varalla)** | https://github.com/suomen-moskeijat/pohja/actions | ylläpitäjille |
 | **Moskeijalista** | `moskeijat.csv` pohja-repossa | ylläpitäjille |
-| **Esimerkkisivut** | https://suomen-moskeijat.github.io/pohja/masjid-sunnah/ ja `/pohja/hyvinkaa/` | esittelyyn |
+| **Esimerkkisivu** | https://suomen-moskeijat.github.io/testimoskeija/ (testimoskeija, esimerkkidata) | esittelyyn ja kokeiluun |
 
 **Miten kokonaisuus toimii:**
 
@@ -47,18 +48,18 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 | Tilanne | Kuka | Mitä tehdään |
 |---|---|---|
 | Haluan näyttää moskeijalle, millainen sivu heille tulisi | ylläpitäjä | Katso hakemistosta, onko heillä ehdotussivu. Jos ei, lisää heidät `moskeijat.csv`:hen ja aja **Luo ehdotussivut listasta** (Osa 2, kohta 3a). Lähetä linkki. |
-| Moskeija haluaa lähteä mukaan | ylläpitäjä | 1) Pages CMS → Moskeijan tiedot → poista **Ehdotus**. 2) Jos heillä on vanha nettisivu: kysy lupa ja tuo tiedot (Osa 2, kohta 3b). 3) Kysy muokkaajien GitHub-tunnukset → **Lisää muokkaaja**. Sivu on nyt luonnos. |
-| Moskeija on tarkistanut sivun ja hyväksyy sen | muokkaaja tai ylläpitäjä | Pages CMS → Moskeijan tiedot → poista **Luonnos** → Save. Sivu on julkinen noin 2 minuutissa. |
-| Moskeija ei halua sivua | ylläpitäjä | Arkistoi repo (repo → Settings → Archive) tai poista se, ja merkitse `moskeijat.csv`:hen tila `ei`. Sivu poistuu hakemistosta. |
-| Uusi moskeija, joka ei ole listalla | ylläpitäjä | **Lisää moskeija** -lomake (nimi, kaupunki, Mawaqit- tai Masjidbox-linkki, nettisivu luvalla). |
-| Moskeija haluaa muokata tekstejä tai lisätä tapahtuman | muokkaaja | Pages CMS (Osa 1). |
-| Uusi henkilö haluaa muokkausoikeuden | ylläpitäjä | GitHub-tunnus → Actions → **Lisää muokkaaja** (repo + tunnus). |
-| Henkilö lopettaa | ylläpitäjä | moskeijan repo → Settings → Collaborators → Remove. |
+| Moskeija haluaa lähteä mukaan | ylläpitäjä | 1) Paneeli → avaa moskeija → **Moskeija lähtee mukaan** (sivu muuttuu luonnokseksi). 2) Jos heillä on vanha nettisivu: kysy lupa ja tuo tiedot (Osa 2, kohta 3b). 3) **Käyttäjät** → kutsu moskeijan pääkäyttäjä sähköpostilla. Pääkäyttäjä hyväksyy käyttöehdot paneelin etusivulla. |
+| Moskeija on tarkistanut sivun ja hyväksyy sen | pääkäyttäjä tai ylläpitäjä | Paneelin etusivu → **Julkaise sivu**. Sivu on julkinen noin 2 minuutissa. |
+| Moskeija ei halua sivua | ylläpitäjä | Paneeli → avaa moskeija → Asetukset → **Poista moskeija**. Se merkitään listaan, eikä sivua luoda uudelleen. |
+| Uusi moskeija, joka ei ole listalla | ylläpitäjä | Paneeli → Ylläpito → **Uusi moskeija** (nimi, kaupunki, Mawaqit- tai Masjidbox-linkki, nettisivu luvalla). |
+| Moskeija haluaa muokata tekstejä tai lisätä tapahtuman | muokkaaja | Hallintapaneeli (Osa 1). |
+| Uusi henkilö haluaa muokkausoikeuden | pääkäyttäjä | Paneeli → **Käyttäjät** → kutsu sähköpostilla (muokkaaja tai pääkäyttäjä). |
+| Henkilö lopettaa | pääkäyttäjä | Paneeli → **Käyttäjät** → Poista. |
 | Rukousajat ovat väärin | pääkäyttäjä | Paneeli → Rukousajat ja Jumua: tarkista lähde ja seuraavat 7 päivää. Yksittäisen päivän voi korjata kohdassa Muutokset yksittäisiin päiviin. |
-| Moskeija ottaa Mawaqitin tai Masjidboxin käyttöön | ylläpitäjä | Pages CMS → Moskeijan tiedot → Rukousajat: lähde ja tunnus. |
+| Moskeija ottaa Mawaqitin tai Masjidboxin käyttöön | pääkäyttäjä | Paneeli → **Rukousajat ja Jumua** → Rukousaikojen lähde. |
 | Moskeija haluaa oman osoitteen (esim. moskeija.fi) | ylläpitäjä | Osa 2, kohta 8. Tee vasta, kun sivu on julkaistu. |
 | Sivu ei päivity tai näyttää rikkinäiseltä | ylläpitäjä | Osa 2, kohta 10 (Actions-loki). |
-| Haluan muuttaa ulkoasua kaikille | ylläpitäjä | Muutos pohjaan → tarkista esittelysivulta → kaikki päivittyvät tunnin sisällä. |
+| Haluan muuttaa ulkoasua kaikille | ylläpitäjä | Muutos pohjaan → tarkista testimoskeijalta → kaikki päivittyvät tunnin sisällä. |
 | Avain `MOSKEIJA_AVAIN` vanhenee | ylläpitäjä | Tee uusi (Osa 2, kohta 2) ja korvaa salaisuus. |
 
 ---
@@ -69,77 +70,83 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 
 ### 1. Mitä tarvitset
 
-> **Uusi sivu on aluksi luonnos** (keltainen palkki ylhäällä). Kun sivu on kunnossa,
-> poista Pages CMS:ssä kohdasta **Moskeijat** valinta **Luonnos**, niin sivu on julkinen.
+> **Uusi sivu on aluksi luonnos** (keltainen palkki ylhäällä). Kun sivu on kunnossa, pääkäyttäjä painaa
+> paneelin etusivulla **Julkaise sivu**, ja sivu on julkinen.
 
-
-1. **GitHub-tunnus** (ilmainen): https://github.com/signup
-2. Kerro tunnuksesi ylläpitäjälle. Saat sähköpostiin **kutsun** moskeijasi sivuun: hyväksy se.
-   Oikeus koskee vain oman moskeijasi sivua.
-3. Muokkaaminen tapahtuu osoitteessa **https://app.pagescms.org**. Kirjaudu GitHub-tunnuksella.
+1. **Kutsu sähköpostiin.** Moskeijan pääkäyttäjä (tai ylläpitäjä) kutsuu sinut paneelin **Käyttäjät**-sivulta.
+   GitHub-tunnusta ei tarvita.
+2. **Kirjaudu:** https://hallinta.suomenmoskeijat.fi/. Kirjoita sähköpostiosoitteesi, niin saat 6-numeroisen koodin.
+   Voit myös tallentaa **pääsyavaimen** (sormenjälki, kasvot tai laitteen PIN) tai kirjautua Googlella tai Microsoftilla.
+3. **Roolit:** *muokkaaja* lisää tapahtumia, tiedotteita, kuvia ja ilmoituksia. *Pääkäyttäjä* muokkaa lisäksi sivuja,
+   ulkoasua, rukousaikoja ja käyttäjiä, ja julkaisee sivun.
 
 > Toimii puhelimella ja tietokoneella. Tallennuksen jälkeen sivu päivittyy noin 2 minuutissa.
+> Kaikki muutokset näkyvät **Historia**-sivulla, ja ne voi perua.
 
 ### 2. Mistä mitäkin muokataan
 
-Kun olet kirjautunut ja valinnut moskeijasi, vasemmalla on valikko:
-
-| Valikossa | Mitä siellä tehdään |
+| Paneelin valikossa | Mitä siellä tehdään |
 |---|---|
-| **Moskeijan tiedot** | moskeijan tiedot: yhteystiedot, Jumua, tekstit eri kielillä, etusivun tausta ja napit, valikko, lahjoitustiedot, somet, värit ja logo |
+| **Yleiskatsaus** | sivun tila, mitä on vielä tekemättä, pikanapit |
+| **Luo julkaisu** | valmiit pohjat (esim. tarawih-vuorot, tapahtuma, tiedote, Eid): kuva someen ja WhatsAppiin sekä tiedote sivulle yhdellä kertaa |
 | **Tapahtumat** | tulevat tapahtumat (menneet katoavat sivulta itsestään) |
-| **Artikkelit** | moskeijan omat kirjoitukset ja tiedotteet |
-| **Omat sivut** | lisäsivut, esim. kirjasto, hyvät lähteet, viikko-ohjelma |
-| **Media** | kuvat ja tiedostot (myös PDF) |
+| **Tiedotteet** | moskeijan omat kirjoitukset ja tiedotteet |
+| **Rukousajat ja Jumua** | lähde, iqamah, Jumua, yksittäisten päivien muutokset ja Ramadan |
+| **Ilmoituspalkki** | lyhyt ilmoitus kaikkien sivujen ylälaitaan |
+| **Kuvat ja tiedostot** | kuvat ja PDF-tiedostot |
+| **Sivut** | etusivu, Meistä, Opetus ja palvelut, Tuki ja lahjoitukset, Yhteystiedot ja lomakkeet, valikko ja omat sivut |
+| **Ulkoasu** | värit, logo, taustakuviot, kulmat ja varjot |
+| **Käyttäjät · Asetukset · Historia** | kutsut ja oikeudet, kielet, oma verkkotunnus, sivun tila, käyttöehdot ja muutoshistoria |
 
-Muokkaa kenttää ja paina lopuksi **Save** (Tallenna).
+Muokkaa kenttiä ja paina lopuksi **Tallenna**. Tekstikentissä on rivi jokaiselle sivun kielelle, ja
+puuttuvat kielet voi kääntää tekoälyllä napista (tarkista käännös ennen tallennusta).
 
 ### 3. Tapahtuman lisääminen
 
-1. **Tapahtumat → Add an entry**
+1. **Tapahtumat → Uusi tapahtuma**
 2. Täytä **nimi**, **päivämäärä** ja halutessasi **alkaa / päättyy klo** (esim. `18.00`), paikka, kuva ja kuvaus.
-3. **Save.** Tapahtuma näkyy etusivulla ja Tapahtumat-sivulla. Se katoaa, kun päivä on mennyt.
+3. **Tallenna.** Tapahtuma näkyy etusivulla ja Tapahtumat-sivulla. Se katoaa, kun päivä on mennyt.
 
-### 4. Artikkelin tai tiedotteen kirjoittaminen
+### 4. Tiedotteen tai artikkelin kirjoittaminen
 
-1. **Artikkelit → Add an entry**
+1. **Tiedotteet → Uusi tiedote**
 2. **Otsikko**, **päivämäärä** ja **aihe**. Valitse aihe listasta, esim. *Tiedotteet* tai *Islamin perusteet*.
    Jos sopivaa ei ole, kirjoita uusi aihe. Se tulee artikkelisivulle omaksi napikseen.
 3. **Lyhyt kuvaus** näkyy listassa, ja **teksti** on varsinainen kirjoitus. Lisää halutessasi kuva.
-4. **Save.** Kolme uusinta näkyy etusivulla, ja kaikki löytyvät Artikkelit-sivulta haun ja aiheiden kautta.
+4. **Tallenna.** Kolme uusinta näkyy etusivulla, ja kaikki löytyvät Artikkelit-sivulta haun ja aiheiden kautta.
 
-**Yhteiset artikkelit:** sivulla on valmiina noin 110 suomenkielistä artikkelia islaminusko.fi:stä
-(lähde mainitaan jokaisessa). Ne saa pois tai takaisin kohdasta **Moskeijan tiedot → Yhteiset artikkelit**.
+**Valmiit artikkelit:** sivulla on noin 110 suomenkielistä artikkelia islaminusko.fi:stä
+(lähde mainitaan jokaisessa). Ne saa pois tai takaisin kohdasta **Sivut → Artikkelit-sivu → Valmiit artikkelit**.
 
 ### 5. Oma sivu (kirjasto, lähteet, viikko-ohjelma …)
 
-1. **Omat sivut → Add an entry**
-2. **Sivun nimi.** Tiedoston nimestä tulee osoite, esim. `hyvat-lahteet` → `/hyvat-lahteet/`.
+1. **Sivut → Omat sivut → Uusi sivu**
+2. **Sivun nimi.** Nimestä tulee osoite, esim. *Hyvät lähteet* → `/hyvat-lahteet/`.
 3. Kirjoita **sisältö** ja lisää halutessasi **linkit kortteina** (nimi, kuvaus, osoite tai PDF-tiedosto, kuvake).
-4. **Näytä valikossa** päälle, niin sivu tulee valikkoon. **Järjestys** määrää paikan valikossa.
+4. **Näytä valikossa** päälle, niin sivu tulee valikkoon. Järjestystä voi muuttaa kohdassa **Sivut → Valikko**.
 
 ### 6. Kokeile ulkoasua ennen valintaa: /esikatselu/
 
 Avaa oma sivusi ja lisää osoitteen perään **`/esikatselu/`**, esim.
 `https://suomen-moskeijat.github.io/hyvinkaa-islam-keskus/esikatselu/`.
 Napauta värimaailmaa ja taustaa: etusivu vaihtuu heti puhelimen kokoisessa ikkunassa.
-Sivu kertoo myös, mistä saman valinnan tekee Pages CMS:ssä. Esikatselu ei muuta mitään.
+Sivu kertoo myös, mistä saman valinnan tekee paneelissa. Esikatselu ei muuta mitään.
 
 **Värimaailmat** (valitaan nimellä, värikoodeja ei tarvita): Kulta-ruskea, Smaragdinvihreä,
 Metsänvihreä ja kulta, Turkoosi, Sininen, Yönsininen ja kulta, Persiansininen, Violetti,
 Viininpunainen, Terrakotta, Oliivinvihreä, Grafiitti ja kulta, sekä *Nykyiset värit (logon mukaan)*.
-Valinta: **Moskeijan tiedot → Ulkoasu: värit ja logo → Värit**.
+Valinta: **Ulkoasu → Värit**.
 
 **Taustakuviot alueittain** (hallintapaneeli → Ulkoasu): kuvio valitaan erikseen sivujen yläosaan,
 alapalkkiin ja nostoihin (lahjoitus, lasten opetus), tai "Ei kuviota". Kuvion väri tulee värimaailmasta.
 
-**Lomakkeiden lähetys ja WhatsApp-napit** (hallintapaneeli → Sivut ja osiot → Yhteystiedot):
+**Lomakkeiden lähetys ja WhatsApp-napit** (hallintapaneeli → Sivut → Yhteystiedot ja lomakkeet):
 lomakkeiden viestit sähköpostiin, WhatsAppiin tai kävijän valinnan mukaan, ja WhatsApp-napit
 näkyviin, ilman kulman pikanappia tai kokonaan piiloon.
 
 ### 6b. Etusivun yläosa: tausta ja napit
 
-**Moskeijan tiedot → Etusivun yläosa**
+**Sivut → Etusivu** (yläosan tausta ja napit)
 
 | Tausta | Miltä näyttää |
 |---|---|
@@ -163,20 +170,21 @@ näkyviin, ilman kulman pikanappia tai kokonaan piiloon.
 
 ### 7. Valikko
 
-**Moskeijan tiedot → Piilota valikosta**: valitse sivut, joita moskeijallanne ei ole, esim. *tapahtumat*.
+**Sivut → Valikko**: järjestä, lisää omia linkkejä ja piilota sivut, joita moskeijallanne ei ole, esim. *tapahtumat*.
 **Lahjoita / Tuki ja jäsenyys** on piilossa automaattisesti, kunnes tiedot on lisätty.
 
 ### 8. Tekstit eri kielillä
 
-Sivu on neljällä kielellä: suomi, englanti, arabia ja somali. Kävijä valitsee kielen yläpalkista.
-Kentissä on rivi jokaiselle kielelle. Jos jokin kieli puuttuu, näytetään englanti tai suomi.
+Sivun kielet valitaan kohdassa **Asetukset → Sivuston kielet** (esim. suomi, englanti, arabia, somali, turkki …).
+Kävijä valitsee kielen yläpalkista. Kentissä on rivi jokaiselle kielelle; paneeli varoittaa puuttuvista
+käännöksistä ja voi kääntää ne tekoälyllä. Jos jokin kieli puuttuu, näytetään englanti tai suomi.
 Arabia näkyy automaattisesti oikealta vasemmalle.
 
 ### 9. Kuvat ja logo
 
-- **Logo:** Moskeijan tiedot → Ulkoasu → Logo. Jos logossa on tummaa tekstiä, lisää myös **vaalea logo**
+- **Logo:** Ulkoasu → Logo. Jos logossa on tummaa tekstiä, lisää myös **vaalea logo**
   alapalkkia varten (tumma tausta).
-- **Kuvagalleria:** Moskeijan tiedot → Kuvagalleria. Käytä omia valokuvia. Kuvapankkien kuvia saa käyttää vain luvalla.
+- **Kuvagalleria:** Sivut → Meistä → Kuvagalleria (kuvat lisätään kohdassa Kuvat ja tiedostot). Käytä omia valokuvia. Kuvapankkien kuvia saa käyttää vain luvalla.
 - Lapsista ja ihmisistä otettuihin kuviin kysytään lupa.
 - Mawaqitissa olevat moskeijan kuvat tulevat sivulle automaattisesti.
 
@@ -217,11 +225,11 @@ näkymä päivittyy heti asetuksia muutettaessa. Lisäksi:
 
 - **Instagram, YouTube ja Telegram:** uusimmat julkaisut näkyvät sivulla automaattisesti ("Seuraa meitä").
 - **Facebook, TikTok, X, Snapchat, WhatsApp-kanava:** näkyvät kuvakkeina.
-- Lisää osoitteet kohtaan **Moskeijan tiedot → Some**.
+- Lisää osoitteet kohtaan **Sivut → Yhteystiedot ja lomakkeet → Somekanavat**.
 
 ### 12. Lahjoitukset ja lomakkeet
 
-- **Tuki ja lahjoitukset:** Moskeijan tiedot → Tuki ja lahjoitukset. Rahankeräyslain (863/2019) vuoksi
+- **Tuki ja lahjoitukset:** Sivut → Tuki ja lahjoitukset. Rahankeräyslain (863/2019) vuoksi
   tilinumero, MobilePay, verkkolahjoituksen linkki ja "Lahjoita nyt" -napit näkyvät vain, kun moskeijalla on
   Poliisihallituksen **rahankeräyslupa** tai voimassa oleva **pienkeräysnumero** (pienkeräyksen päättymispäivän
   jälkeen maksutiedot piilotetaan itsestään). Silloin sivulla näkyvät myös lain vaatimat tiedot: keräyksen
@@ -247,7 +255,7 @@ tiedot Googlelle, sivukartta ja jakokuvat. Nämä kannattaa lisäksi tehdä itse
 | Ongelma | Ratkaisu |
 |---|---|
 | Muutos ei näy | Odota 2–3 minuuttia ja päivitä sivu. Kokeile myös yksityisessä ikkunassa. |
-| En näe moskeijaani Pages CMS:ssä | Hyväksy kutsu sähköpostista, tai pyydä ylläpitäjää lisäämään sinut. |
+| En pääse paneeliin tai en näe moskeijaani | Pyydä pääkäyttäjää kutsumaan sinut, tai pyydä kertakäyttöinen kirjautumislinkki. |
 | Rukousaika on väärin | Tarkista aika Masjidboxista tai Mawaqitista. Sivu päivittyy tunnin sisällä. |
 | Tapahtuma ei näy | Tarkista päivämäärä. Menneet tapahtumat piiloutuvat. |
 | Jokin muu | Ota yhteyttä ylläpitäjään ja kerro sivu, laite ja kuvakaappaus. |
@@ -294,20 +302,19 @@ suomen-moskeijat/<moskeija>       ← yhden moskeijan tiedot + julkaisu.yml, jok
    - Permissions: **Administration, Contents, Pages, Workflows → Read and write**.
    - Tallenna: pohja → Settings → Secrets and variables → Actions → `MOSKEIJA_AVAIN`.
    - Uusi avain ennen kuin se vanhenee.
-2. **Pages CMS -sovellus** organisaatioon: kirjaudu https://app.pagescms.org ja asenna sovellus
-   organisaatiolle `suomen-moskeijat` (kaikki repot).
+2. **Hallintapaneeli:** asennus ja avaimet yksityisen repon `suomen-moskeijat/hallinta` README:ssä.
 3. **Organisaation oikeudet:** Settings → Member privileges → Base permissions: **No permission**.
    Muokkaajia ei lisätä organisaation jäseniksi.
-4. **Pohjan Pages:** pohja → Settings → Pages → Source: **GitHub Actions** (esittely ja ohjeet).
+4. **Pohjan Pages:** pohja → Settings → Pages → Source: **GitHub Actions** (hakemisto ja ohjeet).
 
 ### 3. Uuden moskeijan prosessi: luonnos → hyväksyntä → julkinen
 
-1. **Lisää moskeija** (kohta 3c) tai poista ehdotussivulta Ehdotus-valinta. Sivu on nyt **luonnos**: ylhäällä on keltainen palkki
+1. **Uusi moskeija** paneelissa (kohta 3c) tai ehdotussivulla **Moskeija lähtee mukaan**. Sivu on nyt **luonnos**: ylhäällä on keltainen palkki
    "Luonnos – sivua ei ole vielä julkaistu", eikä Google näytä sivua.
 2. **Tarkista** sivu itse tarkistuslistalla (alla).
 3. **Lähetä linkki moskeijalle**, esim. `https://suomen-moskeijat.github.io/<moskeija>/`.
-   He katsovat sivun puhelimella ja kertovat korjaukset, tai korjaavat itse Pages CMS:ssä.
-4. **Hyväksyntä:** Pages CMS → Moskeijan tiedot → poista valinta **Luonnos** → Save.
+   He katsovat sivun puhelimella ja kertovat korjaukset, tai korjaavat itse paneelissa.
+4. **Hyväksyntä:** pääkäyttäjä hyväksyy käyttöehdot ja painaa paneelin etusivulla **Julkaise sivu**.
    Palkki katoaa noin 2 minuutissa, ja Google saa näyttää sivun.
 5. Myöhemmin halutessa **oma verkkotunnus** (kohta 8).
 
@@ -332,7 +339,7 @@ suomen-moskeijat/<moskeija>       ← yhden moskeijan tiedot + julkaisu.yml, jok
 
 Kun moskeija lähtee mukaan ja antaa luvan, voit tuoda heidän vanhalta sivultaan logon, kuvat ja tekstit:
 - **Uusi repo:** Lisää moskeija -lomake ja kenttä **nettisivu**.
-- **Ehdotussivu on jo olemassa:** täydennä tiedot Pages CMS:ssä, tai pyydä Claudea tuomaan ne (`tuo_sivusto.py`).
+- **Ehdotussivu on jo olemassa:** täydennä tiedot paneelissa, tai pyydä Claudea tuomaan ne (`tuo_sivusto.py`).
 
 ### 3c. Uuden moskeijan lisääminen lomakkeella (noin 2 minuuttia)
 
@@ -347,7 +354,7 @@ Kun moskeija lähtee mukaan ja antaa luvan, voit tuoda heidän vanhalta sivultaa
 | **muokkaajat** | GitHub-tunnukset pilkulla eroteltuina. Kutsu vain tähän moskeijaan. |
 | **repo** | valinnainen, oletuksena nimestä |
 
-**Lisäyksen jälkeen tarkista** (Pages CMS:ssä tai repossa):
+**Lisäyksen jälkeen tarkista** (paneelissa):
 - [ ] nimi, osoite ja kartan sijainti
 - [ ] logo ja värit (värit arvataan logosta)
 - [ ] kuvat: poista julisteet ja kuvapankkikuvat
@@ -386,7 +393,7 @@ Vanha tapa (GitHub-tunnus ja Pages CMS) toimii yhä:
 |---|---|---|
 | Moskeijan sivun julkaisu: rukousajat, Instagram, YouTube, Telegram, Mawaqitin kuvat | kerran tunnissa ja aina kun tietoja muutetaan | moskeijan repo → Actions → *Julkaise sivusto* |
 | Yhteiset artikkelit (islaminusko.fi) | maanantaisin | pohja → Actions → *Päivitä yhteiset artikkelit* |
-| Esittelysivu ja nämä ohjeet | pohjan muutoksesta ja 6 tunnin välein | pohja → Actions → *Esittelysivu* |
+| Moskeijahakemisto ja nämä ohjeet | pohjan muutoksesta ja 6 tunnin välein | pohja → Actions → *Esittelysivu* |
 
 Jokaisen ajon voi käynnistää myös käsin: Actions → työnkulku → **Run workflow**.
 
@@ -395,7 +402,7 @@ Jokaisen ajon voi käynnistää myös käsin: Actions → työnkulku → **Run w
 - Ulkoasu: `assets/css/sivu.css`. Toiminnot: `assets/js/sivu.js`.
 - Sivut: juuren `*.html`. Osat: `_includes/osat/`. Käännökset: `_data/kaannokset.yml`.
 - Uuden moskeijan malli: `malli/` (myös Pages CMS:n kentät `malli/.pages.yml`).
-- **Testaa esittelysivulla**: https://suomen-moskeijat.github.io/pohja/. Esimerkit ovat kansiossa `esittely/`.
+- **Testaa testimoskeijalla**: https://suomen-moskeijat.github.io/testimoskeija/ (muokkaa paneelissa, ei oikeiden moskeijoiden sivuja).
 - Jos lisäät Pages CMS -kenttiä, kopioi `malli/.pages.yml` myös olemassa oleviin moskeijoihin.
 
 ### 7. Rukousaikojen lähteet
@@ -448,7 +455,7 @@ pohja/
   _data/kaannokset.yml       ← käyttöliittymän tekstit neljällä kielellä
   _artikkelit/islaminusko/   ← yhteiset artikkelit
   malli/                     ← uuden moskeijan tiedostot
-  esittely/                  ← esimerkkimoskeijat (esittelysivu)
+  esittely/ohjeet/           ← ohjesivun ulkoasu (hakemisto + ohjeet: /pohja/)
   .github/scripts/           ← haut ja automaatiot (Python, ei riippuvuuksia)
   .github/workflows/         ← julkaisu, Lisää moskeija, Lisää muokkaaja, artikkelit, esittely
 ```

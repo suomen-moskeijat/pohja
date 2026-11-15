@@ -73,7 +73,7 @@ def main():
         l = lista.pop(nimi.lower(), {})
         rivit.append({"nimi": e.get("title") or l.get("nimi") or nimi, "kaupunki": e.get("kaupunki") or l.get("kaupunki", ""),
                       "tila": tila, "sivu": f"https://{ORG.lower()}.github.io/{nimi}/",
-                      "cms": f"https://app.pagescms.org/{ORG}/{nimi}", "repo": f"https://github.com/{ORG}/{nimi}"})
+                      "cms": f"https://hallinta.suomenmoskeijat.fi/#/m/{nimi}", "repo": f"https://github.com/{ORG}/{nimi}"})
     for l in lista.values():  # listalla, ei vielä sivua (tila "ei" = moskeija ei halua sivua)
         if l.get("tila", "").strip() == "ei":
             continue
@@ -94,7 +94,6 @@ def main():
     sivu = f"""<!doctype html>
 <html lang="fi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
 <title>Suomen moskeijat – sivut</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Manrope:wght@400;600;700&display=swap">
 <style>
 :root{{--paa:#3f2717;--kulta:#c9a46a;--kerma:#faf6ee;--raja:#ebe3da;--hieno:#6f5b4c}}
 *{{box-sizing:border-box}} body{{margin:0;font:16px/1.55 Manrope,system-ui,sans-serif;color:#2b1a0e;background:var(--kerma)}}
@@ -112,10 +111,10 @@ h1{{font-size:clamp(26px,6vw,36px);margin:0 0 6px}} h2{{font-size:18px;margin:26
 </style></head><body><div class="k">
 <h1>Suomen moskeijoiden nettisivut</h1>
 <p class="selite">Kaikki sivut ja niiden tila. <b>Ehdotus</b> = esimerkkisivu, moskeija ei vielä mukana · <b>Luonnos</b> = moskeija tarkistaa · <b>Julkaistu</b> = valmis ja Googlessa.</p>
-<div class="yla"><a href="ohjeet/">Ohjeet</a><a class="toinen" href="hallinta/">Hallintapaneeli (malli)</a><a class="toinen" href="https://github.com/{ORG}/pohja/actions">Lisää moskeija (Actions)</a><a class="toinen" href="https://app.pagescms.org">Pages CMS</a></div>
+<div class="yla"><a href="ohjeet/">Ohjeet</a><a class="toinen" href="https://hallinta.suomenmoskeijat.fi/">Hallintapaneeli</a></div>
 <div class="suodatin"><button type="button" data-suodatin="" aria-pressed="true">Kaikki {len(rivit)}</button>{napit}</div>
 {''.join(kaupungit)}
-<p class="selite" style="margin-top:28px">Esimerkit: <a href="masjid-sunnah/">Masjid Sunnah</a> · <a href="hyvinkaa/">Hyvinkää</a>. Päivittyy automaattisesti.</p>
+<p class="selite" style="margin-top:28px">Esimerkkisivu kokeiluun: <a href="https://{ORG.lower()}.github.io/testimoskeija/">Testimoskeija</a>. Päivittyy automaattisesti.</p>
 </div>
 <script>
 document.querySelectorAll('[data-suodatin]').forEach(function(b){{b.addEventListener('click',function(){{

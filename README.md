@@ -76,7 +76,7 @@ Valinnat ovat valmiita vaihtoehtoja, joten sivu pysyy siistinä, vaikka moskeijo
 | Värit ja logo | `teema` | pääväri, korostusväri, logo ja vaalea logo alapalkkiin |
 | Tekstit | `esittely`, `meista`, `palvelut`, `kortit`, `lasten_opetus`, `lahjoitus` | suomi, englanti, arabia, somali (puuttuva kieli → englanti → suomi) |
 
-Esimerkki: `esittely/hyvinkaa/` (oma sivu `_sivut/hyvat-lahteet.md`).
+Esimerkki: testimoskeija (`suomen-moskeijat/testimoskeija`), https://suomen-moskeijat.github.io/testimoskeija/.
 
 ## Muokkaajat: vain oman moskeijan sivu
 
