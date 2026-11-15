@@ -439,7 +439,7 @@ html[data-kortit-palvelut="ruudukko"] .u-palvelu__kuva, html[data-kortit-palvelu
 html[data-kortit-palvelut="ruudukko"] .u-palvelu__nimi { font-size: 15.5px; }
 /* Palvelut: lista (rivi: kuvake, nimi, lyhyt kuvaus, nuoli) */
 html[data-kortit-palvelut="lista"] .u-palvelut { grid-template-columns: 1fr; gap: 10px; }
-html[data-kortit-palvelut="lista"] .u-palvelu__linkki { flex-direction: row; align-items: center; gap: 16px; padding: 14px 18px; border-radius: var(--r-m); }
+html[data-kortit-palvelut="lista"] .u-palvelu__linkki { flex-direction: row; align-items: center; gap: 16px; padding: 14px 18px; }
 html[data-kortit-palvelut="lista"] .u-palvelu__kuva { display: none; }
 html[data-kortit-palvelut="lista"] .u-palvelu__teksti { flex: 1; gap: 2px; }
 html[data-kortit-palvelut="lista"] .u-palvelu__nimi { font-size: 17px; }
@@ -1096,9 +1096,32 @@ html[lang="fi"] .u-ala__kaannos { display: none; }
 .u-rj__teksti small { color: var(--hieno); }
 
 /* Tapahtuman ilmoittautuminen (ilmoittaudu: lomake → yhteydenottolomake aiheella) */
-.u-ilmo { display: grid; grid-template-columns: auto 1fr; gap: 12px 16px; align-items: center; margin-top: 18px; padding: 22px 24px; border-color: color-mix(in srgb, var(--kulta) 55%, var(--raja)); background: color-mix(in srgb, var(--kulta-vaalea) 45%, var(--pinta)); }
+.u-ilmo { display: grid; grid-template-columns: auto 1fr; gap: 12px 16px; align-items: center; margin-top: 18px; padding: 22px 24px; }
 .u-ilmo h2 { margin: 0 0 4px; font-size: 20px; }
 .u-ilmo p { margin: 0; color: var(--hieno); }
 .u-ilmo .u-nappi { grid-column: 1 / -1; justify-self: start; }
 @media (min-width: 640px) { .u-ilmo { grid-template-columns: auto 1fr auto; } .u-ilmo .u-nappi { grid-column: auto; } }
 .u-ilmo-merkki { display: inline-block; margin-top: 4px; padding: 1px 9px; border-radius: 999px; background: var(--kulta-vaalea); color: var(--paa-tumma) !important; font-weight: 700; font-size: 12.5px; }
+
+
+/* ==========================================================================
+   Yhtenäiset kortit koko sivustossa. Moskeija valitsee tyylin paneelissa (Ulkoasu → Korttien tyyli):
+   html[data-kortti] = pehmea (oletus) | reunus | varjo | tausta. Pyöristys tulee asetuksesta Kulmat (--r-l).
+   ========================================================================== */
+:root { --kortti-bg: var(--pinta); --kortti-reuna: var(--raja); --kortti-varjo: var(--varjo-1); --kortti-r: var(--r-l); }
+html[data-kortti="reunus"] { --kortti-varjo: none; --kortti-reuna: color-mix(in srgb, var(--paa) 24%, var(--raja)); }
+html[data-kortti="varjo"] { --kortti-reuna: transparent; --kortti-varjo: var(--varjo-2); }
+html[data-kortti="tausta"] { --kortti-bg: color-mix(in srgb, var(--kulta-vaalea) 50%, var(--pinta)); --kortti-reuna: transparent; --kortti-varjo: none; }
+.u-kortti, .kk, .u-vierailu, .u-ramadan, .u-meista__kielet, .u-toiminta__kohta, .u-tg__julkaisu,
+.u-palvelu__linkki, .u-tapahtuma a, .u-viikko__paiva, .u-rj__kortti, .u-rmh,
+.u-rmh[data-tyyli="kortit"] .u-rmh__aika, .u-rmh[data-tyyli="kortit"] .u-rmh__rivi,
+html[data-kortit-tapahtumat="tiivis"] .u-tapahtumat {
+  background: var(--kortti-bg); border: 1px solid var(--kortti-reuna); box-shadow: var(--kortti-varjo); border-radius: var(--kortti-r); }
+.rk, .u-rukouskortti, .u-rmh[data-tyyli="kortit"] .u-rmh__paiva { border-radius: var(--kortti-r); }
+.u-rmh[data-tyyli="nauha"] { border-radius: 999px; }
+/* Kortin sisällä olevat rivit eivät ole omia kortteja */
+html[data-kortit-tapahtumat="tiivis"] .u-tapahtuma a { background: none; border: 0; border-top: 1px solid var(--raja); border-radius: 0; box-shadow: none; }
+html[data-kortit-tapahtumat="tiivis"] .u-tapahtuma:first-child a { border-top: 0; }
+.u-rmh[data-tyyli="kortit"] { background: none; border: 0; box-shadow: none; }
+/* Kortin päälle vietäessä sama korostus kaikkialla */
+a.u-palvelu__linkki:hover, .u-tapahtuma a:hover, .u-rj__kortti:hover, a.u-rmh:hover, a.u-kortti:hover { border-color: var(--kulta); }

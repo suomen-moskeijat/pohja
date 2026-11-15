@@ -724,6 +724,7 @@
       // Etusivun Ramadan-rivin asettelu ja väri (Rukousajat → Ramadan)
       if (d.ramadanHero && typeof d.ramadanHero === 'object') kaikki('.u-rmh').forEach(function (x) { ['tyyli', 'vari'].forEach(function (k) { var v = d.ramadanHero[k]; if (typeof v === 'string' && /^[a-z]{2,12}$/.test(v)) x.setAttribute('data-' + k, v); }); });
       // Korttien tyylit (Ulkoasu): tapahtumat lista | kortit | tiivis, palvelut kortit | ruudukko | lista
+      if (typeof d.kortti === 'string' && /^[a-z]{2,12}$/.test(d.kortti)) document.documentElement.setAttribute('data-kortti', d.kortti);
       if (d.kortit && typeof d.kortit === 'object') ['tapahtumat', 'palvelut'].forEach(function (x) { var v = d.kortit[x]; if (typeof v === 'string' && /^[a-z]{2,12}$/.test(v)) document.documentElement.setAttribute('data-kortit-' + x, v); });
       teksti('.u-alku__esittely', d.esittely);
       teksti('.u-alku__tunniste', d.tunniste);
