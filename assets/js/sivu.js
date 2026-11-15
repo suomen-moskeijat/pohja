@@ -538,9 +538,11 @@
   /* ---------- 6. Lomakkeet (lomakepalvelu tai valmis WhatsApp-/sähköpostiviesti) ---------- */
   function viesti(lomake, nimi) { kaikki('[data-viesti]', lomake).forEach(function (p) { p.hidden = p.dataset.viesti !== nimi; }); }
   function kentanNimi(el) {
+    // Kentän otsikko on .u-kentta-elementin ensimmäinen span (valintakentässä vaihtoehdoilla on omat spaninsa)
     var k = el.closest('.u-kentta') || el.closest('label');
-    var fi = k && k.querySelector('[data-l="fi"]');
-    return ((fi && fi.textContent) || el.name).replace('*', '').trim();
+    var o = k && k.firstElementChild && k.firstElementChild.tagName === 'SPAN' ? k.firstElementChild : k;
+    var fi = o && o.querySelector('[data-l="fi"]');
+    return ((fi && fi.textContent) || (o && o.textContent) || el.name).replace('*', '').replace(/\s+/g, ' ').trim();
   }
   kaikki('[data-lomake]').forEach(function (lomake) {
     var avattu = Date.now();
