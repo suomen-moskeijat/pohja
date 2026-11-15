@@ -2,6 +2,38 @@
   "ohje": "Testattavat muutokset. Kun teet muutoksen testi-haaraan, lisää tähän kohta (id pysyy samana; nosta versio, kun korjaat hylätyn testin). Kohta: 'Mitä tarkistetaan — Missä: valikkopolku'. Suorat linkit testin linkit-listaan nimettyinä nappeina (näkyvät jokaisessa paneelin versiossa). aloitus = mistä testaaja aloittaa. Älä kirjoita tänne nimiä tai muita henkilötietoja – repo on julkinen.",
   "testit": [
     {
+      "id": "palvelujen-jarjestys",
+      "otsikko": "Palvelujen järjestys nuolilla",
+      "kuvaus": "Palvelun lomakkeessa ei enää ole Järjestys-numeroa (sama numero kahdella sotki järjestyksen). Uusi palvelu tulee listan loppuun, ja järjestystä muutetaan Palvelut-listassa nuolilla ↑↓. Tallennuksen jälkeen kulmaan tulee Avaa sivu -linkki, joka näyttää päivitetyn sivun heti.",
+      "aloitus": "Kirjaudu testipaneeliin sähköpostikoodilla ja avaa testimoskeijan Palvelut (linkki alla).",
+      "alue": "paneeli",
+      "versio": 1,
+      "lisatty": "2026-11-16",
+      "kohdat": [
+        "Uuden palvelun lomakkeessa ei ole Järjestys-kenttää, ja uusi palvelu tulee listan viimeiseksi — Missä: Testipaneeli → Palvelut → Uusi palvelu → Tallenna",
+        "Nuolet ↑↓ siirtävät palvelua heti listassa ja alas tulee Tallenna järjestys -palkki — Missä: Testipaneeli → Palvelut → nuolet Muokkaa-napin vieressä",
+        "Tallenna järjestys → järjestys pysyy, kun sivun lataa uudelleen (numerot 1, 2, 3… ilman tuplia) — Missä: Palvelut-lista",
+        "Peruuta palauttaa tallennetun järjestyksen — Missä: Palvelut-lista → siirrä jotain → Peruuta",
+        "Kun julkaisu valmistuu, kulmaan tulee ✓ Muutos näkyy nyt sivulla ja Avaa sivu ↗, joka näyttää uuden järjestyksen heti — Missä: näytön alakulma tallennuksen jälkeen",
+        "Testimoskeijan Palvelut-sivulla ja etusivulla palvelut ovat samassa järjestyksessä kuin paneelissa — Missä: Testimoskeijan sivu → Palvelut",
+        "Puhelimella listan rivit ovat selkeitä: nimi koko leveydellä, nuolet ja Muokkaa omalla rivillään — Missä: Palvelut-lista puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi palvelu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut/uusi"
+        },
+        {
+          "nimi": "Sivu: Palvelut",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/"
+        }
+      ]
+    },
+    {
       "id": "testaus-helpommaksi",
       "otsikko": "Testaus helpommaksi (tämä sivu)",
       "kuvaus": "Testaus ja julkaisu -sivulla on Aloita testaus: testit yksi kerrallaan. Jokaisessa kohdassa kerrotaan, mistä sen löytää, ja linkkinapit vievät suoraan oikeaan paikkaan. Ei toimi -palautteeseen voi valita kohdan ja liittää kuvakaappauksen.",
