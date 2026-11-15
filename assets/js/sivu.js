@@ -677,6 +677,14 @@
     document.addEventListener('kielivaihto', paikka);
     paikka(); paivita();
   });
+  // Tapahtuman Ilmoittaudu-palkki (puhelin): näkyy, kun tietokortti ei ole näkyvissä
+  var ilmoPalkki = document.querySelector('[data-ilmopalkki]'), ilmoKortti = document.getElementById('ilmoittaudu');
+  if (ilmoPalkki && ilmoKortti && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (e) {
+      var nayta = !e[0].isIntersecting && e[0].boundingClientRect.top > 0; // kortti alempana (ei vielä vieritetty ohi)
+      ilmoPalkki.hidden = !nayta; document.body.classList.toggle('on-ilmopalkki', nayta);
+    }).observe(ilmoKortti);
+  }
   // Ilmoituspalkki: piilotetaan, jos päivä ei ole ilmoituksen voimassaoloajalla (sivu rakennetaan kerran tunnissa)
   kaikki('[data-ilmoitus]').forEach(function (el) {
     var d = new Date(), t = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);

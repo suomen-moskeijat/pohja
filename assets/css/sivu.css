@@ -251,6 +251,9 @@ html[dir="rtl"] .kk__taulu tr.kk__tanaan { box-shadow: inset -4px 0 0 var(--kult
 .u-proosa :where(p, ul, ol, h3, blockquote) + :where(p, ul, ol, h3, blockquote) { margin-top: 1em; }
 .u-proosa--iso { font-size: 17px; }
 .u-proosa h3 { margin-top: 1.6em; }
+.u-proosa h2 { margin: 1.5em 0 .5em; font-size: clamp(20px, 2.6vw, 24px); }
+.u-proosa h2:first-child, .u-proosa h3:first-child { margin-top: 0; }
+.u-proosa :is(p, ul, ol) + :is(p, ul, ol) { margin-top: 1em; }
 .u-proosa ul li { position: relative; padding-inline-start: 28px; }
 .u-proosa ul li + li { margin-top: 8px; }
 .u-proosa ul li::before { content: ""; position: absolute; inset-inline-start: 4px; top: .62em; width: 8px; height: 8px; background: var(--kulta); transform: rotate(45deg); }
@@ -1139,4 +1142,21 @@ a.u-palvelu__linkki:hover, .u-tapahtuma a:hover, .u-rj__kortti:hover, a.u-rmh:ho
 .u-taptieto__toiminto { display: grid; gap: 8px; margin-top: 6px; text-align: center; }
 .u-taptieto__nappi { width: 100%; justify-content: center; }
 .u-taptieto__toiminto small { color: var(--hieno); font-size: 13.5px; }
-.u-tapsivu__kuva { display: block; width: 100%; border-radius: var(--r-m); margin-bottom: 16px; }
+
+/* Tapahtuman pikatiedot otsikon alla ja puhelimen kiinteä Ilmoittaudu-palkki */
+.u-tapsivu__pika { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; }
+.u-tapsivu__pika > span { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: var(--pinta); border: 1px solid var(--raja); color: var(--paa-tumma); font-weight: 600; font-size: 14.5px; }
+.u-tapsivu__pika svg { color: var(--paa); flex: none; }
+.u-tapsivu__kuvaus .u-proosa > :first-child { margin-top: 0; }
+.u-tapsivu__kuvaus { padding: 0; overflow: hidden; }
+.u-tapsivu__kuvaus .u-proosa { padding: 24px; }
+@media (min-width: 900px) { .u-tapsivu__kuvaus .u-proosa { padding: 32px 36px; } }
+.u-tapsivu__kuva { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; margin: 0 !important; border-radius: 0 !important; }
+.u-ilmopalkki { position: fixed; z-index: 45; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 12px; padding: 10px 10px 10px 16px; border-radius: var(--kortti-r, 20px); background: var(--kortti-bg, #fff); border: 1px solid var(--kortti-reuna, var(--raja)); box-shadow: var(--varjo-2); transition: transform .2s, opacity .2s; }
+.u-ilmopalkki[hidden] { display: flex; opacity: 0; transform: translateY(120%); pointer-events: none; }
+.u-ilmopalkki > span { flex: 1; min-width: 0; display: grid; }
+.u-ilmopalkki b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--paa-tumma); }
+.u-ilmopalkki small { color: var(--hieno); font-size: 13px; }
+.u-ilmopalkki .u-nappi { flex: none; }
+@media (min-width: 900px) { .u-ilmopalkki { display: none !important; } }
+body.on-ilmopalkki .u-pikanapit { bottom: calc(92px + env(safe-area-inset-bottom)); }
