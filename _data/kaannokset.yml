@@ -67,6 +67,8 @@ tapahtumat_teksti:  { fi: "Säännöllinen toiminta ja tulevat tapahtumat.", en:
 klo:                { fi: "klo", en: "at", ar: "الساعة", so: "saacadda" }
 lisaa_kalenteriin:  { fi: "Lisää kalenteriin", en: "Add to calendar", ar: "أضف إلى التقويم", so: "Ku dar kalandarka" }
 ilmoittaudu:        { fi: "Ilmoittaudu", en: "Register", ar: "سجّل الآن", so: "Is diiwaangeli" }
+ilmoittautuminen:   { fi: "Ilmoittautuminen", en: "Registration", ar: "التسجيل", so: "Is-diiwaangelin" }
+ilmoittaudu_teksti: { fi: "Kerro, että tulet, tai kysy lisää. Vastaamme pian.", en: "Let us know you are coming, or ask us anything. We will reply soon.", ar: "أخبرنا بحضورك أو اسألنا ما تريد. سنرد قريبًا.", so: "Noo sheeg inaad imanayso, ama wax na weydii. Dhawaan ayaan kuu jawaabi doonaa." }
 joka_viikko:        { fi: "Joka viikko", en: "Every week", ar: "كل أسبوع", so: "Toddobaad kasta" }
 viikko_ohjelma_teksti: { fi: "Säännöllinen toiminta viikoittain. Tervetuloa!", en: "Our regular weekly activities. Welcome!", ar: "أنشطتنا الأسبوعية المنتظمة. أهلاً وسهلاً!", so: "Hawlahayaga joogtada ah ee toddobaadlaha. Soo dhawoow!" }
 alkaen:             { fi: "alkaen", en: "from", ar: "ابتداءً من", so: "laga bilaabo" }

@@ -20,6 +20,7 @@
       <span class="u-tapahtuma__tiedot">
         <strong>{% include kolme.html fi=t.title doc=t %}</strong>
         {% if t.alkaa and t.alkaa != "" %}<small>{% include k.html a="klo" %} <span dir="ltr">{{ t.alkaa }}{% if t.loppuu and t.loppuu != "" %}–{{ t.loppuu }}{% endif %}</span></small>{% endif %}
+        {% if t.ilmoittaudu == "lomake" or t.ilmoittaudu == "linkki" %}<small class="u-ilmo-merkki">{% include k.html a="ilmoittaudu" %} →</small>{% endif %}
       </span>
     </a>
   </li>

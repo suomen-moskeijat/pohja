@@ -29,6 +29,15 @@ layout: sivu
   <article class="u-kortti u-artikkeli"><div class="u-proosa">
     {% if page.kuva and page.kuva != "" %}<img src="{{ page.kuva | relative_url }}" alt="" style="width:100%;border-radius:var(--r-m);margin-bottom:16px">{% endif %}
     {{ content }}
-    {% if page.ilmoittautuminen and page.ilmoittautuminen != "" %}<p><a class="u-nappi u-nappi--kulta" href="{{ page.ilmoittautuminen }}" target="_blank" rel="noopener">{% include k.html a="ilmoittaudu" %}</a></p>{% endif %}
+    {% if page.ilmoittaudu != "lomake" and page.ilmoittaudu != "ei" and page.ilmoittautuminen and page.ilmoittautuminen != "" %}<p><a class="u-nappi u-nappi--kulta" href="{{ page.ilmoittautuminen }}" target="_blank" rel="noopener">{% include k.html a="ilmoittaudu" %}</a></p>{% endif %}
   </div></article>
+  {%- if page.ilmoittaudu == "lomake" -%}
+  {%- if page.toistuu == "viikoittain" -%}{%- assign _ia = page.title -%}{%- else -%}{%- capture _ia -%}{{ page.title }} ({{ page.paiva | date: '%-d.%-m.%Y' }}){%- endcapture -%}{%- endif -%}
+  {%- capture _ia -%}{{ site.data.kaannokset.ilmoittautuminen.fi }}: {{ _ia }}{%- endcapture %}
+  <div class="u-kortti u-ilmo" id="ilmoittaudu">
+    <span class="u-ikoni">{% include ikoni-ph.html nimi="kalenteri" koko=24 %}</span>
+    <div><h2>{% include k.html a="ilmoittaudu" %}</h2><p>{% include k.html a="ilmoittaudu_teksti" %}</p></div>
+    <a class="u-nappi u-nappi--kulta" href="{{ '/yhteystiedot/' | relative_url }}?aihe={{ _ia | url_encode }}#kysy">{% include k.html a="ilmoittaudu" %} <span class="u-flip" aria-hidden="true">→</span></a>
+  </div>
+  {%- endif %}
 </div>
