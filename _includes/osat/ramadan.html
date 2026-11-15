@@ -35,6 +35,20 @@
     {% if _rmm.fitra and _rmm.fitra != "" %}<div><dt>{% include k.html a="fitra" %}</dt><dd>{% include kt.html arvo=_rmm.fitra %}</dd></div>{% endif %}
   </dl>
   {% if _rmm.teksti and _rmm.teksti != "" %}<div class="u-ramadan__teksti">{% include kt.html arvo=_rmm.teksti md=true tagi="div" %}</div>{% endif %}
+  {%- comment -%} Ramadan-julkaisut (julkaisustudion tarawih-vuorot, Eid ym.: artikkeli, jossa ramadan: true), tältä kaudelta {%- endcomment -%}
+  {%- assign _rj_raja = _rm_alkaa | date: "%s" | minus: 10368000 | date: "%Y-%m-%d" -%}
+  {%- assign _rj = site.artikkelit | where: "ramadan", true | sort: "paiva" | reverse -%}
+  {%- capture _rj_kortit -%}{%- for a in _rj -%}{%- assign _ap = a.paiva | date: "%Y-%m-%d" -%}{%- if _ap < _rj_raja -%}{%- continue -%}{%- endif %}
+    <li><a class="u-rj__kortti" href="{{ a.url | relative_url }}">
+      {% if a.kuva and a.kuva != "" %}<img src="{{ a.kuva | relative_url }}" alt="{{ a.title | escape }}" loading="lazy">{% else %}<span class="u-rj__ei-kuvaa">{% include ikoni-ph.html nimi="kuu" koko=40 %}</span>{% endif %}
+      <span class="u-rj__teksti"><strong>{{ a.title }}</strong>{% if a.kuvaus %}<small>{{ a.kuvaus }}</small>{% endif %}</span>
+    </a></li>
+  {%- endfor -%}{%- endcapture -%}
+  {%- assign _rj_kortit = _rj_kortit | strip -%}
+  {% if _rj_kortit != "" %}
+  <h3 class="u-ramadan__otsikko">{% include k.html a="ramadan_julkaisut" %}</h3>
+  <ul class="u-rj">{{ _rj_kortit }}</ul>
+  {% endif %}
   <h3 class="u-ramadan__otsikko">{% include k.html a="ramadan_aikataulu" %}</h3>
   <div class="kk__kaari">
     <table class="kk__taulu u-ramadan__taulu" data-rm-taulu>

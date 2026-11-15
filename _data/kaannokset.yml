@@ -294,6 +294,7 @@ ramadan_kareem:     { fi: "Ramadan Kareem", en: "Ramadan Kareem", ar: "رمضا�
 iftariin:           { fi: "Iftariin", en: "Until iftar", ar: "حتى الإفطار", so: "Ilaa afurka" }
 suhuriin:           { fi: "Suhur päättyy", en: "Suhoor ends in", ar: "ينتهي السحور بعد", so: "Suxuurku wuxuu dhammaanayaa" }
 huomenna_suhur:     { fi: "Huomenna suhur päättyy", en: "Tomorrow suhoor ends", ar: "غدًا ينتهي السحور", so: "Berri suxuurku wuxuu dhammaanayaa" }
+ramadan_julkaisut:  { fi: "Ramadan-julkaisut", en: "Ramadan posts", ar: "منشورات رمضان", so: "Qoraallada Ramadaan" }
 ramadaniin:         { fi: "Ramadaniin", en: "Until Ramadan", ar: "حتى رمضان", so: "Ilaa Ramadaan" }
 paivaa:             { fi: "päivää", en: "days", ar: "يومًا", so: "maalmood" }
 rm_kalenteriin:     { fi: "Lisää Ramadan kalenteriin", en: "Add Ramadan to your calendar", ar: "أضف رمضان إلى تقويمك", so: "Ku dar Ramadaan kalandarkaaga" }
