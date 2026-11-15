@@ -115,7 +115,7 @@
     {% if m.sijainti.lat and m.sijainti.lat != 0 %}"geo": { "@type": "GeoCoordinates", "latitude": {{ m.sijainti.lat }}, "longitude": {{ m.sijainti.lon }} },
     "hasMap": {{ "https://www.google.com/maps/search/?api=1&query=" | append: m.sijainti.lat | append: "," | append: m.sijainti.lon | jsonify }},{% endif %}
     {%- if page.url == "/" -%}{%- assign _nyt = site.time | date: "%Y-%m-%d" -%}{%- assign _tt = site.tapahtumat | sort: "paiva" -%}
-    {%- capture _tulevat -%}{%- assign _n = 0 -%}{%- for t in _tt -%}{%- assign _tpvm = t.paiva | date: "%Y-%m-%d" -%}{%- if _tpvm >= _nyt and _n < 5 -%}{%- assign _n = _n | plus: 1 -%}{%- if _n > 1 -%},{%- endif -%}{ "@type": "Event", "name": {{ t.title | jsonify }}, "startDate": {{ _tpvm | jsonify }}, "url": {{ site.url | append: site.baseurl | append: t.url | jsonify }}, "location": { "@id": {{ kotisivu | append: "#moskeija" | jsonify }} } }{%- endif -%}{%- endfor -%}{%- endcapture -%}
+    {%- capture _tulevat -%}{%- assign _n = 0 -%}{%- for t in _tt -%}{%- if t.toistuu == "viikoittain" -%}{%- continue -%}{%- endif -%}{%- assign _tpvm = t.paiva | date: "%Y-%m-%d" -%}{%- if _tpvm >= _nyt and _n < 5 -%}{%- assign _n = _n | plus: 1 -%}{%- if _n > 1 -%},{%- endif -%}{ "@type": "Event", "name": {{ t.title | jsonify }}, "startDate": {{ _tpvm | jsonify }}, "url": {{ site.url | append: site.baseurl | append: t.url | jsonify }}, "location": { "@id": {{ kotisivu | append: "#moskeija" | jsonify }} } }{%- endif -%}{%- endfor -%}{%- endcapture -%}
     {%- if _tulevat != "" %}
     "event": [{{ _tulevat }}],{% endif -%}{%- endif %}
     "isAccessibleForFree": true,
@@ -155,8 +155,14 @@
     "name": {{ page.title | jsonify }},
     {%- capture _alku -%}{{ page.paiva | date: "%Y-%m-%d" }}{% if page.alkaa and page.alkaa != "" %}T{{ page.alkaa | replace: ".", ":" | strip }}{% endif %}{%- endcapture %}
     "startDate": {{ _alku | jsonify }},
-    {%- capture _loppu -%}{{ page.paiva_loppuu | default: page.paiva | date: "%Y-%m-%d" }}{% if page.loppuu and page.loppuu != "" %}T{{ page.loppuu | replace: ".", ":" | strip }}{% endif %}{%- endcapture %}
+    {%- if page.toistuu == "viikoittain" -%}{%- assign _lp = page.paiva -%}{%- else -%}{%- assign _lp = page.paiva_loppuu | default: page.paiva -%}{%- endif -%}
+    {%- capture _loppu -%}{{ _lp | date: "%Y-%m-%d" }}{% if page.loppuu and page.loppuu != "" %}T{{ page.loppuu | replace: ".", ":" | strip }}{% endif %}{%- endcapture %}
     "endDate": {{ _loppu | jsonify }}, "eventStatus": "https://schema.org/EventScheduled",
+    {%- if page.toistuu == "viikoittain" -%}
+    {%- assign _sd = "ma:Monday,ti:Tuesday,ke:Wednesday,to:Thursday,pe:Friday,la:Saturday,su:Sunday" | split: "," -%}
+    {%- capture _bd -%}{%- for _x in _sd -%}{%- assign _xx = _x | split: ":" -%}{%- if page.viikonpaivat contains _xx[0] -%}"https://schema.org/{{ _xx[1] }}",{%- endif -%}{%- endfor -%}{%- endcapture %}
+    "eventSchedule": { "@type": "Schedule", "repeatFrequency": "P1W", "scheduleTimezone": "Europe/Helsinki", "startDate": {{ page.paiva | date: "%Y-%m-%d" | jsonify }}{% if page.paiva_loppuu and page.paiva_loppuu != "" %}, "endDate": {{ page.paiva_loppuu | date: "%Y-%m-%d" | jsonify }}{% endif %}{% if _bd != "" %}, "byDay": [{{ _bd | split: "," | join: "," }}]{% endif %}{% if page.alkaa and page.alkaa != "" %}, "startTime": {{ page.alkaa | replace: ".", ":" | jsonify }}{% endif %}{% if page.loppuu and page.loppuu != "" %}, "endTime": {{ page.loppuu | replace: ".", ":" | jsonify }}{% endif %} },
+    {%- endif %}
     "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
     "location": { "@type": "Place", "name": {{ page.paikka | default: m.title | jsonify }}, "address": {{ page.paikka | default: m.osoite | jsonify }} },
     "organizer": { "@id": {{ kotisivu | append: "#moskeija" | jsonify }} },

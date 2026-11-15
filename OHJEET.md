@@ -101,11 +101,19 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 Muokkaa kenttiä ja paina lopuksi **Tallenna**. Tekstikentissä on rivi jokaiselle sivun kielelle, ja
 puuttuvat kielet voi kääntää tekoälyllä napista (tarkista käännös ennen tallennusta).
 
-### 3. Tapahtuman lisääminen
+### 3. Tapahtumat ja viikoittainen toiminta
 
 1. **Tapahtumat → Uusi tapahtuma**
-2. Täytä **nimi**, **päivämäärä** ja halutessasi **alkaa / päättyy klo** (esim. `18.00`), paikka, kuva ja kuvaus.
-3. **Tallenna.** Tapahtuma näkyy etusivulla ja Tapahtumat-sivulla. Se katoaa, kun päivä on mennyt.
+2. Valitse ensin **Kuinka usein?**
+   - **Kerran:** yksittäinen tapahtuma, esim. Eid-rukous, avoimet ovet tai yhteinen iftar. Täytä päivä ja kellonaika.
+   - **Joka viikko:** säännöllinen toiminta, esim. Koraanikoulu sunnuntaisin tai naisten opintopiiri torstaisin.
+     Valitse **viikonpäivät**, kellonaika ja halutessasi **kenelle** (lapset, naiset …). **Päivä** = mistä alkaen,
+     **Päättymispäivä** = kauden viimeinen kerta (tyhjä = toistaiseksi).
+3. **Tallenna.** Kertaluonteiset näkyvät etusivulla ja Tapahtumat-sivulla, ja ne katoavat, kun päivä on mennyt.
+   Joka viikko toistuvat näkyvät Tapahtumat-sivun **viikko-ohjelmassa** ja tilattavassa kalenterissa.
+
+> **Palvelut** (nikah, hautajaiset, kouluvierailut, neuvonta) ovat eri asia: ne lisätään kohtaan
+> **Sivut → Opetus ja palvelut → Palvelut**, koska niillä ei ole kellonaikaa.
 
 ### 4. Tiedotteen tai artikkelin kirjoittaminen
 

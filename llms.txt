@@ -77,8 +77,16 @@ sitemap: false
 
 {%- assign _nyt = site.time | date: "%Y-%m-%d" -%}
 {%- assign _tulevat = site.tapahtumat | where_exp: "t", "t.paiva" | sort: "paiva" -%}
-{%- capture _tap -%}{%- for t in _tulevat -%}{%- assign _p = t.paiva | date: "%Y-%m-%d" -%}{%- if _p >= _nyt %}
+{%- capture _tap -%}{%- for t in _tulevat -%}{%- if t.toistuu == "viikoittain" -%}{%- continue -%}{%- endif -%}{%- assign _p = t.paiva | date: "%Y-%m-%d" -%}{%- if _p >= _nyt %}
 - {{ t.paiva | date: "%-d.%-m.%Y" }}{% if t.alkaa and t.alkaa != "" %} klo {{ t.alkaa }}{% endif %}: [{{ t.title }}]({{ juuri }}{{ t.url }}){% endif -%}{%- endfor -%}{%- endcapture -%}
+{%- assign _vpn = "ma:maanantaisin,ti:tiistaisin,ke:keskiviikkoisin,to:torstaisin,pe:perjantaisin,la:lauantaisin,su:sunnuntaisin" | split: "," -%}
+{%- capture _ohj -%}{%- for t in _tulevat -%}{%- if t.toistuu != "viikoittain" -%}{%- continue -%}{%- endif -%}{%- assign _l = t.paiva_loppuu | date: "%Y-%m-%d" | default: "9999-12-31" -%}{%- if _l < _nyt -%}{%- continue -%}{%- endif %}
+- {% capture _pv %}{% for _x in _vpn %}{% assign _xx = _x | split: ":" %}{% if t.viikonpaivat contains _xx[0] %}{{ _xx[1] }}, {% endif %}{% endfor %}{% endcapture %}{{ _pv | split: ", " | join: ", " }} {% if t.alkaa and t.alkaa != "" %}klo {{ t.alkaa }}{% if t.loppuu and t.loppuu != "" %}–{{ t.loppuu }}{% endif %}{% endif %}: [{{ t.title }}]({{ juuri }}{{ t.url }}){%- endfor -%}{%- endcapture -%}
+{%- if _ohj != "" %}
+
+## Viikko-ohjelma (toistuu joka viikko)
+{{ _ohj }}
+{%- endif %}
 {%- if _tap != "" %}
 
 ## Tulevat tapahtumat

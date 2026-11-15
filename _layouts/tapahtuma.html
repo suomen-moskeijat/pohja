@@ -8,7 +8,18 @@ layout: sivu
     <p class="u-eyebrow u-eyebrow--vaalea"><a href="{{ '/tapahtumat/' | relative_url }}">{% include k.html a="nav_tapahtumat" %}</a></p>
     <h1>{% include kolme.html fi=page.title doc=page %}</h1>
     <p class="u-sivuhero__johdanto">
+      {%- if page.toistuu == "viikoittain" -%}
+      {%- assign _vp = page.viikonpaivat -%}{%- assign _w = "su,ma,ti,ke,to,pe,la" | split: "," -%}
+      {%- if _vp == nil or _vp.size == 0 -%}{%- assign _wi = page.paiva | date: '%w' | plus: 0 -%}{%- assign _vp = _w[_wi] | split: "," -%}{%- endif -%}
+      {%- assign _jarj = "ma,ti,ke,to,pe,la,su" | split: "," -%}
+      {%- capture _vpt -%}{%- for _p in _jarj -%}{%- if _vp contains _p -%}{% assign _a = "vp_" | append: _p %}{% include k.html a=_a %}|{%- endif -%}{%- endfor -%}{%- endcapture -%}
+      <strong>{% include k.html a="joka_viikko" %}: {{ _vpt | split: "|" | join: ", " }}</strong>
+      {%- assign _alku = page.paiva | date: '%Y-%m-%d' -%}{%- assign _nyt = site.time | date: '%Y-%m-%d' -%}
+      {%- if _alku > _nyt %} · {% include k.html a="alkaen" %} <span dir="ltr">{{ page.paiva | date: '%-d.%-m.%Y' }}</span>{% endif -%}
+      {%- if page.paiva_loppuu and page.paiva_loppuu != "" %} · {% include k.html a="asti" %} <span dir="ltr">{{ page.paiva_loppuu | date: '%-d.%-m.%Y' }}</span>{% endif -%}
+      {%- else -%}
       <strong dir="ltr">{{ page.paiva | date: '%-d.%-m.%Y' }}{% if page.paiva_loppuu and page.paiva_loppuu != "" %} – {{ page.paiva_loppuu | date: '%-d.%-m.%Y' }}{% endif %}</strong>
+      {%- endif -%}
       {% if page.alkaa and page.alkaa != "" %} · {% include k.html a="klo" %} <span dir="ltr">{{ page.alkaa }}{% if page.loppuu and page.loppuu != "" %}–{{ page.loppuu }}{% endif %}</span>{% endif %}
       <br>{% if page.paikka and page.paikka != "" %}{{ page.paikka }}{% else %}{{ m.osoite }}{% endif %}
     </p>

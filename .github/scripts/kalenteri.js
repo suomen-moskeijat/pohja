@@ -137,10 +137,30 @@ function jumua() {
   return t;
 }
 function paivaksi(s) { const m = String(s || '').match(/^(\d{4})-(\d{2})-(\d{2})/); return m ? new Date(+m[1], m[2] - 1, +m[3], 12) : null; }
+// Toistuva toiminta (toistuu: viikoittain): yksi VEVENT, jossa RRULE ja Helsingin paikallinen aika (kesäaika pysyy oikein)
+const ICS_VP = { ma: 'MO', ti: 'TU', ke: 'WE', to: 'TH', pe: 'FR', la: 'SA', su: 'SU' };
+const JS_VP = ['su', 'ma', 'ti', 'ke', 'to', 'pe', 'la'];
+function paikallinen(p, hhmm) { const m = String(hhmm || '').match(/(\d{1,2})[.:](\d{2})/); return m ? `${paiva8(p)}T${m[1].padStart(2, '0')}${m[2]}00` : null; }
+function toistuva(e, p, yhteinen) {
+  let vp = (Array.isArray(e.viikonpaivat) ? e.viikonpaivat : []).filter((x) => ICS_VP[x]);
+  if (!vp.length) vp = [JS_VP[p.getDay()]];
+  // Ensimmäinen esiintymä aloituspäivänä tai sen jälkeen jollakin valitulla viikonpäivällä
+  let eka = p;
+  for (let i = 0; i < 7; i++) { const d = new Date(p.getFullYear(), p.getMonth(), p.getDate() + i, 12); if (vp.includes(JS_VP[d.getDay()])) { eka = d; break; } }
+  const loppuPv = paivaksi(e.paiva_loppuu);
+  const rrule = `RRULE:FREQ=WEEKLY;BYDAY=${vp.map((x) => ICS_VP[x]).join(',')}${loppuPv ? `;UNTIL=${paiva8(loppuPv)}T235959Z` : ''}`;
+  const uid = `toistuva-${String(e.tunnus || e.nimi).replace(/[^a-z0-9-]/gi, '-').slice(0, 60)}`;
+  const alku = paikallinen(eka, e.alkaa);
+  if (!alku) return { ...yhteinen, uid, rrule, kokoPaiva: true, alkuPv: eka, loppuPv: new Date(eka.getFullYear(), eka.getMonth(), eka.getDate() + 1, 12) };
+  let loppu = paikallinen(eka, e.loppuu);
+  if (!loppu || loppu <= alku) { const t = String(e.alkaa).match(/(\d{1,2})[.:](\d{2})/); loppu = paikallinen(eka, `${Math.min(23, Number(t[1]) + 2)}.${Number(t[1]) + 2 > 23 ? '59' : t[2]}`); } // oletuskesto 2 h
+  return { ...yhteinen, uid, rrule, paikallinenAlku: alku, paikallinenLoppu: loppu };
+}
 function tapahtumat() {
   return (tiedot.tapahtumat || []).map((e) => {
     const p = paivaksi(e.paiva);
     if (!p) return null;
+    if (e.toistuu === 'viikoittain') return toistuva(e, p, { nimi: e.nimi, kuvaus: [e.kuvaus || '', e.url || ''].filter(Boolean).join('\n\n'), paikka: e.paikka || paikka, url: e.url });
     const loppuPv = paivaksi(e.paiva_loppuu) || p;
     const alku = e.alkaa ? hki(p, e.alkaa) : null;
     const kuvaus = [e.kuvaus || '', e.url || ''].filter(Boolean).join('\n\n');
@@ -194,10 +214,15 @@ function ics(lajit, tapaht) {
     `X-WR-CALNAME:${teksti(`${tiedot.nimi} – ${lajit.map((l) => NIMET[l]).join(', ')}`)}`, `X-WR-TIMEZONE:${TZ}`,
     `X-WR-CALDESC:${teksti(`${tiedot.nimi}: ${lajit.map((l) => NIMET[l].toLowerCase()).join(', ')}. Päivittyy automaattisesti. ${tiedot.sivu || ''}${MAININTA ? `\n${MAININTA}` : ''}`)}`,
     'REFRESH-INTERVAL;VALUE=DURATION:PT4H', 'X-PUBLISHED-TTL:PT4H'];
+  if (tapaht.some((e) => e.paikallinenAlku)) r.push('BEGIN:VTIMEZONE', `TZID:${TZ}`,
+    'BEGIN:DAYLIGHT', 'TZOFFSETFROM:+0200', 'TZOFFSETTO:+0300', 'TZNAME:EEST', 'DTSTART:19700329T030000', 'RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU', 'END:DAYLIGHT',
+    'BEGIN:STANDARD', 'TZOFFSETFROM:+0300', 'TZOFFSETTO:+0200', 'TZNAME:EET', 'DTSTART:19701025T040000', 'RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU', 'END:STANDARD', 'END:VTIMEZONE');
   for (const e of tapaht) {
     r.push('BEGIN:VEVENT', `UID:${e.uid}@${tunnus}.suomenmoskeijat.fi`, `DTSTAMP:${leima}`);
-    if (e.kokoPaiva) r.push(`DTSTART;VALUE=DATE:${paiva8(e.alkuPv)}`, `DTEND;VALUE=DATE:${paiva8(e.loppuPv)}`, 'TRANSP:TRANSPARENT');
+    if (e.paikallinenAlku) r.push(`DTSTART;TZID=${TZ}:${e.paikallinenAlku}`, `DTEND;TZID=${TZ}:${e.paikallinenLoppu}`);
+    else if (e.kokoPaiva) r.push(`DTSTART;VALUE=DATE:${paiva8(e.alkuPv)}`, `DTEND;VALUE=DATE:${paiva8(e.loppuPv)}`, 'TRANSP:TRANSPARENT');
     else r.push(`DTSTART:${utc(e.alku)}`, `DTEND:${utc(e.loppu)}`);
+    if (e.rrule) r.push(e.rrule);
     r.push(`SUMMARY:${teksti(e.nimi)}`);
     if (e.kuvaus) r.push(`DESCRIPTION:${teksti(e.kuvaus)}`);
     if (e.paikka) r.push(`LOCATION:${teksti(e.paikka)}`);

@@ -6,6 +6,14 @@ permalink: /tapahtumat/
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {% include osat/sivuhero.html avain="nav_tapahtumat" johdanto_avain="tapahtumat_teksti" %}
 <div class="u-kehys u-sivu u-sivu--kapea">
+  {%- capture _ohjelma -%}{% include osat/viikko-ohjelma.html %}{%- endcapture -%}{%- assign _ohjelma = _ohjelma | strip -%}
+  {% if _ohjelma != "" %}
+  <section class="u-viikko-osio" id="joka-viikko">
+    <h2>{% include k.html a="joka_viikko" %}</h2>
+    {{ _ohjelma }}
+  </section>
+  <h2 class="u-tulevat-otsikko">{% include k.html a="tulevat_tapahtumat" %}</h2>
+  {% endif %}
   {% include osat/tapahtumat.html moskeija=m %}
   {% include osat/kalenteri.html valitut="tapahtumat" %}
 </div>

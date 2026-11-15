@@ -1,0 +1,37 @@
+{%- comment -%}
+  Viikko-ohjelma: toistuvat tapahtumat (toistuu: viikoittain, viikonpaivat: [ma, ti, …]) viikonpäivittäin.
+  Päättyneet (paiva_loppuu menneisyydessä) jäävät pois. Ilman viikonpäiviä käytetään aloituspäivän viikonpäivää.
+  Tulostaa tyhjän, jos toistuvaa toimintaa ei ole.
+{%- endcomment -%}
+{%- assign _vo_nyt = site.time | date: '%Y-%m-%d' -%}
+{%- assign _vo_t = site.tapahtumat | where: "toistuu", "viikoittain" | sort: "alkaa" -%}
+{%- assign _vo_paivat = "ma,ti,ke,to,pe,la,su" | split: "," -%}
+{%- assign _vo_w = "su,ma,ti,ke,to,pe,la" | split: "," -%}
+{%- capture _vo -%}
+{%- for _p in _vo_paivat -%}
+  {%- capture _vo_rivit -%}
+  {%- for t in _vo_t -%}
+    {%- assign _loppu = t.paiva_loppuu | date: '%Y-%m-%d' | default: '9999-12-31' -%}
+    {%- if _loppu < _vo_nyt -%}{%- continue -%}{%- endif -%}
+    {%- assign _vp = t.viikonpaivat -%}
+    {%- if _vp == nil or _vp.size == 0 -%}{%- assign _wi = t.paiva | date: '%w' | plus: 0 -%}{%- assign _vp = _vo_w[_wi] | split: "," -%}{%- endif -%}
+    {%- unless _vp contains _p -%}{%- continue -%}{%- endunless -%}
+    {%- assign _alku = t.paiva | date: '%Y-%m-%d' -%}
+    <li class="u-viikko__rivi"><a href="{{ t.url | relative_url }}">
+      <span class="u-viikko__klo" dir="ltr">{% if t.alkaa and t.alkaa != "" %}{{ t.alkaa }}{% if t.loppuu and t.loppuu != "" %}–{{ t.loppuu }}{% endif %}{% else %}–{% endif %}</span>
+      <span class="u-viikko__tiedot"><strong>{% include kolme.html fi=t.title doc=t %}</strong>
+        {%- if t.kenelle and t.kenelle != "" and t.kenelle != "kaikki" %}{% assign _ka = "kenelle_" | append: t.kenelle %} <small class="u-viikko__kenelle">{% include k.html a=_ka %}</small>{% endif %}
+        {%- if _alku > _vo_nyt %} <small>{% include k.html a="alkaen" %} <span dir="ltr">{{ t.paiva | date: '%-d.%-m.' }}</span></small>{% endif %}
+        {%- if _loppu != '9999-12-31' %} <small>{% include k.html a="asti" %} <span dir="ltr">{{ t.paiva_loppuu | date: '%-d.%-m.' }}</span></small>{% endif %}
+      </span>
+    </a></li>
+  {%- endfor -%}
+  {%- endcapture -%}
+  {%- assign _vo_rivit = _vo_rivit | strip -%}
+  {%- if _vo_rivit != "" -%}{%- assign _vpa = "vp_" | append: _p -%}
+  <div class="u-viikko__paiva"><h3>{% include k.html a=_vpa %}</h3><ul>{{ _vo_rivit }}</ul></div>
+  {%- endif -%}
+{%- endfor -%}
+{%- endcapture -%}
+{%- assign _vo = _vo | strip -%}
+{%- if _vo != "" -%}<div class="u-viikko" data-viikko-ohjelma>{{ _vo }}</div>{%- endif -%}

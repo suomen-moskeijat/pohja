@@ -290,6 +290,21 @@ html[dir="rtl"] .kk__taulu tr.kk__tanaan { box-shadow: inset -4px 0 0 var(--kult
 
 /* Tapahtumat */
 .u-tapahtumat { display: grid; gap: 10px; }
+/* Viikko-ohjelma: toistuva toiminta viikonpäivittäin (osat/viikko-ohjelma.html) */
+.u-viikko { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); margin-bottom: 8px; }
+.u-viikko__paiva { background: var(--pinta); border: 1px solid var(--raja); border-radius: var(--r-m); padding: 14px 16px; }
+.u-viikko__paiva h3 { margin: 0 0 8px; font-size: 15px; color: var(--paa); letter-spacing: .02em; text-transform: uppercase; }
+.u-viikko__paiva ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.u-viikko__rivi a { display: flex; gap: 12px; align-items: baseline; padding: 6px 0; text-decoration: none; color: inherit; border-top: 1px solid var(--raja); }
+.u-viikko__rivi:first-child a { border-top: 0; }
+.u-viikko__rivi a:hover strong { text-decoration: underline; }
+.u-viikko__klo { flex: none; min-width: 92px; font-weight: 700; color: var(--paa); font-variant-numeric: tabular-nums; }
+.u-viikko__tiedot { display: flex; flex-wrap: wrap; gap: 2px 8px; align-items: baseline; }
+.u-viikko__tiedot small { color: var(--hieno, #6f5b4c); }
+.u-viikko__kenelle { padding: 1px 8px; border-radius: 999px; background: var(--kulta-vaalea, #f3e7cf); color: var(--paa-tumma); font-weight: 700; }
+.u-viikko-osio { margin-bottom: 28px; }
+.u-viikko-osio h2, .u-tulevat-otsikko { margin: 0 0 12px; }
+.u-viikko-otsikko { margin: 22px 0 10px; font-size: 17px; }
 .u-tapahtuma a { display: flex; align-items: center; gap: 16px; padding: 14px; background: var(--pinta); border: 1px solid var(--raja); border-radius: var(--r-m); text-decoration: none; }
 .u-tapahtuma a:hover { border-color: var(--kulta); }
 .u-tapahtuma__pvm { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 60px; height: 60px; flex: none; border-radius: var(--kulma, 14px); background: var(--paa); color: #fff; line-height: 1; }

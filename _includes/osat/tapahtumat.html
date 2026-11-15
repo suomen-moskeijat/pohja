@@ -1,5 +1,6 @@
 {%- comment -%}
-  Tulevat tapahtumat. Parametri: maara (enimmäismäärä). Menneet piilotetaan myös selaimessa.
+  Tulevat (kertaluonteiset) tapahtumat. Toistuvat ovat viikko-ohjelmassa (osat/viikko-ohjelma.html).
+  Parametri: maara (enimmäismäärä). Menneet piilotetaan myös selaimessa.
   Jos tulevia ei ole, näytetään tyhjä tila (paitsi jos piilota_tyhja=true).
 {%- endcomment -%}
 {%- assign tanaan = site.time | date: '%Y-%m-%d' -%}
@@ -7,6 +8,7 @@
 {%- assign naytetty = 0 -%}
 <ul class="u-tapahtumat" data-tulevat{% if include.maara %} data-maara="{{ include.maara }}"{% endif %}>
   {%- for t in kaikki -%}
+  {%- if t.toistuu == "viikoittain" -%}{%- continue -%}{%- endif -%}
   {%- assign alku = t.paiva | date: '%Y-%m-%d' -%}
   {%- assign loppu = t.paiva_loppuu | default: t.paiva | date: '%Y-%m-%d' -%}
   {%- if loppu < tanaan -%}{%- continue -%}{%- endif -%}

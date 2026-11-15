@@ -59,10 +59,27 @@ ilmoita_lapsesi:    { fi: "Ilmoita lapsesi opetukseen", en: "Register your child
 tulevat_tapahtumat: { fi: "Tulevat tapahtumat", en: "Upcoming events", ar: "الفعاليات القادمة", so: "Dhacdooyinka soo socda" }
 kaikki_tapahtumat:  { fi: "Kaikki tapahtumat", en: "All events", ar: "كل الفعاليات", so: "Dhammaan dhacdooyinka" }
 ei_tapahtumia:      { fi: "Ei tulevia tapahtumia juuri nyt. Seuraa meitä somessa.", en: "No upcoming events right now. Follow us on social media.", ar: "لا توجد فعاليات قادمة حالياً. تابعونا على وسائل التواصل.", so: "Hadda ma jiraan dhacdooyin soo socda. Nagala soco baraha bulshada." }
-tapahtumat_teksti:  { fi: "Tulevat tapahtumat aikajärjestyksessä.", en: "Upcoming events in chronological order.", ar: "الفعاليات القادمة حسب التاريخ.", so: "Dhacdooyinka soo socda sida ay u kala horreeyaan." }
+tapahtumat_teksti:  { fi: "Säännöllinen toiminta ja tulevat tapahtumat.", en: "Regular activities and upcoming events.", ar: "الأنشطة المنتظمة والفعاليات القادمة.", so: "Hawlaha joogtada ah iyo dhacdooyinka soo socda." }
 klo:                { fi: "klo", en: "at", ar: "الساعة", so: "saacadda" }
 lisaa_kalenteriin:  { fi: "Lisää kalenteriin", en: "Add to calendar", ar: "أضف إلى التقويم", so: "Ku dar kalandarka" }
 ilmoittaudu:        { fi: "Ilmoittaudu", en: "Register", ar: "سجّل الآن", so: "Is diiwaangeli" }
+joka_viikko:        { fi: "Joka viikko", en: "Every week", ar: "كل أسبوع", so: "Toddobaad kasta" }
+viikko_ohjelma_teksti: { fi: "Säännöllinen toiminta viikoittain. Tervetuloa!", en: "Our regular weekly activities. Welcome!", ar: "أنشطتنا الأسبوعية المنتظمة. أهلاً وسهلاً!", so: "Hawlahayaga joogtada ah ee toddobaadlaha. Soo dhawoow!" }
+alkaen:             { fi: "alkaen", en: "from", ar: "ابتداءً من", so: "laga bilaabo" }
+asti:               { fi: "asti", en: "until", ar: "حتى", so: "ilaa" }
+vp_ma:              { fi: "Maanantai", en: "Monday", ar: "الاثنين", so: "Isniin" }
+vp_ti:              { fi: "Tiistai", en: "Tuesday", ar: "الثلاثاء", so: "Talaado" }
+vp_ke:              { fi: "Keskiviikko", en: "Wednesday", ar: "الأربعاء", so: "Arbaco" }
+vp_to:              { fi: "Torstai", en: "Thursday", ar: "الخميس", so: "Khamiis" }
+vp_pe:              { fi: "Perjantai", en: "Friday", ar: "الجمعة", so: "Jimce" }
+vp_la:              { fi: "Lauantai", en: "Saturday", ar: "السبت", so: "Sabti" }
+vp_su:              { fi: "Sunnuntai", en: "Sunday", ar: "الأحد", so: "Axad" }
+kenelle_kaikki:     { fi: "Kaikille", en: "Everyone", ar: "للجميع", so: "Qof walba" }
+kenelle_lapset:     { fi: "Lapsille", en: "Children", ar: "للأطفال", so: "Carruurta" }
+kenelle_nuoret:     { fi: "Nuorille", en: "Youth", ar: "للشباب", so: "Dhallinyarada" }
+kenelle_naiset:     { fi: "Naisille", en: "Women", ar: "للنساء", so: "Haweenka" }
+kenelle_miehet:     { fi: "Miehille", en: "Men", ar: "للرجال", so: "Ragga" }
+kenelle_perheet:    { fi: "Perheille", en: "Families", ar: "للعائلات", so: "Qoysaska" }
 kaupunki:           { fi: "Kaupunki", en: "City", ar: "المدينة", so: "Magaalada" }
 
 # --- Some ---

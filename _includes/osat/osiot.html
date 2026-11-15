@@ -21,14 +21,16 @@
 {%- when "tapahtumat" %}
 {%- assign tanaan = site.time | date: '%Y-%m-%d' -%}
 {%- assign tulevia = 0 -%}
-{%- for t in site.tapahtumat -%}{%- assign loppu = t.paiva_loppuu | default: t.paiva | date: '%Y-%m-%d' -%}{%- if loppu >= tanaan -%}{%- assign tulevia = tulevia | plus: 1 -%}{%- endif -%}{%- endfor -%}
-{% if tulevia > 0 %}
+{%- for t in site.tapahtumat -%}{%- if t.toistuu == "viikoittain" -%}{%- continue -%}{%- endif -%}{%- assign loppu = t.paiva_loppuu | default: t.paiva | date: '%Y-%m-%d' -%}{%- if loppu >= tanaan -%}{%- assign tulevia = tulevia | plus: 1 -%}{%- endif -%}{%- endfor -%}
+{%- capture _ohjelma -%}{% include osat/viikko-ohjelma.html %}{%- endcapture -%}{%- assign _ohjelma = _ohjelma | strip -%}
+{% if tulevia > 0 or _ohjelma != "" %}
 <section class="u-osio u-kehys">
   <div class="u-osio__yla">
     <h2>{% include k.html a="tulevat_tapahtumat" %}</h2>
     <a class="u-linkki" href="{{ '/tapahtumat/' | relative_url }}">{% include k.html a="kaikki_tapahtumat" %} <span class="u-flip" aria-hidden="true">→</span></a>
   </div>
-  {% include osat/tapahtumat.html maara=3 moskeija=m %}
+  {% if tulevia > 0 %}{% include osat/tapahtumat.html maara=3 moskeija=m piilota_tyhja=true %}{% endif %}
+  {% if _ohjelma != "" %}<h3 class="u-viikko-otsikko">{% include k.html a="joka_viikko" %}</h3>{{ _ohjelma }}{% endif %}
 </section>
 {% endif %}
 {%- when "artikkelit" %}
