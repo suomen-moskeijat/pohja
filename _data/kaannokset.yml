@@ -282,3 +282,15 @@ eid_toivotus:       { fi: "Siunattua Eid al-Fitr -juhlaa kaikille! Taqabbal Alla
 rukousajat_lahde:   { fi: "Rukousajat", en: "Prayer times", ar: "مواقيت الصلاة", so: "Waqtiyada salaadda" }
 ilmoita_virheesta:  { fi: "Ilmoita virheestä", en: "Report an error", ar: "الإبلاغ عن خطأ", so: "Soo sheeg khalad" }
 
+# --- Rukousten nimet (sivu.js käyttää uusille kielille; neljä peruskieltä myös sivu.js:ssä) ---
+rk_fajr:            { fi: "Fajr", en: "Fajr", ar: "الفجر", so: "Subax" }
+rk_sunrise:         { fi: "Auringonnousu", en: "Sunrise", ar: "الشروق", so: "Qorrax ka soo bax" }
+rk_dhuhr:           { fi: "Dhuhr", en: "Dhuhr", ar: "الظهر", so: "Duhur" }
+rk_asr:             { fi: "Asr", en: "Asr", ar: "العصر", so: "Casar" }
+rk_maghrib:         { fi: "Maghrib", en: "Maghrib", ar: "المغرب", so: "Maqrib" }
+rk_isha:            { fi: "Isha", en: "Isha", ar: "العشاء", so: "Cishaa" }
+rk_jumua:           { fi: "Jumu'a", en: "Jumu'ah", ar: "الجمعة", so: "Jimce" }
+rk_huomenna:        { fi: "huomenna", en: "tomorrow", ar: "غداً", so: "berri" }
+rk_klo:             { fi: "klo", en: "at", ar: "الساعة", so: "saacadda" }
+rk_pv:              { fi: "Päivä", en: "Day", ar: "اليوم", so: "Taariikh" }
+rk_nousu:           { fi: "Nousu", en: "Sunrise", ar: "الشروق", so: "Qorrax" }

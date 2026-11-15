@@ -28,7 +28,7 @@
       </button>
       <ul class="u-kieli__lista" role="menu" hidden>
         {% for l in site.kielet %}
-        <li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-kieli="{{ l }}" lang="{{ l }}">{% case l %}{% when "fi" %}Suomi{% when "en" %}English{% when "ar" %}العربية{% when "so" %}Soomaali{% else %}{{ l | upcase }}{% endcase %}</button></li>
+        <li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-kieli="{{ l }}" lang="{{ l }}">{% assign _kr = site.data.kielet | where: "koodi", l | first %}{% if _kr %}{{ _kr.nimi }}{% else %}{{ l | upcase }}{% endif %}</button></li>
         {% endfor %}
       </ul>
     </div>

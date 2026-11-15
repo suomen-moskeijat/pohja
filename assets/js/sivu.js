@@ -4,6 +4,10 @@
   var html = document.documentElement;
   var TZ = 'Europe/Helsinki';
   var LOKAALIT = { fi: 'fi-FI', en: 'en-GB', ar: 'ar-u-nu-latn', so: 'so-SO' };
+  // Muut sivuston kielet kielirekisteristä (_data/kielet.json → #kieli-data): lokaali, suunta ja rukousten nimet
+  var KIELIDATA = {};
+  try { KIELIDATA = JSON.parse((document.getElementById('kieli-data') || {}).textContent || '{}'); } catch (e) { KIELIDATA = {}; }
+  Object.keys(KIELIDATA).forEach(function (k) { if (!LOKAALIT[k]) LOKAALIT[k] = KIELIDATA[k].locale || k; });
   function tallenna(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ei tallennusta */ } }
   function kieli() { return LOKAALIT[html.lang] ? html.lang : 'fi'; }
   function muotoile(d, opts, loc) {
@@ -15,7 +19,7 @@
   /* ---------- 1. Kieli ---------- */
   function asetaKieli(k) {
     html.lang = k;
-    html.dir = k === 'ar' ? 'rtl' : 'ltr';
+    html.dir = (KIELIDATA[k] ? KIELIDATA[k].rtl : k === 'ar') ? 'rtl' : 'ltr';
     kaikki('[data-kieli]').forEach(function (b) { b.setAttribute('aria-checked', b.dataset.kieli === k ? 'true' : 'false'); });
     kaikki('[data-kieli-nyt]').forEach(function (e) { e.textContent = k.toUpperCase(); });
     document.dispatchEvent(new CustomEvent('kielivaihto', { detail: k }));
@@ -121,7 +125,7 @@
     ar: { fajr: 'الفجر', sunrise: 'الشروق', dhuhr: 'الظهر', asr: 'العصر', maghrib: 'المغرب', isha: 'العشاء', jumua: 'الجمعة', huomenna: 'غداً', klo: 'الساعة', pv: 'اليوم', nousu: 'الشروق' },
     so: { fajr: 'Subax', sunrise: 'Qorrax ka soo bax', dhuhr: 'Duhur', asr: 'Casar', maghrib: 'Maqrib', isha: 'Cishaa', jumua: 'Jimce', huomenna: 'berri', klo: 'saacadda', pv: 'Taariikh', nousu: 'Qorrax' }
   };
-  function N() { return NIMET[kieli()] || NIMET.fi; }
+  function N() { var k = kieli(); return NIMET[k] || (KIELIDATA[k] && KIELIDATA[k].nimet) || NIMET.en; }
   var kello = new Intl.DateTimeFormat('en-GB', { timeZone: TZ, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
   function aika(d) { return d instanceof Date && !isNaN(d) ? kello.format(d) : '–'; }
   function osat(d) {

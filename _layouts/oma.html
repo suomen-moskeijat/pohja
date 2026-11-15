@@ -14,7 +14,8 @@ layout: sivu
   {% if page.kuva and page.kuva != "" %}<img class="u-omasivu__kuva" src="{{ page.kuva | relative_url }}" alt="" loading="lazy">{% endif %}
   {%- capture _teksti -%}
     {%- assign _fi = content | strip -%}
-    {%- if page.teksti_en or page.teksti_ar or page.teksti_so -%}
+    {%- assign _kaannetty = false -%}{%- for _l in site.kielet -%}{%- assign _k = "teksti_" | append: _l -%}{%- if page[_k] and page[_k] != "" -%}{%- assign _kaannetty = true -%}{%- endif -%}{%- endfor -%}
+    {%- if _kaannetty -%}
       {%- for _l in site.kielet -%}{%- assign _k = "teksti_" | append: _l -%}
         {%- if page[_k] and page[_k] != "" -%}<div data-l="{{ _l }}" lang="{{ _l }}">{{ page[_k] | markdownify }}</div>
         {%- else -%}<div data-l="{{ _l }}">{{ _fi }}</div>{%- endif -%}

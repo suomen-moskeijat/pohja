@@ -13,6 +13,15 @@ import html, json, os, re, sys
 
 SITE = sys.argv[1] if len(sys.argv) > 1 else "_site"
 LOKAALIT = {"fi": "fi_FI", "en": "en_GB", "ar": "ar_AR", "so": "so_SO"}
+RTL = {"ar"}
+try:  # kielirekisteri (_data/kielet.json): uusien kielten og-lokaali ja kirjoitussuunta
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "_data", "kielet.json"), encoding="utf-8") as f:
+        for _k in json.load(f):
+            LOKAALIT[_k["koodi"]] = _k.get("og") or _k["koodi"]
+            if _k.get("rtl"):
+                RTL.add(_k["koodi"])
+except Exception:
+    pass
 META = re.compile(r'<meta name="kieliversiot" content="([a-z,]*)" data-juuri="([^"]*)">')
 
 sivut = {}  # polku (esim. /meista/) → (tiedosto, kielet, juuri)
@@ -64,7 +73,7 @@ for polku, (tiedosto, kl, _) in sivut.items():
     kanoninen = re.search(r'<link rel="canonical" href="([^"]*)">', alkuperainen)
     for kieli in kl:
         t = alkuperainen
-        t = re.sub(r'<html lang="[a-z]+" dir="[a-z]+"', f'<html lang="{kieli}" dir="{"rtl" if kieli == "ar" else "ltr"}" data-url-kieli="{kieli}"', t, count=1)
+        t = re.sub(r'<html lang="[a-z]+" dir="[a-z]+"', f'<html lang="{kieli}" dir="{"rtl" if kieli in RTL else "ltr"}" data-url-kieli="{kieli}"', t, count=1)
         s = seo.get(kieli, {})
         if s.get("t"):
             t = re.sub(r"<title>.*?</title>", lambda _: f"<title>{html.escape(s['t'], quote=False)}</title>", t, count=1, flags=re.S)

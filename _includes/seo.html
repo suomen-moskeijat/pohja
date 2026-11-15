@@ -47,7 +47,8 @@
   <meta property="og:url" content="{{ osoite_nyt }}">
   <meta property="og:locale" content="fi_FI">
   {%- for _l in site.kielet %}{% if _l != "fi" %}
-  <meta property="og:locale:alternate" content="{% case _l %}{% when 'en' %}en_GB{% when 'ar' %}ar_AR{% when 'so' %}so_SO{% endcase %}">{% endif %}{% endfor %}
+  {%- assign _kr = site.data.kielet | where: "koodi", _l | first %}
+  <meta property="og:locale:alternate" content="{{ _kr.og | default: _l }}">{% endif %}{% endfor %}
   {%- include osat/hakunakyvyys.html moskeija=m -%}
   {% unless _piilota %}<meta name="robots" content="max-image-preview:large, max-snippet:-1">{% endunless %}
   {%- comment -%}

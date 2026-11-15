@@ -1,2 +1,12 @@
-{%- comment -%} Teksti eri kielillä erillisistä kentistä: {% include kolme.html fi=x en=y ar=z so=w %}. Puuttuva korvataan englannilla tai suomella. {%- endcomment -%}
-{%- for _l in site.kielet -%}{%- case _l -%}{%- when "fi" -%}{%- assign _v = include.fi -%}{%- when "en" -%}{%- assign _v = include.en -%}{%- when "ar" -%}{%- assign _v = include.ar -%}{%- when "so" -%}{%- assign _v = include.so -%}{%- else -%}{%- assign _v = nil -%}{%- endcase -%}<span data-l="{{ _l }}">{{ _v | default: include.en | default: include.fi }}</span>{%- endfor -%}
+{%- comment -%}
+  Teksti eri kielillä erillisistä kentistä. Yleinen muoto: {% include kolme.html fi=x doc=sivu kentta="otsikko_" %}
+  (kentät otsikko_en, otsikko_ar, otsikko_tr …). Vanha muoto fi= en= ar= so= toimii myös. Puuttuva → englanti → suomi.
+{%- endcomment -%}
+{%- assign _kd = include.doc -%}{%- assign _ke = include.kentta | default: "otsikko_" -%}
+{%- assign _ken = include.en -%}{%- if _kd -%}{%- assign _kx = _ke | append: "en" -%}{%- assign _ken = _kd[_kx] | default: include.en -%}{%- endif -%}
+{%- for _l in site.kielet -%}
+  {%- if _l == "fi" -%}{%- assign _v = include.fi -%}
+  {%- elsif _kd -%}{%- assign _kx = _ke | append: _l -%}{%- assign _v = _kd[_kx] -%}
+  {%- else -%}{%- case _l -%}{%- when "en" -%}{%- assign _v = include.en -%}{%- when "ar" -%}{%- assign _v = include.ar -%}{%- when "so" -%}{%- assign _v = include.so -%}{%- else -%}{%- assign _v = nil -%}{%- endcase -%}{%- endif -%}
+  <span data-l="{{ _l }}">{{ _v | default: _ken | default: include.fi }}</span>
+{%- endfor -%}

@@ -6,7 +6,7 @@ layout: sivu
 <section class="u-sivuhero">
   <div class="u-kehys">
     <p class="u-eyebrow u-eyebrow--vaalea"><a href="{{ '/tapahtumat/' | relative_url }}">{% include k.html a="nav_tapahtumat" %}</a></p>
-    <h1>{% include kolme.html fi=page.title en=page.otsikko_en ar=page.otsikko_ar so=page.otsikko_so %}</h1>
+    <h1>{% include kolme.html fi=page.title doc=page %}</h1>
     <p class="u-sivuhero__johdanto">
       <strong dir="ltr">{{ page.paiva | date: '%-d.%-m.%Y' }}{% if page.paiva_loppuu and page.paiva_loppuu != "" %} – {{ page.paiva_loppuu | date: '%-d.%-m.%Y' }}{% endif %}</strong>
       {% if page.alkaa and page.alkaa != "" %} · {% include k.html a="klo" %} <span dir="ltr">{{ page.alkaa }}{% if page.loppuu and page.loppuu != "" %}–{{ page.loppuu }}{% endif %}</span>{% endif %}

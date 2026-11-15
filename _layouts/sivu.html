@@ -18,6 +18,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 {% include seo.html moskeija=m %}
   <meta name="theme-color" content="{{ _pt | default: '#2b1a0e' }}">
+    {%- comment -%} Sivuston kielet rekisteristä (_data/kielet.json): näkyvän kielen valinta ja sivu.js:n kielitiedot {%- endcomment -%}
+    <style>{% for _l in site.kielet %}html[lang="{{ _l }}"] [data-l]:not([data-l="{{ _l }}"]){display:none!important}{% endfor %}</style>
+    {%- assign _rk_nimet = "fajr,sunrise,dhuhr,asr,maghrib,isha,jumua,huomenna,klo,pv,nousu" | split: "," %}
+    <script type="application/json" id="kieli-data">{ {%- for _l in site.kielet -%}{%- assign _kr = site.data.kielet | where: "koodi", _l | first -%}"{{ _l }}": { "locale": {{ _kr.locale | default: _l | jsonify }}, "rtl": {% if _kr.rtl %}true{% else %}false{% endif %}, "nimet": { {%- for _n in _rk_nimet -%}{%- assign _avain = "rk_" | append: _n -%}{%- assign _t = site.data.kaannokset[_avain] -%}"{{ _n }}": {{ _t[_l] | default: _t.en | jsonify }}{% unless forloop.last %},{% endunless %}{%- endfor -%} } }{% unless forloop.last %},{% endunless %}{%- endfor -%} }</script>
     <script>
     (function () {
       var sallitut = {{ site.kielet | jsonify }}, k = null;
@@ -35,7 +39,7 @@
         if (polku && polku !== location.pathname) { location.replace(polku + location.search + location.hash); }
       }
       document.documentElement.lang = k;
-      document.documentElement.dir = k === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.dir = {{ site.data.kielet | where: 'rtl', true | map: 'koodi' | jsonify }}.indexOf(k) >= 0 ? 'rtl' : 'ltr';
     })();
   </script>
   {%- comment -%} Fontit sivuston omalta palvelimelta (ei pyyntöjä Googlelle; assets/fontit). Moskeijan oma valinta: teema.fontit_url {%- endcomment -%}
