@@ -8,7 +8,7 @@
 {%- assign _rmm = include.moskeija.ramadan -%}
 {%- assign _rm_tw = false -%}{%- if _rmm.tarawih and _rmm.tarawih != "" -%}{%- assign _rm_tw = true -%}{%- endif -%}
 {%- for _r in _rmm.ajat -%}{%- if _r.tarawih and _r.tarawih != "" -%}{%- assign _rm_tw = true -%}{%- endif -%}{%- endfor -%}
-<section class="u-ramadan" id="ramadan" data-rm data-alkaa="{{ _rm_alkaa }}" data-eid="{{ _rm_eid }}" data-paivia="{{ _rm_paivia }}" data-tarawih="{{ _rmm.tarawih }}">
+<section class="u-ramadan" id="ramadan" data-rm{% if _rmm.testi %} data-rm-testi{% endif %} data-alkaa="{{ _rm_alkaa }}" data-eid="{{ _rm_eid }}" data-paivia="{{ _rm_paivia }}" data-tarawih="{{ _rmm.tarawih }}">
   <script type="application/json" data-rm-ajat>{% include osat/ramadan-ajat.json moskeija=include.moskeija %}</script>
   <header class="u-ramadan__yla">
     <span class="u-ikoni u-ramadan__kuu">{% include ikoni-ph.html nimi="kuu" koko=24 %}</span>

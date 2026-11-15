@@ -341,12 +341,29 @@
     return { suhur: su instanceof Date && !isNaN(su) ? su : null, iftar: ift instanceof Date && !isNaN(ift) ? ift : null, tarawih: tw ? hki(d, tw) : null };
   }
   function pvmAvain(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  // Ramadanin esikatselu (vain testimoskeija, ramadan.testi): ?ramadan=ennen | eid | päivän numero (oletus 5)
+  var RM_TESTI = document.querySelector('[data-rm-testi]') ? (decodeURIComponent((location.search.match(/[?&]ramadan=([^&]+)/) || [])[1] || '5')) : null;
+  function rmTestiPaiva(alku, n) {
+    var k = RM_TESTI === 'ennen' ? -10 : RM_TESTI === 'eid' ? n : Math.max(1, Math.min(n, parseInt(RM_TESTI, 10) || 5)) - 1;
+    return new Date(alku.getFullYear(), alku.getMonth(), alku.getDate() + k, 12);
+  }
   function rmVaihe(el) {
     var o = String(el.dataset.alkaa || '').split('-'), n = Number(el.dataset.paivia) || 30;
     if (o.length !== 3) return null;
-    var alku = new Date(+o[0], o[1] - 1, +o[2], 12), tanaan = helsinginPaiva(new Date());
+    var alku = new Date(+o[0], o[1] - 1, +o[2], 12), tanaan = RM_TESTI ? rmTestiPaiva(alku, n) : helsinginPaiva(new Date());
     var i = Math.round((tanaan - alku) / 864e5);
     return { alku: alku, n: n, i: i, tanaan: tanaan, vaihe: i < 0 ? 'ennen' : i < n ? 'aikana' : 'eid' };
+  }
+  // Esikatselun valitsin (testimoskeija): Ennen · Päivä 1 · Päivä 5 · Päivä 27 · Eid
+  if (RM_TESTI) {
+    var rv = document.createElement('div'); rv.className = 'u-rm-testi'; rv.setAttribute('role', 'navigation');
+    var b0 = document.createElement('b'); b0.textContent = 'Ramadanin esikatselu:'; rv.appendChild(b0);
+    [['ennen', 'Ennen ramadania'], ['1', 'Päivä 1'], ['5', 'Päivä 5'], ['27', 'Päivä 27'], ['eid', 'Eid']].forEach(function (x) {
+      var a = document.createElement('a'); a.href = location.pathname + '?ramadan=' + x[0] + location.hash; a.textContent = x[1];
+      if (x[0] === RM_TESTI) a.setAttribute('aria-current', 'true');
+      rv.appendChild(a);
+    });
+    document.body.appendChild(rv);
   }
   function piirraRamadan() {
     kaikki('[data-rm]').forEach(function (el) {
@@ -383,6 +400,7 @@
       var v = rmVaihe(el), l = el.querySelector('[data-rm-laskuri]');
       if (!v || !l || v.vaihe !== 'aikana') { if (l) l.hidden = true; return; }
       var nyt = new Date(), t = rmAjat(v.tanaan, el.dataset.tarawih), kohde = null, teksti = '', kortti = '';
+      if (RM_TESTI) nyt = new Date(v.tanaan.getFullYear(), v.tanaan.getMonth(), v.tanaan.getDate(), nyt.getHours(), nyt.getMinutes(), nyt.getSeconds()); // kellonaika nyt, päivä simuloitu
       if (t.suhur && nyt < t.suhur) { kohde = t.suhur; teksti = 'suhur'; kortti = 'suhur'; }
       else if (t.iftar && nyt < t.iftar) { kohde = t.iftar; teksti = 'iftar'; kortti = 'iftar'; }
       else if (v.i + 1 < v.n) { var h2 = rmAjat(helsinginPaiva(nyt, 1), el.dataset.tarawih); if (h2.suhur) { kohde = h2.suhur; teksti = 'huomenna'; } }

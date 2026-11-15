@@ -956,3 +956,8 @@ html[dir="rtl"] .u-seur__palkki span { background: linear-gradient(-90deg, var(-
 
 .u-ala__kaannos { font-size: 13px; opacity: .8; }
 html[lang="fi"] .u-ala__kaannos { display: none; }
+
+/* Ramadanin esikatselun valitsin (vain testimoskeija, ramadan.testi) */
+.u-rm-testi { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 60; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; max-width: calc(100% - 32px); padding: 8px 10px; border-radius: 16px; background: #1c1c1c; color: #fff; font-size: 13px; box-shadow: 0 10px 30px rgb(0 0 0 / .3); }
+.u-rm-testi a { color: #fff; padding: 4px 10px; border-radius: 999px; border: 1px solid rgb(255 255 255 / .3); text-decoration: none; }
+.u-rm-testi a[aria-current] { background: var(--kulta); color: var(--paa-tumma); border-color: var(--kulta); font-weight: 700; }

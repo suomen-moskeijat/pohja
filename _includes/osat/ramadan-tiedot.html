@@ -21,4 +21,6 @@
   {%- assign _rm_paivia = _e | minus: _a | plus: 43200 | divided_by: 86400 -%}
   {%- assign _nakyy_alku = _a | minus: 1814400 -%}{%- assign _nakyy_loppu = _e | plus: 86400 -%}
   {%- if _nyt >= _nakyy_alku and _nyt < _nakyy_loppu and _rm_paivia > 26 and _rm_paivia < 32 -%}{%- assign _rm_nakyy = true -%}{%- endif -%}
+  {%- comment -%} Esikatselu (vain testimoskeija: ramadan.testi: true): näkyy aina, sivu.js simuloi päivän (?ramadan=ennen|5|eid) {%- endcomment -%}
+  {%- if _rmm.testi -%}{%- assign _rm_nakyy = true -%}{%- endif -%}
 {%- endif -%}

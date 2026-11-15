@@ -8,7 +8,7 @@
 {%- assign _rmm = include.moskeija.ramadan -%}
 {%- assign _eid_ajat = "" -%}
 {%- if _rmm.eid_aika and _rmm.eid_aika != "" -%}{%- assign _eid_ajat = _rmm.eid_aika -%}{%- if _rmm.eid_aika_2 and _rmm.eid_aika_2 != "" -%}{%- assign _eid_ajat = _eid_ajat | append: " · " | append: _rmm.eid_aika_2 -%}{%- endif -%}{%- endif -%}
-<section class="u-rmb" id="ramadan-etusivu" data-rm data-rm-banneri data-alkaa="{{ _rm_alkaa }}" data-eid="{{ _rm_eid }}" data-paivia="{{ _rm_paivia }}" data-tarawih="{{ _rmm.tarawih }}" aria-labelledby="rmb-otsikko">
+<section class="u-rmb" id="ramadan-etusivu" data-rm data-rm-banneri{% if _rmm.testi %} data-rm-testi{% endif %} data-alkaa="{{ _rm_alkaa }}" data-eid="{{ _rm_eid }}" data-paivia="{{ _rm_paivia }}" data-tarawih="{{ _rmm.tarawih }}" aria-labelledby="rmb-otsikko">
   <script type="application/json" data-rm-ajat>{% include osat/ramadan-ajat.json moskeija=include.moskeija %}</script>
   <svg class="u-rmb__kuu" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23Z"/></svg>
   <div class="u-kehys u-rmb__sisus">

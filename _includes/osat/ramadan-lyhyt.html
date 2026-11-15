@@ -1,7 +1,7 @@
 {%- comment -%} Etusivun Ramadan-rivi: "Ramadan, päivä 5/30 · Suhur päättyy 05.12 · Iftar 17.03" (tai alkamispäivä). Täyttää sivu.js. {%- endcomment -%}
 {%- include osat/ramadan-tiedot.html moskeija=include.moskeija -%}
 {%- if _rm_nakyy -%}
-<a class="u-rm-lyhyt" href="{{ '/rukousajat/' | relative_url }}#ramadan" data-rm data-rm-lyhyt data-alkaa="{{ _rm_alkaa }}" data-eid="{{ _rm_eid }}" data-paivia="{{ _rm_paivia }}">
+<a class="u-rm-lyhyt" href="{{ '/rukousajat/' | relative_url }}#ramadan" data-rm data-rm-lyhyt{% if _rmm.testi %} data-rm-testi{% endif %} data-alkaa="{{ _rm_alkaa }}" data-eid="{{ _rm_eid }}" data-paivia="{{ _rm_paivia }}">
   <span class="u-ikoni">{% include ikoni-ph.html nimi="kuu" koko=20 %}</span>
   <span data-rm-tila="ennen">{% include k.html a="ramadan_alkaa" %} <b data-rm-alkupv dir="ltr">{{ _rm_alkaa | date: "%-d.%-m." }}</b></span>
   <span data-rm-tila="aikana" hidden>{% include k.html a="ramadan_paiva" %} <b data-rm-pv dir="ltr"></b> · {% include k.html a="suhur_paattyy" %} <b data-rm-suhur dir="ltr"></b> · {% include k.html a="iftar" %} <b data-rm-iftar dir="ltr"></b></span>
