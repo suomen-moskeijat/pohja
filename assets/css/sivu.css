@@ -843,3 +843,34 @@ html[dir="rtl"] .u-seur__palkki span { background: linear-gradient(-90deg, var(-
 .u-upotus--video .u-upotus__ikoni { background: #fff; color: var(--paa-tumma); width: 64px; height: 64px; }
 .u-video .u-upotus { position: absolute; inset: 0; aspect-ratio: auto; }
 .u-tietosuoja h2 { margin: 1.6em 0 .5em; font-size: 1.25rem; }
+
+/* ---------- Ramadan ---------- */
+.u-ramadan { margin: 28px 0; padding: 24px; background: var(--pinta); border: 1px solid var(--raja); border-radius: var(--r-l); box-shadow: var(--varjo-1); scroll-margin-top: calc(var(--yla) + 16px); }
+.u-ramadan__yla { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.u-ramadan__yla > div { flex: 1; min-width: 200px; }
+.u-ramadan__yla h2 { margin: 0; font: 700 clamp(22px, 3vw, 28px)/1.15 var(--fo); }
+.u-ramadan__kuu { color: var(--kulta-teksti); background: var(--kulta-vaalea); width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+.u-ramadan__tila { margin: 4px 0 0; color: var(--hieno); }
+.u-ramadan__tila b { color: var(--teksti); }
+.u-ramadan__tanaan { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin: 18px 0 4px; }
+.u-ramadan__tanaan > div { background: var(--kulta-vaalea); border-radius: var(--r-m); padding: 14px 16px; display: flex; flex-direction: column; gap: 2px; }
+.u-ramadan__tanaan small { color: var(--hieno); font-weight: 600; }
+.u-ramadan__tanaan b { font: 700 28px/1.1 var(--fo); font-variant-numeric: tabular-nums; }
+.u-ramadan__tiedot { display: grid; gap: 8px; margin: 18px 0 0; }
+.u-ramadan__tiedot > div { display: flex; gap: 12px; flex-wrap: wrap; padding: 10px 0; border-top: 1px solid var(--raja); }
+.u-ramadan__tiedot dt { font-weight: 700; min-width: 150px; }
+.u-ramadan__tiedot dd { margin: 0; flex: 1; min-width: 180px; }
+.u-ramadan__teksti { margin-top: 12px; }
+.u-ramadan__otsikko { margin: 22px 0 10px; font: 700 18px/1.3 var(--fo); }
+.u-ramadan__taulu td, .u-ramadan__taulu th { font-variant-numeric: tabular-nums; }
+.u-rm-lyhyt { display: inline-flex; align-items: center; gap: 10px; text-align: start; line-height: 1.4; margin-top: 12px; padding: 10px 16px; border-radius: var(--kulma, 999px); background: var(--kulta-vaalea); color: var(--paa-tumma); text-decoration: none; font-weight: 600; max-width: 100%; }
+.u-rm-lyhyt b { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.u-rm-lyhyt > span[data-rm-tila] { flex: 1 1 auto; min-width: 0; }
+.u-rm-lyhyt > .u-ikoni, .u-rm-lyhyt > .u-flip { flex: none; }
+.u-rm-lyhyt:hover { background: color-mix(in srgb, var(--kulta-vaalea) 80%, var(--kulta)); }
+@media (max-width: 560px) { .u-ramadan { padding: 18px 16px; } .u-ramadan__tanaan b { font-size: 24px; } }
+@media print {
+  html.u-tulosta-ramadan body > *:not(main), html.u-tulosta-ramadan main > *:not(.u-kehys), html.u-tulosta-ramadan .u-sivu > *:not(#ramadan), html.u-tulosta-ramadan .u-ramadan__tulosta, html.u-tulosta-ramadan .u-sivuhero { display: none !important; }
+  html.u-tulosta-ramadan .u-ramadan { border: 0; box-shadow: none; margin: 0; padding: 0; }
+  html.u-tulosta-ramadan .kk__kaari { overflow: visible; max-height: none; }
+}

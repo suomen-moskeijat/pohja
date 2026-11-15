@@ -1,0 +1,19 @@
+# Ramadanin oletuspäivät kaikille moskeijoille (Umm al-Qura -kalenterin mukaan laskettu arvio).
+# alkaa = ensimmäinen paastopäivä, eid = Eid al-Fitr (ensimmäinen päivä, jolloin ei paastota).
+# Ylläpito voi korjata päivät tähän, kun alku vahvistuu; moskeija voi asettaa omat päivänsä
+# hallintapaneelissa (Rukousajat → Ramadan), ja ne voittavat nämä.
+- vuosi: 1448
+  alkaa: 2027-02-08
+  eid: 2027-03-09
+- vuosi: 1449
+  alkaa: 2028-01-28
+  eid: 2028-02-26
+- vuosi: 1450
+  alkaa: 2029-01-16
+  eid: 2029-02-14
+- vuosi: 1451
+  alkaa: 2030-01-05
+  eid: 2030-02-04
+- vuosi: 1452
+  alkaa: 2030-12-26
+  eid: 2031-01-24

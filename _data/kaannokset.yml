@@ -238,3 +238,20 @@ ts_sailytys: { fi: "Moskeija säilyttää viestit ja ilmoittautumiset vain niin 
 ts_oikeudet_otsikko: { fi: "Oikeutesi", en: "Your rights", ar: "حقوقك", so: "Xuquuqdaada" }
 ts_oikeudet: { fi: "Sinulla on oikeus tarkastaa tietosi, pyytää niiden korjaamista tai poistamista sekä rajoittaa tai vastustaa niiden käsittelyä. Voit perua suostumuksesi milloin tahansa. Ota yhteyttä moskeijaan:", en: "You have the right to access your data, ask for it to be corrected or deleted, and to restrict or object to its processing. You may withdraw your consent at any time. Contact the mosque:", ar: "يحق لك الاطلاع على بياناتك وطلب تصحيحها أو حذفها، وتقييد معالجتها أو الاعتراض عليها. ويمكنك سحب موافقتك في أي وقت. تواصل مع المسجد:", so: "Waxaad xaq u leedahay inaad aragto xogtaada, codsato in la saxo ama la tirtiro, iyo inaad xaddiddo ama diiddo maareynteeda. Waxaad ka noqon kartaa ogolaanshahaaga wakhti kasta. La xiriir masjidka:" }
 ts_valitus: { fi: "Jos katsot, että tietojasi käsitellään lainvastaisesti, voit tehdä valituksen tietosuojavaltuutetulle (tietosuoja.fi).", en: "If you believe your data is processed unlawfully, you can lodge a complaint with the Data Protection Ombudsman (tietosuoja.fi).", ar: "إذا كنت تعتقد أن بياناتك تُعالج بشكل غير قانوني، يمكنك تقديم شكوى إلى مفوض حماية البيانات في فنلندا (tietosuoja.fi).", so: "Haddii aad u malaynayso in xogtaada si sharci darro ah loo maareynayo, waxaad cabasho u gudbin kartaa Wakiilka Ilaalinta Xogta (tietosuoja.fi)." }
+
+# --- Ramadan ---
+ramadan:            { fi: "Ramadan", en: "Ramadan", ar: "رمضان", so: "Ramadaan" }
+ramadan_alkaa:      { fi: "Ramadan alkaa", en: "Ramadan begins", ar: "يبدأ رمضان", so: "Ramadaan wuxuu bilaabanayaa" }
+ramadan_arvio:      { fi: "arvio, vahvistuu kuun näkymisen mukaan", en: "estimate, confirmed by moon sighting", ar: "تقديري، يُؤكَّد برؤية الهلال", so: "qiyaas, waxaa lagu xaqiijinayaa muuqashada bisha" }
+ramadan_paiva:      { fi: "Ramadan, päivä", en: "Ramadan, day", ar: "رمضان، اليوم", so: "Ramadaan, maalinta" }
+suhur_paattyy:      { fi: "Suhur päättyy", en: "Suhoor ends", ar: "ينتهي السحور", so: "Suxuurku wuu dhammaanayaa" }
+iftar:              { fi: "Iftar", en: "Iftar", ar: "الإفطار", so: "Afur" }
+tarawih:            { fi: "Tarawih", en: "Taraweeh", ar: "التراويح", so: "Taraawiix" }
+eid_rukous:         { fi: "Eid-rukous", en: "Eid prayer", ar: "صلاة العيد", so: "Salaadda Ciidda" }
+eid_mubarak:        { fi: "Eid Mubarak!", en: "Eid Mubarak!", ar: "عيد مبارك!", so: "Ciid Mubaarak!" }
+fitra:              { fi: "Fitra (zakat al-fitr)", en: "Zakat al-Fitr", ar: "زكاة الفطر", so: "Sakada Fidriga" }
+ramadan_aikataulu:  { fi: "Ramadanin aikataulu", en: "Ramadan timetable", ar: "إمساكية رمضان", so: "Jadwalka Ramadaanka" }
+rm_pv:              { fi: "Päivä", en: "Day", ar: "اليوم", so: "Maalin" }
+pvm:                { fi: "Päivämäärä", en: "Date", ar: "التاريخ", so: "Taariikh" }
+tulosta:            { fi: "Tulosta", en: "Print", ar: "طباعة", so: "Daabac" }
+ramadan_huom:       { fi: "Suhur päättyy Fajrin aikaan ja iftar on Maghribin aikaan. Ajat tulevat moskeijan rukousajoista.", en: "Suhoor ends at Fajr and iftar is at Maghrib. Times follow the mosque's prayer times.", ar: "ينتهي السحور عند الفجر والإفطار عند المغرب. الأوقات حسب مواقيت صلاة المسجد.", so: "Suxuurku wuxuu dhammaadaa Subaxda, afurkuna waa Maqribka. Waqtiyadu waxay raacaan waqtiyada salaadda masjidka." }

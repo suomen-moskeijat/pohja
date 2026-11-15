@@ -1,0 +1,43 @@
+{%- comment -%}
+  Ramadan-osio rukousajat-sivulle: tila (alkaa / päivä N / Eid), tämän päivän suhur ja iftar, tarawih, Eid-rukous,
+  fitra ja koko kuukauden aikataulu (tulostettava). Näkyy 3 viikkoa ennen alkua – Eid-päivän loppuun.
+  Ajat laskee sivu.js samoin kuin rukousajat ([data-rm]). Parametri: moskeija
+{%- endcomment -%}
+{%- include osat/ramadan-tiedot.html moskeija=include.moskeija -%}
+{%- if _rm_nakyy -%}
+{%- assign _rmm = include.moskeija.ramadan -%}
+<section class="u-ramadan" id="ramadan" data-rm data-alkaa="{{ _rm_alkaa }}" data-eid="{{ _rm_eid }}" data-paivia="{{ _rm_paivia }}">
+  <header class="u-ramadan__yla">
+    <span class="u-ikoni u-ramadan__kuu">{% include ikoni-ph.html nimi="kuu" koko=24 %}</span>
+    <div>
+      <h2>{% include k.html a="ramadan" %} {{ _rm_vuosi }}</h2>
+      <p class="u-ramadan__tila">
+        <span data-rm-tila="ennen">{% include k.html a="ramadan_alkaa" %} <b data-rm-alkupv dir="ltr">{{ _rm_alkaa | date: "%-d.%-m.%Y" }}</b>{% unless _rm_vahvistettu %} <small>({% include k.html a="ramadan_arvio" %})</small>{% endunless %}</span>
+        <span data-rm-tila="aikana" hidden>{% include k.html a="ramadan_paiva" %} <b data-rm-pv dir="ltr"></b><span dir="ltr">/{{ _rm_paivia }}</span></span>
+        <span data-rm-tila="eid" hidden><b>{% include k.html a="eid_mubarak" %}</b></span>
+      </p>
+    </div>
+    <button type="button" class="u-nappi u-nappi--reuna u-nappi--pieni u-ramadan__tulosta" data-rm-tulosta>{% include k.html a="tulosta" %}</button>
+  </header>
+  <div class="u-ramadan__tanaan" data-rm-tanaan hidden>
+    <div><small>{% include k.html a="suhur_paattyy" %}</small><b data-rm-suhur dir="ltr">--:--</b></div>
+    <div><small>{% include k.html a="iftar" %}</small><b data-rm-iftar dir="ltr">--:--</b></div>
+  </div>
+  {%- assign _eid_ajat = "" -%}
+  {%- if _rmm.eid_aika and _rmm.eid_aika != "" -%}{%- assign _eid_ajat = _rmm.eid_aika -%}{%- if _rmm.eid_aika_2 and _rmm.eid_aika_2 != "" -%}{%- assign _eid_ajat = _eid_ajat | append: " · " | append: _rmm.eid_aika_2 -%}{%- endif -%}{%- endif -%}
+  <dl class="u-ramadan__tiedot">
+    {% if _rmm.tarawih and _rmm.tarawih != "" %}<div><dt>{% include k.html a="tarawih" %}</dt><dd><span dir="ltr">{{ _rmm.tarawih }}</span>{% if _rmm.tarawih_huom and _rmm.tarawih_huom != "" %} · {% include kt.html arvo=_rmm.tarawih_huom %}{% endif %}</dd></div>{% endif %}
+    <div><dt>{% include k.html a="eid_rukous" %}</dt><dd><span dir="ltr">{{ _rm_eid | date: "%-d.%-m.%Y" }}</span>{% if _eid_ajat != "" %} · <span dir="ltr">{{ _eid_ajat }}</span>{% endif %}{% if _rmm.eid_paikka and _rmm.eid_paikka != "" %} · {% include kt.html arvo=_rmm.eid_paikka %}{% endif %}{% unless _rm_vahvistettu %} <small>({% include k.html a="ramadan_arvio" %})</small>{% endunless %}</dd></div>
+    {% if _rmm.fitra and _rmm.fitra != "" %}<div><dt>{% include k.html a="fitra" %}</dt><dd>{% include kt.html arvo=_rmm.fitra %}</dd></div>{% endif %}
+  </dl>
+  {% if _rmm.teksti and _rmm.teksti != "" %}<div class="u-ramadan__teksti">{% include kt.html arvo=_rmm.teksti md=true tagi="div" %}</div>{% endif %}
+  <h3 class="u-ramadan__otsikko">{% include k.html a="ramadan_aikataulu" %}</h3>
+  <div class="kk__kaari">
+    <table class="kk__taulu u-ramadan__taulu" data-rm-taulu>
+      <thead><tr><th scope="col">{% include k.html a="rm_pv" %}</th><th scope="col">{% include k.html a="pvm" %}</th><th scope="col">{% include k.html a="suhur_paattyy" %}</th><th scope="col">{% include k.html a="iftar" %}</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <p class="u-hieno">{% include k.html a="ramadan_huom" %}</p>
+</section>
+{%- endif -%}
