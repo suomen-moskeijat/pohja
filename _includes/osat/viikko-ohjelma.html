@@ -22,7 +22,6 @@
       <span class="u-viikko__tiedot"><strong>{% include kolme.html fi=t.title doc=t %}</strong>
         {%- if t.kenelle and t.kenelle != "" and t.kenelle != "kaikki" %}{% assign _ka = "kenelle_" | append: t.kenelle %} <small class="u-viikko__kenelle">{% include k.html a=_ka %}</small>{% endif %}
         {%- if _alku > _vo_nyt %} <small>{% include k.html a="alkaen" %} <span dir="ltr">{{ t.paiva | date: '%-d.%-m.' }}</span></small>{% endif %}
-        {%- if t.ilmoittaudu == "lomake" or t.ilmoittaudu == "linkki" %} <small class="u-ilmo-merkki">{% include k.html a="ilmoittaudu" %} →</small>{% endif %}
         {%- if _loppu != '9999-12-31' %} <small>{% include k.html a="asti" %} <span dir="ltr">{{ t.paiva_loppuu | date: '%-d.%-m.' }}</span></small>{% endif %}
       </span>
     </a></li>

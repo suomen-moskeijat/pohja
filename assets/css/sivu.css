@@ -1101,7 +1101,6 @@ html[lang="fi"] .u-ala__kaannos { display: none; }
 .u-ilmo p { margin: 0; color: var(--hieno); }
 .u-ilmo .u-nappi { grid-column: 1 / -1; justify-self: start; }
 @media (min-width: 640px) { .u-ilmo { grid-template-columns: auto 1fr auto; } .u-ilmo .u-nappi { grid-column: auto; } }
-.u-ilmo-merkki { display: inline-block; margin-top: 4px; padding: 1px 9px; border-radius: 999px; background: var(--kulta-vaalea); color: var(--paa-tumma) !important; font-weight: 700; font-size: 12.5px; }
 
 
 /* ==========================================================================
