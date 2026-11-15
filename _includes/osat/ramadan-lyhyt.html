@@ -1,11 +1,24 @@
-{%- comment -%} Etusivun Ramadan-rivi: "Ramadan, päivä 5/30 · Suhur päättyy 05.12 · Iftar 17.03" (tai alkamispäivä). Täyttää sivu.js. {%- endcomment -%}
+{%- comment -%}
+  Etusivun yläosan Ramadan-rivi: vasemmalla iso päivä (tai päiviä alkuun), oikealla suhur ja iftar. Täyttää sivu.js.
+  Moskeija valitsee paneelissa (Rukousajat → Ramadan): ramadan.hero_tyyli laatta | kortit | nauha
+  ja ramadan.hero_vari tumma | paa | kulta | vaalea.
+{%- endcomment -%}
 {%- include osat/ramadan-tiedot.html moskeija=include.moskeija -%}
 {%- if _rm_nakyy -%}
-<a class="u-rm-lyhyt" href="{{ '/rukousajat/' | relative_url }}#ramadan" data-rm data-rm-lyhyt{% if _rmm.testi %} data-rm-testi{% endif %} data-alkaa="{{ _rm_alkaa }}" data-eid="{{ _rm_eid }}" data-paivia="{{ _rm_paivia }}">
-  <span class="u-ikoni">{% include ikoni-ph.html nimi="kuu" koko=20 %}</span>
-  <span data-rm-tila="ennen">{% include k.html a="ramadan_alkaa" %} <b data-rm-alkupv dir="ltr">{{ _rm_alkaa | date: "%-d.%-m." }}</b></span>
-  <span data-rm-tila="aikana" hidden>{% include k.html a="ramadan_paiva" %} <b data-rm-pv dir="ltr"></b> · {% include k.html a="suhur_paattyy" %} <b data-rm-suhur dir="ltr"></b> · {% include k.html a="iftar" %} <b data-rm-iftar dir="ltr"></b></span>
-  <span data-rm-tila="eid" hidden><b>{% include k.html a="eid_mubarak" %}</b></span>
-  <span class="u-flip" aria-hidden="true">→</span>
+<a class="u-rmh" href="{{ '/rukousajat/' | relative_url }}#ramadan" data-tyyli="{{ _rmm.hero_tyyli | default: 'laatta' }}" data-vari="{{ _rmm.hero_vari | default: 'tumma' }}" data-rm data-rm-lyhyt{% if _rmm.testi %} data-rm-testi{% endif %} data-alkaa="{{ _rm_alkaa }}" data-eid="{{ _rm_eid }}" data-paivia="{{ _rm_paivia }}">
+  <span class="u-rmh__paiva">
+    <span data-rm-tila="ennen"><small>{% include k.html a="ramadaniin" %}</small><b data-rm-paivia-jaljella dir="ltr">–</b><small>{% include k.html a="paivaa" %}</small></span>
+    <span data-rm-tila="aikana" hidden><small>{% include k.html a="ramadan" %}</small><b data-rm-pv dir="ltr"></b><small dir="ltr">/ {{ _rm_paivia }}</small></span>
+    <span data-rm-tila="eid" hidden><small>Eid</small><b class="u-rmh__ar" lang="ar" dir="rtl">عيد</b><small>{{ _rm_vuosi }}</small></span>
+  </span>
+  <span class="u-rmh__tiedot">
+    <span data-rm-tila="ennen" class="u-rmh__rivi"><small>{% include k.html a="ramadan_alkaa" %}</small><b data-rm-alkupv dir="ltr">{{ _rm_alkaa | date: "%-d.%-m." }}</b></span>
+    <span data-rm-tila="aikana" hidden class="u-rmh__ajat">
+      <span class="u-rmh__aika"><small>{% include k.html a="suhur_paattyy" %}</small><b data-rm-suhur dir="ltr">--:--</b></span>
+      <span class="u-rmh__aika"><small>{% include k.html a="iftar" %}</small><b data-rm-iftar dir="ltr">--:--</b></span>
+    </span>
+    <span data-rm-tila="eid" hidden class="u-rmh__rivi"><b>{% include k.html a="eid_mubarak" %}</b></span>
+  </span>
+  <span class="u-rmh__nuoli u-flip" aria-hidden="true">→</span>
 </a>
 {%- endif -%}

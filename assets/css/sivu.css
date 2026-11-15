@@ -1030,3 +1030,56 @@ html[lang="fi"] .u-ala__kaannos { display: none; }
 @media (max-width: 820px) { .u-rmb[data-tyyli="tiivis"] .u-rmb__sisus { grid-template-columns: 1fr; } }
 .u-rmb[data-tyyli="tiivis"] .u-rmb__napit .u-nappi--haamu { display: none; }
 @media (max-width: 820px) { .u-rmb[data-tyyli="tiivis"] .u-rmb__napit .u-nappi { padding-block: 10px; } }
+
+/* ---------- Etusivun yläosan Ramadan-rivi (osat/ramadan-lyhyt.html) ----------
+   data-tyyli: laatta (iso päivä vasemmalla, ajat oikealla) | kortit (kolme ruutua) | nauha (matala rivi)
+   data-vari: päivälaatan väri – tumma (ruskea) | paa (moskeijan pääväri) | kulta | vaalea */
+.u-rmh { --rmh-bg: var(--paa-tumma); --rmh-fg: #fff; --rmh-ak: var(--kulta);
+  display: flex; align-items: stretch; gap: 0; width: 100%; max-width: 560px; margin: 14px auto 0; text-align: start; text-decoration: none; color: var(--paa-tumma);
+  background: var(--pinta); border: 1px solid color-mix(in srgb, var(--kulta) 45%, var(--raja)); border-radius: var(--r-l); box-shadow: var(--varjo-1); overflow: hidden; transition: transform .15s, box-shadow .15s; }
+.u-rmh:hover { transform: translateY(-1px); box-shadow: var(--varjo-2); }
+.u-rmh[data-vari="paa"] { --rmh-bg: var(--paa); --rmh-fg: #fff; --rmh-ak: var(--kulta-vaalea); }
+.u-rmh[data-vari="kulta"] { --rmh-bg: var(--kulta); --rmh-fg: var(--paa-tumma); --rmh-ak: var(--paa-tumma); }
+.u-rmh[data-vari="vaalea"] { --rmh-bg: var(--kulta-vaalea); --rmh-fg: var(--paa-tumma); --rmh-ak: color-mix(in srgb, var(--kulta) 55%, var(--paa)); }
+.u-rmh b { font-variant-numeric: tabular-nums; }
+.u-rmh small { display: block; font-size: 12.5px; font-weight: 600; letter-spacing: .02em; opacity: .8; }
+.u-rmh__paiva { flex: none; display: grid; place-items: center; min-width: 104px; padding: 12px 14px; background: var(--rmh-bg); color: var(--rmh-fg); text-align: center; position: relative; }
+.u-rmh__paiva::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 85% 15%, color-mix(in srgb, var(--rmh-ak) 35%, transparent), transparent 55%); pointer-events: none; }
+.u-rmh__paiva > span { display: grid; justify-items: center; gap: 2px; line-height: 1.1; }
+.u-rmh__paiva b { font: 800 40px/1 var(--fo); color: var(--rmh-ak); }
+.u-rmh[data-vari="kulta"] .u-rmh__paiva b, .u-rmh[data-vari="vaalea"] .u-rmh__paiva b { color: var(--paa-tumma); }
+.u-rmh__ar { font-family: "Amiri", serif !important; font-size: 34px !important; }
+.u-rmh__tiedot { flex: 1; display: flex; align-items: center; padding: 12px 18px; min-width: 0; }
+.u-rmh__tiedot > span { width: 100%; }
+.u-rmh__ajat { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.u-rmh__aika b, .u-rmh__rivi b { display: block; margin-top: 2px; font: 800 26px/1.1 var(--fo); color: var(--paa-tumma); }
+.u-rmh__aika + .u-rmh__aika { border-inline-start: 1px solid var(--raja); padding-inline-start: 12px; }
+.u-rmh__nuoli { flex: none; display: grid; place-items: center; padding: 0 16px 0 4px; font-size: 20px; color: var(--paa); }
+/* kortit: kolme erillistä ruutua */
+.u-rmh[data-tyyli="kortit"] { gap: 10px; background: none; border: 0; box-shadow: none; overflow: visible; }
+.u-rmh[data-tyyli="kortit"] .u-rmh__paiva { border-radius: var(--r-l); box-shadow: var(--varjo-1); overflow: hidden; }
+.u-rmh[data-tyyli="kortit"] .u-rmh__tiedot { padding: 0; }
+.u-rmh[data-tyyli="kortit"] .u-rmh__ajat { gap: 10px; height: 100%; }
+.u-rmh[data-tyyli="kortit"] .u-rmh__aika, .u-rmh[data-tyyli="kortit"] .u-rmh__rivi { display: grid; align-content: center; padding: 12px 16px; background: var(--pinta); border: 1px solid color-mix(in srgb, var(--kulta) 45%, var(--raja)); border-radius: var(--r-l); box-shadow: var(--varjo-1); }
+.u-rmh[data-tyyli="kortit"] .u-rmh__aika + .u-rmh__aika { padding-inline-start: 16px; }
+.u-rmh[data-tyyli="kortit"] .u-rmh__nuoli { display: none; }
+/* nauha: matala rivi, päivä pienenä laattana */
+.u-rmh[data-tyyli="nauha"] { border-radius: 999px; max-width: 620px; }
+.u-rmh[data-tyyli="nauha"] .u-rmh__paiva { min-width: 0; padding: 6px 16px; }
+.u-rmh[data-tyyli="nauha"] .u-rmh__paiva > span { grid-auto-flow: column; align-items: baseline; gap: 6px; }
+.u-rmh[data-tyyli="nauha"] .u-rmh__paiva b { font-size: 24px; }
+.u-rmh[data-tyyli="nauha"] .u-rmh__paiva small:last-child { display: none; }
+.u-rmh[data-tyyli="nauha"] .u-rmh__tiedot { padding: 8px 14px; }
+.u-rmh[data-tyyli="nauha"] .u-rmh__ajat { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.u-rmh[data-tyyli="nauha"] .u-rmh__aika { display: flex; align-items: baseline; gap: 6px; border: 0; padding: 0; }
+.u-rmh[data-tyyli="nauha"] .u-rmh__aika b, .u-rmh[data-tyyli="nauha"] .u-rmh__rivi b { font-size: 18px; margin: 0; }
+.u-rmh[data-tyyli="nauha"] .u-rmh__rivi { display: flex; align-items: baseline; gap: 6px; }
+@media (max-width: 420px) {
+  .u-rmh__paiva { min-width: 88px; padding: 10px; }
+  .u-rmh__paiva b { font-size: 34px; }
+  .u-rmh__tiedot { padding: 10px 12px; }
+  .u-rmh__aika b, .u-rmh__rivi b { font-size: 22px; }
+  .u-rmh__nuoli { padding: 0 10px 0 0; }
+  .u-rmh[data-tyyli="kortit"] { gap: 8px; }
+  .u-rmh[data-tyyli="kortit"] .u-rmh__aika { padding: 10px 12px; }
+}
