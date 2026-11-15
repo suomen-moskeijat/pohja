@@ -694,6 +694,23 @@
       }
       teksti('.u-alku__esittely', d.esittely);
       teksti('.u-alku__tunniste', d.tunniste);
+      // Ilmoituspalkki: { teksti, linkki } tai null (piiloon). Palkki luodaan, jos sivulla ei vielä ole sitä.
+      if ('ilmoitus' in d) {
+        var il = d.ilmoitus, pal = document.querySelector('[data-ilmoitus]');
+        if (!il || typeof il.teksti !== 'string' || !il.teksti.trim()) { if (pal) pal.hidden = true; }
+        else {
+          if (!pal) {
+            pal = document.createElement('div'); pal.className = 'u-ilmoituspalkki'; pal.setAttribute('role', 'note'); pal.setAttribute('data-ilmoitus', '');
+            var yla = document.querySelector('.u-yla, header');
+            if (yla && yla.parentNode) yla.parentNode.insertBefore(pal, yla); else document.body.insertBefore(pal, document.body.firstChild);
+          }
+          var vanhat = pal.querySelectorAll('[data-esik-il]'); for (var vi = 0; vi < vanhat.length; vi++) vanhat[vi].remove();
+          [].slice.call(pal.children).forEach(function (c) { if (c.tagName !== 'svg' && c.tagName !== 'SVG') c.hidden = true; });
+          var sp = document.createElement('span'); sp.setAttribute('data-esik-il', ''); sp.textContent = il.teksti; pal.appendChild(sp);
+          if (typeof il.linkki === 'string' && il.linkki) { var la = document.createElement('a'); la.setAttribute('data-esik-il', ''); la.href = '#'; la.textContent = '→'; pal.appendChild(la); }
+          pal.hidden = false;
+        }
+      }
     });
   }
 })();
