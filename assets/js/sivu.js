@@ -356,14 +356,17 @@
   }
   // Esikatselun valitsin (testimoskeija): Ennen · Päivä 1 · Päivä 5 · Päivä 27 · Eid
   if (RM_TESTI) {
-    var rv = document.createElement('div'); rv.className = 'u-rm-testi'; rv.setAttribute('role', 'navigation');
-    var b0 = document.createElement('b'); b0.textContent = 'Ramadanin esikatselu:'; rv.appendChild(b0);
-    [['ennen', 'Ennen ramadania'], ['1', 'Päivä 1'], ['5', 'Päivä 5'], ['27', 'Päivä 27'], ['eid', 'Eid']].forEach(function (x) {
+    var VAIHEET = [['ennen', 'Ennen ramadania'], ['1', 'Päivä 1'], ['5', 'Päivä 5'], ['27', 'Päivä 27'], ['eid', 'Eid']];
+    var rv = document.createElement('details'); rv.className = 'u-rm-testi';
+    var su = document.createElement('summary'), nyt_ = VAIHEET.filter(function (x) { return x[0] === RM_TESTI; })[0];
+    su.textContent = '🌙 Esikatselu: ' + (nyt_ ? nyt_[1] : 'Päivä ' + RM_TESTI) + ' ▾'; rv.appendChild(su);
+    var nv = document.createElement('nav'); nv.setAttribute('aria-label', 'Ramadanin esikatselu');
+    VAIHEET.forEach(function (x) {
       var a = document.createElement('a'); a.href = location.pathname + '?ramadan=' + x[0] + location.hash; a.textContent = x[1];
       if (x[0] === RM_TESTI) a.setAttribute('aria-current', 'true');
-      rv.appendChild(a);
+      nv.appendChild(a);
     });
-    document.body.appendChild(rv);
+    rv.appendChild(nv); document.body.appendChild(rv);
   }
   function piirraRamadan() {
     kaikki('[data-rm]').forEach(function (el) {
@@ -562,8 +565,14 @@
     var fi = o && o.querySelector('[data-l="fi"]');
     return ((fi && fi.textContent) || (o && o.textContent) || el.name).replace('*', '').replace(/\s+/g, ' ').trim();
   }
+  var esiAihe = (location.search.match(/[?&]aihe=([^&]+)/) || [])[1];
+  if (esiAihe) { try { esiAihe = decodeURIComponent(esiAihe.replace(/\+/g, ' ')).slice(0, 120); } catch (e) { esiAihe = ''; } }
   kaikki('[data-lomake]').forEach(function (lomake) {
     var avattu = Date.now();
+    if (esiAihe && lomake.closest('#kysy')) {
+      var ak = lomake.querySelector('[name="aihe"]');
+      if (ak) ak.value = esiAihe; else lomake.dataset.aihe = (lomake.dataset.aihe || '') + ': ' + esiAihe;
+    }
     lomake.addEventListener('submit', function (e) {
       e.preventDefault();
       lomake.classList.add('on-tarkistettu');
@@ -712,6 +721,8 @@
         var fi = el.querySelector('[data-l="fi"]');
         (fi || el).textContent = arvo;
       }
+      // Korttien tyylit (Ulkoasu): tapahtumat lista | kortit | tiivis, palvelut kortit | ruudukko | lista
+      if (d.kortit && typeof d.kortit === 'object') ['tapahtumat', 'palvelut'].forEach(function (x) { var v = d.kortit[x]; if (typeof v === 'string' && /^[a-z]{2,12}$/.test(v)) document.documentElement.setAttribute('data-kortit-' + x, v); });
       teksti('.u-alku__esittely', d.esittely);
       teksti('.u-alku__tunniste', d.tunniste);
       // Ilmoituspalkki: { teksti, linkki } tai null (piiloon). Palkki luodaan, jos sivulla ei vielä ole sitä.

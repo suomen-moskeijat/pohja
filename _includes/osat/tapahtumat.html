@@ -15,6 +15,7 @@
   {%- assign naytetty = naytetty | plus: 1 -%}
   <li class="u-tapahtuma" data-paiva="{{ loppu }}">
     <a href="{{ t.url | relative_url }}">
+      {% if t.kuva and t.kuva != "" %}<img class="u-tapahtuma__kuva" src="{{ t.kuva | relative_url }}" alt="" loading="lazy">{% endif %}
       <time class="u-tapahtuma__pvm" datetime="{{ alku }}" dir="ltr"><b>{{ t.paiva | date: '%-d' }}</b><small>{{ t.paiva | date: '%-m/%Y' }}</small></time>
       <span class="u-tapahtuma__tiedot">
         <strong>{% include kolme.html fi=t.title doc=t %}</strong>

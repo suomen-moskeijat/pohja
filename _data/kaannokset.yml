@@ -11,7 +11,7 @@ nav_artikkelit:     { fi: "Artikkelit", en: "Articles", ar: "المقالات", 
 nav_moskeijoille:   { fi: "Moskeijoille", en: "For mosques", ar: "للمساجد", so: "Masaajidda" }
 nav_meista:         { fi: "Meistä", en: "About", ar: "من نحن", so: "Annaga" }
 nav_rukousajat:     { fi: "Rukousajat", en: "Prayer times", ar: "مواقيت الصلاة", so: "Waqtiyada salaadda" }
-nav_palvelut:       { fi: "Opetus ja palvelut", en: "Education & services", ar: "التعليم والخدمات", so: "Waxbarasho & adeegyo" }
+nav_palvelut:       { fi: "Palvelut", en: "Services", ar: "الخدمات", so: "Adeegyada" }
 nav_some:           { fi: "Somessa", en: "Social media", ar: "تواصل اجتماعي", so: "Baraha bulshada" }
 nav_yhteystiedot:   { fi: "Yhteystiedot", en: "Contact", ar: "اتصل بنا", so: "Xiriir" }
 nav_lahjoita:       { fi: "Lahjoita", en: "Donate", ar: "تبرّع", so: "Deeq" }
@@ -51,7 +51,11 @@ rukous_huom:        { fi: "Ajat on laskettu tähtitieteellisesti ja voivat poike
 lataa_aikataulu:    { fi: "Lataa moskeijan virallinen aikataulu", en: "Download the official timetable", ar: "تحميل الجدول الرسمي للمسجد", so: "Soo dejiso jadwalka rasmiga ah" }
 
 # --- Palvelut ---
-palvelut_otsikko:   { fi: "Opetus ja palvelut", en: "Education & services", ar: "التعليم والخدمات", so: "Waxbarasho & adeegyo" }
+palvelut_otsikko:   { fi: "Palvelut", en: "Services", ar: "الخدمات", so: "Adeegyada" }
+kaikki_palvelut:    { fi: "Kaikki palvelut", en: "All services", ar: "كل الخدمات", so: "Dhammaan adeegyada" }
+muut_palvelut:      { fi: "Muut palvelut", en: "Other services", ar: "خدمات أخرى", so: "Adeegyo kale" }
+kysy_tasta:         { fi: "Kysy tästä", en: "Ask about this", ar: "اسأل عن هذا", so: "Wax ka weydii" }
+palvelut_ohje:      { fi: "Ota yhteyttä, niin sovitaan aika ja kerromme lisää.", en: "Get in touch and we will arrange a time and tell you more.", ar: "تواصل معنا لتحديد موعد ومعرفة المزيد.", so: "Nala soo xiriir si aan waqti u ballanno oo aan kuu sheegno wax dheeraad ah." }
 lasten_opetus:      { fi: "Lasten opetus", en: "Children's education", ar: "تعليم الأطفال", so: "Waxbarashada carruurta" }
 ilmoita_lapsesi:    { fi: "Ilmoita lapsesi opetukseen", en: "Register your child for classes", ar: "سجّل طفلك في الدروس", so: "Ka diiwaangeli ilmahaaga waxbarashada" }
 

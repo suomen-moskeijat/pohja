@@ -1,0 +1,35 @@
+{%- comment -%}
+  Moskeijan palvelut korteina (_palvelut/*.md, järjestys: jarjestys). Kortti vie palvelun omalle sivulle.
+  Ulkoasu tulee moskeijan valinnasta (teema.tyyli_palvelut → html[data-kortit-palvelut]: kortit | ruudukko | lista).
+  Vanhat palvelut moskeijan tiedoissa (palvelut: [ { kuvake, nimi, kuvaus } ]) näytetään, kunnes ne on siirretty.
+  Parametrit: moskeija, maara (enimmäismäärä), ohita (palvelun url, joka jätetään pois).
+{%- endcomment -%}
+{%- assign _pv = site.palvelut | sort: "jarjestys", "last" -%}
+{%- if _pv.size > 0 -%}
+<ul class="u-palvelut" data-palvelut>
+  {%- assign _pvn = 0 -%}
+  {%- for p in _pv -%}
+  {%- if include.ohita and p.url == include.ohita -%}{%- continue -%}{%- endif -%}
+  {%- if include.maara and _pvn >= include.maara -%}{%- break -%}{%- endif -%}
+  {%- assign _pvn = _pvn | plus: 1 -%}
+  <li class="u-palvelu"><a class="u-palvelu__linkki" href="{{ p.url | relative_url }}">
+    {% if p.kuva and p.kuva != "" %}<img class="u-palvelu__kuva" src="{{ p.kuva | relative_url }}" alt="" loading="lazy">{% endif %}
+    <span class="u-ikoni u-palvelu__ikoni">{% include ikoni-ph.html nimi=p.kuvake koko=24 %}</span>
+    <span class="u-palvelu__teksti">
+      <strong class="u-palvelu__nimi">{% include kolme.html fi=p.title doc=p %}</strong>
+      {% if p.kuvaus %}<span class="u-palvelu__kuvaus">{% include kt.html arvo=p.kuvaus %}</span>{% endif %}
+    </span>
+    <span class="u-palvelu__lisaa">{% include k.html a="lue_lisaa" %} <span class="u-flip" aria-hidden="true">→</span></span>
+  </a></li>
+  {%- endfor -%}
+</ul>
+{%- elsif include.moskeija.palvelut.size > 0 -%}
+<ul class="u-palvelut" data-palvelut>
+  {%- for p in include.moskeija.palvelut -%}{%- if include.maara and forloop.index > include.maara -%}{%- break -%}{%- endif %}
+  <li class="u-palvelu"><div class="u-palvelu__linkki">
+    <span class="u-ikoni u-palvelu__ikoni">{% include ikoni-ph.html nimi=p.kuvake koko=24 %}</span>
+    <span class="u-palvelu__teksti"><strong class="u-palvelu__nimi">{% include kt.html arvo=p.nimi %}</strong>{% if p.kuvaus %}<span class="u-palvelu__kuvaus">{% include kt.html arvo=p.kuvaus %}</span>{% endif %}</span>
+  </div></li>
+  {%- endfor -%}
+</ul>
+{%- endif -%}

@@ -22,12 +22,17 @@ collections:
   sivut:
     output: true      # moskeijan omat sivut (_sivut/), esim. kirjat, lähteet, artikkelit
     permalink: /:name/
+  palvelut:
+    output: true      # moskeijan palvelut (_palvelut/), esim. janaza, nikah – jokaisella oma sivu
+    permalink: /palvelut/:name/
 
 defaults:
   - scope: { path: "", type: tapahtumat }
     values: { layout: tapahtuma }
   - scope: { path: "", type: artikkelit }
     values: { layout: artikkeli }
+  - scope: { path: "", type: palvelut }
+    values: { layout: palvelu }
   - scope: { path: "", type: sivut }
     values: { layout: oma }
 

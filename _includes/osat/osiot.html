@@ -33,6 +33,17 @@
   {% if _ohjelma != "" %}<h3 class="u-viikko-otsikko">{% include k.html a="joka_viikko" %}</h3>{{ _ohjelma }}{% endif %}
 </section>
 {% endif %}
+{%- when "palvelut" %}
+{%- capture _pl -%}{% include osat/palvelut.html moskeija=m maara=6 %}{%- endcapture -%}{%- assign _pl = _pl | strip -%}
+{% if _pl != "" %}{% unless m.valikko_piilota contains "palvelut" %}
+<section class="u-osio u-kehys">
+  <div class="u-osio__yla">
+    <h2>{% include k.html a="palvelut_otsikko" %}</h2>
+    <a class="u-linkki" href="{{ '/palvelut/' | relative_url }}">{% include k.html a="kaikki_palvelut" %} <span class="u-flip" aria-hidden="true">→</span></a>
+  </div>
+  {{ _pl }}
+</section>
+{% endunless %}{% endif %}
 {%- when "artikkelit" %}
 {%- assign _uusimmat = site.artikkelit | sort: 'paiva' | reverse -%}
 {% if _uusimmat.size > 0 %}{% unless m.valikko_piilota contains "artikkelit" %}

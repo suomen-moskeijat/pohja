@@ -10,7 +10,7 @@
 {%- else -%}{%- assign _p = t.paa -%}{%- assign _pt = t.paa_tumma -%}{%- assign _k = t.korostus -%}{%- assign _kv = t.korostus_vaalea -%}{%- endif -%}
 {%- assign v = site.time | date: '%s' -%}
 {%- assign juuri = '/' | relative_url -%}
-<html lang="{{ site.kielet | first | default: 'fi' }}" dir="ltr" data-baseurl="{{ site.baseurl }}">
+<html lang="{{ site.kielet | first | default: 'fi' }}" dir="ltr" data-baseurl="{{ site.baseurl }}" data-kortit-tapahtumat="{{ t.tyyli_tapahtumat | default: 'lista' }}" data-kortit-palvelut="{{ t.tyyli_palvelut | default: 'kortit' }}">
 <head>
   <meta charset="utf-8">
   {%- comment -%} Tietoturva: vain sivuston omat skriptit (+ Cloudflare Turnstile lomakkeissa). Ei sisäisiä skriptejä eikä

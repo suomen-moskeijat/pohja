@@ -1,21 +1,14 @@
 ---
 layout: sivu
-title: Opetus ja palvelut
+title: Palvelut
 permalink: /palvelut/
 ---
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {% include osat/sivuhero.html avain="palvelut_otsikko" johdanto=m.palvelut_esittely %}
 <div class="u-kehys u-sivu">
-  {% if m.palvelut.size > 0 %}
-  <ul class="u-palvelut">
-    {% for p in m.palvelut %}
-    <li class="u-kortti u-palvelu">
-      <span class="u-ikoni">{% include ikoni-ph.html nimi=p.kuvake koko=24 %}</span>
-      <h2>{% include kt.html arvo=p.nimi %}</h2>
-      <p>{% include kt.html arvo=p.kuvaus %}</p>
-    </li>
-    {% endfor %}
-  </ul>
+  {%- capture _pl -%}{% include osat/palvelut.html moskeija=m %}{%- endcapture -%}{%- assign _pl = _pl | strip -%}
+  {% if _pl != "" %}
+  {{ _pl }}
   {% else %}
   <div class="u-tyhja">
     <span class="u-ikoni">{% include ikoni-ph.html nimi="moskeija" koko=26 %}</span>
