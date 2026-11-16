@@ -443,6 +443,17 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', merkitseArabia);
   else merkitseArabia();
 
+  /* Viikko-ohjelma: kuluva päivä korostetaan (Tänään) */
+  function viikonTanaan() {
+    var vp = ['su', 'ma', 'ti', 'ke', 'to', 'pe', 'la'][new Date().getDay()];
+    Array.prototype.forEach.call(document.querySelectorAll('.u-viikko__paiva[data-vp="' + vp + '"]'), function (el) {
+      el.classList.add('u-viikko__paiva--tanaan');
+      var t = el.querySelector('.u-viikko__tanaan'); if (t) t.hidden = false;
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', viikonTanaan);
+  else viikonTanaan();
+
   /* ---------- 5. Instagram: julkaisu isona ---------- */
   /* Seuraa meitä: välilehdet (nuolinäppäimet vaihtavat) */
   kaikki('[data-somet]').forEach(function (o) {

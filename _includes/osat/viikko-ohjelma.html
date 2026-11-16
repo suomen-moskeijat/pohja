@@ -29,7 +29,7 @@
   {%- endcapture -%}
   {%- assign _vo_rivit = _vo_rivit | strip -%}
   {%- if _vo_rivit != "" -%}{%- assign _vpa = "vp_" | append: _p -%}
-  <div class="u-viikko__paiva"><h3>{% include k.html a=_vpa %}</h3><ul>{{ _vo_rivit }}</ul></div>
+  <div class="u-viikko__paiva" data-vp="{{ _p }}"><h3>{% include k.html a=_vpa %} <span class="u-viikko__tanaan" hidden>{% include k.html a="tanaan" %}</span></h3><ul>{{ _vo_rivit }}</ul></div>
   {%- endif -%}
 {%- endfor -%}
 {%- endcapture -%}

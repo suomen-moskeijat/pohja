@@ -62,8 +62,10 @@ ilmoita_lapsesi:    { fi: "Ilmoita lapsesi opetukseen", en: "Register your child
 
 # --- Tapahtumat ---
 tulevat_tapahtumat: { fi: "Tulevat tapahtumat", en: "Upcoming events", ar: "الفعاليات القادمة", so: "Dhacdooyinka soo socda" }
+tulevat:            { fi: "Tulevat", en: "Upcoming", ar: "القادمة", so: "Soo socda" }
 kaikki_tapahtumat:  { fi: "Kaikki tapahtumat", en: "All events", ar: "كل الفعاليات", so: "Dhammaan dhacdooyinka" }
 ei_tapahtumia:      { fi: "Ei tulevia tapahtumia juuri nyt. Seuraa meitä somessa.", en: "No upcoming events right now. Follow us on social media.", ar: "لا توجد فعاليات قادمة حالياً. تابعونا على وسائل التواصل.", so: "Hadda ma jiraan dhacdooyin soo socda. Nagala soco baraha bulshada." }
+ei_tulevia:         { fi: "Ei tulevia tapahtumia juuri nyt", en: "No upcoming events right now", ar: "لا توجد فعاليات قادمة حالياً", so: "Ma jiraan dhacdooyin soo socda hadda" }
 tapahtumat_teksti:  { fi: "Säännöllinen toiminta ja tulevat tapahtumat.", en: "Regular activities and upcoming events.", ar: "الأنشطة المنتظمة والفعاليات القادمة.", so: "Hawlaha joogtada ah iyo dhacdooyinka soo socda." }
 klo:                { fi: "klo", en: "at", ar: "الساعة", so: "saacadda" }
 lisaa_kalenteriin:  { fi: "Lisää kalenteriin", en: "Add to calendar", ar: "أضف إلى التقويم", so: "Ku dar kalandarka" }
