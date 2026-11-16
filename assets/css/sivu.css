@@ -463,7 +463,15 @@ html[data-kortit-palvelut="lista"] .u-palvelu__lisaa { margin: 0; padding: 0; fo
 html[data-kortit-palvelut="lista"] .u-palvelu__lisaa .u-flip { font-size: 20px; }
 /* Palvelun oma sivu */
 .u-palvelusivu { display: grid; gap: 18px; }
-.u-palvelusivu__yhteys { display: grid; gap: 12px; padding: 22px 24px; }
+.u-palvelusivu__kortti { overflow: hidden; }
+.u-palvelusivu__kuva { width: 100%; max-height: 420px; object-fit: cover; }
+.u-palvelusivu__sisus { display: grid; gap: 24px; padding: 24px; }
+@media (min-width: 768px) { .u-palvelusivu__sisus { padding: 40px 48px; gap: 28px; } }
+.u-palvelusivu__johdanto { margin: 0; font-size: clamp(18px, 2.2vw, 21px); line-height: 1.55; color: var(--paa); }
+.u-palvelusivu__sisus .u-proosa > :first-child { margin-top: 0; }
+.u-palvelusivu__sisus .u-proosa > :last-child { margin-bottom: 0; }
+.u-palvelusivu__yhteys { display: grid; gap: 12px; }
+.u-palvelusivu__sisus > * + .u-palvelusivu__yhteys { padding-top: 24px; border-top: 1px solid var(--raja); }
 .u-palvelusivu__yhteys p { margin: 0; font-weight: 600; }
 
 .u-kaksi { display: grid; gap: 20px; align-items: start; }

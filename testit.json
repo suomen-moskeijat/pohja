@@ -388,6 +388,37 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-16"
+    },
+    {
+      "id": "palvelusivu-kuvaus-sisaltoon",
+      "otsikko": "Palvelun sivu: lyhyt kuvaus sisältöön, yhteydenotto samaan korttiin",
+      "alue": "sivut",
+      "kuvaus": "Palvelun lyhyt kuvaus näkyy nyt sisältökortin alussa johdantona eikä otsikkoalueella. Koko teksti ja yhteydenotto ovat samassa kortissa, joten sivu ei näytä tyhjältä, vaikka palvelulla olisi vain lyhyt kuvaus.",
+      "aloitus": "Avaa testimoskeijan Palvelut-sivu ja klikkaa jotain palvelua.",
+      "kohdat": [
+        "Otsikkoalueella on vain Palvelut-linkki ja palvelun nimi — Missä: Palvelut → esim. Nikah",
+        "Lyhyt kuvaus on kortin alussa isommalla tekstillä, sen alla koko teksti — Missä: Palvelut → Janaza",
+        "Yhteydenotto (Kysy tästä, puhelin, WhatsApp) on samassa kortissa ohuen viivan alla — Missä: Palvelut → Janaza",
+        "Palvelu, jolla on vain lyhyt kuvaus, ei näytä tyhjältä — Missä: Testipaneeli → Palvelut → uusi palvelu pelkällä lyhyellä kuvauksella → sivu",
+        "Ilmoittaudu-nappi näkyy, jos palvelulle on annettu ilmoittautuminen — Missä: Palvelu, jossa ilmoittautuminen",
+        "Puhelimella kortti mahtuu ruudulle — Missä: Palvelun sivu puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Sivu: Palvelut",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/"
+        },
+        {
+          "nimi": "Sivu: Janaza",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/janaza-hautajaiset/"
+        },
+        {
+          "nimi": "Testipaneeli: Palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-16"
     }
   ]
 }

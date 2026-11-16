@@ -14,11 +14,10 @@ layout: sivu
   <div class="u-kehys">
     <p class="u-eyebrow u-eyebrow--vaalea"><a href="{{ '/palvelut/' | relative_url }}">{% include k.html a="palvelut_otsikko" %}</a></p>
     <h1>{% include kolme.html fi=page.title doc=page %}</h1>
-    {% if page.kuvaus %}<p class="u-sivuhero__johdanto">{% include kt.html arvo=page.kuvaus %}</p>{% endif %}
   </div>
 </section>
+{%- comment -%} Yksi kortti: kuva, lyhyt kuvaus johdantona, koko teksti ja yhteydenotto – sivu ei jää tyhjäksi, vaikka kuvaus olisi lyhyt {%- endcomment -%}
 <div class="u-kehys u-sivu u-sivu--kapea u-palvelusivu">
-  {% if page.kuva and page.kuva != "" %}<img class="u-omasivu__kuva" src="{{ page.kuva | relative_url }}" alt="" loading="lazy">{% endif %}
   {%- capture _teksti -%}
     {%- assign _fi = content | strip -%}
     {%- assign _kaannetty = false -%}{%- for _l in site.kielet -%}{%- assign _k = "teksti_" | append: _l -%}{%- if page[_k] and page[_k] != "" -%}{%- assign _kaannetty = true -%}{%- endif -%}{%- endfor -%}
@@ -30,9 +29,14 @@ layout: sivu
     {%- else -%}{{ _fi }}{%- endif -%}
   {%- endcapture -%}
   {%- assign _tyhja = _teksti | strip_html | strip -%}
-  {% if _tyhja != "" %}<article class="u-kortti u-artikkeli"><div class="u-proosa u-proosa--iso">{{ _teksti }}</div></article>{% endif %}
+  {%- capture _johd -%}{% if page.kuvaus %}{% include kt.html arvo=page.kuvaus %}{% endif %}{%- endcapture -%}{%- assign _johd_t = _johd | strip_html | strip -%}
+  <article class="u-kortti u-palvelusivu__kortti">
+    {% if page.kuva and page.kuva != "" %}<img class="u-palvelusivu__kuva" src="{{ page.kuva | relative_url }}" alt="" loading="lazy">{% endif %}
+    <div class="u-palvelusivu__sisus">
+    {% if _johd_t != "" %}<p class="u-palvelusivu__johdanto">{{ _johd | strip }}</p>{% endif %}
+    {% if _tyhja != "" %}<div class="u-proosa u-proosa--iso">{{ _teksti }}</div>{% endif %}
   {% unless page.yhteys == false %}
-  <div class="u-kortti u-palvelusivu__yhteys">
+  <div class="u-palvelusivu__yhteys">
     <p>{% if page.ilmoittautuminen and page.ilmoittautuminen != "" %}{% include k.html a="palvelut_ohje_ilmo" %}{% else %}{% include k.html a="palvelut_ohje" %}{% endif %}</p>
     <div class="u-napit">
       {%- assign _pi = page.ilmoittautuminen | default: "" | strip -%}
@@ -45,6 +49,8 @@ layout: sivu
     </div>
   </div>
   {% endunless %}
+    </div>
+  </article>
 </div>
 {%- capture _muut -%}{% include osat/palvelut.html moskeija=m ohita=page.url maara=6 %}{%- endcapture -%}{%- assign _muut = _muut | strip -%}
 {% if _muut != "" %}
