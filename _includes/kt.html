@@ -8,7 +8,9 @@
 {%- if _kt_json == "{" -%}
   {%- for _l in site.kielet -%}
     {%- assign _v = _a[_l] | default: _a.en | default: _a.fi -%}
-    {%- if include.md -%}<{{ _t }} data-l="{{ _l }}" lang="{{ _l }}">{{ _v | markdownify }}</{{ _t }}>{%- else -%}<{{ _t }} data-l="{{ _l }}">{{ _v }}</{{ _t }}>{%- endif -%}
+    {%- comment -%} Puuttuva käännös (esim. suomenkielinen teksti arabian sivulla): dir="auto" pitää välimerkit oikealla puolella {%- endcomment -%}
+    {%- assign _oma = _a[_l] | default: "" | strip -%}{%- if _oma == "" -%}{%- assign _kv = ' dir="auto"' -%}{%- else -%}{%- assign _kv = "" -%}{%- endif -%}
+    {%- if include.md -%}<{{ _t }} data-l="{{ _l }}" lang="{{ _l }}"{{ _kv }}>{{ _v | markdownify }}</{{ _t }}>{%- else -%}<{{ _t }} data-l="{{ _l }}"{{ _kv }}>{{ _v }}</{{ _t }}>{%- endif -%}
   {%- endfor -%}
 {%- else -%}
   {%- if include.md -%}{{ _a | markdownify }}{%- else -%}{{ _a }}{%- endif -%}

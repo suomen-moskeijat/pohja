@@ -756,7 +756,9 @@
         "Teksti napin yläpuolella ja Napin teksti -kentät tulevat näkyviin, kun ilmoittautuminen on valittu, ja esikatselu päivittyy — Missä: Testipaneeli → Tapahtumat → Uusi",
         "Tapahtuman sivulla teksti näkyy napin yläpuolella ja nappi sekä alareunan palkki käyttävät omaa napin tekstiä — Missä: Testimoskeija → Tapahtumat → tapahtuma",
         "Ilman omia tekstejä nappi on Ilmoittaudu ja lomakkeella ilmoittautuessa oletusteksti näkyy — Missä: Testimoskeija → Tapahtumat → Avoimet ovet",
-        "Samat kaksi kenttää palvelussa ja lasten opetuksessa — Missä: Testipaneeli → Palvelut → palvelu; Sivut → Palvelut → Lasten opetukseen ilmoittautuminen"
+        "Samat kaksi kenttää palvelussa ja lasten opetuksessa — Missä: Testipaneeli → Palvelut → palvelu; Sivut → Palvelut → Lasten opetukseen ilmoittautuminen",
+        "Napin yläpuolinen teksti näyttää samalta kaikissa kolmessa (sama koko ja harmaa väri) — Missä: Testimoskeija → tapahtuma, palvelu ja Ilmoita lapsesi opetukseen",
+        "Arabiaksi: suomeksi kirjoitettu oma teksti näkyy oikein päin (piste lauseen lopussa) — Missä: sama sivu, kieli AR"
       ],
       "linkit": [
         {

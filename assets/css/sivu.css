@@ -468,7 +468,8 @@ html[data-kortit-palvelut="lista"] .u-palvelu__lisaa .u-flip { font-size: 20px; 
 .u-palvelusivu__sisus .u-proosa > :last-child { margin-bottom: 0; }
 .u-palvelusivu__yhteys { display: grid; gap: 12px; }
 .u-palvelusivu__sisus > * + .u-palvelusivu__yhteys { padding-top: 24px; border-top: 1px solid var(--raja); }
-.u-palvelusivu__yhteys p { margin: 0; font-weight: 600; }
+/* Toimintonapin teksti: sama tyyli kaikkialla (palvelu, tapahtuma, lasten opetus) = .u-hieno */
+.u-palvelusivu__yhteys p { margin: 0; color: var(--hieno); font-size: 15px; }
 
 .u-kaksi { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: start; }
 @media (min-width: 1024px) { .u-kaksi { grid-template-columns: 1.6fr 1fr; gap: 28px; } .u-kaksi > aside { position: sticky; top: calc(var(--yla) + 20px); } }
@@ -1160,7 +1161,7 @@ a.u-palvelu__linkki:hover, .u-tapahtuma a:hover, .u-rj__kortti:hover, a.u-rmh:ho
 /* Tapahtuman sivu: tietokortti (milloin, aika, paikka, kenelle + Ilmoittaudu) ja kuvaus */
 .u-tapsivu { display: grid; gap: 18px; align-items: start; }
 @media (min-width: 900px) { .u-tapsivu { grid-template-columns: minmax(0, 1fr) 340px; } .u-taptieto { grid-column: 2; grid-row: 1; position: sticky; top: calc(var(--yla, 76px) + 16px); } .u-tapsivu__kuvaus { grid-column: 1; grid-row: 1; } .u-tapsivu--yksi { grid-template-columns: minmax(0, 460px); } .u-tapsivu--yksi .u-taptieto { grid-column: 1; position: static; } }
-.u-taptieto { padding: 8px 22px 22px; }
+.u-taptieto { padding: 8px 24px 24px; }
 .u-taptieto__rivit { list-style: none; margin: 0; padding: 0; }
 .u-taptieto__rivit li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--raja); }
 .u-taptieto__rivit li:last-child { border-bottom: 0; }
@@ -1168,9 +1169,9 @@ a.u-palvelu__linkki:hover, .u-tapahtuma a:hover, .u-rj__kortti:hover, a.u-rmh:ho
 .u-taptieto__rivit small { color: var(--hieno); font-size: 13px; font-weight: 600; letter-spacing: .02em; }
 .u-taptieto__rivit strong { font-size: 16.5px; color: var(--paa-tumma); line-height: 1.35; }
 .u-taptieto__rivit strong small { display: block; margin-top: 2px; font-weight: 500; letter-spacing: 0; }
-.u-taptieto__toiminto { display: grid; gap: 8px; margin-top: 6px; text-align: center; }
+.u-taptieto__toiminto { display: grid; gap: 12px; margin-top: 8px; text-align: center; }
 .u-taptieto__nappi { width: 100%; justify-content: center; }
-.u-taptieto__toiminto small { color: var(--hieno); font-size: 13.5px; }
+.u-taptieto__toiminto small { color: var(--hieno); font-size: 15px; text-wrap: balance; }
 
 /* Tapahtuman pikatiedot otsikon alla ja puhelimen kiinteä Ilmoittaudu-palkki */
 .u-tapsivu__pika { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; }
