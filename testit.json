@@ -2,45 +2,22 @@
   "ohje": "Testattavat muutokset. Kun teet muutoksen testi-haaraan, lisää tähän kohta (id pysyy samana; nosta versio, kun korjaat hylätyn testin). Kohta: 'Mitä tarkistetaan — Missä: valikkopolku'. Suorat linkit testin linkit-listaan nimettyinä nappeina (näkyvät jokaisessa paneelin versiossa). aloitus = mistä testaaja aloittaa. Älä kirjoita tänne nimiä tai muita henkilötietoja – repo on julkinen.",
   "testit": [
     {
-      "id": "rukousajat-vieritys",
-      "otsikko": "Rukousajat-sivun asettelu (unslop)",
-      "kuvaus": "Tietokoneella Rukousajat-sivu on kaksi itsenäistä palstaa: vasemmalla kapea palsta (seuraava rukous, päivän ajat, Jumua, kalenterin tilaus) ja oikealla leveä (Ramadan ja kuukauden aikataulu). Ennen osiot asettuivat riveittäin, jolloin väliin jäi isoja tyhjiä aukkoja, ja vasen palsta kulki vierityksen mukana. Puhelimella järjestys on ennallaan, ja kapeimmillakin puhelimilla rukousten nimet mahtuvat katkeamatta.",
-      "aloitus": "Avaa testimoskeijan Rukousajat-sivu tietokoneella (leveä ikkuna), vieritä alas, ja tee sama puhelimella.",
+      "id": "sivusto-ulkoasu",
+      "otsikko": "Sivuston ulkoasu (unslop)",
       "alue": "sivut",
-      "versio": 2,
-      "lisatty": "2026-11-16",
+      "kuvaus": "Koko sivuston hionta yhdessä testissä: etusivun yläosa kahteen palstaan, ei ISOJA KIRJAIMIA eikä koristeemojeja, kuvakkeet ilman taustaruutuja, nostot ja Tuki ja jäsenyys -laatikko siistimpinä, kellonajat yhteen muotoon (12.30), päivämäärälaatoissa kuukausi (28 marras), isommat kosketusalueet puhelimella ja Koraanin jae lukufontilla. Moskeijan omat värit, fontit ja kuviot pysyvät.",
+      "aloitus": "Avaa testimoskeijan etusivu tietokoneella (leveä ikkuna) ja sitten puhelimella. Selaa koko sivu läpi.",
       "kohdat": [
-        "Tietokoneella vasemmalla on seuraava rukous, päivän ajat, Perjantairukous ja Lisää puhelimen kalenteriin – peräkkäin ilman tyhjiä aukkoja — Missä: Testimoskeija → Rukousajat (tietokone), vasen palsta",
-        "Oikealla on Ramadan-osio ja sen alla kuukauden aikataulu, eikä niiden väliin jää tyhjää — Missä: Rukousajat → oikea palsta",
-        "Vierittäessä vasen palsta pysyy paikallaan eikä kulje mukana — Missä: Rukousajat → vieritä alas",
-        "Puhelimella järjestys: seuraava rukous ja päivän ajat, Perjantairukous, Ramadan, kuukausi, Lisää puhelimen kalenteriin — Missä: Rukousajat puhelimella",
-        "Pienellä puhelimella (esim. iPhone SE) Auringonnousu ei katkea kesken sanan, ja arabiankielinen nimi on rivin alla — Missä: Rukousajat → päivän ajat",
-        "Kuukauden vaihto nuolilla ja Tulosta toimivat kuten ennen — Missä: Rukousajat → kuukauden aikataulu ja Ramadan-osio"
-      ],
-      "linkit": [
-        {
-          "nimi": "Sivu: Rukousajat",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/"
-        }
-      ]
-    },
-    {
-      "id": "aloitusnakyma-jaettu",
-      "otsikko": "Etusivun yläosa kahteen palstaan",
-      "kuvaus": "Tietokoneella etusivun yläosassa moskeijan nimi, esittely ja napit ovat vasemmalla ja seuraava rukous (ja Ramadanin aikaan suhur/iftar-rivi) oikealla – ennen kaikki oli keskellä allekkain. Puhelimella järjestys on ennallaan. Palvelukorteissa kuvake on ilman taustaruutua. Uusi valinta: Ramadan-rivin voi piilottaa yläosasta, koska samat ajat näkyvät Ramadan-osiossa heti alla.",
-      "aloitus": "Avaa testimoskeijan etusivu tietokoneella (leveä ikkuna) ja sen jälkeen puhelimella.",
-      "alue": "sivut",
-      "versio": 1,
-      "lisatty": "2026-11-16",
-      "kohdat": [
-        "Tietokoneella nimi, esittely ja napit ovat vasemmalla ja Seuraava rukous -kortti oikealla — Missä: Testimoskeijan etusivu, ylin osa",
-        "Ramadan-rivi (päivä 5, suhur, iftar) on rukouskortin alla oikealla palstalla — Missä: etusivu, ylin osa oikealla",
-        "Puhelimella kaikki on allekkain kuten ennen: nimi, rukouskortti, Ramadan-rivi, napit — Missä: etusivu puhelimella",
-        "Arabiaksi palstat ovat peilikuvana (teksti oikealla, rukouskortti vasemmalla) — Missä: etusivu → kielinappi (FI) → العربية",
-        "Palvelukorteissa kuvake on ilman vaaleaa taustaruutua — Missä: etusivu → Palvelut",
-        "Paneelissa on Ramadan: etusivun yläosan rivi -kohdassa uusi valinta Ei riviä, ja esikatselu kertoo sen — Missä: Testipaneeli → testimoskeija → Rukousajat ja Jumua → Ramadan: etusivun yläosan rivi",
-        "Kun Ei riviä on tallennettu ja sivu päivittynyt, yläosassa on vain Seuraava rukous, ja suhur ja iftar näkyvät Ramadan-osiossa alla — Missä: testimoskeijan etusivu (Avaa sivu ↗ tallennuksen jälkeen)",
-        "Palauta lopuksi valinnaksi Laatta, jotta testimoskeija on muille testaajille ennallaan — Missä: Testipaneeli → Rukousajat ja Jumua → Ramadan: etusivun yläosan rivi"
+        "Tietokoneella nimi, esittely ja napit ovat vasemmalla ja Seuraava rukous oikealla; puhelimella kaikki allekkain — Missä: Testimoskeijan etusivu, ylin osa",
+        "Pienet otsikot on kirjoitettu tavallisesti (Seuraava rukous, Lasten opetus), ei ISOJA KIRJAIMIA eikä ◆-merkkejä — Missä: etusivu ja alasivujen yläosat",
+        "Kuvakkeet ovat ilman vaaleita taustaruutuja ja kortit eivät hyppää hiiren alla — Missä: etusivu → Palvelut ja Tervetuloa käymään",
+        "Kellonajat on kirjoitettu pisteellä (12.30, 05.52) kaikkialla: rukousajat, Jumua ja tapahtumat — Missä: etusivu ja Rukousajat-sivu",
+        "Tapahtuman päivämäärälaatassa lukee esim. 28 marras (ei 28 11/2026) — Missä: etusivu → Tapahtumat → Tulevat",
+        "Kun kieleksi vaihtaa English, ajat näkyvät kaksoispisteellä (12:30) ja kuukaudet englanniksi — Missä: kielinappi (FI) ylhäällä → English",
+        "Arabiaksi sivu on peilikuvana ja Ramadan-päivä näkyy muodossa 5/29 — Missä: kielinappi → العربية",
+        "Puhelimella artikkelien suodatinnapit ja pienet napit ovat helppoja painaa — Missä: Artikkelit-sivu puhelimella",
+        "Tuki ja jäsenyys -sivulla on aina vähintään yksi tapa ottaa yhteyttä — Missä: valikko → Tuki ja jäsenyys",
+        "Puhelimella (myös pienellä, esim. iPhone SE) mikään ei mene päällekkäin eikä sivu vieri sivuttain — Missä: kaikki sivut puhelimella"
       ],
       "linkit": [
         {
@@ -48,63 +25,82 @@
           "url": "https://suomen-moskeijat.github.io/testimoskeija/"
         },
         {
-          "nimi": "Testipaneeli: Rukousajat ja Ramadan",
-          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/rukousajat"
+          "nimi": "Sivu: Etusivu englanniksi",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/en/"
+        },
+        {
+          "nimi": "Sivu: Artikkelit",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/artikkelit/"
+        },
+        {
+          "nimi": "Sivu: Tuki ja jäsenyys",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/lahjoita/"
         }
-      ]
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-17"
     },
     {
-      "id": "ulkoasun-hionta",
-      "otsikko": "Ulkoasun hionta (unslop)",
-      "kuvaus": "Sivupohjan pieni siistiminen unslop-tarkistuslistalla: ei ISOJA KIRJAIMIA väljällä harvennuksella, otsikot hieman kevyempiä, ei kultaisia hehkuja taustoissa, kortit eivät enää hyppää ylös hiiren alla, Ramadan-bannerin seuraava aika ei syki vaan on korostettu kultareunalla, ja Joka viikko -kortit täyttävät koko rivin. Värit, fontit, kuviot ja moskeijan omat asetukset pysyvät ennallaan. Lisäksi korjattu arabiankielisen Ramadan-bannerin päivänumero, joka näkyi väärin päin (/295 → 5/29).",
-      "aloitus": "Avaa testimoskeijan etusivu (linkki alla) tietokoneella ja puhelimella. Vertaa tarvittaessa jonkin toisen moskeijan sivuun, jossa muutos ei vielä ole.",
+      "id": "tapahtumat-osio",
+      "otsikko": "Tapahtumat: Joka viikko ja Tulevat",
       "alue": "sivut",
-      "versio": 1,
-      "lisatty": "2026-11-16",
+      "kuvaus": "Etusivulla ja Tapahtumat-sivulla on yksi Tapahtumat-kokonaisuus, jossa on kaksi nimettyä osaa: Joka viikko (viikko-ohjelma) ja Tulevat (kertaluonteiset). Molemmat noudattavat samaa tyyliä (Ulkoasu → Tapahtumien kortit: Lista, Tiivis tai Kuvakortit). Tapahtuman omalla sivulla tiedot näkyvät kerran tietokortissa.",
+      "aloitus": "Avaa testimoskeijan etusivu ja vieritä Tapahtumat-kohtaan. Kirjaudu testipaneeliin (keltainen TESTIPANEELI-palkki ylhäällä) sähköpostikoodilla ja avaa testimoskeija (ylläpitäjällä Moskeijat-listasta, testaajalla vasemmasta valikosta, puhelimella ☰ Valikko). Paneelin muutokset näkyvät sivulla 2–5 minuutin päästä – paina Avaa sivu ↗ tai päivitä sivu.",
       "kohdat": [
-        "Otsikon yläpuolella kaupungin nimi on tavallista tekstiä ilman pilleriä ja pistettä — Missä: Testimoskeijan etusivu → ylin kohta (Helsinki)",
-        "Seuraava rukous -otsikko ja viikonpäivät on kirjoitettu tavallisesti (ei SEURAAVA RUKOUS, ei KESKIVIIKKO) — Missä: etusivu → rukouskortti ja Joka viikko",
-        "Joka viikko -kortit täyttävät koko rivin leveyden tietokoneella — Missä: etusivu → Tulevat tapahtumat → Joka viikko",
-        "Palvelu-, artikkeli- ja tapahtumakortit eivät nouse hiiren alla, vain reuna vaihtaa väriä — Missä: etusivu → Palvelut ja Uusimmat artikkelit",
-        "Ramadan-bannerissa seuraava aika on korostettu kultaisella reunalla eikä syki — Missä: etusivu → Ramadan-banneri (esikatselu Päivä 5)",
-        "Otsikot ja isot numerot ovat hieman kevyempiä, mutta yhä selvästi luettavia — Missä: etusivu, Rukousajat-sivu",
-        "Arabiankielinen versio näyttää edelleen oikealta (teksti oikealta vasemmalle, ei harvennusta) — Missä: etusivu → kielinappi (FI) ylhäällä oikealla → العربية",
-        "Arabiaksi Ramadan-bannerissa päivä näkyy muodossa 5/29 (ei /295) — Missä: etusivu → kielinappi → العربية → Ramadan-banneri",
-        "Puhelimella mikään ei mene päällekkäin eikä leveys vuoda yli — Missä: etusivu ja Rukousajat puhelimella"
+        "Etusivulla on otsikko Tapahtumat ja sen alla Joka viikko ja Tulevat; tietokoneella rinnakkain, puhelimella allekkain — Missä: Testimoskeijan etusivu → Tapahtumat",
+        "Joka viikko -ohjelmassa on päivän laatta (esim. Su) ja tulevissa päivämäärälaatta – sama ulkoasu — Missä: etusivu → Tapahtumat",
+        "Kuluva päivä on korostettu, jos sille on toimintaa — Missä: Joka viikko -ohjelma",
+        "Tiivis ja Kuvakortit vaihtavat sekä viikko-ohjelman että tulevien ulkoasun — Missä: Testipaneeli → Ulkoasu → Tapahtumien kortit → Tallenna → avaa sivu",
+        "Tapahtumat-sivulla samat osat samoilla otsikoilla — Missä: valikko → Tapahtumat",
+        "Toistuvan tapahtuman sivulla lukee esim. Sunnuntaisin eikä tietoja toisteta otsikon alla — Missä: Tapahtumat → Koraanikoulu",
+        "Avoimet ovet: puhelimella tietokortti ja Ilmoittaudu ennen kuvausta, Ilmoittaudu avaa lomakkeen aihe valmiina — Missä: Tapahtumat → Avoimet ovet",
+        "Uusi viikoittainen tapahtuma (Kuinka usein? Joka viikko) näkyy viikko-ohjelmassa — Missä: Testipaneeli → Tapahtumat → Uusi tapahtuma"
       ],
       "linkit": [
         {
           "nimi": "Sivu: Etusivu",
           "url": "https://suomen-moskeijat.github.io/testimoskeija/"
-        },
-        {
-          "nimi": "Sivu: Rukousajat",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/"
         },
         {
           "nimi": "Sivu: Tapahtumat",
           "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
+        },
+        {
+          "nimi": "Sivu: Avoimet ovet",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/2026-11-28-avoimet-ovet/"
+        },
+        {
+          "nimi": "Testipaneeli: Ulkoasu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/ulkoasu"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi tapahtuma",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat/uusi"
         }
-      ]
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-17"
     },
     {
-      "id": "palvelujen-jarjestys",
-      "otsikko": "Palvelujen järjestys nuolilla",
-      "kuvaus": "Palvelun lomakkeessa ei enää ole Järjestys-numeroa (sama numero kahdella sotki järjestyksen). Uusi palvelu tulee listan loppuun, ja järjestystä muutetaan Palvelut-listassa nuolilla ↑↓. Tallennuksen jälkeen kulmaan tulee Avaa sivu -linkki, joka näyttää päivitetyn sivun heti.",
-      "aloitus": "Kirjaudu testipaneeliin sähköpostikoodilla ja avaa testimoskeijan Palvelut (linkki alla).",
+      "id": "palvelut",
+      "otsikko": "Palvelut: omat sivut, järjestys ja ilmoittautuminen",
       "alue": "paneeli",
-      "versio": 1,
-      "lisatty": "2026-11-16",
+      "kuvaus": "Palvelut ovat omina sivuinaan. Järjestys vaihdetaan listassa nuolilla. Palvelulle voi antaa Ilmoittautumisen (esim. lasten opetuksen lomake), jolloin sivulle tulee Ilmoittaudu-nappi. Etusivun vanhat Toimintamme-kortit voi muuttaa palveluiksi yhdellä napilla; viikoittainen toiminta kuuluu Tapahtumiin.",
+      "aloitus": "Kirjaudu testipaneeliin (keltainen TESTIPANEELI-palkki ylhäällä) sähköpostikoodilla ja avaa testimoskeija (ylläpitäjällä Moskeijat-listasta, testaajalla vasemmasta valikosta, puhelimella ☰ Valikko). Paneelin muutokset näkyvät sivulla 2–5 minuutin päästä – paina Avaa sivu ↗ tai päivitä sivu.",
       "kohdat": [
-        "Uuden palvelun lomakkeessa ei ole Järjestys-kenttää, ja uusi palvelu tulee listan viimeiseksi — Missä: Testipaneeli → Palvelut → Uusi palvelu → Tallenna",
-        "Nuolet ↑↓ siirtävät palvelua heti listassa ja alas tulee Tallenna järjestys -palkki — Missä: Testipaneeli → Palvelut → nuolet Muokkaa-napin vieressä",
-        "Tallenna järjestys → järjestys pysyy, kun sivun lataa uudelleen (numerot 1, 2, 3… ilman tuplia) — Missä: Palvelut-lista",
-        "Peruuta palauttaa tallennetun järjestyksen — Missä: Palvelut-lista → siirrä jotain → Peruuta",
-        "Kun julkaisu valmistuu, kulmaan tulee ✓ Muutos näkyy nyt sivulla ja Avaa sivu ↗, joka näyttää uuden järjestyksen heti — Missä: näytön alakulma tallennuksen jälkeen",
-        "Testimoskeijan Palvelut-sivulla ja etusivulla palvelut ovat samassa järjestyksessä kuin paneelissa — Missä: Testimoskeijan sivu → Palvelut",
-        "Puhelimella listan rivit ovat selkeitä: nimi koko leveydellä, nuolet ja Muokkaa omalla rivillään — Missä: Palvelut-lista puhelimella"
+        "Palvelut-sivulla palvelut ovat kortteina ja kortti avaa palvelun oman sivun — Missä: Testimoskeijan sivu → valikko → Palvelut",
+        "Uuden palvelun lomakkeessa ei ole Järjestys-kenttää; uusi palvelu tulee listan viimeiseksi — Missä: Testipaneeli → Palvelut → Uusi palvelu → Tallenna",
+        "Nuolet ↑↓ siirtävät palvelua ja Tallenna järjestys säilyttää järjestyksen (1, 2, 3… ilman tuplia) — Missä: Testipaneeli → Palvelut",
+        "Palvelun lomakkeessa on Ilmoittautuminen: Valitse sivu → Lasten opetus; palvelun sivulle tulee Ilmoittaudu-nappi — Missä: Testipaneeli → Palvelut → avaa palvelu → Ilmoittautuminen → Tallenna",
+        "Toimintamme-kortit palveluiksi: lisää ensin 2 korttia Etusivu-sivulla, sitten Palvelut-sivulla avaa Etusivun Toimintamme-kortit palveluiksi, rastita yksi ja paina Muuta — Missä: Testipaneeli → Sivut → Etusivu → Toimintamme-kortit, sitten Palvelut",
+        "Siirron jälkeen etusivulla on Palvelut-osio Toimintamme-osion paikalla — Missä: Testimoskeijan etusivu",
+        "Historiassa näkyvät palvelujen nimet (ei tiedostotunnuksia) — Missä: Testipaneeli → Historia"
       ],
       "linkit": [
+        {
+          "nimi": "Sivu: Palvelut",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/"
+        },
         {
           "nimi": "Testipaneeli: Palvelut",
           "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
@@ -114,10 +110,115 @@
           "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut/uusi"
         },
         {
-          "nimi": "Sivu: Palvelut",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/"
+          "nimi": "Testipaneeli: Etusivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/etusivu"
+        },
+        {
+          "nimi": "Testipaneeli: Historia",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/historia"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-17"
+    },
+    {
+      "id": "rukousajat",
+      "otsikko": "Rukousajat: sivun asettelu ja paneelin välilehdet",
+      "alue": "sivut",
+      "kuvaus": "Rukousajat-sivulla on tietokoneella kaksi palstaa ilman tyhjiä aukkoja, eikä vasen palsta kulje vierityksen mukana. Paneelin Rukousajat-näkymä on jaettu välilehtiin: Lähde ja iqamah, Jumua, Poikkeuspäivät ja Ramadan.",
+      "aloitus": "Avaa testimoskeijan Rukousajat-sivu tietokoneella ja puhelimella. Kirjaudu testipaneeliin (keltainen TESTIPANEELI-palkki ylhäällä) sähköpostikoodilla ja avaa testimoskeija (ylläpitäjällä Moskeijat-listasta, testaajalla vasemmasta valikosta, puhelimella ☰ Valikko). Paneelin muutokset näkyvät sivulla 2–5 minuutin päästä – paina Avaa sivu ↗ tai päivitä sivu.",
+      "kohdat": [
+        "Tietokoneella vasemmalla tänään, Jumua ja kalenterin tilaus, oikealla kuukauden aikataulu – ei tyhjiä aukkoja — Missä: Testimoskeija → Rukousajat",
+        "Vasen palsta ei kulje vierityksen mukana — Missä: Rukousajat → vieritä alas",
+        "Pienellä puhelimella Auringonnousu ei katkea kesken sanan — Missä: Rukousajat puhelimella",
+        "Paneelissa välilehdet Lähde ja iqamah · Jumua · Poikkeuspäivät · Ramadan näyttävät vain oman osansa, ja yksi Tallenna tallentaa kaiken — Missä: Testipaneeli → Rukousajat ja Jumua",
+        "Ramadan-välilehdellä on Ramadan: etusivun yläosan rivi, myös valinta Ei riviä — Missä: Testipaneeli → Rukousajat ja Jumua → Ramadan"
+      ],
+      "linkit": [
+        {
+          "nimi": "Sivu: Rukousajat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/"
+        },
+        {
+          "nimi": "Testipaneeli: Rukousajat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/rukousajat"
+        },
+        {
+          "nimi": "Testipaneeli: Ramadan-rivi",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/rukousajat?k=ramadan.hero_tyyli"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-17"
+    },
+    {
+      "id": "ramadan-ulkoasu",
+      "otsikko": "Ramadan: etusivun yläosa, tyylit ja Ramadan-julkaisut",
+      "kuvaus": "Ramadanin aikana etusivun yläosassa näkyy päivä isolla ja ajat siististi. Tyylin ja värin voi valita. Ramadan-osiossa näkyvät julkaisut (tarawih, iftar, eid). Testisivulla Ramadanin voi esikatsella osoitteen lopulla ?ramadan=ennen, ?ramadan=5 tai ?ramadan=eid.",
+      "aloitus": "Avaa linkit alla – ne näyttävät Ramadanin, vaikka nyt ei ole Ramadan. Asetukset: Kirjaudu testipaneeliin (keltainen TESTIPANEELI-palkki ylhäällä) sähköpostikoodilla. Avaa testimoskeija: ylläpitäjällä Moskeijat-listasta, testaajalla vasemmasta valikosta (puhelimella ☰ Valikko). Paneelin muutokset näkyvät nettisivulla 2–5 minuutin päästä – päivitä sivu.",
+      "alue": "sivut",
+      "versio": 2,
+      "lisatty": "2026-11-15",
+      "kohdat": [
+        "Etusivun yläosassa ramadanpäivä ja ajat näkyvät väljästi, ei päällekkäin — Missä: Testimoskeijan etusivu Ramadanin 5. päivänä",
+        "Ennen Ramadania ja Eid-päivänä näkyvät oikeat tekstit — Missä: Etusivu ?ramadan=ennen ja ?ramadan=eid",
+        "Rukousajat-sivun Ramadan-osiossa näkyvät Ramadan-julkaisut kuvineen (tarawih, iftar, eid) — Missä: Testimoskeijan sivu → Rukousajat → vieritä Ramadan-kohtaan",
+        "Paneelissa Ramadan-välilehdellä etusivun yläosan rivi, päivälaatan väri ja osion tyyli vaihtuvat esikatselussa — Missä: Testipaneeli → Rukousajat ja Jumua → välilehti Ramadan",
+        "Puhelimella Ramadan-osio on helppo lukea — Missä: Samat sivut puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Sivu: Etusivu, Ramadan 5. päivä",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/?ramadan=5"
+        },
+        {
+          "nimi": "Sivu: Etusivu, Eid",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/?ramadan=eid"
+        },
+        {
+          "nimi": "Sivu: Ramadan-osio",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/?ramadan=5#ramadan"
+        },
+        {
+          "nimi": "Testipaneeli: Rukousajat ja Ramadan",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/rukousajat"
         }
       ]
+    },
+    {
+      "id": "paneeli-selkeys",
+      "otsikko": "Paneeli selkeämmäksi (unslop)",
+      "alue": "paneeli",
+      "kuvaus": "Paneelista on poistettu koriste-emojit ja ISOT otsikot, moskeijan etusivun otsikko on Yleiskatsaus, värikentät näyttävät oikean värin, julkaisujen tila on pisteenä ja tekstinä, Kaikki moskeijat -lista toimii puhelimella ja tapahtuman esikatselu avautuu puhelimella napista.",
+      "aloitus": "Kirjaudu testipaneeliin (keltainen TESTIPANEELI-palkki ylhäällä) sähköpostikoodilla ja avaa testimoskeija (ylläpitäjällä Moskeijat-listasta, testaajalla vasemmasta valikosta, puhelimella ☰ Valikko). Paneelin muutokset näkyvät sivulla 2–5 minuutin päästä – paina Avaa sivu ↗ tai päivitä sivu.",
+      "kohdat": [
+        "Vasemman valikon ryhmät (Usein, Sivusto, Hallinta) on kirjoitettu tavallisesti eikä paneelissa ole koriste-emojeja — Missä: Testipaneeli, vasen valikko ja Sivut → Etusivu → Etusivun osiot",
+        "Moskeijan ensimmäisen sivun otsikko on Yleiskatsaus — Missä: Testipaneeli → Yleiskatsaus",
+        "Ulkoasussa Nykyiset värit -valinnalla tyhjät värikentät näyttävät käytössä olevan värin, eivät kaikki samaa ruskeaa — Missä: Testipaneeli → Ulkoasu → Värit → Nykyiset värit",
+        "Uusi tapahtuma puhelimella: Näytä esikatselu -nappi alhaalla avaa esikatselun — Missä: Testipaneeli puhelimella → Tapahtumat → Uusi tapahtuma",
+        "Julkaisun verkkosivuteksti on luettelona (Päivä, Kello, Paikka) ilman emojeja — Missä: Testipaneeli → Luo julkaisu → Tapahtuma → Julkaise nettisivulle",
+        "Ylläpitäjä: Kaikki moskeijat -lista puhelimella ei vieri sivuttain, ja nimen painallus avaa moskeijan — Missä: Ylläpito → Moskeijat puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Yleiskatsaus",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija"
+        },
+        {
+          "nimi": "Testipaneeli: Ulkoasu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/ulkoasu"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi tapahtuma",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat/uusi"
+        },
+        {
+          "nimi": "Testipaneeli: Luo julkaisu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/julkaisut"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-17"
     },
     {
       "id": "testaus-helpommaksi",
@@ -155,171 +256,19 @@
       ]
     },
     {
-      "id": "palvelut-omat-sivut",
-      "otsikko": "Palvelut omina sivuinaan",
-      "kuvaus": "Jokaisella palvelulla (esim. janaza, nikah) on oma sivu, sivuston valikossa on Palvelut, ja kortit ovat klikattavia. Paneelissa palvelut ovat omana kohtanaan.",
-      "aloitus": "Avaa ensin testimoskeijan nettisivu ja katso, sitten testipaneeli. Kirjaudu testipaneeliin (keltainen TESTIPANEELI-palkki ylhäällä) sähköpostikoodilla. Avaa testimoskeija: ylläpitäjällä Moskeijat-listasta, testaajalla vasemmasta valikosta (puhelimella ☰ Valikko). Paneelin muutokset näkyvät nettisivulla 2–5 minuutin päästä – päivitä sivu.",
-      "alue": "sivut",
-      "versio": 1,
-      "lisatty": "2026-11-15",
-      "kohdat": [
-        "Sivuston yläreunan valikossa on Palvelut, ja sivulla näkyy 6 palvelua kortteina — Missä: Testimoskeijan sivu → yläreunan valikko (puhelimella ☰) → Palvelut",
-        "Kortin klikkaus avaa palvelun oman sivun, jossa on koko kuvaus ja yhteydenotto — Missä: Palvelut-sivu → klikkaa esim. Janaza – hautajaiset",
-        "Etusivulla on Palvelut-osio samoilla korteilla — Missä: Testimoskeijan etusivu → vieritä alas Palvelut-kohtaan",
-        "Paneelissa voi lisätä palvelun: se näkyy sivulla muutaman minuutin päästä — Missä: Testipaneeli → Testimoskeija → vasen valikko: Sivusto → Palvelut → Uusi palvelu",
-        "Palvelun muokkaus ja poisto toimivat — Missä: Testipaneeli → Palvelut → klikkaa palvelua → muokkaa → Tallenna (tai Poista)",
-        "Puhelimella kortit ja palvelun sivu näyttävät siisteiltä — Missä: Avaa samat sivut puhelimella"
-      ],
-      "linkit": [
-        {
-          "nimi": "Sivu: Palvelut",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/"
-        },
-        {
-          "nimi": "Sivu: Janaza-palvelu",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/janaza-hautajaiset/"
-        },
-        {
-          "nimi": "Sivu: Etusivu",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
-        },
-        {
-          "nimi": "Testipaneeli: Palvelut",
-          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
-        }
-      ]
-    },
-    {
-      "id": "toistuvat-tapahtumat",
-      "otsikko": "Toistuva toiminta ja viikko-ohjelma",
-      "kuvaus": "Tapahtumalle voi valita Kerran tai Joka viikko (viikonpäivät). Viikoittaiset näkyvät viikko-ohjelmana, kertaluontoiset tapahtumalistassa.",
-      "aloitus": "Kirjaudu testipaneeliin (keltainen TESTIPANEELI-palkki ylhäällä) sähköpostikoodilla. Avaa testimoskeija: ylläpitäjällä Moskeijat-listasta, testaajalla vasemmasta valikosta (puhelimella ☰ Valikko). Paneelin muutokset näkyvät nettisivulla 2–5 minuutin päästä – päivitä sivu.",
-      "alue": "sivut",
-      "versio": 1,
-      "lisatty": "2026-11-15",
-      "kohdat": [
-        "Tapahtumat-sivulla viikko-ohjelma (koraanikoulu, naisten opintopiiri) näkyy erikseen tulevista tapahtumista — Missä: Testimoskeijan sivu → valikko → Tapahtumat",
-        "Uusi viikoittainen tapahtuma: Kuinka usein? = Joka viikko, valitse päivät, tallenna → näkyy viikko-ohjelmassa — Missä: Testipaneeli → vasen valikko: Tapahtumat → Uusi tapahtuma",
-        "Paneelin tapahtumalistan välilehdet Tulevat / Joka viikko / Menneet toimivat — Missä: Testipaneeli → Tapahtumat → välilehdet listan yläpuolella",
-        "Lisää kalenteriin -valikossa voi tilata tapahtumat puhelimen kalenteriin — Missä: Tapahtumat-sivu → Lisää puhelimen kalenteriin"
-      ],
-      "linkit": [
-        {
-          "nimi": "Sivu: Tapahtumat",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
-        },
-        {
-          "nimi": "Testipaneeli: Uusi tapahtuma",
-          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat/uusi"
-        },
-        {
-          "nimi": "Testipaneeli: Tapahtumat",
-          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat"
-        }
-      ]
-    },
-    {
-      "id": "tapahtumasivu-ilmoittaudu",
-      "otsikko": "Tapahtuman oma sivu ja Ilmoittaudu",
-      "kuvaus": "Tapahtumasivulla kuvaus ja kuva ovat ensin, tiedot kortissa sivussa. Ilmoittaudu vie yhteydenottolomakkeelle, jossa aihe on valmiiksi täytetty (tai tapahtuman omaan linkkiin).",
-      "aloitus": "Avaa Avoimet ovet -tapahtuma ensin tietokoneella ja sitten puhelimella.",
-      "alue": "sivut",
-      "versio": 1,
-      "lisatty": "2026-11-15",
-      "kohdat": [
-        "Avoimet ovet -sivulla kuva, muotoiltu kuvaus ja tietokortti näyttävät hyviltä — Missä: Testimoskeijan sivu → Tapahtumat → Avoimet ovet",
-        "Puhelimella alareunassa näkyy Ilmoittaudu-palkki, joka katoaa, kun tietokortti tulee näkyviin — Missä: Sama sivu puhelimella → vieritä alas",
-        "Ilmoittaudu avaa Yhteystiedot-sivun lomakkeen, ja aihe on valmiiksi täytetty — Missä: Avoimet ovet → Ilmoittaudu → Yhteystiedot-sivun alaosa",
-        "Paneelissa tapahtuman Ilmoittautuminen: Ei / Lomakkeella / Omalla linkillä – kaikki toimivat — Missä: Testipaneeli → Tapahtumat → Avoimet ovet → kohta Ilmoittautuminen → Tallenna",
-        "Tapahtumalistassa ja etusivulla ei näy ylimääräisiä ilmoittautumismerkkejä — Missä: Testimoskeijan sivu → Tapahtumat"
-      ],
-      "linkit": [
-        {
-          "nimi": "Sivu: Avoimet ovet",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/2026-11-28-avoimet-ovet/"
-        },
-        {
-          "nimi": "Testipaneeli: Tapahtumat",
-          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat"
-        },
-        {
-          "nimi": "Sivu: Tapahtumat",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
-        }
-      ]
-    },
-    {
-      "id": "korttityylit",
-      "otsikko": "Yhtenäiset kortit ja korttityylit",
-      "kuvaus": "Kaikki kortit (tapahtumat, palvelut, artikkelit) näyttävät samalta koko sivustolla. Ulkoasussa voi valita korttien tyylin sekä tapahtumien ja palvelujen asettelun.",
-      "aloitus": "Kirjaudu testipaneeliin (keltainen TESTIPANEELI-palkki ylhäällä) sähköpostikoodilla. Avaa testimoskeija: ylläpitäjällä Moskeijat-listasta, testaajalla vasemmasta valikosta (puhelimella ☰ Valikko). Paneelin muutokset näkyvät nettisivulla 2–5 minuutin päästä – päivitä sivu. Ulkoasu-sivun oikealla (puhelimella alhaalla) on esikatselu, joka vaihtuu heti.",
-      "alue": "sivut",
-      "versio": 1,
-      "lisatty": "2026-11-15",
-      "kohdat": [
-        "Korttien tyyli: Pehmeä / Reunus / Varjo / Sävytetty – esikatselu vaihtuu heti — Missä: Testipaneeli → vasen valikko: Sivusto → Ulkoasu → Korttien tyyli",
-        "Tapahtumien kortit: Lista / Kuvakortit / Tiivis vaihtuvat esikatselussa — Missä: Ulkoasu → Tapahtumien kortit",
-        "Palvelujen kortit: Kortit / Ruudukko / Lista vaihtuvat esikatselussa — Missä: Ulkoasu → Palvelujen kortit",
-        "Tallenna-napin jälkeen valinta näkyy etusivulla sekä Tapahtumat- ja Palvelut-sivuilla — Missä: Ulkoasu → Tallenna (alhaalla) → odota 2–5 min → avaa sivut"
-      ],
-      "linkit": [
-        {
-          "nimi": "Testipaneeli: Ulkoasu",
-          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/ulkoasu"
-        },
-        {
-          "nimi": "Sivu: Etusivu",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
-        }
-      ]
-    },
-    {
-      "id": "ramadan-ulkoasu",
-      "otsikko": "Ramadan: etusivun yläosa, tyylit ja Ramadan-julkaisut",
-      "kuvaus": "Ramadanin aikana etusivun yläosassa näkyy päivä isolla ja ajat siististi. Tyylin ja värin voi valita. Ramadan-osiossa näkyvät julkaisut (tarawih, iftar, eid). Testisivulla Ramadanin voi esikatsella osoitteen lopulla ?ramadan=ennen, ?ramadan=5 tai ?ramadan=eid.",
-      "aloitus": "Avaa linkit alla – ne näyttävät Ramadanin, vaikka nyt ei ole Ramadan. Asetukset: Kirjaudu testipaneeliin (keltainen TESTIPANEELI-palkki ylhäällä) sähköpostikoodilla. Avaa testimoskeija: ylläpitäjällä Moskeijat-listasta, testaajalla vasemmasta valikosta (puhelimella ☰ Valikko). Paneelin muutokset näkyvät nettisivulla 2–5 minuutin päästä – päivitä sivu.",
-      "alue": "sivut",
-      "versio": 1,
-      "lisatty": "2026-11-15",
-      "kohdat": [
-        "Etusivun yläosassa ramadanpäivä ja ajat näkyvät väljästi, ei päällekkäin — Missä: Testimoskeijan etusivu Ramadanin 5. päivänä",
-        "Ennen Ramadania ja Eid-päivänä näkyvät oikeat tekstit — Missä: Etusivu ?ramadan=ennen ja ?ramadan=eid",
-        "Rukousajat-sivun Ramadan-osiossa näkyvät Ramadan-julkaisut kuvineen (tarawih, iftar, eid) — Missä: Testimoskeijan sivu → Rukousajat → vieritä Ramadan-kohtaan",
-        "Paneelissa Ramadan: etusivun yläosan rivi, päivälaatan väri ja osion tyyli vaihtuvat esikatselussa — Missä: Testipaneeli → vasen valikko: Rukousajat ja Jumua → vieritä Ramadan-kohtiin",
-        "Puhelimella Ramadan-osio on helppo lukea — Missä: Samat sivut puhelimella"
-      ],
-      "linkit": [
-        {
-          "nimi": "Sivu: Etusivu, Ramadan 5. päivä",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/?ramadan=5"
-        },
-        {
-          "nimi": "Sivu: Etusivu, Eid",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/?ramadan=eid"
-        },
-        {
-          "nimi": "Sivu: Ramadan-osio",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/?ramadan=5#ramadan"
-        },
-        {
-          "nimi": "Testipaneeli: Rukousajat ja Ramadan",
-          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/rukousajat"
-        }
-      ]
-    },
-    {
-      "id": "yhteydenottolomake",
-      "otsikko": "Yhteydenottolomakkeen kentät ja sivujen johdannot",
-      "kuvaus": "Paneelissa voi päättää, mitä kenttiä Yhteystiedot-sivun alaosan lomakkeessa on, sekä kirjoittaa johdantotekstin Yhteystiedot- ja Artikkelit-sivuille.",
-      "aloitus": "Kirjaudu testipaneeliin (keltainen TESTIPANEELI-palkki ylhäällä) sähköpostikoodilla. Avaa testimoskeija: ylläpitäjällä Moskeijat-listasta, testaajalla vasemmasta valikosta (puhelimella ☰ Valikko). Paneelin muutokset näkyvät nettisivulla 2–5 minuutin päästä – päivitä sivu.",
+      "id": "yhteydenotto-ja-ilmoitukset",
+      "otsikko": "Yhteydenotto, ilmoituspalkki ja julkaisun seuranta",
       "alue": "paneeli",
-      "versio": 1,
-      "lisatty": "2026-11-15",
+      "kuvaus": "Yhdistetty: Kysy moskeijalta -lomakkeen kentät ja johdannot, ilmoituspalkin esikatselu ja poisto sekä tallennuksen jälkeinen julkaisun seuranta.",
+      "aloitus": "Kirjaudu testipaneeliin (keltainen TESTIPANEELI-palkki ylhäällä) sähköpostikoodilla ja avaa testimoskeija (ylläpitäjällä Moskeijat-listasta, testaajalla vasemmasta valikosta, puhelimella ☰ Valikko). Paneelin muutokset näkyvät sivulla 2–5 minuutin päästä – paina Avaa sivu ↗ tai päivitä sivu.",
       "kohdat": [
         "Kysy moskeijalta -lomakkeeseen voi lisätä ja poistaa kenttiä, ja muutos näkyy sivulla — Missä: Testipaneeli → Sivusto → Sivut → Yhteystiedot ja lomakkeet → Kysy moskeijalta -lomake",
         "Aihevaihtoehtoja voi muokata — Missä: Sama kohta → Aiheet",
         "Lomakkeen lähetys testisivulla onnistuu ja kiitosviesti näkyy — Missä: Testimoskeijan sivu → Yhteystiedot → alaosan lomake → Lähetä",
-        "Johdantotekstit näkyvät Yhteystiedot- ja Artikkelit-sivujen yläosassa — Missä: Testipaneeli → Sivut → Yhteystiedot ja lomakkeet → Johdanto (ja Artikkelit-sivu → Johdanto)"
+        "Kirjoita ilmoitus → esikatselu näyttää sen heti — Missä: Testipaneeli → vasen valikko: Ilmoituspalkki → Teksti",
+        "Tallenna → palkki näkyy testimoskeijan sivun ylälaidassa muutaman minuutin päästä — Missä: Ilmoituspalkki → Tallenna → avaa sivu",
+        "Poista ilmoitus → palkki katoaa sivulta — Missä: Ilmoituspalkki → Poista ilmoitus (punainen nappi)",
+        "Tallenna jokin pieni muutos → kulmaan tulee \"Julkaistaan…\" ja lopuksi tieto, että sivu on päivitetty — Missä: Testipaneeli → esim. Ilmoituspalkki tai Ulkoasu → Tallenna → katso näytön alakulmaa"
       ],
       "linkit": [
         {
@@ -331,71 +280,27 @@
           "url": "https://suomen-moskeijat.github.io/testimoskeija/yhteystiedot/"
         },
         {
-          "nimi": "Testipaneeli: Artikkelit-sivu",
-          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/artikkelit"
-        }
-      ]
-    },
-    {
-      "id": "ilmoituspalkki",
-      "otsikko": "Ilmoituspalkin esikatselu ja poisto",
-      "kuvaus": "Ilmoituspalkin voi esikatsella ennen tallennusta ja poistaa kokonaan. Paneeli näyttää, onko palkki nyt näkyvissä.",
-      "aloitus": "Kirjaudu testipaneeliin (keltainen TESTIPANEELI-palkki ylhäällä) sähköpostikoodilla. Avaa testimoskeija: ylläpitäjällä Moskeijat-listasta, testaajalla vasemmasta valikosta (puhelimella ☰ Valikko). Paneelin muutokset näkyvät nettisivulla 2–5 minuutin päästä – päivitä sivu.",
-      "alue": "paneeli",
-      "versio": 1,
-      "lisatty": "2026-11-15",
-      "kohdat": [
-        "Kirjoita ilmoitus → esikatselu näyttää sen heti — Missä: Testipaneeli → vasen valikko: Ilmoituspalkki → Teksti",
-        "Tallenna → palkki näkyy testimoskeijan sivun ylälaidassa muutaman minuutin päästä — Missä: Ilmoituspalkki → Tallenna → avaa sivu",
-        "Poista ilmoitus → palkki katoaa sivulta — Missä: Ilmoituspalkki → Poista ilmoitus (punainen nappi)",
-        "Tilarivi (näkyy nyt / ajastettu / ei ilmoitusta) on oikein — Missä: Ilmoituspalkki-sivun yläosa"
-      ],
-      "linkit": [
-        {
           "nimi": "Testipaneeli: Ilmoituspalkki",
           "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/ilmoitus"
-        },
-        {
-          "nimi": "Sivu: Etusivu",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
         }
-      ]
-    },
-    {
-      "id": "julkaisun-seuranta",
-      "otsikko": "Julkaisun seuranta ja esikatselun päivitys",
-      "kuvaus": "Tallennuksen jälkeen paneelin kulmassa näkyy, milloin muutos on sivulla. Esikatselu päivittyy itsestään, kun julkaisu valmistuu.",
-      "aloitus": "Kirjaudu testipaneeliin (keltainen TESTIPANEELI-palkki ylhäällä) sähköpostikoodilla. Avaa testimoskeija: ylläpitäjällä Moskeijat-listasta, testaajalla vasemmasta valikosta (puhelimella ☰ Valikko). Paneelin muutokset näkyvät nettisivulla 2–5 minuutin päästä – päivitä sivu.",
-      "alue": "paneeli",
-      "versio": 1,
-      "lisatty": "2026-11-15",
-      "kohdat": [
-        "Tallenna jokin pieni muutos → kulmaan tulee \"Julkaistaan…\" ja lopuksi tieto, että sivu on päivitetty — Missä: Testipaneeli → esim. Ilmoituspalkki tai Ulkoasu → Tallenna → katso näytön alakulmaa",
-        "Esikatselu näyttää uuden version ilman sivun uudelleenlatausta — Missä: Sama sivu → esikatselu oikealla (puhelimella alhaalla)"
       ],
-      "linkit": [
-        {
-          "nimi": "Testipaneeli: Ilmoituspalkki",
-          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/ilmoitus"
-        },
-        {
-          "nimi": "Testipaneeli: Ulkoasu",
-          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/ulkoasu"
-        }
-      ]
+      "versio": 1,
+      "lisatty": "2026-11-17"
     },
     {
-      "id": "kayttoehdot",
-      "otsikko": "Käyttöehdot ja hyväksyntä",
-      "kuvaus": "Paneelissa on Käyttöehdot ja tietosuoja -sivu. Moskeijan pääkäyttäjä hyväksyy ehdot yleiskatsauksessa.",
-      "aloitus": "Kirjaudu ulos testipaneelista (vasen alakulma) tai avaa linkki yksityisessä ikkunassa.",
-      "alue": "paneeli",
-      "versio": 1,
-      "lisatty": "2026-11-15",
+      "id": "kayttoehdot-ja-tietoturva",
+      "otsikko": "Käyttöehdot ja tietoturva",
+      "alue": "sivut",
+      "kuvaus": "Yhdistetty: käyttöehtojen lukeminen ja hyväksyntä sekä sivujen toiminta suojausten kanssa.",
+      "aloitus": "Avaa testimoskeijan sivu ja kokeile kohdat. Käyttöehdot: kirjaudu ulos testipaneelista tai avaa linkki yksityisessä ikkunassa.",
       "kohdat": [
         "Kirjautumissivun alaosasta pääsee lukemaan ehdot — Missä: Kirjautumissivu → Käyttöehdot ja tietosuoja (alhaalla)",
         "Ehtojen teksti on selkeää ja yhteystiedot oikein — Missä: Käyttöehdot ja tietosuoja -sivu",
-        "Pääkäyttäjänä hyväksyntä onnistuu ja näkyy Historiassa — Missä: Testipaneeli → Testimoskeija → Yleiskatsaus (ehtokortti) → Historia"
+        "Pääkäyttäjänä hyväksyntä onnistuu ja näkyy Historiassa — Missä: Testipaneeli → Testimoskeija → Yleiskatsaus (ehtokortti) → Historia",
+        "Kielivalikko vaihtaa kielen (esim. English) — Missä: Testimoskeijan sivu → yläreunan kielivalinta (FI)",
+        "Yhteystiedot-sivun lomake lähtee (ihmistarkistus näkyy) — Missä: Yhteystiedot → alaosan lomake",
+        "Kartta aukeaa klikkaamalla — Missä: Yhteystiedot → Näytä kartta",
+        "Rukousajat näkyvät — Missä: Valikko → Rukousajat"
       ],
       "linkit": [
         {
@@ -405,25 +310,7 @@
         {
           "nimi": "Testipaneeli: Yleiskatsaus",
           "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija"
-        }
-      ]
-    },
-    {
-      "id": "tietoturva-sivut",
-      "otsikko": "Tietoturva: sivut toimivat suojausten kanssa",
-      "kuvaus": "Sivuille on lisätty suojaus, joka estää vieraat skriptit. Tarkista, että kaikki toimii edelleen.",
-      "aloitus": "Avaa testimoskeijan sivu ja kokeile alla olevat kohdat.",
-      "alue": "sivut",
-      "versio": 1,
-      "lisatty": "2026-11-15",
-      "kohdat": [
-        "Kielivalikko vaihtaa kielen (esim. English) — Missä: Testimoskeijan sivu → yläreunan kielivalinta (FI)",
-        "Yhteystiedot-sivun lomake lähtee (ihmistarkistus näkyy) — Missä: Yhteystiedot → alaosan lomake",
-        "Kartta aukeaa klikkaamalla — Missä: Yhteystiedot → Näytä kartta",
-        "Rukousajat näkyvät — Missä: Valikko → Rukousajat",
-        "Kuvat näkyvät artikkeleissa — Missä: Valikko → Artikkelit → avaa esim. Yhteinen iftar"
-      ],
-      "linkit": [
+        },
         {
           "nimi": "Sivu: Etusivu",
           "url": "https://suomen-moskeijat.github.io/testimoskeija/"
@@ -431,16 +318,10 @@
         {
           "nimi": "Sivu: Yhteystiedot",
           "url": "https://suomen-moskeijat.github.io/testimoskeija/yhteystiedot/"
-        },
-        {
-          "nimi": "Sivu: Rukousajat",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/"
-        },
-        {
-          "nimi": "Sivu: Artikkelit",
-          "url": "https://suomen-moskeijat.github.io/testimoskeija/artikkelit/"
         }
-      ]
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-17"
     }
   ]
 }
