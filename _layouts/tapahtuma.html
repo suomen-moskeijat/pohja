@@ -31,7 +31,8 @@ layout: sivu
   {%- capture _ia -%}{{ site.data.kaannokset.ilmoittautuminen.fi }}: {{ _ia }}{%- endcapture -%}
   {%- capture _ilmo -%}{{ '/yhteystiedot/' | relative_url }}?aihe={{ _ia | url_encode }}#kysy{%- endcapture -%}
 {%- elsif page.ilmoittaudu != "ei" and page.ilmoittautuminen and page.ilmoittautuminen != "" -%}
-  {%- assign _ilmo = page.ilmoittautuminen -%}{%- assign _ulk = true -%}
+  {%- assign _ilmo = page.ilmoittautuminen | strip -%}{%- assign _i1 = _ilmo | slice: 0 -%}
+  {%- if _i1 == "/" -%}{%- assign _ilmo = _ilmo | relative_url -%}{%- assign _ulk = false -%}{%- else -%}{%- assign _ulk = true -%}{%- endif -%}
 {%- endif -%}
 <section class="u-sivuhero">
   <div class="u-kuvio" aria-hidden="true"></div>
@@ -61,7 +62,7 @@ layout: sivu
     {% if _ilmo != "" %}
     <div class="u-taptieto__toiminto">
       <a class="u-nappi u-nappi--kulta u-taptieto__nappi" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{% include k.html a="ilmoittaudu" %} <span class="u-flip" aria-hidden="true">→</span></a>
-      {% unless _ulk %}<small>{% include k.html a="ilmoittaudu_teksti" %}</small>{% endunless %}
+      {% if page.ilmoittaudu == "lomake" %}<small>{% include k.html a="ilmoittaudu_teksti" %}</small>{% endif %}
     </div>
     {% endif %}
   </aside>

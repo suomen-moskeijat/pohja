@@ -8,5 +8,5 @@ kuvaus:
   en: "Tarawih prayers, Eid prayers, funeral prayer (janazah), Islamic marriages (nikah) and community gatherings."
   ar: "صلاة التراويح وصلاة العيد وصلاة الجنازة وعقود النكاح واللقاءات المجتمعية."
 yhteys: true
-jarjestys: 5
+jarjestys: 2
 ---

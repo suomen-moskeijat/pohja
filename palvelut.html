@@ -16,5 +16,7 @@ permalink: /palvelut/
     <a class="u-nappi u-nappi--reuna u-nappi--pieni" href="{{ '/yhteystiedot/' | relative_url }}">{% include k.html a="ota_yhteytta" %}</a>
   </div>
   {% endif %}
-  {% include osat/lapset.html moskeija=m %}
+  {%- comment -%} Ilmoita lapsesi -nosto vain, jos mikään palvelu ei jo vie samalle lomakkeelle {%- endcomment -%}
+  {%- assign _lp = site.palvelut | where_exp: "p", "p.ilmoittautuminen contains 'lasten-opetus'" -%}
+  {% if _lp.size == 0 %}{% include osat/lapset.html moskeija=m %}{% endif %}
 </div>

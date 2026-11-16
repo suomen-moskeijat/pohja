@@ -1221,3 +1221,8 @@ body.on-ilmopalkki .u-pikanapit { bottom: calc(92px + env(safe-area-inset-bottom
 .u-sivu--kapea .u-viikko { grid-template-columns: minmax(0, 1fr); }
 /* Viikko-ohjelman päiväkortit oman sisältönsä korkuisia (ei tyhjiä laatikoita lyhyille päiville) */
 .u-viikko { align-items: start; }
+/* Palvelut: kaksi korttia täyttää rivin, yksittäinen kortti ei veny koko leveydelle */
+@media (min-width: 1024px) { .u-palvelut:has(> :nth-child(2):last-child) { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 640px) { .u-palvelut:has(> :only-child) { grid-template-columns: minmax(0, 560px); } }
+/* Tapahtuma ilman kuvausta: tietokortti keskelle, ei tyhjää kaistaa oikealle */
+@media (min-width: 900px) { .u-tapsivu--yksi { justify-content: center; } }
