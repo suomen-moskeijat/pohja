@@ -2,7 +2,9 @@
 {%- assign o = include.o -%}
 {%- if o.kysymykset.size > 0 -%}
 <section class="u-osio u-kehys">
-  <div class="u-osio__yla"><h2>{% if o.otsikko %}{% include kt.html arvo=o.otsikko %}{% else %}{% include k.html a="ukk_otsikko" %}{% endif %}</h2></div>
+  {%- capture _ukk_h -%}{% if o.otsikko %}{% include kt.html arvo=o.otsikko %}{% else %}{% include k.html a="ukk_otsikko" %}{% endif %}{%- endcapture -%}
+  {%- assign _ukk_fi = _ukk_h | split: 'data-l="fi"' | last | split: '>' | slice: 1 | first | split: '<' | first | strip -%}
+  {%- unless page.title and _ukk_fi == page.title %}<div class="u-osio__yla"><h2>{{ _ukk_h }}</h2></div>{% endunless %}
   <div class="u-ukk">
     {% for q in o.kysymykset %}
     <details class="u-kortti">

@@ -3,7 +3,8 @@ layout: sivu
 ---
 {%- comment -%}
   Palvelun oma sivu (_palvelut/<nimi>.md): title + otsikko_xx, kuvake, kuvaus (lyhyt, monikielinen),
-  sisältö (markdown) + teksti_xx, kuva, yhteys (false = ei Kysy tästä -nappia), jarjestys.
+  sisältö (markdown) + teksti_xx, kuva, yhteys (false = ei Kysy tästä -nappia), jarjestys,
+  ilmoittautuminen (sivuston polku kuten /palvelut/lasten-opetus/ tai ulkoinen osoite → Ilmoittaudu-pääpainike).
 {%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
@@ -32,10 +33,13 @@ layout: sivu
   {% if _tyhja != "" %}<article class="u-kortti u-artikkeli"><div class="u-proosa u-proosa--iso">{{ _teksti }}</div></article>{% endif %}
   {% unless page.yhteys == false %}
   <div class="u-kortti u-palvelusivu__yhteys">
-    <span class="u-ikoni">{% include ikoni-ph.html nimi=page.kuvake koko=24 %}</span>
-    <p>{% include k.html a="palvelut_ohje" %}</p>
+    <p>{% if page.ilmoittautuminen and page.ilmoittautuminen != "" %}{% include k.html a="palvelut_ohje_ilmo" %}{% else %}{% include k.html a="palvelut_ohje" %}{% endif %}</p>
     <div class="u-napit">
-      <a class="u-nappi u-nappi--kulta" href="{{ '/yhteystiedot/' | relative_url }}?aihe={{ page.title | url_encode }}#kysy">{% include k.html a="kysy_tasta" %} <span class="u-flip" aria-hidden="true">→</span></a>
+      {%- assign _pi = page.ilmoittautuminen | default: "" | strip -%}
+      {%- if _pi != "" -%}{%- assign _pi1 = _pi | slice: 0 -%}{%- if _pi1 == "/" -%}{%- assign _pi = _pi | relative_url -%}{%- assign _pu = false -%}{%- else -%}{%- assign _pu = true -%}{%- endif %}
+      <a class="u-nappi u-nappi--kulta" href="{{ _pi }}"{% if _pu %} target="_blank" rel="noopener"{% endif %}>{% include k.html a="ilmoittaudu" %} <span class="u-flip" aria-hidden="true">→</span></a>
+      {%- endif %}
+      <a class="u-nappi {% if _pi != "" %}u-nappi--reuna{% else %}u-nappi--kulta{% endif %}" href="{{ '/yhteystiedot/' | relative_url }}?aihe={{ page.title | url_encode }}#kysy">{% include k.html a="kysy_tasta" %} <span class="u-flip" aria-hidden="true">→</span></a>
       {% if m.puhelin and m.puhelin != "" %}<a class="u-nappi u-nappi--reuna" href="tel:{{ m.puhelin | remove: ' ' }}" dir="ltr">{% include ikoni-ph.html nimi="puhelin" koko=18 %} {{ m.puhelin }}</a>{% endif %}
       {% if wa != "" %}<a class="u-nappi u-nappi--reuna" href="https://wa.me/{{ wa }}?text={{ page.title | url_encode }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" koko=18 %} WhatsApp</a>{% endif %}
     </div>

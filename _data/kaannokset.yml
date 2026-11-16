@@ -56,13 +56,16 @@ kaikki_palvelut:    { fi: "Kaikki palvelut", en: "All services", ar: "كل ال�
 muut_palvelut:      { fi: "Muut palvelut", en: "Other services", ar: "خدمات أخرى", so: "Adeegyo kale" }
 kysy_tasta:         { fi: "Kysy tästä", en: "Ask about this", ar: "اسأل عن هذا", so: "Wax ka weydii" }
 palvelut_ohje:      { fi: "Ota yhteyttä, niin sovitaan aika ja kerromme lisää.", en: "Get in touch and we will arrange a time and tell you more.", ar: "تواصل معنا لتحديد موعد ومعرفة المزيد.", so: "Nala soo xiriir si aan waqti u ballanno oo aan kuu sheegno wax dheeraad ah." }
+palvelut_ohje_ilmo: { fi: "Ilmoittaudu lomakkeella tai kysy lisää – vastaamme mielellämme.", en: "Register with the form or ask us more – we are happy to answer.", ar: "سجّل عبر النموذج أو اسألنا للمزيد – يسعدنا الرد.", so: "Isku diiwaangeli foomka ama wax badan na weydii – waan ku faraxsanahay inaan ku jawaabno." }
 lasten_opetus:      { fi: "Lasten opetus", en: "Children's education", ar: "تعليم الأطفال", so: "Waxbarashada carruurta" }
 ilmoita_lapsesi:    { fi: "Ilmoita lapsesi opetukseen", en: "Register your child for classes", ar: "سجّل طفلك في الدروس", so: "Ka diiwaangeli ilmahaaga waxbarashada" }
 
 # --- Tapahtumat ---
 tulevat_tapahtumat: { fi: "Tulevat tapahtumat", en: "Upcoming events", ar: "الفعاليات القادمة", so: "Dhacdooyinka soo socda" }
+tulevat:            { fi: "Tulevat", en: "Upcoming", ar: "القادمة", so: "Soo socda" }
 kaikki_tapahtumat:  { fi: "Kaikki tapahtumat", en: "All events", ar: "كل الفعاليات", so: "Dhammaan dhacdooyinka" }
 ei_tapahtumia:      { fi: "Ei tulevia tapahtumia juuri nyt. Seuraa meitä somessa.", en: "No upcoming events right now. Follow us on social media.", ar: "لا توجد فعاليات قادمة حالياً. تابعونا على وسائل التواصل.", so: "Hadda ma jiraan dhacdooyin soo socda. Nagala soco baraha bulshada." }
+ei_tulevia:         { fi: "Ei tulevia tapahtumia juuri nyt", en: "No upcoming events right now", ar: "لا توجد فعاليات قادمة حالياً", so: "Ma jiraan dhacdooyin soo socda hadda" }
 tapahtumat_teksti:  { fi: "Säännöllinen toiminta ja tulevat tapahtumat.", en: "Regular activities and upcoming events.", ar: "الأنشطة المنتظمة والفعاليات القادمة.", so: "Hawlaha joogtada ah iyo dhacdooyinka soo socda." }
 klo:                { fi: "klo", en: "at", ar: "الساعة", so: "saacadda" }
 lisaa_kalenteriin:  { fi: "Lisää kalenteriin", en: "Add to calendar", ar: "أضف إلى التقويم", so: "Ku dar kalandarka" }
@@ -84,6 +87,20 @@ vp_to:              { fi: "Torstai", en: "Thursday", ar: "الخميس", so: "Kh
 vp_pe:              { fi: "Perjantai", en: "Friday", ar: "الجمعة", so: "Jimce" }
 vp_la:              { fi: "Lauantai", en: "Saturday", ar: "السبت", so: "Sabti" }
 vp_su:              { fi: "Sunnuntai", en: "Sunday", ar: "الأحد", so: "Axad" }
+vp_ma_t:            { fi: "Maanantaisin", en: "Mondays", ar: "كل اثنين", so: "Isniin kasta" }
+vp_ti_t:            { fi: "Tiistaisin", en: "Tuesdays", ar: "كل ثلاثاء", so: "Talaado kasta" }
+vp_ke_t:            { fi: "Keskiviikkoisin", en: "Wednesdays", ar: "كل أربعاء", so: "Arbaco kasta" }
+vp_to_t:            { fi: "Torstaisin", en: "Thursdays", ar: "كل خميس", so: "Khamiis kasta" }
+vp_pe_t:            { fi: "Perjantaisin", en: "Fridays", ar: "كل جمعة", so: "Jimce kasta" }
+vp_la_t:            { fi: "Lauantaisin", en: "Saturdays", ar: "كل سبت", so: "Sabti kasta" }
+vp_su_t:            { fi: "Sunnuntaisin", en: "Sundays", ar: "كل أحد", so: "Axad kasta" }
+vp_ma_lyh:          { fi: "Ma", en: "Mon", ar: "الاثنين", so: "Isn" }
+vp_ti_lyh:          { fi: "Ti", en: "Tue", ar: "الثلاثاء", so: "Tal" }
+vp_ke_lyh:          { fi: "Ke", en: "Wed", ar: "الأربعاء", so: "Arb" }
+vp_to_lyh:          { fi: "To", en: "Thu", ar: "الخميس", so: "Kha" }
+vp_pe_lyh:          { fi: "Pe", en: "Fri", ar: "الجمعة", so: "Jim" }
+vp_la_lyh:          { fi: "La", en: "Sat", ar: "السبت", so: "Sab" }
+vp_su_lyh:          { fi: "Su", en: "Sun", ar: "الأحد", so: "Axd" }
 kenelle_kaikki:     { fi: "Kaikille", en: "Everyone", ar: "للجميع", so: "Qof walba" }
 kenelle_lapset:     { fi: "Lapsille", en: "Children", ar: "للأطفال", so: "Carruurta" }
 kenelle_nuoret:     { fi: "Nuorille", en: "Youth", ar: "للشباب", so: "Dhallinyarada" }
@@ -217,6 +234,7 @@ sivua_ei_loydy:     { fi: "Sivua ei löytynyt", en: "Page not found", ar: "ال�
 sivua_ei_loydy_teksti: { fi: "Sivu on ehkä siirretty tai poistettu. Tästä pääset eteenpäin:", en: "The page may have been moved or removed. Continue here:", ar: "ربما نُقلت الصفحة أو حُذفت. تابع من هنا:", so: "Boggan waa la raray ama la tirtiray. Halkan ka sii wad:" }
 etusivulle:         { fi: "Etusivulle", en: "Home page", ar: "الصفحة الرئيسية", so: "Bogga hore" }
 kysy_puhelin:       { fi: "Vastaamme mielellämme puhelimitse.", en: "We are happy to answer by phone.", ar: "يسعدنا الرد عبر الهاتف.", so: "Waxaan ku faraxsanahay inaan taleefanka kaga jawaabno." }
+kysy_sahkoposti:    { fi: "Vastaamme mielellämme sähköpostitse.", en: "We are happy to answer by email.", ar: "يسعدنا الرد عبر البريد الإلكتروني.", so: "Waxaan ku faraxsanahay inaan ku jawaabno iimayl." }
 lahetystapa:        { fi: "Miten haluat lähettää viestin?", en: "How would you like to send it?", ar: "كيف تريد إرسال الرسالة؟", so: "Sidee baad rabtaa inaad u dirto?" }
 lahetys_sahkoposti: { fi: "Sähköpostilla", en: "By email", ar: "بالبريد الإلكتروني", so: "Iimayl ahaan" }
 lahetys_whatsapp:   { fi: "WhatsAppilla", en: "On WhatsApp", ar: "عبر واتساب", so: "WhatsApp ahaan" }

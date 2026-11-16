@@ -26,7 +26,7 @@
   {%- endfor -%}
 </ul>
 <div class="u-tyhja" data-tyhja{% if naytetty > 0 %} hidden{% endif %}>
-  <span class="u-ikoni">{% include ikoni-ph.html nimi="kalenteri" koko=26 %}</span>
-  <p>{% include k.html a="ei_tapahtumia" %}</p>
-  {% assign ig = include.moskeija.some.instagram %}{% if ig and ig != "" %}<a class="u-nappi u-nappi--reuna u-nappi--pieni" href="{{ ig }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="ig" koko=18 %} Instagram</a>{% endif %}
+  {% assign ig = include.moskeija.some.instagram %}
+  <p>{% if ig and ig != "" %}{% include k.html a="ei_tapahtumia" %}{% else %}{% include k.html a="ei_tulevia" %}{% endif %}</p>
+  {% if ig and ig != "" %}<a class="u-nappi u-nappi--reuna u-nappi--pieni" href="{{ ig }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="ig" koko=18 %} Instagram</a>{% endif %}
 </div>
