@@ -792,6 +792,15 @@ html[dir="rtl"] .u-seur__palkki span { background: linear-gradient(-90deg, var(-
 .u-artikkelikortti__kuvaus { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; color: var(--hieno); font-size: 15px; line-height: 1.55; }
 .u-artikkelikortti__kuva { width: calc(100% + 40px); max-width: none; margin: -18px -20px 4px; aspect-ratio: 16 / 9; object-fit: cover; object-position: center top; border-radius: calc(var(--r-l) - 1px) calc(var(--r-l) - 1px) 0 0; background: var(--tausta); }
 .u-artikkelikortti__ala { display: flex; justify-content: space-between; margin-top: auto; padding-top: 6px; font-size: 13px; font-weight: 600; color: var(--kulta-teksti); }
+/* Artikkelien näkymä (Ulkoasu): kuvat = kansikuva ylhäällä (oletus), teksti = ilman kuvia, lista = yksi sarake, pieni kuva sivussa */
+[data-kortit-artikkelit="teksti"] .u-artikkelikortti__kuva { display: none; }
+[data-kortit-artikkelit="lista"] .u-artikkelilista, [data-kortit-artikkelit="lista"] .u-artikkelilista--pieni { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+[data-kortit-artikkelit="lista"] .u-artikkelikortti > a { display: grid; grid-template-columns: minmax(0, 1fr); column-gap: 16px; row-gap: 4px; padding: 14px 16px; }
+[data-kortit-artikkelit="lista"] .u-artikkelikortti > a:has(.u-artikkelikortti__kuva) { grid-template-columns: 112px minmax(0, 1fr); }
+[data-kortit-artikkelit="lista"] .u-artikkelikortti__kuva { grid-row: 1 / span 4; width: 112px; height: 84px; margin: 0; aspect-ratio: auto; border-radius: calc(var(--r-m) * .5); align-self: start; }
+[data-kortit-artikkelit="lista"] .u-artikkelikortti__kuvaus { -webkit-line-clamp: 2; }
+[data-kortit-artikkelit="lista"] .u-artikkelikortti__ala { display: none; }
+@media (max-width: 479px) { [data-kortit-artikkelit="lista"] .u-artikkelikortti > a:has(.u-artikkelikortti__kuva) { grid-template-columns: 76px minmax(0, 1fr); column-gap: 12px; } [data-kortit-artikkelit="lista"] .u-artikkelikortti__kuva { width: 76px; height: 76px; } }
 .u-artikkelit__lisaa { display: flex; justify-content: center; margin-top: 22px; }
 .u-artikkelit__lisaa .u-nappi[hidden] { display: none; }
 .u-artikkelihero h1 { max-width: 22em; font-size: clamp(28px, 6vw, 46px); }

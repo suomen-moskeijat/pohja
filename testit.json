@@ -355,6 +355,39 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-16"
+    },
+    {
+      "id": "nakymien-valinta",
+      "otsikko": "Tapahtumien, palvelujen ja artikkelien näkymän valinta",
+      "alue": "paneeli",
+      "kuvaus": "Ulkoasussa näkymän voi valita kuvista: jokaisessa vaihtoehdossa on pieni luonnos siitä, miltä se näyttää. Uutena valinta myös artikkeleille (Kansikuvilla, Ilman kuvia, Lista). Tapahtumat-, Palvelut- ja Tiedotteet-sivuilla näkyy valittu näkymä ja linkki sen vaihtamiseen.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa Testimoskeija → Tapahtumat.",
+      "kohdat": [
+        "Listan yläpuolella näkyy Näkymä sivulla ja valittu näkymä pienenä kuvana — Missä: Testipaneeli → Tapahtumat (myös Palvelut ja Tiedotteet)",
+        "Vaihda näkymää vie Ulkoasuun oikeaan kohtaan, joka korostuu — Missä: Tapahtumat → Vaihda näkymää",
+        "Tapahtumien, palvelujen ja artikkelien vaihtoehdot ovat kuvina ja kuva vastaa sitä, miltä sivu näyttää — Missä: Testipaneeli → Ulkoasu",
+        "Vaihtoehdon valinta näyttää selityksen ja muuttaa esikatselun heti — Missä: Ulkoasu → Tiedotteiden ja artikkelien näkymä → Lista, esikatselussa Artikkelit-sivu",
+        "Tallenna Lista: Artikkelit-sivulla artikkelit ovat yhdessä sarakkeessa, pieni kansikuva vasemmalla — Missä: Testimoskeija → Artikkelit",
+        "Ilman kuvia: kortit ilman kansikuvia — Missä: Ulkoasu → Ilman kuvia → Testimoskeija → Artikkelit",
+        "Palauta lopuksi Kansikuvilla — Missä: Testipaneeli → Ulkoasu",
+        "Puhelimella valinnat mahtuvat ruudulle ja Artikkelit-sivu ei vieri sivusuunnassa — Missä: Ulkoasu ja Artikkelit-sivu puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Tapahtumat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat"
+        },
+        {
+          "nimi": "Testipaneeli: Ulkoasu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/ulkoasu"
+        },
+        {
+          "nimi": "Sivu: Artikkelit",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/artikkelit/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-16"
     }
   ]
 }
