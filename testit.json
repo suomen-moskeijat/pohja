@@ -729,8 +729,8 @@
       "kohdat": [
         "Kortissa on teksti ja Kysy tästä -nappi, ei puhelinta, WhatsAppia tai sähköpostia — Missä: Testimoskeija → Palvelut → Ilmoita lapsesi opetukseen",
         "Nappi avaa Yhteystiedot-sivun kysymyslomakkeen, aiheena Lasten opetus — Missä: sama sivu → Kysy tästä",
-        "Oma teksti näkyy kortissa tallennuksen jälkeen — Missä: Testipaneeli → Sivut → Palvelut → Lasten opetukseen ilmoittautuminen → Kortin teksti",
-        "Kun Näytä Kysyttävää-kortti on pois, korttia ei ole ja lomake on keskellä — Missä: sama paneelikohta → sivu",
+        "Oma teksti ja napin teksti näkyvät kortissa tallennuksen jälkeen — Missä: Testipaneeli → Sivut → Palvelut → Lasten opetukseen ilmoittautuminen → Teksti napin yläpuolella / Napin teksti",
+        "Kun Näytä Kysyttävää-kortti ja \"Kysy tästä\" -nappi on pois, korttia ei ole ja lomake on keskellä — Missä: sama paneelikohta → sivu",
         "Puhelimella (320 px) ei vaakavieritystä — Missä: sama sivu"
       ],
       "linkit": [
@@ -744,6 +744,35 @@
         }
       ],
       "versio": 2,
+      "lisatty": "2026-11-16"
+    },
+    {
+      "id": "toimintonappi-kaikkialla",
+      "otsikko": "Toimintonappi samoilla kentillä tapahtumissa, palveluissa ja lasten opetuksessa",
+      "alue": "paneeli",
+      "kuvaus": "Tapahtumaan, palveluun ja lasten opetukseen voi kirjoittaa saman mallin mukaan tekstin napin yläpuolelle ja napin tekstin (esim. Varaa paikka). Tyhjä = oletus (tapahtumassa Ilmoittaudu, muualla Kysy tästä). Nappi näyttää kaikkialla samalta.",
+      "aloitus": "Avaa testipaneelissa uusi tapahtuma ja valitse Ilmoittautuminen: Moskeijan lomakkeella.",
+      "kohdat": [
+        "Teksti napin yläpuolella ja Napin teksti -kentät tulevat näkyviin, kun ilmoittautuminen on valittu, ja esikatselu päivittyy — Missä: Testipaneeli → Tapahtumat → Uusi",
+        "Tapahtuman sivulla teksti näkyy napin yläpuolella ja nappi sekä alareunan palkki käyttävät omaa napin tekstiä — Missä: Testimoskeija → Tapahtumat → tapahtuma",
+        "Ilman omia tekstejä nappi on Ilmoittaudu ja lomakkeella ilmoittautuessa oletusteksti näkyy — Missä: Testimoskeija → Tapahtumat → Avoimet ovet",
+        "Samat kaksi kenttää palvelussa ja lasten opetuksessa — Missä: Testipaneeli → Palvelut → palvelu; Sivut → Palvelut → Lasten opetukseen ilmoittautuminen"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Uusi tapahtuma",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat/uusi"
+        },
+        {
+          "nimi": "Sivu: Tapahtumat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
+        },
+        {
+          "nimi": "Testipaneeli: Palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
+        }
+      ],
+      "versio": 1,
       "lisatty": "2026-11-16"
     }
   ]

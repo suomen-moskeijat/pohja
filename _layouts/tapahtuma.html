@@ -34,6 +34,10 @@ layout: sivu
   {%- assign _ilmo = page.ilmoittautuminen | strip -%}{%- assign _i1 = _ilmo | slice: 0 -%}
   {%- if _i1 == "/" -%}{%- assign _ilmo = _ilmo | relative_url -%}{%- assign _ulk = false -%}{%- else -%}{%- assign _ulk = true -%}{%- endif -%}
 {%- endif -%}
+{%- comment -%} Toimintonappi samoilla kentillä kuin palvelussa ja lasten opetuksessa (paneeli: yhteys_teksti, yhteys_nappi) {%- endcomment -%}
+{%- capture _yt -%}{% if page.yhteys_teksti %}{% include kt.html arvo=page.yhteys_teksti %}{% endif %}{%- endcapture -%}{%- assign _yt = _yt | strip -%}
+{%- capture _yn -%}{% if page.yhteys_nappi %}{% include kt.html arvo=page.yhteys_nappi %}{% endif %}{%- endcapture -%}{%- assign _yn = _yn | strip -%}
+{%- capture _nappi_t -%}{% if _yn != "" %}{{ _yn }}{% else %}{% include k.html a="ilmoittaudu" %}{% endif %}{%- endcapture -%}
 <section class="u-sivuhero">
   <div class="u-kuvio" aria-hidden="true"></div>
   <div class="u-kehys">
@@ -56,8 +60,8 @@ layout: sivu
     </ul>
     {% if _ilmo != "" %}
     <div class="u-taptieto__toiminto">
-      <a class="u-nappi u-nappi--kulta u-taptieto__nappi" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{% include k.html a="ilmoittaudu" %}</a>
-      {% if page.ilmoittaudu == "lomake" %}<small>{% include k.html a="ilmoittaudu_teksti" %}</small>{% endif %}
+      {% if _yt != "" %}<small>{{ _yt }}</small>{% elsif page.ilmoittaudu == "lomake" %}<small>{% include k.html a="ilmoittaudu_teksti" %}</small>{% endif %}
+      <a class="u-nappi u-nappi--kulta u-taptieto__nappi" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{{ _nappi_t | strip }}</a>
     </div>
     {% endif %}
   </aside>
@@ -65,6 +69,6 @@ layout: sivu
 {% if _ilmo != "" %}
 <div class="u-ilmopalkki" data-ilmopalkki hidden>
   <span><b>{% include kolme.html fi=page.title doc=page %}</b><small>{{ _milloin_lyhyt | strip }}{% if page.alkaa and page.alkaa != "" %} · <span dir="ltr" data-klo>{{ page.alkaa }}</span>{% endif %}</small></span>
-  <a class="u-nappi u-nappi--kulta" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{% include k.html a="ilmoittaudu" %}</a>
+  <a class="u-nappi u-nappi--kulta" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{{ _nappi_t | strip }}</a>
 </div>
 {% endif %}
