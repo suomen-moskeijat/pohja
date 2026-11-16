@@ -719,6 +719,26 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-16"
+    },
+    {
+      "id": "kysyttavaa-yhteystiedot",
+      "otsikko": "Lasten opetus: Kysyttävää-kortti vain olemassa olevilla yhteystiedoilla",
+      "alue": "sivut",
+      "kuvaus": "Kortti näyttää WhatsAppin, puhelimen tai sähköpostin sen mukaan, mitä moskeijalle on täytetty. Jos mitään ei ole, korttia ei näytetä. Pitkä sähköpostiosoite rivittyy kapealla puhelimella.",
+      "aloitus": "Avaa testimoskeijan Ilmoita lapsesi opetukseen -sivu puhelimella.",
+      "kohdat": [
+        "Kortissa näkyy vain täytetty yhteystieto, ei puhelinlupausta ilman numeroa — Missä: Testimoskeija → Palvelut → Ilmoita lapsesi opetukseen",
+        "Kun puhelin ja WhatsApp tyhjennetään, kortti näyttää sähköpostin — Missä: Testipaneeli → Asetukset → Yhteystiedot → Tallenna → sivu",
+        "Kapealla puhelimella (320 px) ei vaakavieritystä — Missä: sama sivu"
+      ],
+      "linkit": [
+        {
+          "nimi": "Sivu: Lasten opetus",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/lasten-opetus/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-16"
     }
   ]
 }

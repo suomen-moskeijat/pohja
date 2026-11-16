@@ -470,7 +470,9 @@ html[data-kortit-palvelut="lista"] .u-palvelu__lisaa .u-flip { font-size: 20px; 
 .u-palvelusivu__sisus > * + .u-palvelusivu__yhteys { padding-top: 24px; border-top: 1px solid var(--raja); }
 .u-palvelusivu__yhteys p { margin: 0; font-weight: 600; }
 
-.u-kaksi { display: grid; gap: 20px; align-items: start; }
+.u-kaksi { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: start; }
+/* Pitkä teksti napissa (esim. sähköpostiosoite) rivittyy kapealla näytöllä eikä levennä sivua */
+.u-nappi--pitka { max-width: 100%; white-space: normal; overflow-wrap: anywhere; text-align: center; }
 @media (min-width: 1024px) { .u-kaksi { grid-template-columns: 1.6fr 1fr; gap: 28px; } .u-kaksi > aside { position: sticky; top: calc(var(--yla) + 20px); } }
 .u-sivupalkki { display: flex; flex-direction: column; gap: 12px; padding: 24px; }
 .u-sivupalkki h2 { font-size: 22px; }

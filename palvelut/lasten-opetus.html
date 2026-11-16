@@ -18,7 +18,7 @@ seo_avain: ilmoita_lapsesi
     <div class="u-napit u-napit--pino">
       {% if wa != "" %}<a class="u-nappi u-nappi--wa" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" koko=18 %} WhatsApp</a>{% endif %}
       {% if _puh != "" %}<a class="u-nappi u-nappi--reuna" href="tel:{{ _puh | remove: ' ' }}" dir="ltr">{{ _puh }}</a>{% endif %}
-      {% if wa == "" and _puh == "" and _sp != "" %}<a class="u-nappi u-nappi--reuna" href="mailto:{{ _sp }}" dir="ltr">{{ _sp }}</a>{% endif %}
+      {% if wa == "" and _puh == "" and _sp != "" %}<a class="u-nappi u-nappi--reuna u-nappi--pitka" href="mailto:{{ _sp }}" dir="ltr">{{ _sp }}</a>{% endif %}
     </div>
   </aside>
   {%- endif %}
