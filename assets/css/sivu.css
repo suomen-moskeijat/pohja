@@ -297,18 +297,18 @@ html[dir="rtl"] .kk__taulu tr.kk__tanaan { box-shadow: inset -4px 0 0 var(--kult
 .u-tapahtumat { display: grid; gap: 10px; }
 .u-tapahtuma__kuva { display: none; }
 /* Tapahtumat: kortit (ruudukko, kuva tai juliste ylhäällä) */
-html[data-kortit-tapahtumat="kortit"] .u-tapahtumat { grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 14px; }
-html[data-kortit-tapahtumat="kortit"] .u-tapahtuma a { position: relative; flex-direction: column; align-items: flex-start; gap: 12px; height: 100%; padding: 16px; border-radius: var(--r-l); overflow: hidden; box-shadow: var(--varjo-1); }
-html[data-kortit-tapahtumat="kortit"] .u-tapahtuma__kuva { display: block; width: calc(100% + 32px); max-width: none; margin: -16px -16px 0; aspect-ratio: 4 / 3; object-fit: cover; }
-html[data-kortit-tapahtumat="kortit"] .u-tapahtuma__kuva + .u-tapahtuma__pvm { position: absolute; top: 12px; left: 12px; box-shadow: 0 6px 16px rgb(0 0 0 / .25); }
-html[data-kortit-tapahtumat="kortit"] .u-tapahtuma__tiedot strong { font-size: 17px; }
+[data-kortit-tapahtumat="kortit"] .u-tapahtumat { grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 14px; }
+[data-kortit-tapahtumat="kortit"] .u-tapahtuma a { position: relative; flex-direction: column; align-items: flex-start; gap: 12px; height: 100%; padding: 16px; border-radius: var(--r-l); overflow: hidden; box-shadow: var(--varjo-1); }
+[data-kortit-tapahtumat="kortit"] .u-tapahtuma__kuva { display: block; width: calc(100% + 32px); max-width: none; margin: -16px -16px 0; aspect-ratio: 4 / 3; object-fit: cover; }
+[data-kortit-tapahtumat="kortit"] .u-tapahtuma__kuva + .u-tapahtuma__pvm { position: absolute; top: 12px; left: 12px; box-shadow: 0 6px 16px rgb(0 0 0 / .25); }
+[data-kortit-tapahtumat="kortit"] .u-tapahtuma__tiedot strong { font-size: 17px; }
 /* Tapahtumat: tiivis (päivä ja nimi riveinä ilman laattaa) */
-html[data-kortit-tapahtumat="tiivis"] .u-tapahtumat { gap: 0; background: var(--pinta); border: 1px solid var(--raja); border-radius: var(--r-m); padding: 4px 16px; }
-html[data-kortit-tapahtumat="tiivis"] .u-tapahtuma a { padding: 12px 0; gap: 14px; background: none; border: 0; border-radius: 0; border-top: 1px solid var(--raja); }
-html[data-kortit-tapahtumat="tiivis"] .u-tapahtuma:first-child a { border-top: 0; }
-html[data-kortit-tapahtumat="tiivis"] .u-tapahtuma__pvm { flex-direction: row; align-items: baseline; gap: 4px; width: 100px; min-width: 100px; height: auto; justify-content: flex-start; background: none; color: var(--paa); }
-html[data-kortit-tapahtumat="tiivis"] .u-tapahtuma__pvm b { font-size: 17px; }
-html[data-kortit-tapahtumat="tiivis"] .u-tapahtuma__pvm small { font-size: 14px; opacity: .8; }
+[data-kortit-tapahtumat="tiivis"] .u-tapahtumat { gap: 0; background: var(--pinta); border: 1px solid var(--raja); border-radius: var(--r-m); padding: 4px 16px; }
+[data-kortit-tapahtumat="tiivis"] .u-tapahtuma a { padding: 12px 0; gap: 14px; background: none; border: 0; border-radius: 0; border-top: 1px solid var(--raja); }
+[data-kortit-tapahtumat="tiivis"] .u-tapahtuma:first-child a { border-top: 0; }
+[data-kortit-tapahtumat="tiivis"] .u-tapahtuma__pvm { flex-direction: row; align-items: baseline; gap: 4px; width: 100px; min-width: 100px; height: auto; justify-content: flex-start; background: none; color: var(--paa); }
+[data-kortit-tapahtumat="tiivis"] .u-tapahtuma__pvm b { font-size: 17px; }
+[data-kortit-tapahtumat="tiivis"] .u-tapahtuma__pvm small { font-size: 14px; opacity: .8; }
 /* Viikko-ohjelma: toistuva toiminta viikonpäivittäin (osat/viikko-ohjelma.html) */
 .u-viikko { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); margin-bottom: 8px; }
 .u-viikko__paiva { background: var(--pinta); border: 1px solid var(--raja); border-radius: var(--r-m); padding: 14px 16px; }
@@ -1124,13 +1124,13 @@ html[data-kortti="tausta"] { --kortti-bg: color-mix(in srgb, var(--kulta-vaalea)
 .u-kortti, .kk, .u-vierailu, .u-ramadan, .u-meista__kielet, .u-toiminta__kohta, .u-tg__julkaisu,
 .u-palvelu__linkki, .u-tapahtuma a, .u-viikko__paiva, .u-rj__kortti, .u-rmh,
 .u-rmh[data-tyyli="kortit"] .u-rmh__aika, .u-rmh[data-tyyli="kortit"] .u-rmh__rivi,
-html[data-kortit-tapahtumat="tiivis"] .u-tapahtumat {
+[data-kortit-tapahtumat="tiivis"] .u-tapahtumat {
   background: var(--kortti-bg); border: 1px solid var(--kortti-reuna); box-shadow: var(--kortti-varjo); border-radius: var(--kortti-r); }
 .rk, .u-rukouskortti, .u-rmh[data-tyyli="kortit"] .u-rmh__paiva { border-radius: var(--kortti-r); }
 .u-rmh[data-tyyli="nauha"] { border-radius: 999px; }
 /* Kortin sisällä olevat rivit eivät ole omia kortteja */
-html[data-kortit-tapahtumat="tiivis"] .u-tapahtuma a { background: none; border: 0; border-top: 1px solid var(--raja); border-radius: 0; box-shadow: none; }
-html[data-kortit-tapahtumat="tiivis"] .u-tapahtuma:first-child a { border-top: 0; }
+[data-kortit-tapahtumat="tiivis"] .u-tapahtuma a { background: none; border: 0; border-top: 1px solid var(--raja); border-radius: 0; box-shadow: none; }
+[data-kortit-tapahtumat="tiivis"] .u-tapahtuma:first-child a { border-top: 0; }
 .u-rmh[data-tyyli="kortit"] { background: none; border: 0; box-shadow: none; }
 /* Kortin päälle vietäessä sama korostus kaikkialla */
 a.u-palvelu__linkki:hover, .u-tapahtuma a:hover, .u-rj__kortti:hover, a.u-rmh:hover, a.u-kortti:hover { border-color: var(--kulta); }
@@ -1239,27 +1239,59 @@ body.on-ilmopalkki .u-pikanapit { bottom: calc(92px + env(safe-area-inset-bottom
 .u-tapahtumaosio__lohko .u-tyhja p { margin: 0; color: var(--hieno); }
 .u-tapahtumaosio__lohko .u-tapahtumat { margin: 0; }
 
-.u-viikko { container-type: inline-size; display: block; padding: 4px 20px; margin: 0;
-  background: var(--kortti-bg); border: 1px solid var(--kortti-reuna); box-shadow: var(--kortti-varjo); border-radius: var(--kortti-r); }
-.u-viikko .u-viikko__paiva { display: grid; gap: 4px; margin-inline: -20px; padding: 16px 20px; background: none; border: 0; border-radius: 0; box-shadow: none; }
-.u-viikko .u-viikko__paiva + .u-viikko__paiva { border-top: 1px solid var(--raja); }
-.u-viikko .u-viikko__paiva--tanaan { border-inline-start: 3px solid var(--kulta); padding-inline-start: 17px; background: color-mix(in srgb, var(--kulta-vaalea) 60%, transparent); }
-.u-viikko__paiva h3 { display: flex; align-items: baseline; gap: 8px; margin: 0; font: 600 15px/1.4 var(--ft); color: var(--paa); }
-.u-viikko__tanaan { font-size: 13px; font-weight: 600; color: var(--kulta-teksti); }
-.u-viikko__tanaan[hidden] { display: none; }
-.u-viikko__paiva ul { display: grid; gap: 0; }
-.u-viikko__rivi a { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 6px 0; border-top: 0; }
+/* Viikko-ohjelma seuraa samaa tyylivalintaa kuin tulevat tapahtumat (Ulkoasu → Tapahtumien kortit):
+   Lista = päivän laatta + rivit kortissa (kuten tulevien päivämäärälaatta), Kuvakortit = päiväkortit ruudukkona,
+   Tiivis = yksi aikataulukortti. Rivit (kellonaika, nimi, kenelle) ovat kaikissa samat. */
+.u-viikko__sisus { min-width: 0; flex: 1; }
+.u-viikko__paiva ul { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.u-viikko__rivi a { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 6px 0; border-top: 0; text-decoration: none; color: inherit; }
+.u-viikko__rivi:first-child a { padding-top: 0; }
+.u-viikko__rivi:last-child a { padding-bottom: 0; }
 .u-viikko__klo { min-width: 0; white-space: nowrap; font-weight: 600; color: var(--paa); }
 .u-viikko__tiedot { display: block; }
-.u-viikko__tiedot strong { display: block; font-weight: 600; color: var(--paa); }
-.u-viikko__tiedot small, .u-viikko__kenelle { display: inline-block; white-space: nowrap; margin: 2px 0 0; margin-inline-end: 8px; padding: 0; background: none; border-radius: 0; font-size: 14px; font-weight: 400; color: var(--hieno); }
+.u-viikko__tiedot strong { font-weight: 600; color: var(--paa); margin-inline-end: 8px; }
+.u-viikko__tiedot small, .u-viikko__kenelle { display: inline-block; white-space: nowrap; margin: 0; margin-inline-end: 8px; padding: 0; background: none; border-radius: 0; font-size: 14px; font-weight: 400; color: var(--hieno); }
+.u-viikko__tanaan { font-size: 13px; font-weight: 600; color: var(--kulta-teksti); }
+.u-viikko__tanaan[hidden] { display: none; }
+.u-viikko__laatta { display: flex; align-items: center; justify-content: center; flex: none; width: 60px; height: 60px; border-radius: var(--kulma, 14px); background: var(--paa); color: #fff; }
+.u-viikko__laatta b { font: 600 20px/1 var(--fo); }
+html[lang="ar"] .u-viikko__laatta b { font-size: 13px; }
+.u-viikko__paiva--tanaan .u-viikko__laatta { background: var(--kulta); color: var(--paa-tumma); }
+/* Lista (oletus) ja Kuvakortit: päivän nimi on laatassa; otsikko ruudunlukijoille */
+.u-viikko__paiva h3 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.u-viikko { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin: 0; }
+.u-viikko .u-viikko__paiva { display: flex; align-items: flex-start; gap: 16px; padding: 14px; }
+.u-viikko__sisus { padding-top: 4px; }
+[data-kortit-tapahtumat="kortit"] .u-viikko { grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 14px; }
+[data-kortit-tapahtumat="kortit"] .u-viikko .u-viikko__paiva { flex-direction: column; gap: 12px; padding: 16px; height: 100%; }
+[data-kortit-tapahtumat="kortit"] .u-viikko__sisus { padding-top: 0; width: 100%; }
+/* Tiivis: yksi aikataulukortti, päivä omassa sarakkeessaan */
+[data-kortit-tapahtumat="tiivis"] .u-viikko { container-type: inline-size; display: block; padding: 4px 20px;
+  background: var(--kortti-bg); border: 1px solid var(--kortti-reuna); box-shadow: var(--kortti-varjo); border-radius: var(--kortti-r); }
+[data-kortit-tapahtumat="tiivis"] .u-viikko .u-viikko__paiva { display: grid; gap: 4px; margin-inline: -20px; padding: 16px 20px; background: none; border: 0; border-radius: 0; box-shadow: none; }
+[data-kortit-tapahtumat="tiivis"] .u-viikko .u-viikko__paiva + .u-viikko__paiva { border-top: 1px solid var(--raja); }
+[data-kortit-tapahtumat="tiivis"] .u-viikko .u-viikko__paiva--tanaan { border-inline-start: 3px solid var(--kulta); padding-inline-start: 17px; background: color-mix(in srgb, var(--kulta-vaalea) 60%, transparent); }
+[data-kortit-tapahtumat="tiivis"] .u-viikko__laatta { display: none; }
+[data-kortit-tapahtumat="tiivis"] .u-viikko__sisus { padding-top: 0; }
+[data-kortit-tapahtumat="tiivis"] .u-viikko__paiva h3 { position: static; width: auto; height: auto; overflow: visible; clip-path: none; display: flex; align-items: baseline; gap: 8px; margin: 0 0 4px; font: 600 15px/1.4 var(--ft); color: var(--paa); }
 @container (min-width: 560px) {
-  .u-viikko .u-viikko__paiva { grid-template-columns: 136px minmax(0, 1fr); gap: 16px; align-items: baseline; }
-  .u-viikko__paiva h3 { flex-direction: column; gap: 0; }
-  .u-viikko__rivi:first-child a { padding-top: 0; }
-  .u-viikko__rivi:last-child a { padding-bottom: 0; }
-  .u-viikko__tiedot strong { display: inline; }
-  .u-viikko__tiedot small, .u-viikko__kenelle { display: inline; margin: 0 0 0 8px; margin-inline: 8px 0; }
+  [data-kortit-tapahtumat="tiivis"] .u-viikko__sisus { display: grid; grid-template-columns: 136px minmax(0, 1fr); gap: 16px; align-items: baseline; }
+  [data-kortit-tapahtumat="tiivis"] .u-viikko__paiva h3 { flex-direction: column; gap: 0; margin: 0; }
 }
-@media (max-width: 379px) { .u-viikko__rivi a { grid-template-columns: 96px minmax(0, 1fr); gap: 8px; font-size: 15px; } .u-viikko { padding-inline: 16px; } .u-viikko .u-viikko__paiva { margin-inline: -16px; padding-inline: 16px; } }
+@media (max-width: 379px) {
+  .u-viikko__rivi a { grid-template-columns: 96px minmax(0, 1fr); gap: 8px; font-size: 15px; }
+  .u-viikko .u-viikko__paiva { gap: 12px; padding: 12px; }
+  .u-viikko__laatta { width: 48px; height: 48px; }
+  [data-kortit-tapahtumat="tiivis"] .u-viikko { padding-inline: 16px; }
+  [data-kortit-tapahtumat="tiivis"] .u-viikko .u-viikko__paiva { margin-inline: -16px; padding-inline: 16px; }
+}
 
+/* Vain vertailukopio: tyylivaihtoehdon merkintä */
+.u-vertailumerkki { margin: 0 0 16px; padding: 8px 12px; border: 1px dashed var(--raja); border-radius: 8px; font-size: 14px; color: var(--hieno); }
+/* Kapea päiväkortti (puhelin, Lista/Kuvakortit): kellonaika nimen yläpuolelle, ettei nimi pirstoudu */
+.u-viikko__sisus { container-type: inline-size; }
+@container (max-width: 320px) {
+  .u-viikko__rivi a { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 4px 0; }
+  .u-viikko__rivi + .u-viikko__rivi a { padding-top: 8px; }
+  .u-viikko__klo { font-size: 14px; }
+}

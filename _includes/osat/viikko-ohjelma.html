@@ -29,7 +29,8 @@
   {%- endcapture -%}
   {%- assign _vo_rivit = _vo_rivit | strip -%}
   {%- if _vo_rivit != "" -%}{%- assign _vpa = "vp_" | append: _p -%}
-  <div class="u-viikko__paiva" data-vp="{{ _p }}"><h3>{% include k.html a=_vpa %} <span class="u-viikko__tanaan" hidden>{% include k.html a="tanaan" %}</span></h3><ul>{{ _vo_rivit }}</ul></div>
+  {%- assign _vpl = _vpa | append: "_lyh" -%}
+  <div class="u-viikko__paiva" data-vp="{{ _p }}"><span class="u-viikko__laatta" aria-hidden="true"><b>{% include k.html a=_vpl %}</b></span><div class="u-viikko__sisus"><h3>{% include k.html a=_vpa %} <span class="u-viikko__tanaan" hidden>{% include k.html a="tanaan" %}</span></h3><ul>{{ _vo_rivit }}</ul></div></div>
   {%- endif -%}
 {%- endfor -%}
 {%- endcapture -%}

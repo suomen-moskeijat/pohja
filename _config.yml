@@ -53,3 +53,6 @@ exclude:
   - Gemfile.lock
   - vendor
   - node_modules
+
+# Vain vertailukopio-haarassa: etusivun Tapahtumat-osio kaikilla tyyleillä peräkkäin
+vertailu_tapahtumatyylit: true

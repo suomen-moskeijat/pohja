@@ -94,6 +94,13 @@ vp_to_t:            { fi: "Torstaisin", en: "Thursdays", ar: "كل خميس", so
 vp_pe_t:            { fi: "Perjantaisin", en: "Fridays", ar: "كل جمعة", so: "Jimce kasta" }
 vp_la_t:            { fi: "Lauantaisin", en: "Saturdays", ar: "كل سبت", so: "Sabti kasta" }
 vp_su_t:            { fi: "Sunnuntaisin", en: "Sundays", ar: "كل أحد", so: "Axad kasta" }
+vp_ma_lyh:          { fi: "Ma", en: "Mon", ar: "الاثنين", so: "Isn" }
+vp_ti_lyh:          { fi: "Ti", en: "Tue", ar: "الثلاثاء", so: "Tal" }
+vp_ke_lyh:          { fi: "Ke", en: "Wed", ar: "الأربعاء", so: "Arb" }
+vp_to_lyh:          { fi: "To", en: "Thu", ar: "الخميس", so: "Kha" }
+vp_pe_lyh:          { fi: "Pe", en: "Fri", ar: "الجمعة", so: "Jim" }
+vp_la_lyh:          { fi: "La", en: "Sat", ar: "السبت", so: "Sab" }
+vp_su_lyh:          { fi: "Su", en: "Sun", ar: "الأحد", so: "Axd" }
 kenelle_kaikki:     { fi: "Kaikille", en: "Everyone", ar: "للجميع", so: "Qof walba" }
 kenelle_lapset:     { fi: "Lapsille", en: "Children", ar: "للأطفال", so: "Carruurta" }
 kenelle_nuoret:     { fi: "Nuorille", en: "Youth", ar: "للشباب", so: "Dhallinyarada" }
