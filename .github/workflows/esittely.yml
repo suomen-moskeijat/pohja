@@ -44,6 +44,38 @@ jobs:
           ORG: ${{ github.repository_owner }}
         run: python3 .github/scripts/hakemisto.py index.html && sudo cp index.html _site/index.html
 
+      # Vertailukopio: Hyvinkään sivu pohjan vertailu-unslop-haaralla (vain unslop-ulkoasumuutokset
+      # julkaistun pohjan päälle). Osoite /pohja/vertailu/hyvinkaa/, ei hakukoneisiin. Poistetaan, kun päätös on tehty.
+      - name: Vertailukopio – hae Hyvinkään tiedot ja vertailupohja
+        run: |
+          git clone -q --depth 1 https://github.com/${{ github.repository_owner }}/hyvinkaa-islam-keskus vrt-moskeija
+          git clone -q --depth 1 --branch vertailu-unslop https://github.com/${{ github.repository }} vrt-pohja
+          mkdir vrt-sivu
+          (cd vrt-pohja && tar --exclude=.git --exclude=.github/workflows --exclude=malli --exclude=testi --exclude=testit.json --exclude=esittely -cf - .) | (cd vrt-sivu && tar -xf -)
+          (cd vrt-moskeija && tar --exclude=.git --exclude=.github -cf - .) | (cd vrt-sivu && tar -xf -)
+          cat vrt-pohja/_config.yml vrt-moskeija/_config.yml > vrt-sivu/_config.yml
+          printf '\nrepo: "hyvinkaa-islam-keskus"\nurl: "https://%s.github.io"\nbaseurl: "/pohja/vertailu/hyvinkaa"\n' "${{ github.repository_owner }}" >> vrt-sivu/_config.yml
+          cd vrt-sivu
+          python3 .github/scripts/artikkelit.py --karsi .
+          python3 .github/scripts/rukousajat.py || echo "Rukousaikoja ei saatu"
+          python3 .github/scripts/somet.py || true
+          python3 -m pip install --quiet pillow pyyaml || true
+          python3 .github/scripts/pienet.py . || true
+
+      - name: Vertailukopio – rakenna
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./vrt-sivu
+          destination: ./vrt-site
+          future: true
+
+      - name: Vertailukopio – kieliversiot, ei hakukoneisiin, mukaan sivustoon
+        run: |
+          sudo python3 vrt-sivu/.github/scripts/kieliversiot.py vrt-site || true
+          sudo find vrt-site -name '*.html' -exec sed -i 's#<head>#<head><meta name="robots" content="noindex, nofollow">#' {} +
+          sudo rm -f vrt-site/sitemap.xml vrt-site/robots.txt vrt-site/llms.txt vrt-site/llms-full.txt vrt-site/feed.xml
+          sudo mkdir -p _site/vertailu && sudo cp -r vrt-site _site/vertailu/hyvinkaa
+
       - uses: actions/upload-pages-artifact@v3
 
   julkaise:
