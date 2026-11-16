@@ -3,17 +3,19 @@
   "testit": [
     {
       "id": "rukousajat-vieritys",
-      "otsikko": "Rukousajat-sivu: vasen palsta ei kulje mukana",
-      "kuvaus": "Tietokoneella Rukousajat-sivun vasen palsta (seuraava rukous, päivän ajat, Jumua ja kalenterin tilaus) seurasi vieritystä, ja koska se on näyttöä korkeampi, sen alaosa jäi piiloon. Nyt palsta pysyy paikallaan kuten muukin sivu.",
-      "aloitus": "Avaa testimoskeijan Rukousajat-sivu tietokoneella (leveä ikkuna) ja vieritä alas.",
+      "otsikko": "Rukousajat-sivun asettelu (unslop)",
+      "kuvaus": "Tietokoneella Rukousajat-sivu on kaksi itsenäistä palstaa: vasemmalla kapea palsta (seuraava rukous, päivän ajat, Jumua, kalenterin tilaus) ja oikealla leveä (Ramadan ja kuukauden aikataulu). Ennen osiot asettuivat riveittäin, jolloin väliin jäi isoja tyhjiä aukkoja, ja vasen palsta kulki vierityksen mukana. Puhelimella järjestys on ennallaan, ja kapeimmillakin puhelimilla rukousten nimet mahtuvat katkeamatta.",
+      "aloitus": "Avaa testimoskeijan Rukousajat-sivu tietokoneella (leveä ikkuna), vieritä alas, ja tee sama puhelimella.",
       "alue": "sivut",
-      "versio": 1,
+      "versio": 2,
       "lisatty": "2026-11-16",
       "kohdat": [
-        "Vierittäessä alas Seuraava rukous -kortti ja päivän ajat jäävät ylös eivätkä kulje mukana — Missä: Testimoskeija → Rukousajat (tietokone)",
-        "Vasemman palstan alaosa (Perjantairukous ja Tilaa kalenteri -valinnat) näkyy kokonaan, kun vierität sen kohdalle — Missä: Rukousajat → vasen palsta alhaalla",
-        "Oikean puolen kuukausitaulukko ja Ramadanin aikataulu näkyvät normaalisti koko matkan — Missä: Rukousajat → oikea palsta",
-        "Puhelimella sivu toimii kuten ennen (kaikki allekkain) — Missä: Rukousajat puhelimella"
+        "Tietokoneella vasemmalla on seuraava rukous, päivän ajat, Perjantairukous ja Lisää puhelimen kalenteriin – peräkkäin ilman tyhjiä aukkoja — Missä: Testimoskeija → Rukousajat (tietokone), vasen palsta",
+        "Oikealla on Ramadan-osio ja sen alla kuukauden aikataulu, eikä niiden väliin jää tyhjää — Missä: Rukousajat → oikea palsta",
+        "Vierittäessä vasen palsta pysyy paikallaan eikä kulje mukana — Missä: Rukousajat → vieritä alas",
+        "Puhelimella järjestys: seuraava rukous ja päivän ajat, Perjantairukous, Ramadan, kuukausi, Lisää puhelimen kalenteriin — Missä: Rukousajat puhelimella",
+        "Pienellä puhelimella (esim. iPhone SE) Auringonnousu ei katkea kesken sanan, ja arabiankielinen nimi on rivin alla — Missä: Rukousajat → päivän ajat",
+        "Kuukauden vaihto nuolilla ja Tulosta toimivat kuten ennen — Missä: Rukousajat → kuukauden aikataulu ja Ramadan-osio"
       ],
       "linkit": [
         {

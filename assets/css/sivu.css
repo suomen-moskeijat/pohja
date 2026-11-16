@@ -211,11 +211,12 @@ html[dir="rtl"] .rk__palkki span { background: linear-gradient(-90deg, var(--kul
 .rk__taulu thead th:first-child { padding-inline-start: 16px; text-align: start; text-transform: none; letter-spacing: 0; font-weight: 600; }
 html[lang="ar"] .rk__taulu thead th { letter-spacing: 0; }
 .rk__taulu tbody tr { border-top: 1px solid var(--raja); }
-.rk__taulu tbody th { padding-block: 12px; padding-inline: 12px 8px; text-align: start; overflow-wrap: anywhere; font: 700 16px/1.2 var(--ft); color: var(--paa); border-inline-start: 4px solid transparent; }
+.rk__taulu tbody th { padding-block: 12px; padding-inline: 12px 8px; text-align: start; overflow-wrap: break-word; hyphens: auto; font: 700 16px/1.2 var(--ft); color: var(--paa); border-inline-start: 4px solid transparent; }
 .rk__taulu td { padding-block: 12px; padding-inline: 4px 16px; text-align: end; font: 600 18px/1 var(--fo); color: var(--paa); }
 .rk__taulu td + td { font: 500 15px/1 var(--ft); color: var(--hieno); }
 .rk__ar { display: inline-block; margin-inline-start: 8px; font: 500 14px/1 "Geeza Pro", "Noto Naskh Arabic", "Segoe UI", Tahoma, sans-serif; color: var(--hieno); }
 html[lang="ar"] .rk__ar { display: none; }
+@media (max-width: 379px) { .rk__ar { display: block; margin: 4px 0 0; } .rk__taulu thead th:nth-child(2), .rk__taulu thead th:nth-child(3) { width: 68px; } .rk__taulu td, .rk__taulu thead th { padding-inline-end: 10px; } }
 .rk__rivi--muu th, .rk__rivi--muu td { color: var(--hieno) !important; font-weight: 500 !important; }
 .rk__rivi--muu td { font-size: 16px !important; }
 .rk__rivi--seuraava { background: var(--kulta-vaalea); }
@@ -407,9 +408,21 @@ html.u-lukittu { overflow: hidden; }
 @media (min-width: 768px) { .u-artikkeli { padding: 40px 48px; } }
 .u-artikkeli__kielet { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--raja); }
 
-.u-rukoussivu { display: grid; gap: 20px; align-items: start; }
-.u-rukoussivu__tanaan { display: grid; gap: 14px; }
-@media (min-width: 1024px) { .u-rukoussivu { grid-template-columns: .9fr 1.1fr; gap: 28px; } }
+.u-rukoussivu { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: start; }
+.u-rukoussivu__tanaan { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+/* Puhelimella palstat puretaan: tänään, Ramadan, kuukausi, kalenterin tilaus */
+.u-rukoussivu__sivu, .u-rukoussivu__paa { display: contents; }
+.u-rukoussivu__tanaan { order: 1; }
+.u-rukoussivu__paa > * { order: 2; }
+.u-rukoussivu__kalenteri { order: 3; }
+.u-rukoussivu > * > * { min-width: 0; }
+.u-rukoussivu :is(.u-ramadan, .u-kalenteri) { margin: 0; }
+/* Tietokoneella kaksi itsenäistä palstaa, jotka eivät jätä toisiinsa tyhjiä aukkoja */
+@media (min-width: 1024px) {
+  .u-rukoussivu { grid-template-columns: minmax(340px, 400px) minmax(0, 1fr); gap: 32px; }
+  .u-rukoussivu__sivu, .u-rukoussivu__paa { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+  .u-rukoussivu__sivu > *, .u-rukoussivu__paa > * { order: 0; margin: 0; }
+}
 .u-juma { display: flex; align-items: center; gap: 14px; padding: 16px 20px; }
 .u-juma > span:nth-child(2) { display: flex; flex-direction: column; flex: 1; }
 .u-juma small { color: var(--hieno); }
