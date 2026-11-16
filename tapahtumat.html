@@ -17,5 +17,5 @@ permalink: /tapahtumat/
     <h2 class="u-tapahtumaosio__otsikko">{% include k.html a="tulevat" %}</h2>
     {% include osat/tapahtumat.html moskeija=m %}
   </section>
-  {% include osat/kalenteri.html valitut="tapahtumat" %}
+  {% if m.kalenteri_tilaus %}{% include osat/kalenteri.html valitut="tapahtumat" %}{% endif %}
 </div>

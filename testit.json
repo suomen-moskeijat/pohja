@@ -513,6 +513,68 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-16"
+    },
+    {
+      "id": "kaikki-paneelista",
+      "otsikko": "Kaikki sivulla näkyvä muokattavissa paneelista",
+      "alue": "paneeli",
+      "kuvaus": "Vanhat palvelut siirtyvät itsestään omiksi sivuikseen. Ulkoasuun lisättiin selaimen välilehden kuvake ja omiin väreihin taustan, reunaviivojen ja himmeän tekstin värit. Uusi logo vaihtuu myös yläpalkkiin. Rukousaikoihin tuli linkki viralliseen aikatauluun. Kalenterin tilaus on valinta, jonka moskeija voi ottaa käyttöön.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa Testimoskeija.",
+      "kohdat": [
+        "Asetukset → Perustiedot: Kalenterin tilaus sivulla on valinta (testimoskeijassa päällä) — Missä: Testipaneeli → Asetukset → Perustiedot",
+        "Kun valinta on päällä, Lisää puhelimen kalenteriin -kortti näkyy Rukousajat-, Tapahtumat- ja Ramadan-sivuilla — Missä: Testimoskeija → Rukousajat",
+        "Kalenterin tilaus toimii puhelimessa: valitse rastit, Tilaa kalenteri, ajat tulevat kalenteriin — Missä: Rukousajat → Lisää puhelimen kalenteriin (puhelimella)",
+        "Pois päältä kortti katoaa kaikilta sivuilta — Missä: Perustiedot → valinta pois → Tallenna → Rukousajat",
+        "Ulkoasu → Värit ja logo: Nykyiset värit -kohdassa on Sivun tausta, Reunaviivat ja Himmeä teksti — Missä: Testipaneeli → Ulkoasu",
+        "Ulkoasu → Värit ja logo: Selaimen välilehden kuvake — Missä: Ulkoasu → Värit ja logo (alhaalla)",
+        "Uusi logo näkyy sivun yläpalkissa tallennuksen jälkeen — Missä: Ulkoasu → Logo → Tallenna → sivu",
+        "Rukousajat → Lähde ja iqamah: Linkki viralliseen aikatauluun näkyy sivulla kuukauden aikataulun alla — Missä: Testipaneeli → Rukousajat ja Jumua",
+        "Palvelut-sivulla vanhat palvelut (jos moskeijalla on) siirtyvät itsestään listaan muokattaviksi — Missä: Testipaneeli → Palvelut"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Perustiedot",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/perus"
+        },
+        {
+          "nimi": "Testipaneeli: Ulkoasu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/ulkoasu"
+        },
+        {
+          "nimi": "Sivu: Rukousajat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-16"
+    },
+    {
+      "id": "nakyma-listasivulla",
+      "otsikko": "Näkymän vaihto suoraan Tapahtumat-, Palvelut- ja Tiedotteet-sivulta",
+      "alue": "paneeli",
+      "kuvaus": "Listan yläpuolella näkyy, miltä tapahtumat (palvelut, tiedotteet) näyttävät sivulla. Vaihda avaa ikkunan samalle sivulle: vaihtoehdot kuvina, esikatselu oikeasta sivusta ja Tallenna. Ei tarvitse etsiä Ulkoasu-sivua.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa Testimoskeija → Tapahtumat.",
+      "kohdat": [
+        "Listan yläpuolella: Näkymä sivulla ja valittu näkymä pienenä kuvana — Missä: Testipaneeli → Tapahtumat",
+        "Vaihda avaa ikkunan: kolme vaihtoehtoa kuvina ja esikatselu Tapahtumat-sivusta — Missä: Tapahtumat → Vaihda",
+        "Vaihtoehdon valinta muuttaa esikatselun heti — Missä: ikkunan esikatselu",
+        "Tallenna sulkee ikkunan ja rivi näyttää uuden valinnan; sivu päivittyy noin minuutissa — Missä: ikkuna → Tallenna",
+        "Sama Palvelut- ja Tiedotteet-sivuilla — Missä: Testipaneeli → Palvelut / Tiedotteet",
+        "Muokkaaja-roolilla riviä ei näy (ulkoasu kuuluu pääkäyttäjälle) — Missä: Tapahtumat muokkaajana",
+        "Puhelimella ikkuna mahtuu ruudulle — Missä: Tapahtumat → Vaihda puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Tapahtumat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat"
+        },
+        {
+          "nimi": "Testipaneeli: Palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-16"
     }
   ]
 }

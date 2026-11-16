@@ -429,7 +429,7 @@ html.u-lukittu { overflow: hidden; }
 .u-ramadansivu { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: start; }
 .u-ramadansivu .u-ramadan, .u-ramadansivu .u-kalenteri { margin: 0; }
 .u-ramadansivu__sivu { scroll-margin-top: calc(var(--yla, 76px) + 16px); }
-@media (min-width: 1024px) { .u-ramadansivu { grid-template-columns: minmax(0, 1fr) minmax(300px, 360px); gap: 32px; } .u-ramadansivu__sivu { position: sticky; top: calc(var(--yla, 76px) + 16px); } }
+@media (min-width: 1024px) { .u-ramadansivu:not(.u-ramadansivu--yksi) { grid-template-columns: minmax(0, 1fr) minmax(300px, 360px); gap: 32px; } .u-ramadansivu__sivu { position: sticky; top: calc(var(--yla, 76px) + 16px); } }
 .u-ramadansivu__tyhja { display: flex; gap: 14px; align-items: flex-start; padding: 22px 24px; }
 .u-ramadansivu__tyhja p { margin: 0 0 8px; }
 .u-juma > span:nth-child(2) { display: flex; flex-direction: column; flex: 1; }

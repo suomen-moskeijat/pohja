@@ -8,7 +8,7 @@ rukousajat: true
 {% include osat/rukousdata.html moskeija=m %}
 {% include osat/sivuhero.html avain="rukousajat" johdanto_avain="aikataulu_virallinen" %}
 {%- comment -%}
-  Tietokoneella kaksi itsenäistä palstaa (ei tyhjiä aukkoja): vasemmalla tänään, Jumua ja kalenterin tilaus,
+  Tietokoneella kaksi itsenäistä palstaa (ei tyhjiä aukkoja): vasemmalla tänään, Jumua ja kalenterin tilaus (jos moskeija on ottanut sen käyttöön: kalenteri_tilaus),
   oikealla linkki Ramadan-sivulle (Ramadanin aikaan) ja kuukauden aikataulu. Puhelimella palstat puretaan ja järjestys on: tänään, Ramadan, kuukausi, kalenteri.
 {%- endcomment -%}
 <div class="u-kehys u-sivu u-rukoussivu">
@@ -23,7 +23,7 @@ rukousajat: true
     <div class="u-kortti u-juma"><span class="u-ikoni">{% include ikoni-ph.html nimi="moskeija" koko=22 %}</span><span><strong>{% include k.html a="jumua" %}</strong><small>{% if _j[2] and _j[2] != "" %}{% include k.html a="seuraava_perjantai" %} <span dir="ltr">{{ _j[2] }}</span>{% if _j[1] and _j[1] != "" %} · {% include k.html a="iqamah" %} <span dir="ltr">{{ _j[1] }}</span>{% endif %}{% else %}{% include k.html a="jumua_lyhyt" %}{% endif %}</small></span><b dir="ltr" data-klo>{{ _j[0] }}</b></div>
     {% endif %}
   </div>
-  <div class="u-rukoussivu__kalenteri">{% include osat/kalenteri.html valitut="rukous,jumua" %}</div>
+  {% if m.kalenteri_tilaus %}<div class="u-rukoussivu__kalenteri">{% include osat/kalenteri.html valitut="rukous,jumua" %}</div>{% endif %}
   </div>
   <div class="u-rukoussivu__paa">
   {%- include osat/ramadan-tiedot.html moskeija=m -%}

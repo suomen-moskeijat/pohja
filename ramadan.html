@@ -6,7 +6,7 @@ rukousajat: true
 ---
 {%- comment -%}
   Ramadanin oma sivu: yläosassa Ramadan-banneri (laskuri / päivä N, suhur ja iftar), sitten koko Ramadan-osio
-  (tarawih, Eid, fitra, julkaisut ja kuukauden aikataulu) ja kalenterin tilaus. Valikossa ja etusivun yläosassa
+  (tarawih, Eid, fitra, julkaisut ja kuukauden aikataulu) ja kalenterin tilaus (jos käytössä: kalenteri_tilaus). Valikossa ja etusivun yläosassa
   linkki tänne 3 viikkoa ennen alkua – Eid-päivän loppuun. Muulloin sivu kertoo, milloin aikataulu tulee.
 {%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
@@ -14,9 +14,9 @@ rukousajat: true
 {%- include osat/ramadan-tiedot.html moskeija=m -%}
 {% if _rm_nakyy %}
 {% include osat/ramadan-banneri.html moskeija=m %}
-<div class="u-kehys u-sivu u-ramadansivu">
+<div class="u-kehys u-sivu u-ramadansivu{% unless m.kalenteri_tilaus %} u-ramadansivu--yksi{% endunless %}">
   <div class="u-ramadansivu__paa">{% include osat/ramadan.html moskeija=m sivulla=true %}</div>
-  <div class="u-ramadansivu__sivu" id="kalenteri-ramadan">{% include osat/kalenteri.html valitut="ramadan" %}</div>
+  {% if m.kalenteri_tilaus %}<div class="u-ramadansivu__sivu" id="kalenteri-ramadan">{% include osat/kalenteri.html valitut="ramadan" %}</div>{% endif %}
 </div>
 {% else %}
 {% include osat/sivuhero.html avain="ramadan" %}
