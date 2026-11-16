@@ -1251,7 +1251,6 @@ body.on-ilmopalkki .u-pikanapit { bottom: calc(92px + env(safe-area-inset-bottom
 /* Tapahtuma ilman kuvausta: tietokortti keskelle, ei tyhjää kaistaa oikealle */
 @media (min-width: 900px) { .u-tapsivu--yksi { justify-content: center; } }
 
-@media (max-width: 899px) { .u-tapsivu .u-taptieto { order: -1; } }
 
 /* ---------- Unslop: Tapahtumat-osio = Joka viikko + Tulevat ----------
    Yksi osio (etusivu) tai sivu, jossa kaksi nimettyä lohkoa. Viikko-ohjelma on aikataulu:

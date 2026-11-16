@@ -758,7 +758,8 @@
         "Ilman omia tekstejä nappi on Ilmoittaudu ja lomakkeella ilmoittautuessa oletusteksti näkyy — Missä: Testimoskeija → Tapahtumat → Avoimet ovet",
         "Samat kaksi kenttää palvelussa ja lasten opetuksessa — Missä: Testipaneeli → Palvelut → palvelu; Sivut → Palvelut → Lasten opetukseen ilmoittautuminen",
         "Napin yläpuolinen teksti näyttää samalta kaikissa kolmessa (sama koko ja harmaa väri) — Missä: Testimoskeija → tapahtuma, palvelu ja Ilmoita lapsesi opetukseen",
-        "Arabiaksi: suomeksi kirjoitettu oma teksti näkyy oikein päin (piste lauseen lopussa) — Missä: sama sivu, kieli AR"
+        "Arabiaksi: suomeksi kirjoitettu oma teksti näkyy oikein päin (piste lauseen lopussa) — Missä: sama sivu, kieli AR",
+        "Puhelimella tapahtuman kuvaus tulee ensin ja tietokortti (aika, paikka, nappi) sen jälkeen; alareunan palkissa on nappi, kunnes kortti tulee näkyviin — Missä: Testimoskeija → Tapahtumat → Avoimet ovet (puhelin)"
       ],
       "linkit": [
         {
