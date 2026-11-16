@@ -10,7 +10,7 @@ rukousajat: true
 {%- if _tausta == "kuva" and a.kuva and a.kuva != "" -%}{%- assign _alku_luokka = " u-alku--kuva" -%}{%- elsif _tausta == "vari" -%}{%- assign _alku_luokka = " u-alku--vari" -%}{%- else -%}{%- assign _alku_luokka = "" -%}{%- endif -%}
 <section class="u-alku{{ _alku_luokka }}"{% if _alku_luokka == " u-alku--kuva" %} style="--alku-kuva: url('{{ a.kuva | relative_url }}')"{% endif %}>
   <div class="u-kehys u-alku__sisalto">
-    {% if m.hero_tunniste %}<p class="u-alku__tunniste"><span aria-hidden="true">●</span> {% include kt.html arvo=m.hero_tunniste %}</p>{% endif %}
+    {% if m.hero_tunniste %}<p class="u-alku__tunniste">{% include kt.html arvo=m.hero_tunniste %}</p>{% endif %}
     <h1>{% if m.hero_otsikko %}{% include kt.html arvo=m.hero_otsikko %}{% else %}{% include nimi.html moskeija=m %}{% endif %}</h1>
     {% if m.esittely %}<p class="u-alku__esittely">{% include kt.html arvo=m.esittely %}</p>{% endif %}
 
