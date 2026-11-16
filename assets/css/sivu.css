@@ -1217,3 +1217,7 @@ body.on-ilmopalkki .u-pikanapit { bottom: calc(92px + env(safe-area-inset-bottom
 /* Nosto (esim. Ilmoita lapsesi opetukseen): ei koristeikonia, teksti ja nappi */
 .u-nosto__ikoni { display: none; }
 @media (min-width: 820px) { .u-nosto { grid-template-columns: minmax(0, 1fr) auto; } }
+/* Kapealla sivulla (Tapahtumat) viikko-ohjelma päivä kerrallaan koko leveydellä: ei vajaata riviä */
+.u-sivu--kapea .u-viikko { grid-template-columns: minmax(0, 1fr); }
+/* Viikko-ohjelman päiväkortit oman sisältönsä korkuisia (ei tyhjiä laatikoita lyhyille päiville) */
+.u-viikko { align-items: start; }
