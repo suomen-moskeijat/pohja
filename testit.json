@@ -485,6 +485,34 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-16"
+    },
+    {
+      "id": "ulkoasu-valilehdet",
+      "otsikko": "Ulkoasu yksinkertaisemmaksi: kolme välilehteä",
+      "alue": "paneeli",
+      "kuvaus": "Ulkoasu-sivu on jaettu välilehtiin: Värit ja logo, Näkymät (tapahtumat, palvelut, artikkelit, korttien tyyli) ja Lisäasetukset (kulmat, varjo, kuviot). Ohjetekstejä on lyhennetty.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa Testimoskeija → Ulkoasu.",
+      "kohdat": [
+        "Sivulla on kolme välilehteä ja ensimmäisenä näkyy Värit ja logo — Missä: Testipaneeli → Ulkoasu",
+        "Näkymät-välilehdellä ovat tapahtumien, palvelujen ja artikkelien näkymät kuvina sekä korttien tyyli — Missä: Ulkoasu → Näkymät",
+        "Lisäasetuksissa ovat kulmien pyöristys, ylälaidan varjo ja kuviot — Missä: Ulkoasu → Lisäasetukset",
+        "Esikatselu muuttuu heti valinnasta jokaisella välilehdellä — Missä: Ulkoasu → oikean reunan esikatselu",
+        "Tallenna tallentaa muutokset kaikilta välilehdiltä kerralla — Missä: Ulkoasu → Tallenna",
+        "Tapahtumat-sivun Vaihda näkymää vie suoraan Näkymät-välilehdelle — Missä: Testipaneeli → Tapahtumat → Vaihda näkymää",
+        "Puhelimella välilehdet ja valinnat mahtuvat ruudulle — Missä: Ulkoasu puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Ulkoasu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/ulkoasu"
+        },
+        {
+          "nimi": "Testipaneeli: Tapahtumat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-16"
     }
   ]
 }
