@@ -5,18 +5,24 @@ permalink: /palvelut/lasten-opetus/
 seo_avain: ilmoita_lapsesi
 ---
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
-{%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
-{%- if m.yhteydenotto.whatsapp == "piilossa" -%}{%- assign wa = "" -%}{%- endif -%}
+{%- comment -%}
+  Kysyttävää-kortti: moskeija päättää paneelissa (Palvelut → Lasten opetukseen ilmoittautuminen), näytetäänkö kortti
+  ja millä tekstillä. Nappi vie Yhteystiedot-sivun kysymyslomakkeeseen (aiheena lasten opetus). Yhteystietoja ei lisätä
+  korttiin automaattisesti. Kortti piilotetaan, jos Kysy moskeijalta -lomake on pois käytöstä.
+{%- endcomment -%}
+{%- assign _kysy = true -%}
+{%- if m.lasten_opetus.kysy_kortti == false or m.yhteydenotto.kysy.pois -%}{%- assign _kysy = false -%}{%- endif -%}
+{%- capture _kt -%}{% if m.lasten_opetus.kysy_teksti %}{% include kt.html arvo=m.lasten_opetus.kysy_teksti %}{% endif %}{%- endcapture -%}{%- assign _kt = _kt | strip -%}
 {% include osat/sivuhero.html yla="lasten_opetus" avain="ilmoita_lapsesi" johdanto=m.lasten_opetus.teksti %}
-<div class="u-kehys u-sivu u-kaksi">
+<div class="u-kehys u-sivu{% if _kysy %} u-kaksi{% else %} u-sivu--kapea{% endif %}">
   {% include osat/lomake-lapsi.html moskeija=m %}
+  {%- if _kysy %}
   <aside class="u-kortti u-sivupalkki">
-    <span class="u-ikoni">{% include ikoni-ph.html nimi="puhelin" koko=22 %}</span>
     <h2>{% include k.html a="kysyttavaa" %}</h2>
-    <p class="u-hieno">{% if wa != "" %}{% include k.html a="kysy_whatsapp" %}{% else %}{% include k.html a="kysy_puhelin" %}{% endif %}</p>
+    <p class="u-hieno">{% if _kt != "" %}{{ _kt }}{% else %}{% include k.html a="lapset_kysy_teksti" %}{% endif %}</p>
     <div class="u-napit u-napit--pino">
-      {% if wa != "" %}<a class="u-nappi u-nappi--wa" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" koko=18 %} WhatsApp</a>{% endif %}
-      {% if m.puhelin and m.puhelin != "" %}<a class="u-nappi u-nappi--reuna" href="tel:{{ m.puhelin | remove: ' ' }}" dir="ltr">{{ m.puhelin }}</a>{% endif %}
+      <a class="u-nappi u-nappi--reuna" href="{{ '/yhteystiedot/' | relative_url }}?aihe={{ site.data.kaannokset.lasten_opetus.fi | url_encode }}#kysy">{% include k.html a="kysy_tasta" %}</a>
     </div>
   </aside>
+  {%- endif %}
 </div>
