@@ -16,7 +16,7 @@
       <p class="u-rmb__tunniste"><span lang="ar" dir="rtl">رمضان كريم</span> · {% include k.html a="ramadan" %} {{ _rm_vuosi }}</p>
       <h2 id="rmb-otsikko" class="u-rmb__otsikko">
         <span data-rm-tila="ennen">{% include k.html a="ramadan_alkaa" %} <span class="u-rmb__kulta" data-rm-alkupv dir="ltr">{{ _rm_alkaa | date: "%-d.%-m." }}</span></span>
-        <span data-rm-tila="aikana" hidden>{% include k.html a="ramadan_kareem" %} <span class="u-rmb__pv">{% include k.html a="ramadan_paiva" %} <b class="u-rmb__kulta" data-rm-pv dir="ltr"></b><span dir="ltr">/{{ _rm_paivia }}</span></span></span>
+        <span data-rm-tila="aikana" hidden>{% include k.html a="ramadan_kareem" %} <span class="u-rmb__pv">{% include k.html a="ramadan_paiva" %} <bdi dir="ltr"><b class="u-rmb__kulta" data-rm-pv></b>/{{ _rm_paivia }}</bdi></span></span>
         <span data-rm-tila="eid" hidden>{% include k.html a="eid_mubarak" %}</span>
       </h2>
       <p class="u-rmb__lisa" data-rm-tila="ennen">{% unless _rm_vahvistettu %}{% include k.html a="ramadan_arvio" %}{% endunless %}</p>

@@ -2,6 +2,40 @@
   "ohje": "Testattavat muutokset. Kun teet muutoksen testi-haaraan, lisää tähän kohta (id pysyy samana; nosta versio, kun korjaat hylätyn testin). Kohta: 'Mitä tarkistetaan — Missä: valikkopolku'. Suorat linkit testin linkit-listaan nimettyinä nappeina (näkyvät jokaisessa paneelin versiossa). aloitus = mistä testaaja aloittaa. Älä kirjoita tänne nimiä tai muita henkilötietoja – repo on julkinen.",
   "testit": [
     {
+      "id": "ulkoasun-hionta",
+      "otsikko": "Ulkoasun hionta (unslop)",
+      "kuvaus": "Sivupohjan pieni siistiminen unslop-tarkistuslistalla: ei ISOJA KIRJAIMIA väljällä harvennuksella, otsikot hieman kevyempiä, ei kultaisia hehkuja taustoissa, kortit eivät enää hyppää ylös hiiren alla, Ramadan-bannerin seuraava aika ei syki vaan on korostettu kultareunalla, ja Joka viikko -kortit täyttävät koko rivin. Värit, fontit, kuviot ja moskeijan omat asetukset pysyvät ennallaan. Lisäksi korjattu arabiankielisen Ramadan-bannerin päivänumero, joka näkyi väärin päin (/295 → 5/29).",
+      "aloitus": "Avaa testimoskeijan etusivu (linkki alla) tietokoneella ja puhelimella. Vertaa tarvittaessa jonkin toisen moskeijan sivuun, jossa muutos ei vielä ole.",
+      "alue": "sivut",
+      "versio": 1,
+      "lisatty": "2026-11-16",
+      "kohdat": [
+        "Otsikon yläpuolella kaupungin nimi on tavallista tekstiä ilman pilleriä ja pistettä — Missä: Testimoskeijan etusivu → ylin kohta (Helsinki)",
+        "Seuraava rukous -otsikko ja viikonpäivät on kirjoitettu tavallisesti (ei SEURAAVA RUKOUS, ei KESKIVIIKKO) — Missä: etusivu → rukouskortti ja Joka viikko",
+        "Joka viikko -kortit täyttävät koko rivin leveyden tietokoneella — Missä: etusivu → Tulevat tapahtumat → Joka viikko",
+        "Palvelu-, artikkeli- ja tapahtumakortit eivät nouse hiiren alla, vain reuna vaihtaa väriä — Missä: etusivu → Palvelut ja Uusimmat artikkelit",
+        "Ramadan-bannerissa seuraava aika on korostettu kultaisella reunalla eikä syki — Missä: etusivu → Ramadan-banneri (esikatselu Päivä 5)",
+        "Otsikot ja isot numerot ovat hieman kevyempiä, mutta yhä selvästi luettavia — Missä: etusivu, Rukousajat-sivu",
+        "Arabiankielinen versio näyttää edelleen oikealta (teksti oikealta vasemmalle, ei harvennusta) — Missä: etusivu → kielinappi (FI) ylhäällä oikealla → العربية",
+        "Arabiaksi Ramadan-bannerissa päivä näkyy muodossa 5/29 (ei /295) — Missä: etusivu → kielinappi → العربية → Ramadan-banneri",
+        "Puhelimella mikään ei mene päällekkäin eikä leveys vuoda yli — Missä: etusivu ja Rukousajat puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Sivu: Etusivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        },
+        {
+          "nimi": "Sivu: Rukousajat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/"
+        },
+        {
+          "nimi": "Sivu: Tapahtumat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
+        }
+      ]
+    },
+    {
       "id": "palvelujen-jarjestys",
       "otsikko": "Palvelujen järjestys nuolilla",
       "kuvaus": "Palvelun lomakkeessa ei enää ole Järjestys-numeroa (sama numero kahdella sotki järjestyksen). Uusi palvelu tulee listan loppuun, ja järjestystä muutetaan Palvelut-listassa nuolilla ↑↓. Tallennuksen jälkeen kulmaan tulee Avaa sivu -linkki, joka näyttää päivitetyn sivun heti.",
