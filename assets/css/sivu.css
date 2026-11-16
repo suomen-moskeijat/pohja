@@ -1293,3 +1293,13 @@ html[lang="ar"] .u-viikko__laatta b { font-size: 13px; }
   .u-viikko__rivi + .u-viikko__rivi a { padding-top: 8px; }
   .u-viikko__klo { font-size: 14px; }
 }
+
+/* ---------- Kosketusalueet ja pienin tekstikoko (läpikäynti) ----------
+   Napit ja suodattimet vähintään 44 px korkeita puhelimella, murupolun linkki saa isomman
+   osuma-alueen ilman että asettelu muuttuu, pienin teksti 12 px. */
+@media (max-width: 767px) {
+  .u-aihe, .u-nappi--pieni { min-height: 44px; }
+}
+.u-eyebrow a { display: inline-block; padding-block: 12px; margin-block: -12px; }
+.u-aihe small { font-size: 12px; opacity: .75; }
+.kk__taulu th small { font-size: 12px; }

@@ -30,8 +30,8 @@
   {%- assign _eid_ajat = "" -%}
   {%- if _rmm.eid_aika and _rmm.eid_aika != "" -%}{%- assign _eid_ajat = _rmm.eid_aika -%}{%- if _rmm.eid_aika_2 and _rmm.eid_aika_2 != "" -%}{%- assign _eid_ajat = _eid_ajat | append: " · " | append: _rmm.eid_aika_2 -%}{%- endif -%}{%- endif -%}
   <dl class="u-ramadan__tiedot">
-    {% if _rmm.tarawih and _rmm.tarawih != "" %}<div><dt>{% include k.html a="tarawih" %}</dt><dd><span dir="ltr">{{ _rmm.tarawih }}</span>{% if _rmm.tarawih_huom and _rmm.tarawih_huom != "" %} · {% include kt.html arvo=_rmm.tarawih_huom %}{% endif %}</dd></div>{% endif %}
-    <div><dt>{% include k.html a="eid_rukous" %}</dt><dd><span dir="ltr">{{ _rm_eid | date: "%-d.%-m.%Y" }}</span>{% if _eid_ajat != "" %} · <span dir="ltr">{{ _eid_ajat }}</span>{% endif %}{% if _rmm.eid_paikka and _rmm.eid_paikka != "" %} · {% include kt.html arvo=_rmm.eid_paikka %}{% endif %}{% unless _rm_vahvistettu %} <small>({% include k.html a="ramadan_arvio" %})</small>{% endunless %}</dd></div>
+    {% if _rmm.tarawih and _rmm.tarawih != "" %}<div><dt>{% include k.html a="tarawih" %}</dt><dd><span dir="ltr" data-klo>{{ _rmm.tarawih }}</span>{% if _rmm.tarawih_huom and _rmm.tarawih_huom != "" %} · {% include kt.html arvo=_rmm.tarawih_huom %}{% endif %}</dd></div>{% endif %}
+    <div><dt>{% include k.html a="eid_rukous" %}</dt><dd><span dir="ltr">{{ _rm_eid | date: "%-d.%-m.%Y" }}</span>{% if _eid_ajat != "" %} · <span dir="ltr" data-klo>{{ _eid_ajat }}</span>{% endif %}{% if _rmm.eid_paikka and _rmm.eid_paikka != "" %} · {% include kt.html arvo=_rmm.eid_paikka %}{% endif %}{% unless _rm_vahvistettu %} <small>({% include k.html a="ramadan_arvio" %})</small>{% endunless %}</dd></div>
     {% if _rmm.fitra and _rmm.fitra != "" %}<div><dt>{% include k.html a="fitra" %}</dt><dd>{% include kt.html arvo=_rmm.fitra %}</dd></div>{% endif %}
   </dl>
   {% if _rmm.teksti and _rmm.teksti != "" %}<div class="u-ramadan__teksti">{% include kt.html arvo=_rmm.teksti md=true tagi="div" %}</div>{% endif %}

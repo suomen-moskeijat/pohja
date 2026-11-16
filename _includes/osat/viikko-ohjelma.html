@@ -18,7 +18,7 @@
     {%- unless _vp contains _p -%}{%- continue -%}{%- endunless -%}
     {%- assign _alku = t.paiva | date: '%Y-%m-%d' -%}
     <li class="u-viikko__rivi"><a href="{{ t.url | relative_url }}">
-      <span class="u-viikko__klo" dir="ltr">{% if t.alkaa and t.alkaa != "" %}{{ t.alkaa }}{% if t.loppuu and t.loppuu != "" %}–{{ t.loppuu }}{% endif %}{% else %}–{% endif %}</span>
+      <span class="u-viikko__klo" dir="ltr" data-klo>{% if t.alkaa and t.alkaa != "" %}{{ t.alkaa }}{% if t.loppuu and t.loppuu != "" %}–{{ t.loppuu }}{% endif %}{% else %}–{% endif %}</span>
       <span class="u-viikko__tiedot"><strong>{% include kolme.html fi=t.title doc=t %}</strong>
         {%- if t.kenelle and t.kenelle != "" and t.kenelle != "kaikki" %}{% assign _ka = "kenelle_" | append: t.kenelle %} <small class="u-viikko__kenelle">{% include k.html a=_ka %}</small>{% endif %}
         {%- if _alku > _vo_nyt %} <small>{% include k.html a="alkaen" %} <span dir="ltr">{{ t.paiva | date: '%-d.%-m.' }}</span></small>{% endif %}

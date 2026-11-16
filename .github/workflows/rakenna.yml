@@ -106,6 +106,10 @@ jobs:
           destination: ./_site
           future: true
 
+      # Kuvien mitat <img>-tageihin: sivu ei hypi kuvien latautuessa
+      - name: Kuvien mitat
+        run: sudo python3 sivu/.github/scripts/kuvakoot.py _site || echo "::warning::Kuvien mittoja ei voitu lisätä"
+
       # Kieliversiot omiin osoitteisiin (/en/, /ar/, /so/) ja sivukarttaan – hakukoneet näyttävät oikean kielen
       - name: Kieliversiot
         run: sudo python3 sivu/.github/scripts/kieliversiot.py _site

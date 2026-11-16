@@ -129,7 +129,8 @@
   function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function N() { var k = kieli(); return NIMET[k] || (KIELIDATA[k] && KIELIDATA[k].nimet) || NIMET.en; }
   var kello = new Intl.DateTimeFormat('en-GB', { timeZone: TZ, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
-  function aika(d) { return d instanceof Date && !isNaN(d) ? kello.format(d) : '–'; }
+  /** Kellonaika: suomeksi 12.30, muilla kielillä 12:30 (sama muoto kuin tapahtumissa ja aikatauluissa) */
+  function aika(d) { if (!(d instanceof Date) || isNaN(d)) return '–'; var t = kello.format(d); return kieli() === 'fi' ? t.replace(':', '.') : t; }
   function osat(d) {
     var o = {};
     new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' })
@@ -442,6 +443,19 @@
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', merkitseArabia);
   else merkitseArabia();
+
+  /* Kellonajat ([data-klo], tallennettu muodossa 12.30): suomeksi 12.30, muilla kielillä 12:30 */
+  function kellonajat() {
+    var fi = kieli() === 'fi';
+    Array.prototype.forEach.call(document.querySelectorAll('[data-klo]'), function (el) {
+      if (el.children.length) return;
+      if (!el.dataset.kloAlku) el.dataset.kloAlku = el.textContent;
+      el.textContent = el.dataset.kloAlku.replace(/(^|[^\d.])(\d{1,2})[.:](\d{2})(?![\d.])/g, function (_, e, h, m) { return e + h + (fi ? '.' : ':') + m; });
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', kellonajat);
+  else kellonajat();
+  document.addEventListener('kielivaihto', kellonajat);
 
   /* Viikko-ohjelma: kuluva päivä korostetaan (Tänään) */
   function viikonTanaan() {

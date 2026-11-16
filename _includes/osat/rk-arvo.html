@@ -15,4 +15,4 @@
 {%- else -%}
   {%- if _rkm and _rkm[include.n] -%}{%- assign _rkv = _rkm[include.n] -%}{%- elsif include.r -%}{%- assign _rkv = include.r[include.n] -%}{%- endif -%}
 {%- endif -%}
-{{- _rkv | append: "" | replace: ".", ":" | default: include.tyhja -}}
+{{- _rkv | append: "" | replace: ":", "." | default: include.tyhja -}}

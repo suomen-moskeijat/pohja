@@ -32,6 +32,11 @@ permalink: /lahjoita/
       {% if wa != "" %}<a class="u-nappi u-nappi--wa" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" koko=18 %} WhatsApp</a>{% endif %}
       {% if m.puhelin and m.puhelin != "" %}<a class="u-nappi u-nappi--reuna" href="tel:{{ m.puhelin | remove: ' ' }}" dir="ltr">{% include ikoni-ph.html nimi="puhelin" koko=18 %} {{ m.puhelin }}</a>{% endif %}
       {% if m.sahkoposti and m.sahkoposti != "" %}<a class="u-nappi u-nappi--reuna" href="mailto:{{ m.sahkoposti }}">{% include ikoni-ph.html nimi="posti" koko=18 %} {% include k.html a="sahkoposti" %}</a>{% endif %}
+      {%- comment -%} Aina vähintään yksi tapa: kysymyslomake (ellei pois käytöstä), muuten Yhteystiedot-sivu {%- endcomment %}
+      {%- assign _tk_p = m.puhelin | default: "" | strip -%}{%- assign _tk_s = m.sahkoposti | default: "" | strip -%}
+      {%- if wa == "" and _tk_p == "" and _tk_s == "" %}
+      {% unless m.yhteydenotto.kysy.pois %}<a class="u-nappi u-nappi--kulta" href="{{ '/yhteystiedot/' | relative_url }}?aihe={{ site.data.kaannokset.tuki_otsikko.fi | url_encode }}#kysy">{% include k.html a="kysy_tasta" %} <span class="u-flip" aria-hidden="true">→</span></a>{% else %}<a class="u-nappi u-nappi--reuna" href="{{ '/yhteystiedot/' | relative_url }}">{% include k.html a="nav_yhteystiedot" %}</a>{% endunless %}
+      {%- endif %}
     </div>
     {%- endif %}
   </div>
