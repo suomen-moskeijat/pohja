@@ -318,6 +318,43 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-17"
+    },
+    {
+      "id": "kuvat-sisaltoon",
+      "otsikko": "Kuvat tekstin sekaan ja artikkelin kansikuva",
+      "alue": "paneeli",
+      "kuvaus": "Tapahtuman, tiedotteen, palvelun ja oman sivun tekstiin voi lisätä kuvan mihin kohtaan tahansa Kuva-napilla. Tiedotteen kuva on nyt Kansikuva, joka näkyy myös artikkelilistassa.",
+      "aloitus": "Kirjaudu testipaneeliin ja avaa Testimoskeija → Tiedotteet → Uusi tiedote.",
+      "kohdat": [
+        "Kirjoita kaksi kappaletta, vie kursori niiden väliin ja paina Kuva — Missä: Testipaneeli → Tiedotteet → Uusi tiedote → Teksti-kentän työkalurivi",
+        "Valitse kuva tai lataa uusi, anna kuvateksti — kuva tulee kursorin kohtaan omaksi kappaleekseen — Missä: Kuva-ikkuna",
+        "Esikatsele näyttää kuvan ja kuvatekstin — Missä: Teksti-kentän Esikatsele-nappi",
+        "Kentän nimi on Kansikuva ja ohje kertoo, missä se näkyy — Missä: Uusi tiedote → Kansikuva",
+        "Tallenna tiedote kansikuvan ja tekstin kuvan kanssa; kuva näkyy tekstin keskellä kuvateksteineen — Missä: Testimoskeija → Artikkelit → oma tiedote",
+        "Kansikuva näkyy kortin yläosassa artikkelilistassa ja etusivulla — Missä: Testimoskeija → Artikkelit sekä Etusivu → Uusimmat artikkelit",
+        "Kuva-nappi löytyy myös tapahtuman kuvauksesta ja palvelun tekstistä — Missä: Testipaneeli → Tapahtumat → Uusi tapahtuma / Palvelut → Uusi palvelu",
+        "Puhelimella kuva mahtuu ruudulle eikä sivu vieri sivusuunnassa — Missä: Testimoskeijan tiedote puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Uusi tiedote",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/artikkelit/uusi"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi tapahtuma",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat/uusi"
+        },
+        {
+          "nimi": "Sivu: Artikkelit",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/artikkelit/"
+        },
+        {
+          "nimi": "Sivu: Etusivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-16"
     }
   ]
 }

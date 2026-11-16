@@ -2,6 +2,7 @@
 {%- assign a = include.a -%}
 <li class="u-artikkelikortti" data-artikkeli data-aihe="{{ a.aihe | escape }}" data-haku="{{ a.title | append: ' ' | append: a.kuvaus | append: ' ' | append: a.aihe | downcase | escape }}">
   <a class="u-kortti" href="{{ a.url | relative_url }}">
+    {% if a.kuva and a.kuva != "" %}<img class="u-artikkelikortti__kuva" src="{{ a.kuva | relative_url }}" alt="" loading="lazy">{% endif %}
     <span class="u-artikkelikortti__yla">{% if a.aihe and a.aihe != "" and a.aihe != "Muut" %}<span class="u-artikkelikortti__aihe">{{ a.aihe }}</span>{% endif %}<time datetime="{{ a.paiva | date: '%Y-%m-%d' }}" dir="ltr">{{ a.paiva | date: '%-d.%-m.%Y' }}</time></span>
     <strong lang="fi" dir="auto">{{ a.title }}</strong>
     {% if a.kuvaus and a.kuvaus != "" %}<span class="u-artikkelikortti__kuvaus" lang="fi" dir="auto">{{ a.kuvaus }}</span>{% endif %}

@@ -683,6 +683,18 @@
     });
   }
 
+  /* Yksin kappaleessa oleva kuva kuvatekstillä: kuvateksti (alt) näkyviin kuvan alle */
+  kaikki('.u-proosa p > img:only-child').forEach(function (img) {
+    var p = img.parentNode;
+    if (p.textContent.trim()) return;
+    var f = document.createElement('figure'); f.className = 'u-proosa__kuva';
+    if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+    f.appendChild(img);
+    var alt = (img.getAttribute('alt') || '').trim();
+    if (alt) { var c = document.createElement('figcaption'); c.textContent = alt; c.setAttribute('aria-hidden', 'true'); f.appendChild(c); }
+    p.parentNode.replaceChild(f, p);
+  });
+
   /* ---------- Artikkelit: haku, aiheet ja "Näytä lisää" ---------- */
   kaikki('[data-artikkelit]').forEach(function (juuri) {
     var haku = juuri.querySelector('[data-artikkelit-haku]'), lisaa = juuri.querySelector('[data-artikkelit-lisaa]');
