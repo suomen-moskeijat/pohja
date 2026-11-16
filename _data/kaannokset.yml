@@ -298,6 +298,9 @@ ts_valitus: { fi: "Jos katsot, että tietojasi käsitellään lainvastaisesti, v
 
 # --- Ramadan ---
 ramadan:            { fi: "Ramadan", en: "Ramadan", ar: "رمضان", so: "Ramadaan" }
+nav_ramadan:        { fi: "Ramadan", en: "Ramadan", ar: "رمضان", so: "Ramadaan" }
+rm_sivulle:         { fi: "Suhur, iftar, tarawih ja koko kuukauden aikataulu", en: "Suhur, iftar, tarawih and the full month's timetable", ar: "السحور والإفطار والتراويح وجدول الشهر كاملاً", so: "Suxuur, afur, taraawiix iyo jadwalka bisha oo dhan" }
+ramadan_tulossa:    { fi: "Ramadanin aikataulu julkaistaan tällä sivulla noin kolme viikkoa ennen ramadanin alkua.", en: "The Ramadan timetable will be published on this page about three weeks before Ramadan begins.", ar: "سيُنشر جدول رمضان في هذه الصفحة قبل بداية رمضان بنحو ثلاثة أسابيع.", so: "Jadwalka Ramadaanka waxaa boggan lagu daabici doonaa qiyaastii saddex toddobaad ka hor bilowga Ramadaanka." }
 ramadan_alkaa:      { fi: "Ramadan alkaa", en: "Ramadan begins", ar: "يبدأ رمضان", so: "Ramadaan wuxuu bilaabanayaa" }
 ramadan_arvio:      { fi: "arvio, vahvistuu kuun näkymisen mukaan", en: "estimate, confirmed by moon sighting", ar: "تقديري، يُؤكَّد برؤية الهلال", so: "qiyaas, waxaa lagu xaqiijinayaa muuqashada bisha" }
 ramadan_paiva:      { fi: "Ramadan, päivä", en: "Ramadan, day", ar: "رمضان، اليوم", so: "Ramadaan, maalinta" }

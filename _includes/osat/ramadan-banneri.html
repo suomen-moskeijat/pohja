@@ -1,5 +1,5 @@
 {%- comment -%}
-  Etusivun Ramadan-banneri (näkyy 3 viikkoa ennen alkua – Eid-päivän loppuun): ennen alkua laskuri,
+  Ramadan-sivun yläosa (näkyy 3 viikkoa ennen alkua – Eid-päivän loppuun): ennen alkua laskuri,
   Ramadanin aikana päivä N, tämän päivän suhur ja iftar isona ja laskuri seuraavaan, Eid-päivänä Eid Mubarak.
   Täyttää sivu.js ([data-rm]). Parametri: moskeija
 {%- endcomment -%}
@@ -8,22 +8,22 @@
 {%- assign _rmm = include.moskeija.ramadan -%}
 {%- assign _eid_ajat = "" -%}
 {%- if _rmm.eid_aika and _rmm.eid_aika != "" -%}{%- assign _eid_ajat = _rmm.eid_aika -%}{%- if _rmm.eid_aika_2 and _rmm.eid_aika_2 != "" -%}{%- assign _eid_ajat = _eid_ajat | append: " · " | append: _rmm.eid_aika_2 -%}{%- endif -%}{%- endif -%}
-<section class="u-rmb" id="ramadan-etusivu" data-tyyli="{{ _rmm.tyyli | default: 'tumma' }}" data-rm data-rm-banneri{% if _rmm.testi %} data-rm-testi{% endif %} data-alkaa="{{ _rm_alkaa }}" data-eid="{{ _rm_eid }}" data-paivia="{{ _rm_paivia }}" data-tarawih="{{ _rmm.tarawih }}" aria-labelledby="rmb-otsikko">
+<section class="u-rmb" id="ramadan-banneri" data-tyyli="{{ _rmm.tyyli | default: 'tumma' }}" data-rm data-rm-banneri{% if _rmm.testi %} data-rm-testi{% endif %} data-alkaa="{{ _rm_alkaa }}" data-eid="{{ _rm_eid }}" data-paivia="{{ _rm_paivia }}" data-tarawih="{{ _rmm.tarawih }}" aria-labelledby="rmb-otsikko">
   <script type="application/json" data-rm-ajat>{% include osat/ramadan-ajat.json moskeija=include.moskeija %}</script>
   <svg class="u-rmb__kuu" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23Z"/></svg>
   <div class="u-kehys u-rmb__sisus">
     <div class="u-rmb__teksti">
       <p class="u-rmb__tunniste"><span lang="ar" dir="rtl">رمضان كريم</span> · {% include k.html a="ramadan" %} {{ _rm_vuosi }}</p>
-      <h2 id="rmb-otsikko" class="u-rmb__otsikko">
+      <h1 id="rmb-otsikko" class="u-rmb__otsikko">
         <span data-rm-tila="ennen">{% include k.html a="ramadan_alkaa" %} <span class="u-rmb__kulta" data-rm-alkupv dir="ltr">{{ _rm_alkaa | date: "%-d.%-m." }}</span></span>
         <span data-rm-tila="aikana" hidden>{% include k.html a="ramadan_kareem" %} <span class="u-rmb__pv">{% include k.html a="ramadan_paiva" %} <bdi dir="ltr"><b class="u-rmb__kulta" data-rm-pv></b>/{{ _rm_paivia }}</bdi></span></span>
         <span data-rm-tila="eid" hidden>{% include k.html a="eid_mubarak" %}</span>
-      </h2>
+      </h1>
       <p class="u-rmb__lisa" data-rm-tila="ennen">{% unless _rm_vahvistettu %}{% include k.html a="ramadan_arvio" %}{% endunless %}</p>
       <p class="u-rmb__lisa" data-rm-tila="eid" hidden>{% include k.html a="eid_toivotus" %}</p>
       <div class="u-napit u-rmb__napit">
-        <a class="u-nappi u-nappi--kulta" href="{{ '/rukousajat/' | relative_url }}#ramadan">{% include k.html a="rm_koko_aikataulu" %} <span class="u-flip" aria-hidden="true">→</span></a>
-        <a class="u-nappi u-nappi--haamu" href="{{ '/rukousajat/' | relative_url }}#kalenteri-ramadan">{% include ikoni-ph.html nimi="kalenteri" koko=18 %} {% include k.html a="rm_kalenteriin" %}</a>
+        <a class="u-nappi u-nappi--kulta" href="#ramadan">{% include k.html a="rm_koko_aikataulu" %} <span class="u-flip" aria-hidden="true">→</span></a>
+        <a class="u-nappi u-nappi--haamu" href="#kalenteri-ramadan">{% include ikoni-ph.html nimi="kalenteri" koko=18 %} {% include k.html a="rm_kalenteriin" %}</a>
       </div>
     </div>
     <div class="u-rmb__paneeli">

@@ -9,6 +9,19 @@
 {%- assign j = '/' | relative_url -%}
 {%- include osat/lahjoitus-lupa.html moskeija=m -%}
 {%- assign _nav_lahjoita = "nav_tuki" -%}{%- if _lupa -%}{%- assign _nav_lahjoita = "nav_lahjoita" -%}{%- endif -%}
+{%- comment -%} Ramadan-sivu valikkoon rukousaikojen perään 3 viikkoa ennen alkua – Eid-päivän loppuun {%- endcomment -%}
+{%- include osat/ramadan-tiedot.html moskeija=m -%}
+{%- assign _rm_valikkoon = _rm_nakyy -%}{%- if m.valikko_piilota contains "ramadan" -%}{%- assign _rm_valikkoon = false -%}{%- endif -%}
+{%- capture _rm_linkki -%}{%- if _rm_valikkoon -%}
+  {%- capture _rm_nyt -%}{% if page.url contains "/ramadan/" %} aria-current="page"{% endif %}{%- endcapture -%}
+  {%- case include.tapa -%}
+  {%- when "mobiili" -%}<a class="u-mv-linkki" href="{{ j }}ramadan/"{{ _rm_nyt }}>{% include k.html a="nav_ramadan" %}<span class="u-nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span></a>
+  {%- when "ala" -%}<li><a href="{{ j }}ramadan/">{% include k.html a="nav_ramadan" %}</a></li>
+  {%- else -%}<a href="{{ j }}ramadan/"{{ _rm_nyt }}>{% include k.html a="nav_ramadan" %}</a>
+  {%- endcase -%}
+{%- endif -%}{%- endcapture -%}
+{%- assign _rm_tehty = false -%}
+{%- unless m.valikko and m.valikko.size > 0 -%}{%- if m.valikko_piilota contains "rukousajat" -%}{{ _rm_linkki }}{%- endif -%}{%- endunless -%}
 {%- if m.valikko and m.valikko.size > 0 -%}
 {%- assign _lahjoita_listassa = false -%}
 {%- for o in m.valikko -%}
@@ -39,7 +52,9 @@
   {%- when "ala" -%}<li><a href="{{ _href }}"{{ _kohde }}>{{ _nimi }}</a></li>
   {%- else -%}<a href="{{ _href }}"{{ _nyt }}{{ _kohde }}>{{ _nimi }}</a>
   {%- endcase -%}
+  {%- if o.sivu == "rukousajat" -%}{{ _rm_linkki }}{%- assign _rm_tehty = true -%}{%- endif -%}
 {%- endfor -%}
+{%- unless _rm_tehty -%}{{ _rm_linkki }}{%- endunless -%}
 {%- if include.tapa == "ala" and _lahjoita_listassa == false and m.lahjoitus -%}{%- unless m.valikko_piilota contains "lahjoita" -%}<li><a href="{{ j }}lahjoita/">{% include k.html a=_nav_lahjoita %}</a></li>{%- endunless -%}{%- endif -%}
 {%- else -%}
 {%- assign _omat = site.sivut | where: "valikossa", true | sort: "jarjestys", "last" -%}
@@ -69,5 +84,6 @@
   {%- when "ala" -%}<li><a href="{{ j }}{{ _sivu }}/">{% include k.html a=_avain %}</a></li>
   {%- else -%}<a href="{{ j }}{{ _sivu }}/"{{ _nyt }}>{% include k.html a=_avain %}</a>
   {%- endcase -%}
+  {%- if _sivu == "rukousajat" -%}{{ _rm_linkki }}{%- assign _rm_tehty = true -%}{%- endif -%}
 {%- endfor -%}
 {%- endif -%}

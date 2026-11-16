@@ -1,5 +1,5 @@
 {%- comment -%}
-  Ramadan-osio rukousajat-sivulle: tila (alkaa / päivä N / Eid), tämän päivän suhur ja iftar, tarawih, Eid-rukous,
+  Ramadan-osio Ramadan-sivulle (sivulla=true: päivä, suhur ja iftar ovat jo yläosan bannerissa): tila (alkaa / päivä N / Eid), tämän päivän suhur ja iftar, tarawih, Eid-rukous,
   fitra ja koko kuukauden aikataulu (tulostettava). Näkyy 3 viikkoa ennen alkua – Eid-päivän loppuun.
   Ajat laskee sivu.js samoin kuin rukousajat ([data-rm]). Parametri: moskeija
 {%- endcomment -%}
@@ -14,19 +14,23 @@
     <span class="u-ikoni u-ramadan__kuu">{% include ikoni-ph.html nimi="kuu" koko=24 %}</span>
     <div>
       <h2>{% include k.html a="ramadan" %} {{ _rm_vuosi }}</h2>
+      {%- unless include.sivulla %}
       <p class="u-ramadan__tila">
         <span data-rm-tila="ennen">{% include k.html a="ramadan_alkaa" %} <b data-rm-alkupv dir="ltr">{{ _rm_alkaa | date: "%-d.%-m.%Y" }}</b>{% unless _rm_vahvistettu %} <small>({% include k.html a="ramadan_arvio" %})</small>{% endunless %}</span>
         <span data-rm-tila="aikana" hidden>{% include k.html a="ramadan_paiva" %} <b data-rm-pv dir="ltr"></b><span dir="ltr">/{{ _rm_paivia }}</span></span>
         <span data-rm-tila="eid" hidden><b>{% include k.html a="eid_mubarak" %}</b></span>
       </p>
+      {%- endunless %}
     </div>
     <button type="button" class="u-nappi u-nappi--reuna u-nappi--pieni u-ramadan__tulosta" data-rm-tulosta>{% include k.html a="tulosta" %}</button>
   </header>
+  {%- unless include.sivulla %}
   <div class="u-ramadan__tanaan" data-rm-tanaan hidden>
     <div><small>{% include k.html a="suhur_paattyy" %}</small><b data-rm-suhur dir="ltr">--:--</b></div>
     <div><small>{% include k.html a="iftar" %}</small><b data-rm-iftar dir="ltr">--:--</b></div>
     {% if _rm_tw %}<div><small>{% include k.html a="tarawih" %}</small><b data-rm-tarawih dir="ltr">--:--</b></div>{% endif %}
   </div>
+  {%- endunless %}
   {%- assign _eid_ajat = "" -%}
   {%- if _rmm.eid_aika and _rmm.eid_aika != "" -%}{%- assign _eid_ajat = _rmm.eid_aika -%}{%- if _rmm.eid_aika_2 and _rmm.eid_aika_2 != "" -%}{%- assign _eid_ajat = _eid_ajat | append: " · " | append: _rmm.eid_aika_2 -%}{%- endif -%}{%- endif -%}
   <dl class="u-ramadan__tiedot">

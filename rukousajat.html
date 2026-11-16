@@ -9,7 +9,7 @@ rukousajat: true
 {% include osat/sivuhero.html avain="rukousajat" johdanto_avain="aikataulu_virallinen" %}
 {%- comment -%}
   Tietokoneella kaksi itsenäistä palstaa (ei tyhjiä aukkoja): vasemmalla tänään, Jumua ja kalenterin tilaus,
-  oikealla Ramadan ja kuukauden aikataulu. Puhelimella palstat puretaan ja järjestys on: tänään, Ramadan, kuukausi, kalenteri.
+  oikealla linkki Ramadan-sivulle (Ramadanin aikaan) ja kuukauden aikataulu. Puhelimella palstat puretaan ja järjestys on: tänään, Ramadan, kuukausi, kalenteri.
 {%- endcomment -%}
 <div class="u-kehys u-sivu u-rukoussivu">
   <div class="u-rukoussivu__sivu">
@@ -26,7 +26,8 @@ rukousajat: true
   <div class="u-rukoussivu__kalenteri">{% include osat/kalenteri.html valitut="rukous,jumua" %}</div>
   </div>
   <div class="u-rukoussivu__paa">
-  {% include osat/ramadan.html moskeija=m %}
+  {%- include osat/ramadan-tiedot.html moskeija=m -%}
+  {% if _rm_nakyy %}<a class="u-kortti u-juma u-rmlinkki" href="{{ '/ramadan/' | relative_url }}"><span class="u-ikoni">{% include ikoni-ph.html nimi="kuu" koko=22 %}</span><span><strong>{% include k.html a="ramadan" %} {{ _rm_vuosi }}</strong><small>{% include k.html a="rm_sivulle" %}</small></span><span class="u-flip" aria-hidden="true">→</span></a>{% endif %}
   {% include osat/kuukausi.html moskeija=m %}
   </div>
 </div>

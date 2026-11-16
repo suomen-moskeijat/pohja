@@ -419,6 +419,72 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-16"
+    },
+    {
+      "id": "kirjan-kansi",
+      "otsikko": "Kirjan kansi: artikkelien ja kirjojen kansikuvat kokonaisina",
+      "alue": "sivut",
+      "kuvaus": "Artikkelin kansikuva näkyy listassa kokonaisena (ei rajausta) ja otsikko on kannen alareunassa. Linkkikorteille (esim. Hyvät lähteet) voi lisätä kansikuvan, jolloin kortti näkyy kirjan kantena.",
+      "aloitus": "Avaa testimoskeijan Artikkelit-sivu. Kirjojen testiin tarvitset oman sivun, jossa on linkkikortteja.",
+      "kohdat": [
+        "Kansikuvalliset artikkelit näkyvät kansina: kuva kokonaan näkyvissä, aihe, päivä ja otsikko alareunassa — Missä: Testimoskeija → Artikkelit",
+        "Sama etusivun Uusimmat artikkelit -osiossa — Missä: Testimoskeija → Etusivu",
+        "Ulkoasun Lista- ja Ilman kuvia -näkymät toimivat edelleen — Missä: Testipaneeli → Ulkoasu → Tiedotteiden ja artikkelien näkymä",
+        "Linkkikortille voi valita kansikuvan — Missä: Testipaneeli → Sivut → oma sivu → Linkit kortteina → Kansikuva",
+        "Kansikuvalliset linkit näkyvät kirjan kansina (nimi alareunassa), muut tavallisina linkkikortteina — Missä: Testimoskeija → oma sivu",
+        "Puhelimella kannet mahtuvat ruudulle — Missä: Artikkelit ja oma sivu puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Sivu: Artikkelit",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/artikkelit/"
+        },
+        {
+          "nimi": "Testipaneeli: Sivut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-16"
+    },
+    {
+      "id": "ramadan-sivu",
+      "otsikko": "Ramadan omana sivunaan",
+      "alue": "sivut",
+      "kuvaus": "Ramadanilla on oma sivu (/ramadan/): yläosassa Ramadan-banneri (päivä, suhur, iftar, laskuri), sitten tarawih, Eid, fitra, Ramadan-julkaisut, koko kuukauden aikataulu ja kalenterin tilaus. Etusivulla Ramadan näkyy vain yläosan rivinä, joka vie Ramadan-sivulle. Rukousajat-sivulla on linkki Ramadan-sivulle. Valikossa Ramadan näkyy 3 viikkoa ennen alkua – Eid-päivän loppuun.",
+      "aloitus": "Avaa testimoskeija. Esikatselun päivän voi vaihtaa vasemman alakulman Esikatselu-valinnasta.",
+      "kohdat": [
+        "Etusivulla Ramadan näkyy vain yläosan rivinä, ei isoa Ramadan-osiota alempana — Missä: Testimoskeija → Etusivu",
+        "Yläosan Ramadan-rivi vie Ramadan-sivulle — Missä: Etusivu → Ramadan-rivi",
+        "Valikossa on Ramadan rukousaikojen jälkeen (myös puhelimen valikossa ja alapalkissa) — Missä: Yläreunan valikko",
+        "Ramadan-sivun yläosa: päivä, suhur ja iftar, laskuri ja tarawih — Missä: Ramadan-sivu",
+        "Koko Ramadanin aikataulu -nappi vie aikatauluun ja Lisää kalenteriin -nappi kalenterin tilaukseen, jossa Ramadan on valmiiksi valittuna — Missä: Ramadan-sivun yläosan napit",
+        "Tarawih, Eid-rukous, fitra, Ramadan-julkaisut ja tulostettava aikataulu näkyvät — Missä: Ramadan-sivu",
+        "Esikatselu: ennen ramadania, päivä 5 ja Eid näyttävät oikealta — Missä: Ramadan-sivu → Esikatselu-valinta",
+        "Rukousajat-sivulla on Ramadan-kortti, joka vie Ramadan-sivulle — Missä: Rukousajat",
+        "Puhelimella sivu ei vieri sivusuunnassa — Missä: Ramadan-sivu puhelimella",
+        "Paneelin Ramadan-ohjeet puhuvat Ramadan-sivusta — Missä: Testipaneeli → Rukousajat ja Jumua → Ramadan"
+      ],
+      "linkit": [
+        {
+          "nimi": "Sivu: Ramadan",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/ramadan/"
+        },
+        {
+          "nimi": "Sivu: Etusivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        },
+        {
+          "nimi": "Sivu: Rukousajat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/"
+        },
+        {
+          "nimi": "Testipaneeli: Ramadan",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/rukousajat"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-16"
     }
   ]
 }
