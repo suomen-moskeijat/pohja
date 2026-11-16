@@ -1192,3 +1192,21 @@ body.on-ilmopalkki .u-pikanapit { bottom: calc(92px + env(safe-area-inset-bottom
 
 /* Palvelukortit: kuvake ilman taustaruutua, tekstin väreissä */
 .u-palvelu__ikoni { width: auto; height: auto; place-items: start; background: none; color: var(--kulta-teksti); }
+
+/* ---------- Unslop: kuvakkeet ----------
+   Kuvakkeet tekstin väreissä ilman taustaruutuja, ei timanttimerkkejä, ei koristeikoneita nostoissa
+   (lasten opetus, tuki ja jäsenyys). Tarkistuslista: unslop, Damir Sokolovsky (@heydamir), CC BY 4.0. */
+.u-ikoni, .u-ikoni--pieni, .u-ikoni--iso, .u-kalenteri__yla .u-ikoni { width: 24px; height: 24px; border-radius: 0; background: none; color: var(--kulta-teksti); place-items: center; }
+.u-ikoni--iso { width: 32px; height: 32px; }
+.u-eyebrow::before { content: none; }
+.u-tyhja > .u-ikoni, .u-lahjoitustiedot > .u-ikoni, .u-lahjoitus__ikoni { display: none; }
+/* Tuki ja jäsenyys -nosto ilman ikonia: teksti alkureunassa, nappi vieressä tietokoneella */
+.u-lahjoitus { align-items: flex-start; text-align: start; }
+@media (min-width: 900px) {
+  .u-lahjoitus { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 48px; align-items: center; }
+  .u-lahjoitus > :not(.u-kuvio):not(.u-nappi) { grid-column: 1; }
+  .u-lahjoitus > .u-nappi { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
+}
+/* Nosto (esim. Ilmoita lapsesi opetukseen): ei koristeikonia, teksti ja nappi */
+.u-nosto__ikoni { display: none; }
+@media (min-width: 820px) { .u-nosto { grid-template-columns: minmax(0, 1fr) auto; } }
