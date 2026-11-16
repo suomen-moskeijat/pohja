@@ -1226,3 +1226,29 @@ body.on-ilmopalkki .u-pikanapit { bottom: calc(92px + env(safe-area-inset-bottom
 @media (min-width: 640px) { .u-palvelut:has(> :only-child) { grid-template-columns: minmax(0, 560px); } }
 /* Tapahtuma ilman kuvausta: tietokortti keskelle, ei tyhjää kaistaa oikealle */
 @media (min-width: 900px) { .u-tapsivu--yksi { justify-content: center; } }
+
+/* ---------- Unslop: viikko-ohjelma yhtenä aikatauluna ----------
+   Yksi kortti, päivät riveinä: päivä omassa sarakkeessaan, kellonajat yhdessä sarakkeessa,
+   toiminnan nimi ja kenelle samalla rivillä. Ei erillisiä laatikoita eikä pillereitä. */
+.u-viikko { display: block; padding: 4px 20px; margin-bottom: 8px;
+  background: var(--kortti-bg); border: 1px solid var(--kortti-reuna); box-shadow: var(--kortti-varjo); border-radius: var(--kortti-r); }
+.u-viikko .u-viikko__paiva { display: grid; gap: 4px; padding: 16px 0; background: none; border: 0; border-radius: 0; box-shadow: none; }
+.u-viikko .u-viikko__paiva + .u-viikko__paiva { border-top: 1px solid var(--raja); }
+.u-viikko__paiva h3 { margin: 0; font: 600 15px/1.4 var(--ft); color: var(--hieno); }
+.u-viikko__paiva ul { gap: 0; }
+.u-viikko__rivi a { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 6px 0; border-top: 0; }
+.u-viikko__klo { min-width: 0; font-weight: 600; }
+.u-viikko__tiedot { display: block; }
+.u-viikko__tiedot strong { font-weight: 600; color: var(--paa); }
+.u-viikko__tiedot small, .u-viikko__kenelle { display: inline; margin-inline-start: 8px; padding: 0; background: none; border-radius: 0; font-size: 14px; font-weight: 400; color: var(--hieno); }
+@media (min-width: 720px) {
+  .u-viikko { padding: 4px 24px; }
+  .u-viikko .u-viikko__paiva { grid-template-columns: 160px minmax(0, 1fr); gap: 16px; align-items: baseline; }
+  .u-viikko__paiva h3 { color: var(--paa); }
+  .u-viikko__rivi:first-child a { padding-top: 0; }
+  .u-viikko__rivi:last-child a { padding-bottom: 0; }
+}
+@media (max-width: 380px) { .u-viikko__rivi a { grid-template-columns: 92px minmax(0, 1fr); gap: 8px; } }
+
+/* Tapahtumasivu: tiedot vain kerran (tietokortissa), puhelimella tietokortti ja Ilmoittaudu ensin */
+@media (max-width: 899px) { .u-tapsivu .u-taptieto { order: -1; } }

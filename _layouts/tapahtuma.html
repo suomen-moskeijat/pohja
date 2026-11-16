@@ -12,8 +12,8 @@ layout: sivu
     {%- assign _vp = page.viikonpaivat -%}
     {%- if _vp == nil or _vp.size == 0 -%}{%- assign _wi = page.paiva | date: '%w' | plus: 0 -%}{%- assign _vp = _w[_wi] | split: "," -%}{%- endif -%}
     {%- assign _jarj = "ma,ti,ke,to,pe,la,su" | split: "," -%}
-    {%- capture _vpt -%}{%- for _p in _jarj -%}{%- if _vp contains _p -%}{% assign _a = "vp_" | append: _p %}{% include k.html a=_a %}|{%- endif -%}{%- endfor -%}{%- endcapture -%}
-    {% include k.html a="joka_viikko" %}: {{ _vpt | split: "|" | join: ", " }}
+    {%- capture _vpt -%}{%- for _p in _jarj -%}{%- if _vp contains _p -%}{% assign _a = "vp_" | append: _p | append: "_t" %}{% include k.html a=_a %}|{%- endif -%}{%- endfor -%}{%- endcapture -%}
+    {{ _vpt | split: "|" | join: ", " }}
     {%- assign _alku = page.paiva | date: '%Y-%m-%d' -%}{%- assign _nyt = site.time | date: '%Y-%m-%d' -%}
     {%- if _alku > _nyt %}<small>{% include k.html a="alkaen" %} <span dir="ltr">{{ page.paiva | date: '%-d.%-m.%Y' }}</span>{% if page.paiva_loppuu and page.paiva_loppuu != "" %} · {% include k.html a="asti" %} <span dir="ltr">{{ page.paiva_loppuu | date: '%-d.%-m.%Y' }}</span>{% endif %}</small>
     {%- elsif page.paiva_loppuu and page.paiva_loppuu != "" %}<small>{% include k.html a="asti" %} <span dir="ltr">{{ page.paiva_loppuu | date: '%-d.%-m.%Y' }}</span></small>{% endif -%}
@@ -39,11 +39,6 @@ layout: sivu
   <div class="u-kehys">
     <p class="u-eyebrow u-eyebrow--vaalea"><a href="{{ '/tapahtumat/' | relative_url }}">{% include k.html a="nav_tapahtumat" %}</a></p>
     <h1>{% include kolme.html fi=page.title doc=page %}</h1>
-    <p class="u-tapsivu__pika">
-      <span>{% include ikoni-ph.html nimi="kalenteri" koko=16 %} {{ _milloin_lyhyt | strip }}</span>
-      {% if page.alkaa and page.alkaa != "" %}<span dir="ltr">{% include ikoni-ph.html nimi="kello" koko=16 %} {{ page.alkaa }}{% if page.loppuu and page.loppuu != "" %}–{{ page.loppuu }}{% endif %}</span>{% endif %}
-      <span>{% include ikoni-ph.html nimi="sijainti" koko=16 %} {% if page.paikka and page.paikka != "" %}{{ page.paikka }}{% else %}{{ m.title }}{% endif %}</span>
-    </p>
   </div>
 </section>
 {%- capture _kuvaus -%}{{ content }}{%- endcapture -%}

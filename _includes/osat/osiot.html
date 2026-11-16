@@ -3,11 +3,24 @@
   omat osiot (teksti, ilmoitus, video, ukk, linkit, kuvat). Parametrit: osiot, moskeija
 {%- endcomment -%}
 {%- assign m = include.moskeija -%}
+{%- capture _osiot -%}{%- for o in include.osiot -%}{%- if o.osio -%}{{ o.osio }}{%- else -%}{{ o }}{%- endif -%},{%- endfor -%}{%- endcapture -%}
+{%- assign _osiot = _osiot | split: "," -%}
 {%- for o in include.osiot -%}
 {%- if o.osio -%}{%- assign _t = o.osio -%}{%- else -%}{%- assign _t = o -%}{%- endif -%}
 {%- case _t -%}
 {%- when "toiminta" %}
-{% if m.kortit.size > 0 %}
+{%- comment -%} Vertailukopio: jos palvelut ovat omina sivuinaan, Toimintamme-kortit korvataan palveluilla (viikkotoiminta on tapahtumissa) {%- endcomment -%}
+{%- if site.palvelut.size > 0 and _osiot contains "tapahtumat" -%}{%- unless _osiot contains "palvelut" -%}
+{%- capture _pl -%}{% include osat/palvelut.html moskeija=m maara=6 %}{%- endcapture -%}
+<section class="u-osio u-kehys">
+  <div class="u-osio__yla">
+    <h2>{% include k.html a="palvelut_otsikko" %}</h2>
+    <a class="u-linkki" href="{{ '/palvelut/' | relative_url }}">{% include k.html a="kaikki_palvelut" %} <span class="u-flip" aria-hidden="true">→</span></a>
+  </div>
+  {{ _pl }}
+</section>
+{%- endunless -%}
+{%- elsif m.kortit.size > 0 %}
 <section class="u-osio u-kehys">
   <div class="u-osio__yla">
     <h2>{% include k.html a="toimintamme" %}</h2>
@@ -17,7 +30,8 @@
 </section>
 {% endif %}
 {%- when "lapset" %}
-<div class="u-kehys">{% include osat/lapset.html moskeija=m %}</div>
+{%- assign _lp = site.palvelut | where_exp: "p", "p.ilmoittautuminen contains 'lasten-opetus'" -%}
+{% if _lp.size == 0 %}<div class="u-kehys">{% include osat/lapset.html moskeija=m %}</div>{% endif %}
 {%- when "tapahtumat" %}
 {%- assign tanaan = site.time | date: '%Y-%m-%d' -%}
 {%- assign tulevia = 0 -%}
@@ -26,11 +40,11 @@
 {% if tulevia > 0 or _ohjelma != "" %}
 <section class="u-osio u-kehys">
   <div class="u-osio__yla">
-    <h2>{% include k.html a="tulevat_tapahtumat" %}</h2>
+    <h2>{% if tulevia > 0 %}{% include k.html a="tulevat_tapahtumat" %}{% else %}{% include k.html a="joka_viikko" %}{% endif %}</h2>
     <a class="u-linkki" href="{{ '/tapahtumat/' | relative_url }}">{% include k.html a="kaikki_tapahtumat" %} <span class="u-flip" aria-hidden="true">→</span></a>
   </div>
   {% if tulevia > 0 %}{% include osat/tapahtumat.html maara=3 moskeija=m piilota_tyhja=true %}{% endif %}
-  {% if _ohjelma != "" %}<h3 class="u-viikko-otsikko">{% include k.html a="joka_viikko" %}</h3>{{ _ohjelma }}{% endif %}
+  {% if _ohjelma != "" %}{% if tulevia > 0 %}<h3 class="u-viikko-otsikko">{% include k.html a="joka_viikko" %}</h3>{% endif %}{{ _ohjelma }}{% endif %}
 </section>
 {% endif %}
 {%- when "palvelut" %}
