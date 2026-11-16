@@ -722,22 +722,28 @@
     },
     {
       "id": "kysyttavaa-yhteystiedot",
-      "otsikko": "Lasten opetus: Kysyttävää-kortti vain olemassa olevilla yhteystiedoilla",
+      "otsikko": "Lasten opetus: Kysyttävää-kortti ohjaa kysymyslomakkeeseen, moskeija päättää tekstin",
       "alue": "sivut",
-      "kuvaus": "Kortti näyttää WhatsAppin, puhelimen tai sähköpostin sen mukaan, mitä moskeijalle on täytetty. Jos mitään ei ole, korttia ei näytetä. Pitkä sähköpostiosoite rivittyy kapealla puhelimella.",
-      "aloitus": "Avaa testimoskeijan Ilmoita lapsesi opetukseen -sivu puhelimella.",
+      "kuvaus": "Kortti ei enää lupaa puhelinta tai näytä yhteystietoja automaattisesti. Kysy tästä -nappi vie Yhteystiedot-sivun kysymyslomakkeeseen, jossa aiheena on lasten opetus. Paneelista valitaan, näytetäänkö kortti, ja kirjoitetaan sen teksti (tyhjä = oletus). Kortti piiloutuu myös, jos kysymyslomake on pois käytöstä.",
+      "aloitus": "Avaa testimoskeijan Ilmoita lapsesi opetukseen -sivu ja testipaneelin Palvelut-kohta (Lasten opetukseen ilmoittautuminen).",
       "kohdat": [
-        "Kortissa näkyy vain täytetty yhteystieto, ei puhelinlupausta ilman numeroa — Missä: Testimoskeija → Palvelut → Ilmoita lapsesi opetukseen",
-        "Kun puhelin ja WhatsApp tyhjennetään, kortti näyttää sähköpostin — Missä: Testipaneeli → Asetukset → Yhteystiedot → Tallenna → sivu",
-        "Kapealla puhelimella (320 px) ei vaakavieritystä — Missä: sama sivu"
+        "Kortissa on teksti ja Kysy tästä -nappi, ei puhelinta, WhatsAppia tai sähköpostia — Missä: Testimoskeija → Palvelut → Ilmoita lapsesi opetukseen",
+        "Nappi avaa Yhteystiedot-sivun kysymyslomakkeen, aiheena Lasten opetus — Missä: sama sivu → Kysy tästä",
+        "Oma teksti näkyy kortissa tallennuksen jälkeen — Missä: Testipaneeli → Sivut → Palvelut → Lasten opetukseen ilmoittautuminen → Kortin teksti",
+        "Kun Näytä Kysyttävää-kortti on pois, korttia ei ole ja lomake on keskellä — Missä: sama paneelikohta → sivu",
+        "Puhelimella (320 px) ei vaakavieritystä — Missä: sama sivu"
       ],
       "linkit": [
         {
           "nimi": "Sivu: Lasten opetus",
           "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/lasten-opetus/"
+        },
+        {
+          "nimi": "Testipaneeli: Lasten opetus",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/palvelut?k=lasten_opetus"
         }
       ],
-      "versio": 1,
+      "versio": 2,
       "lisatty": "2026-11-16"
     }
   ]

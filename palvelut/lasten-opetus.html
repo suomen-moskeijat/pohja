@@ -5,20 +5,23 @@ permalink: /palvelut/lasten-opetus/
 seo_avain: ilmoita_lapsesi
 ---
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
-{%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
-{%- if m.yhteydenotto.whatsapp == "piilossa" -%}{%- assign wa = "" -%}{%- endif -%}
+{%- comment -%}
+  Kysyttävää-kortti: moskeija päättää paneelissa (Palvelut → Lasten opetukseen ilmoittautuminen), näytetäänkö kortti
+  ja millä tekstillä. Nappi vie Yhteystiedot-sivun kysymyslomakkeeseen (aiheena lasten opetus). Yhteystietoja ei lisätä
+  korttiin automaattisesti. Kortti piilotetaan, jos Kysy moskeijalta -lomake on pois käytöstä.
+{%- endcomment -%}
+{%- assign _kysy = true -%}
+{%- if m.lasten_opetus.kysy_kortti == false or m.yhteydenotto.kysy.pois -%}{%- assign _kysy = false -%}{%- endif -%}
+{%- capture _kt -%}{% if m.lasten_opetus.kysy_teksti %}{% include kt.html arvo=m.lasten_opetus.kysy_teksti %}{% endif %}{%- endcapture -%}{%- assign _kt = _kt | strip -%}
 {% include osat/sivuhero.html yla="lasten_opetus" avain="ilmoita_lapsesi" johdanto=m.lasten_opetus.teksti %}
-<div class="u-kehys u-sivu u-kaksi">
+<div class="u-kehys u-sivu{% if _kysy %} u-kaksi{% else %} u-sivu--kapea{% endif %}">
   {% include osat/lomake-lapsi.html moskeija=m %}
-  {%- assign _puh = m.puhelin | default: "" | strip -%}{%- assign _sp = m.sahkoposti | default: "" | strip -%}
-  {%- if wa != "" or _puh != "" or _sp != "" %}
+  {%- if _kysy %}
   <aside class="u-kortti u-sivupalkki">
     <h2>{% include k.html a="kysyttavaa" %}</h2>
-    <p class="u-hieno">{% if wa != "" %}{% include k.html a="kysy_whatsapp" %}{% elsif _puh != "" %}{% include k.html a="kysy_puhelin" %}{% else %}{% include k.html a="kysy_sahkoposti" %}{% endif %}</p>
+    <p class="u-hieno">{% if _kt != "" %}{{ _kt }}{% else %}{% include k.html a="lapset_kysy_teksti" %}{% endif %}</p>
     <div class="u-napit u-napit--pino">
-      {% if wa != "" %}<a class="u-nappi u-nappi--wa" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" koko=18 %} WhatsApp</a>{% endif %}
-      {% if _puh != "" %}<a class="u-nappi u-nappi--reuna" href="tel:{{ _puh | remove: ' ' }}" dir="ltr">{{ _puh }}</a>{% endif %}
-      {% if wa == "" and _puh == "" and _sp != "" %}<a class="u-nappi u-nappi--reuna u-nappi--pitka" href="mailto:{{ _sp }}" dir="ltr">{{ _sp }}</a>{% endif %}
+      <a class="u-nappi u-nappi--reuna" href="{{ '/yhteystiedot/' | relative_url }}?aihe={{ site.data.kaannokset.lasten_opetus.fi | url_encode }}#kysy">{% include k.html a="kysy_tasta" %}</a>
     </div>
   </aside>
   {%- endif %}

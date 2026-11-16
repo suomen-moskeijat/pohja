@@ -240,6 +240,7 @@ kieli:              { fi: "Kieli", en: "Language", ar: "اللغة", so: "Luqadd
 sulje:              { fi: "Sulje", en: "Close", ar: "إغلاق", so: "Xir" }
 toiminta_kielet:    { fi: "Toimintaa kielillä", en: "Activities in", ar: "الأنشطة باللغات", so: "Hawlaha luqadaha" }
 kysyttavaa:         { fi: "Kysyttävää?", en: "Questions?", ar: "لديك سؤال؟", so: "Su'aal ma qabtaa?" }
+lapset_kysy_teksti: { fi: "Kysy opetuksesta lomakkeella, niin vastaamme mielellämme.", en: "Ask us about the classes using the form – we are happy to answer.", ar: "اسألنا عن الدروس عبر النموذج – يسعدنا الرد.", so: "Wax naga weydii waxbarashada adigoo isticmaalaya foomka – waan ku faraxsanahay inaan ku jawaabno." }
 kysy_whatsapp:      { fi: "Vastaamme nopeimmin WhatsAppissa tai puhelimitse.", en: "We reply fastest on WhatsApp or by phone.", ar: "نرد بشكل أسرع عبر واتساب أو الهاتف.", so: "Sida ugu dhakhsaha badan waxaan uga jawaabnaa WhatsApp ama taleefan." }
 seo_moskeija:       { fi: "moskeija", en: "mosque", ar: "مسجد", so: "masjid" }
 seo_rukousajat_kuvaus: { fi: "Rukousajat {kaupunki}: päivän fajr-, dhuhr-, asr-, maghrib- ja isha-ajat, iqamah ja perjantairukous.", en: "Prayer times in {kaupunki}: today's fajr, dhuhr, asr, maghrib and isha, iqamah times and Friday prayer.", ar: "مواقيت الصلاة في {kaupunki}: الفجر والظهر والعصر والمغرب والعشاء والإقامة وصلاة الجمعة.", so: "Waqtiyada salaadda {kaupunki}: subax, duhur, casar, maqrib iyo cishaa, iqaamada iyo salaadda Jimcaha." }
