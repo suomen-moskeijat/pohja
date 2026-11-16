@@ -8,7 +8,7 @@
     <label class="u-kentta"><span>{% include k.html a="huoltajan_nimi" %} *</span><input name="huoltaja" required autocomplete="name"></label>
     <div class="u-kentat">
       <label class="u-kentta"><span>{% include k.html a="sahkoposti" %} *</span><input name="sahkoposti" type="email" required autocomplete="email" inputmode="email" dir="ltr"></label>
-      <label class="u-kentta"><span>{% include k.html a="puhelin" %} *</span><input name="puhelin" type="tel" required autocomplete="tel" pattern="[+0-9 ()-]{6,20}" dir="ltr"></label>
+      <label class="u-kentta"><span>{% include k.html a="puhelin" %} *</span><input name="puhelin" type="tel" required autocomplete="tel" pattern="[0-9+ \(\)\-]{6,20}" dir="ltr"></label>
     </div>
   </fieldset>
   <fieldset>

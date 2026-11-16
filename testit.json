@@ -604,6 +604,32 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-16"
+    },
+    {
+      "id": "whatsapp-lomake",
+      "otsikko": "Lomakkeen lähetys WhatsAppilla",
+      "alue": "sivut",
+      "kuvaus": "WhatsApp-lähetys toimii myös, kun selain estää uuden ikkunan (esim. sivu avattu WhatsAppin, Instagramin tai Facebookin linkistä): WhatsApp avautuu samassa välilehdessä, ja viestissä on lisäksi Avaa WhatsApp -linkki. Puhelinnumerokentän tarkistus toimii uusissa selaimissa.",
+      "aloitus": "Avaa testimoskeijan lasten opetuksen sivu puhelimella. Testimoskeijalla pitää olla WhatsApp-numero (Testipaneeli → Yhteystiedot).",
+      "kohdat": [
+        "Täytä ilmoittautuminen ja lähetä: WhatsApp avautuu valmiin viestin kanssa — Missä: Testimoskeija → Palvelut → Lasten opetus (puhelimella)",
+        "Avaa sivu WhatsAppissa olevasta linkistä (sovelluksen oma selain) ja lähetä: WhatsApp avautuu — Missä: linkki WhatsApp-viestissä",
+        "Lähetyksen jälkeen näkyy Avaa WhatsApp -linkki, joka avaa saman viestin — Missä: lomakkeen alla",
+        "Puhelinnumero kelpaa muodoissa 040 123 4567 ja +358 40 123 4567 — Missä: lomakkeen Puhelin-kenttä",
+        "Kysy moskeijalta -lomake toimii samoin WhatsAppilla — Missä: Testimoskeija → Yhteystiedot → alaosan lomake"
+      ],
+      "linkit": [
+        {
+          "nimi": "Sivu: Lasten opetus",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/lasten-opetus/"
+        },
+        {
+          "nimi": "Testipaneeli: Yhteystiedot",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/yhteystiedot"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-16"
     }
   ]
 }
