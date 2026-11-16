@@ -2,6 +2,27 @@
   "ohje": "Testattavat muutokset. Kun teet muutoksen testi-haaraan, lisää tähän kohta (id pysyy samana; nosta versio, kun korjaat hylätyn testin). Kohta: 'Mitä tarkistetaan — Missä: valikkopolku'. Suorat linkit testin linkit-listaan nimettyinä nappeina (näkyvät jokaisessa paneelin versiossa). aloitus = mistä testaaja aloittaa. Älä kirjoita tänne nimiä tai muita henkilötietoja – repo on julkinen.",
   "testit": [
     {
+      "id": "rukousajat-vieritys",
+      "otsikko": "Rukousajat-sivu: vasen palsta ei kulje mukana",
+      "kuvaus": "Tietokoneella Rukousajat-sivun vasen palsta (seuraava rukous, päivän ajat, Jumua ja kalenterin tilaus) seurasi vieritystä, ja koska se on näyttöä korkeampi, sen alaosa jäi piiloon. Nyt palsta pysyy paikallaan kuten muukin sivu.",
+      "aloitus": "Avaa testimoskeijan Rukousajat-sivu tietokoneella (leveä ikkuna) ja vieritä alas.",
+      "alue": "sivut",
+      "versio": 1,
+      "lisatty": "2026-11-16",
+      "kohdat": [
+        "Vierittäessä alas Seuraava rukous -kortti ja päivän ajat jäävät ylös eivätkä kulje mukana — Missä: Testimoskeija → Rukousajat (tietokone)",
+        "Vasemman palstan alaosa (Perjantairukous ja Tilaa kalenteri -valinnat) näkyy kokonaan, kun vierität sen kohdalle — Missä: Rukousajat → vasen palsta alhaalla",
+        "Oikean puolen kuukausitaulukko ja Ramadanin aikataulu näkyvät normaalisti koko matkan — Missä: Rukousajat → oikea palsta",
+        "Puhelimella sivu toimii kuten ennen (kaikki allekkain) — Missä: Rukousajat puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Sivu: Rukousajat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/"
+        }
+      ]
+    },
+    {
       "id": "aloitusnakyma-jaettu",
       "otsikko": "Etusivun yläosa kahteen palstaan",
       "kuvaus": "Tietokoneella etusivun yläosassa moskeijan nimi, esittely ja napit ovat vasemmalla ja seuraava rukous (ja Ramadanin aikaan suhur/iftar-rivi) oikealla – ennen kaikki oli keskellä allekkain. Puhelimella järjestys on ennallaan. Palvelukorteissa kuvake on ilman taustaruutua. Uusi valinta: Ramadan-rivin voi piilottaa yläosasta, koska samat ajat näkyvät Ramadan-osiossa heti alla.",
