@@ -619,8 +619,14 @@
           .then(function (v) { if (!v.ok) throw new Error(v.status); viesti(lomake, 'kiitos'); lomake.reset(); lomake.classList.remove('on-tarkistettu'); })
           .catch(function () { viesti(lomake, 'lahetysvirhe'); });
       } else if (tapa === 'whatsapp' && wa) {
-        window.open('https://wa.me/' + wa + '?text=' + encodeURIComponent(teksti), '_blank', 'noopener');
+        // Uusi välilehti; jos selain estää sen (esim. Instagramin tai WhatsAppin sisäinen selain), avataan samassa.
+        // Viestissä on lisäksi linkki, jolla WhatsAppin saa auki, jos mikään ei auennut.
+        var waOsoite = 'https://wa.me/' + wa + '?text=' + encodeURIComponent(teksti);
+        kaikki('[data-wa-linkki]', lomake).forEach(function (a) { a.href = waOsoite; });
         viesti(lomake, 'whatsapp');
+        var ikkuna = null;
+        try { ikkuna = window.open(waOsoite, '_blank'); } catch (e) { ikkuna = null; }
+        if (ikkuna) { try { ikkuna.opener = null; } catch (e) {} } else location.href = waOsoite;
       } else if (sp) {
         location.href = 'mailto:' + sp + '?subject=' + encodeURIComponent(lomake.dataset.aihe) + '&body=' + encodeURIComponent(teksti);
         viesti(lomake, 'sahkoposti');
