@@ -432,6 +432,17 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', kaynnistaRukous);
   else kaynnistaRukous();
 
+  /* Arabiankieliset kappaleet (esim. Koraanin jae) tekstisisällössä: oikealta vasemmalle ja lukufontilla */
+  function merkitseArabia() {
+    var ar = /^[\s\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF.,:;!?()«»"'\u060C\u061B\u061F0-9]+$/;
+    Array.prototype.forEach.call(document.querySelectorAll('.u-proosa p, .u-proosa li'), function (el) {
+      var t = el.textContent.trim();
+      if (t && !el.hasAttribute('lang') && /[\u0600-\u06FF]/.test(t) && ar.test(t)) { el.setAttribute('lang', 'ar'); el.setAttribute('dir', 'rtl'); el.classList.add('u-arabia'); }
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', merkitseArabia);
+  else merkitseArabia();
+
   /* ---------- 5. Instagram: julkaisu isona ---------- */
   /* Seuraa meitä: välilehdet (nuolinäppäimet vaihtavat) */
   kaikki('[data-somet]').forEach(function (o) {

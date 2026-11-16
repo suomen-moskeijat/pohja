@@ -217,6 +217,7 @@ sivua_ei_loydy:     { fi: "Sivua ei löytynyt", en: "Page not found", ar: "ال�
 sivua_ei_loydy_teksti: { fi: "Sivu on ehkä siirretty tai poistettu. Tästä pääset eteenpäin:", en: "The page may have been moved or removed. Continue here:", ar: "ربما نُقلت الصفحة أو حُذفت. تابع من هنا:", so: "Boggan waa la raray ama la tirtiray. Halkan ka sii wad:" }
 etusivulle:         { fi: "Etusivulle", en: "Home page", ar: "الصفحة الرئيسية", so: "Bogga hore" }
 kysy_puhelin:       { fi: "Vastaamme mielellämme puhelimitse.", en: "We are happy to answer by phone.", ar: "يسعدنا الرد عبر الهاتف.", so: "Waxaan ku faraxsanahay inaan taleefanka kaga jawaabno." }
+kysy_sahkoposti:    { fi: "Vastaamme mielellämme sähköpostitse.", en: "We are happy to answer by email.", ar: "يسعدنا الرد عبر البريد الإلكتروني.", so: "Waxaan ku faraxsanahay inaan ku jawaabno iimayl." }
 lahetystapa:        { fi: "Miten haluat lähettää viestin?", en: "How would you like to send it?", ar: "كيف تريد إرسال الرسالة؟", so: "Sidee baad rabtaa inaad u dirto?" }
 lahetys_sahkoposti: { fi: "Sähköpostilla", en: "By email", ar: "بالبريد الإلكتروني", so: "Iimayl ahaan" }
 lahetys_whatsapp:   { fi: "WhatsAppilla", en: "On WhatsApp", ar: "عبر واتساب", so: "WhatsApp ahaan" }

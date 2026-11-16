@@ -32,7 +32,7 @@
   <link rel="preload" href="{{ '/assets/fontit/sora-latin-46cba0e3.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ '/assets/fontit/manrope-latin-58ee1998.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ t.fontit_url | default: _fontit }}">
-  {% if page.layout == "artikkeli" %}<link rel="stylesheet" href="{{ '/assets/fontit/amiri.css' | relative_url }}">{% endif %}
+  <link rel="stylesheet" href="{{ '/assets/fontit/amiri.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/css/sivu.css' | relative_url }}?v={{ v }}">
   {%- comment -%} Värit: valmis värimaailma (teema.vari, _data/teemat.yml) tai ylläpitäjän omat värikoodit (vari: oma tai tyhjä) {%- endcomment -%}
   {%- capture _teema -%}
