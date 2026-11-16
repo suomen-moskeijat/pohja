@@ -10,6 +10,6 @@
     {%- comment -%} Vain ensimmäinen virke jokaisesta kielestä {%- endcomment -%}
     <p>{% for l in site.kielet %}{% assign teksti = tx[l] | default: tx.en | default: tx.fi | default: tx %}<span data-l="{{ l }}">{{ teksti | split: '. ' | first | remove: '.' }}.</span>{% endfor %}</p>
   </div>
-  <a class="u-nappi u-nappi--tumma" href="{{ '/palvelut/lasten-opetus/' | relative_url }}">{% include k.html a="ilmoittaudu" %} <span class="u-flip" aria-hidden="true">→</span></a>
+  <a class="u-nappi u-nappi--kulta" href="{{ '/palvelut/lasten-opetus/' | relative_url }}">{% include k.html a="ilmoittaudu" %}</a>
 </section>
 {%- endif -%}

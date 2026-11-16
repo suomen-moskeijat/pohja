@@ -56,6 +56,7 @@ kaikki_palvelut:    { fi: "Kaikki palvelut", en: "All services", ar: "كل ال�
 muut_palvelut:      { fi: "Muut palvelut", en: "Other services", ar: "خدمات أخرى", so: "Adeegyo kale" }
 kysy_tasta:         { fi: "Kysy tästä", en: "Ask about this", ar: "اسأل عن هذا", so: "Wax ka weydii" }
 palvelut_ohje:      { fi: "Ota yhteyttä, niin sovitaan aika ja kerromme lisää.", en: "Get in touch and we will arrange a time and tell you more.", ar: "تواصل معنا لتحديد موعد ومعرفة المزيد.", so: "Nala soo xiriir si aan waqti u ballanno oo aan kuu sheegno wax dheeraad ah." }
+palvelut_ohje_ilmo: { fi: "Ilmoittaudu lomakkeella tai kysy lisää – vastaamme mielellämme.", en: "Register with the form or ask us more – we are happy to answer.", ar: "سجّل عبر النموذج أو اسألنا للمزيد – يسعدنا الرد.", so: "Isku diiwaangeli foomka ama wax badan na weydii – waan ku faraxsanahay inaan ku jawaabno." }
 lasten_opetus:      { fi: "Lasten opetus", en: "Children's education", ar: "تعليم الأطفال", so: "Waxbarashada carruurta" }
 ilmoita_lapsesi:    { fi: "Ilmoita lapsesi opetukseen", en: "Register your child for classes", ar: "سجّل طفلك في الدروس", so: "Ka diiwaangeli ilmahaaga waxbarashada" }
 

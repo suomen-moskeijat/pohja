@@ -7,7 +7,7 @@
     <div class="u-tekstiosio__teksti">
       {% if o.otsikko %}<h2>{% include kt.html arvo=o.otsikko %}</h2>{% endif %}
       {% if o.teksti %}<div class="u-proosa">{% include kt.html arvo=o.teksti md=true tagi="div" %}</div>{% endif %}
-      {% if o.nappi_teksti and o.nappi_linkki %}<div class="u-napit"><a class="u-nappi {% if o.tausta == "vari" %}u-nappi--kulta{% else %}u-nappi--tumma{% endif %}" href="{% include osat/linkki-href.html l=o.nappi_linkki %}"{% if _ulk == "http" %} target="_blank" rel="noopener"{% endif %}>{% include kt.html arvo=o.nappi_teksti %}</a></div>{% endif %}
+      {% if o.nappi_teksti and o.nappi_linkki %}<div class="u-napit"><a class="u-nappi u-nappi--kulta" href="{% include osat/linkki-href.html l=o.nappi_linkki %}"{% if _ulk == "http" %} target="_blank" rel="noopener"{% endif %}>{% include kt.html arvo=o.nappi_teksti %}</a></div>{% endif %}
     </div>
     {% if _kuva != "" %}<img class="u-tekstiosio__kuva" src="{{ _kuva | relative_url }}" alt="" loading="lazy">{% endif %}
   </div>
