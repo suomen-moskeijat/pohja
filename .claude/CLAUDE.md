@@ -14,7 +14,8 @@ Ei keksittyä sisältöä: käytä moskeijan omia tekstejä. Koraanin jakeisiin 
 Kaikki, mitä moskeijan sivulla näkyy, pitää voida muokata hallintapaneelista. Kun lisäät sivupohjaan uuden
 moskeijan tiedon (m.kentta, teema t.kentta, ramadan, rukousajat …), lisää sama kenttä paneelin kaavioon
 (hallinta: src/kaavio.js) samassa muutoksessa. Tarkistus: hallinta `node testi/kattavuus.mjs` (ei saa olla ❌).
-Vanhat tiedot siirretään paneelin muotoon (esim. palvelut omiksi sivuikseen), ei jätetä piiloon.
+Etusivun osiot eivät tallenna omaa sisältöä: ne näyttävät tiedon sieltä, missä sitä muokataan (palvelut, tapahtumat …),
+ettei samaa tietoa ylläpidetä kahdessa paikassa. Vanhat tiedot siirretään paneelin muotoon (esim. palvelut omiksi sivuikseen), ei jätetä piiloon.
 
 ## Kehitysprosessi
 - Uudet muutokset `testi`-haaraan, ei suoraan `main`-haaraan.

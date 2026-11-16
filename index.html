@@ -28,6 +28,6 @@ rukousajat: true
   Etusivun osiot: moskeija voi järjestää, poistaa ja lisätä osioita (etusivu: [{osio: …}, …],
   hallintapaneeli → Etusivun osiot). Ilman listaa näytetään oletusjärjestys.
 {%- endcomment -%}
-{%- assign _oletus = "toiminta,lapset,tapahtumat,palvelut,artikkelit,meista,galleria,somet,lahjoitus,vierailu" | split: "," -%}
+{%- assign _oletus = "palvelut,lapset,tapahtumat,artikkelit,meista,galleria,somet,lahjoitus,vierailu" | split: "," -%}
 {%- if m.etusivu and m.etusivu.size > 0 -%}{%- assign _osiot = m.etusivu -%}{%- else -%}{%- assign _osiot = _oletus -%}{%- endif -%}
 {% include osat/osiot.html osiot=_osiot moskeija=m %}

@@ -1,21 +1,17 @@
 {%- comment -%}
-  Osiot listasta (etusivu ja omat sivut): valmiit osiot (toiminta, tapahtumat, galleria …) ja
+  Osiot listasta (etusivu ja omat sivut): valmiit osiot (palvelut, tapahtumat, galleria …) ja
   omat osiot (teksti, ilmoitus, video, ukk, linkit, kuvat). Parametrit: osiot, moskeija
 {%- endcomment -%}
 {%- assign m = include.moskeija -%}
+{%- comment -%} Vanha "toiminta" (Toimintamme-kortit) näyttää nyt moskeijan palvelut; jos listassa on jo palvelut, ei kahdesti {%- endcomment -%}
+{%- assign _on_palvelut = false -%}
+{%- for o in include.osiot -%}{%- if o.osio -%}{%- assign _t = o.osio -%}{%- else -%}{%- assign _t = o -%}{%- endif -%}{%- if _t == "palvelut" -%}{%- assign _on_palvelut = true -%}{%- endif -%}{%- endfor -%}
+{%- assign _palvelut_naytetty = false -%}
 {%- for o in include.osiot -%}
 {%- if o.osio -%}{%- assign _t = o.osio -%}{%- else -%}{%- assign _t = o -%}{%- endif -%}
+{%- if _t == "toiminta" -%}{%- if _on_palvelut -%}{%- continue -%}{%- endif -%}{%- assign _t = "palvelut" -%}{%- endif -%}
+{%- if _t == "palvelut" -%}{%- if _palvelut_naytetty -%}{%- continue -%}{%- endif -%}{%- assign _palvelut_naytetty = true -%}{%- endif -%}
 {%- case _t -%}
-{%- when "toiminta" %}
-{% if m.kortit.size > 0 %}
-<section class="u-osio u-kehys">
-  <div class="u-osio__yla">
-    <h2>{% include k.html a="toimintamme" %}</h2>
-    <a class="u-linkki" href="{{ '/palvelut/' | relative_url }}">{% include k.html a="nav_palvelut" %} <span class="u-flip" aria-hidden="true">→</span></a>
-  </div>
-  {% include osat/toiminta.html moskeija=m %}
-</section>
-{% endif %}
 {%- when "lapset" %}
 {%- assign _lp = site.palvelut | where_exp: "p", "p.ilmoittautuminen contains 'lasten-opetus'" -%}
 {% if _lp.size == 0 %}<div class="u-kehys">{% include osat/lapset.html moskeija=m %}</div>{% endif %}

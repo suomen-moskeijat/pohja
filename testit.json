@@ -630,6 +630,36 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-16"
+    },
+    {
+      "id": "etusivu-yksi-tieto",
+      "otsikko": "Etusivu näyttää, ei tallenna omaa: Toimintamme-kortit pois",
+      "alue": "sivut",
+      "kuvaus": "Etusivun osiot hakevat sisältönsä muualta (palvelut, tapahtumat, artikkelit …). Erilliset Toimintamme-kortit on poistettu: etusivun Toimintamme-osion paikalla näkyy Palvelut, ja se näkyy vain, jos moskeijalla on palveluita. Palvelut muokataan yhdessä paikassa (Palvelut).",
+      "aloitus": "Avaa testimoskeijan etusivu ja testipaneelin Etusivu.",
+      "kohdat": [
+        "Etusivulla ei ole erillistä Toimintamme-korttiriviä; palvelut näkyvät Palvelut-osiossa — Missä: Testimoskeija → Etusivu",
+        "Palvelun muutos (nimi tai kuvaus) näkyy sekä etusivulla että Palvelut-sivulla — Missä: Testipaneeli → Palvelut → Muokkaa → Tallenna → sivu",
+        "Kun kaikki palvelut poistetaan, Palvelut-osio katoaa etusivulta — Missä: Testipaneeli → Palvelut (poista testipalvelu) → Etusivu",
+        "Etusivun osioissa ei ole Toimintamme-kortit-vaihtoehtoa eikä Etusivu-sivulla omaa korttilistaa; Palvelut on osioissa kerran — Missä: Testipaneeli → Sivut → Etusivu",
+        "Omalle sivulle voi lisätä valmiin Palvelut-osion — Missä: Testipaneeli → Sivut → oma sivu → Lisää osio"
+      ],
+      "linkit": [
+        {
+          "nimi": "Sivu: Etusivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        },
+        {
+          "nimi": "Testipaneeli: Etusivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/etusivu"
+        },
+        {
+          "nimi": "Testipaneeli: Palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-16"
     }
   ]
 }
