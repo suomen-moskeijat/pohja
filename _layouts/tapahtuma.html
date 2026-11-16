@@ -56,7 +56,7 @@ layout: sivu
     </ul>
     {% if _ilmo != "" %}
     <div class="u-taptieto__toiminto">
-      <a class="u-nappi u-nappi--kulta u-taptieto__nappi" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{% include k.html a="ilmoittaudu" %} <span class="u-flip" aria-hidden="true">→</span></a>
+      <a class="u-nappi u-nappi--kulta u-taptieto__nappi" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{% include k.html a="ilmoittaudu" %}</a>
       {% if page.ilmoittaudu == "lomake" %}<small>{% include k.html a="ilmoittaudu_teksti" %}</small>{% endif %}
     </div>
     {% endif %}

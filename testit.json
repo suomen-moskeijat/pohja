@@ -660,6 +660,65 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-16"
+    },
+    {
+      "id": "palvelu-nappi-teksti",
+      "otsikko": "Palvelun yhteydenotto: nappi päälle/pois, oma teksti ja napin teksti + esikatselu",
+      "alue": "paneeli",
+      "kuvaus": "Palvelun muokkauksessa voi valita, näytetäänkö yhteydenotto ja Kysy tästä -nappi, sekä kirjoittaa oman tekstin napin yläpuolelle ja napin tekstin. Palvelun ja uuden oman sivun muokkauksessa on nyt esikatselu, joka päivittyy kirjoittaessa.",
+      "aloitus": "Avaa testipaneelin Palvelut ja jokin palvelu muokattavaksi.",
+      "kohdat": [
+        "Esikatselu näkyy oikealla (puhelimella Näytä esikatselu -napista) ja päivittyy kirjoittaessa — Missä: Testipaneeli → Palvelut → palvelu",
+        "Teksti napin yläpuolella ja Napin teksti näkyvät esikatselussa heti ja sivulla tallennuksen jälkeen — Missä: Testipaneeli → Palvelut → palvelu → Tallenna → sivu",
+        "Tyhjä teksti = oletus (Ota yhteyttä … / Kysy tästä) — Missä: Testimoskeija → Palvelut → palvelu",
+        "Kun Yhteydenotto on pois, tekstikentät piiloutuvat ja sivulla ei ole nappia — Missä: Testipaneeli → Palvelut → palvelu",
+        "Uuden oman sivun luonnissa on esikatselu — Missä: Testipaneeli → Uusi sivu → Tyhjä sivu"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi sivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/omat/uusi"
+        },
+        {
+          "nimi": "Sivu: Kouluvierailut",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/kouluvierailut-ja-tutustumiset/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-16"
+    },
+    {
+      "id": "napit-yhtenaiset",
+      "otsikko": "Napit yhtenäisiksi koko sivustolla",
+      "alue": "sivut",
+      "kuvaus": "Kaikki toimintonapit ovat samaa mallia: pyöreä nappi, sama korkeus ja fontti, pääväri (kulta) toiminnoille. Nuolet napeista poistettu, tumma nappi vaihdettu pääväriin (lapset, tekstiosio, kalenterin tilaus).",
+      "aloitus": "Avaa testimoskeijan etusivu ja selaa läpi; avaa sitten palvelu, tapahtuma ja lahjoitussivu.",
+      "kohdat": [
+        "Napit näyttävät samalta (muoto, korkeus, fontti) eikä niissä ole nuolia — Missä: Testimoskeija → Etusivu",
+        "Palvelun Kysy tästä / Ilmoittaudu -napit samaa mallia — Missä: Testimoskeija → Palvelut → palvelu",
+        "Tapahtuman ja lahjoitussivun napit samaa mallia — Missä: Testimoskeija → Tapahtumat → tapahtuma; Lahjoita",
+        "Puhelimella napit eivät mene reunan yli — Missä: puhelin, samat sivut"
+      ],
+      "linkit": [
+        {
+          "nimi": "Sivu: Etusivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        },
+        {
+          "nimi": "Sivu: Palvelu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/kouluvierailut-ja-tutustumiset/"
+        },
+        {
+          "nimi": "Sivu: Lahjoita",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/lahjoita/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-16"
     }
   ]
 }
