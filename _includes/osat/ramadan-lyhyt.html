@@ -1,10 +1,10 @@
 {%- comment -%}
   Etusivun yläosan Ramadan-rivi: vasemmalla iso päivä (tai päiviä alkuun), oikealla suhur ja iftar. Täyttää sivu.js.
-  Moskeija valitsee paneelissa (Rukousajat → Ramadan): ramadan.hero_tyyli laatta | kortit | nauha
+  Moskeija valitsee paneelissa (Rukousajat → Ramadan): ramadan.hero_tyyli laatta | kortit | nauha | ei (ei riviä)
   ja ramadan.hero_vari tumma | paa | kulta | vaalea.
 {%- endcomment -%}
 {%- include osat/ramadan-tiedot.html moskeija=include.moskeija -%}
-{%- if _rm_nakyy -%}
+{%- if _rm_nakyy and _rmm.hero_tyyli != "ei" -%}
 <a class="u-rmh" href="{{ '/rukousajat/' | relative_url }}#ramadan" data-tyyli="{{ _rmm.hero_tyyli | default: 'laatta' }}" data-vari="{{ _rmm.hero_vari | default: 'tumma' }}" data-rm data-rm-lyhyt{% if _rmm.testi %} data-rm-testi{% endif %} data-alkaa="{{ _rm_alkaa }}" data-eid="{{ _rm_eid }}" data-paivia="{{ _rm_paivia }}">
   <span class="u-rmh__paiva">
     <span data-rm-tila="ennen"><small>{% include k.html a="ramadaniin" %}</small><b data-rm-paivia-jaljella dir="ltr">–</b><small>{% include k.html a="paivaa" %}</small></span>

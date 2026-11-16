@@ -1154,3 +1154,28 @@ a.u-palvelu__linkki:hover, .u-tapahtuma a:hover, .u-rj__kortti:hover, a.u-rmh:ho
 .u-ilmopalkki .u-nappi { flex: none; }
 @media (min-width: 900px) { .u-ilmopalkki { display: none !important; } }
 body.on-ilmopalkki .u-pikanapit { bottom: calc(92px + env(safe-area-inset-bottom)); }
+
+/* ---------- Aloitusnäyttö jaettuna (unslop-hionta) ----------
+   Puhelimella kaikki allekkain keskellä kuten ennen (teksti, rukousajat, napit).
+   Tietokoneella teksti ja napit alkureunassa, rukousajat omana palstanaan toisella puolella. */
+.u-alku__teksti, .u-alku__ajat { display: flex; flex-direction: column; align-items: center; width: 100%; min-width: 0; }
+.u-alku__ajat .u-rmh { margin-inline: auto; }
+@media (min-width: 1024px) {
+  .u-alku__sisalto--jako {
+    display: grid; align-items: center; column-gap: clamp(48px, 6vw, 96px);
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 440px);
+    grid-template-areas: "teksti ajat" "napit ajat";
+    text-align: start;
+  }
+  .u-alku__sisalto--jako .u-alku__teksti { grid-area: teksti; align-items: flex-start; align-self: end; }
+  .u-alku__sisalto--jako .u-alku__ajat { grid-area: ajat; align-items: stretch; }
+  .u-alku__sisalto--jako .u-alku__napit { grid-area: napit; align-self: start; justify-content: flex-start; margin-top: 28px; }
+  .u-alku__sisalto--jako h1 { margin: 0; max-width: 12em; font-size: clamp(44px, 4.4vw, 64px); line-height: 1.06; }
+  .u-alku__sisalto--jako .u-alku__esittely { margin: 18px 0 0; max-width: 30em; text-wrap: pretty; }
+  .u-alku__sisalto--jako .u-alku__ajat .u-seur { width: 100%; margin-top: 0; }
+  .u-alku__sisalto--jako .u-alku__ajat .u-rmh { max-width: none; margin: 12px 0 0; }
+  html[lang="ar"] .u-alku__sisalto--jako h1 { line-height: 1.35; }
+}
+
+/* Palvelukortit: kuvake ilman taustaruutua, tekstin väreissä */
+.u-palvelu__ikoni { width: auto; height: auto; place-items: start; background: none; color: var(--kulta-teksti); }
