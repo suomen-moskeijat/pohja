@@ -1,10 +1,15 @@
 {%- comment -%}
   Tulevat (kertaluonteiset) tapahtumat. Toistuvat ovat viikko-ohjelmassa (osat/viikko-ohjelma.html).
-  Parametri: maara (enimmäismäärä). Menneet piilotetaan myös selaimessa.
+  Parametri: maara (enimmäismäärä). Menneet piilotetaan myös selaimessa. Kiinnitetyt ensin, sitten oma järjestys, sitten päivämäärä.
   Jos tulevia ei ole, näytetään tyhjä tila (paitsi jos piilota_tyhja=true).
 {%- endcomment -%}
 {%- assign tanaan = site.time | date: '%Y-%m-%d' -%}
-{%- assign kaikki = site.tapahtumat | sort: 'paiva' -%}
+{%- comment -%} Järjestys: kiinnitetyt (kiinnitetty: true) ensin, sitten paneelissa nuolilla järjestetyt (jarjestys), sitten päivämäärän mukaan {%- endcomment -%}
+{%- assign _tk = "" | split: "" -%}{%- assign _tj = "" | split: "" -%}{%- assign _tm = "" | split: "" -%}
+{%- assign _tp = site.tapahtumat | sort: 'paiva' -%}
+{%- for t in _tp -%}{%- if t.kiinnitetty == true -%}{%- assign _tk = _tk | push: t -%}{%- elsif t.jarjestys -%}{%- assign _tj = _tj | push: t -%}{%- else -%}{%- assign _tm = _tm | push: t -%}{%- endif -%}{%- endfor -%}
+{%- assign _tj = _tj | sort: 'jarjestys' -%}
+{%- assign kaikki = _tk | concat: _tj | concat: _tm -%}
 {%- assign naytetty = 0 -%}
 <ul class="u-tapahtumat" data-tulevat{% if include.maara %} data-maara="{{ include.maara }}"{% endif %}>
   {%- for t in kaikki -%}

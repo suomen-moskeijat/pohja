@@ -575,6 +575,35 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-16"
+    },
+    {
+      "id": "tapahtumien-jarjestys",
+      "otsikko": "Tapahtumien kiinnitys ja oma järjestys",
+      "alue": "paneeli",
+      "kuvaus": "Tulevia tapahtumia voi järjestää nuolilla ja yksittäisen tapahtuman voi kiinnittää ensimmäiseksi. Sivulla järjestys on: kiinnitetyt, sitten oma järjestys, sitten päivämäärän mukaan. Oman järjestyksen saa pois yhdellä napilla. Omien sivujen järjestys on valikossa (Sivut → Muokkaa valikkoa).",
+      "aloitus": "Kirjaudu testipaneeliin ja avaa Testimoskeija → Tapahtumat (Tulevat).",
+      "kohdat": [
+        "Tulevat-välilehdellä jokaisella tapahtumalla on nuolet ylös ja alas — Missä: Testipaneeli → Tapahtumat → Tulevat",
+        "Siirrä tapahtuma nuolella ja paina Tallenna järjestys — Missä: Tapahtumat → Tallenna järjestys",
+        "Sivulla tulevat tapahtumat näkyvät samassa järjestyksessä etusivulla ja Tapahtumat-sivulla — Missä: Testimoskeija → Etusivu ja Tapahtumat (noin minuutin päästä)",
+        "Listan yläpuolella lukee, että tulevilla on oma järjestys, ja Palauta päivämääräjärjestys palauttaa järjestyksen — Missä: Tapahtumat → Palauta päivämääräjärjestys",
+        "Tapahtuman lomakkeessa on Kiinnitys: Kiinnitä ensimmäiseksi; kiinnitetty näkyy listassa ensimmäisenä ja merkittynä — Missä: Tapahtumat → Muokkaa → Kiinnitys",
+        "Kiinnitetty tapahtuma näkyy sivulla ensimmäisenä, vaikka se olisi myöhemmin — Missä: Testimoskeija → Etusivu → Tapahtumat",
+        "Joka viikko -tapahtumissa ei ole nuolia (ne ovat viikonpäivän ja kellonajan mukaan) — Missä: Tapahtumat → Joka viikko",
+        "Omien sivujen järjestys valikossa: Sivut → Muokkaa valikkoa, nuolet — Missä: Testipaneeli → Sivut → Muokkaa valikkoa"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Tapahtumat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat"
+        },
+        {
+          "nimi": "Sivu: Tapahtumat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-16"
     }
   ]
 }
