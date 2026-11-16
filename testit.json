@@ -2,6 +2,35 @@
   "ohje": "Testattavat muutokset. Kun teet muutoksen testi-haaraan, lisää tähän kohta (id pysyy samana; nosta versio, kun korjaat hylätyn testin). Kohta: 'Mitä tarkistetaan — Missä: valikkopolku'. Suorat linkit testin linkit-listaan nimettyinä nappeina (näkyvät jokaisessa paneelin versiossa). aloitus = mistä testaaja aloittaa. Älä kirjoita tänne nimiä tai muita henkilötietoja – repo on julkinen.",
   "testit": [
     {
+      "id": "aloitusnakyma-jaettu",
+      "otsikko": "Etusivun yläosa kahteen palstaan",
+      "kuvaus": "Tietokoneella etusivun yläosassa moskeijan nimi, esittely ja napit ovat vasemmalla ja seuraava rukous (ja Ramadanin aikaan suhur/iftar-rivi) oikealla – ennen kaikki oli keskellä allekkain. Puhelimella järjestys on ennallaan. Palvelukorteissa kuvake on ilman taustaruutua. Uusi valinta: Ramadan-rivin voi piilottaa yläosasta, koska samat ajat näkyvät Ramadan-osiossa heti alla.",
+      "aloitus": "Avaa testimoskeijan etusivu tietokoneella (leveä ikkuna) ja sen jälkeen puhelimella.",
+      "alue": "sivut",
+      "versio": 1,
+      "lisatty": "2026-11-16",
+      "kohdat": [
+        "Tietokoneella nimi, esittely ja napit ovat vasemmalla ja Seuraava rukous -kortti oikealla — Missä: Testimoskeijan etusivu, ylin osa",
+        "Ramadan-rivi (päivä 5, suhur, iftar) on rukouskortin alla oikealla palstalla — Missä: etusivu, ylin osa oikealla",
+        "Puhelimella kaikki on allekkain kuten ennen: nimi, rukouskortti, Ramadan-rivi, napit — Missä: etusivu puhelimella",
+        "Arabiaksi palstat ovat peilikuvana (teksti oikealla, rukouskortti vasemmalla) — Missä: etusivu → kielinappi (FI) → العربية",
+        "Palvelukorteissa kuvake on ilman vaaleaa taustaruutua — Missä: etusivu → Palvelut",
+        "Paneelissa on Ramadan: etusivun yläosan rivi -kohdassa uusi valinta Ei riviä, ja esikatselu kertoo sen — Missä: Testipaneeli → testimoskeija → Rukousajat ja Jumua → Ramadan: etusivun yläosan rivi",
+        "Kun Ei riviä on tallennettu ja sivu päivittynyt, yläosassa on vain Seuraava rukous, ja suhur ja iftar näkyvät Ramadan-osiossa alla — Missä: testimoskeijan etusivu (Avaa sivu ↗ tallennuksen jälkeen)",
+        "Palauta lopuksi valinnaksi Laatta, jotta testimoskeija on muille testaajille ennallaan — Missä: Testipaneeli → Rukousajat ja Jumua → Ramadan: etusivun yläosan rivi"
+      ],
+      "linkit": [
+        {
+          "nimi": "Sivu: Etusivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        },
+        {
+          "nimi": "Testipaneeli: Rukousajat ja Ramadan",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/rukousajat"
+        }
+      ]
+    },
+    {
       "id": "ulkoasun-hionta",
       "otsikko": "Ulkoasun hionta (unslop)",
       "kuvaus": "Sivupohjan pieni siistiminen unslop-tarkistuslistalla: ei ISOJA KIRJAIMIA väljällä harvennuksella, otsikot hieman kevyempiä, ei kultaisia hehkuja taustoissa, kortit eivät enää hyppää ylös hiiren alla, Ramadan-bannerin seuraava aika ei syki vaan on korostettu kultareunalla, ja Joka viikko -kortit täyttävät koko rivin. Värit, fontit, kuviot ja moskeijan omat asetukset pysyvät ennallaan. Lisäksi korjattu arabiankielisen Ramadan-bannerin päivänumero, joka näkyi väärin päin (/295 → 5/29).",

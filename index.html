@@ -9,14 +9,16 @@ rukousajat: true
 {%- assign _tausta = a.tausta | default: "kuvio" -%}
 {%- if _tausta == "kuva" and a.kuva and a.kuva != "" -%}{%- assign _alku_luokka = " u-alku--kuva" -%}{%- elsif _tausta == "vari" -%}{%- assign _alku_luokka = " u-alku--vari" -%}{%- else -%}{%- assign _alku_luokka = "" -%}{%- endif -%}
 <section class="u-alku{{ _alku_luokka }}"{% if _alku_luokka == " u-alku--kuva" %} style="--alku-kuva: url('{{ a.kuva | relative_url }}')"{% endif %}>
-  <div class="u-kehys u-alku__sisalto">
-    {% if m.hero_tunniste %}<p class="u-alku__tunniste">{% include kt.html arvo=m.hero_tunniste %}</p>{% endif %}
-    <h1>{% if m.hero_otsikko %}{% include kt.html arvo=m.hero_otsikko %}{% else %}{% include nimi.html moskeija=m %}{% endif %}</h1>
-    {% if m.esittely %}<p class="u-alku__esittely">{% include kt.html arvo=m.esittely %}</p>{% endif %}
-
-    {% include osat/seuraava.html %}
-    {% include osat/ramadan-lyhyt.html moskeija=m %}
-
+  {%- comment -%} Tietokoneella teksti ja napit vasemmalla, rukousajat oikealla; puhelimella allekkain: teksti, ajat, napit. {%- endcomment -%}
+  {%- capture _alku_ajat -%}{% include osat/seuraava.html %}{% include osat/ramadan-lyhyt.html moskeija=m %}{%- endcapture -%}
+  {%- assign _alku_ajat = _alku_ajat | strip -%}
+  <div class="u-kehys u-alku__sisalto{% if _alku_ajat != "" %} u-alku__sisalto--jako{% endif %}">
+    <div class="u-alku__teksti">
+      {% if m.hero_tunniste %}<p class="u-alku__tunniste">{% include kt.html arvo=m.hero_tunniste %}</p>{% endif %}
+      <h1>{% if m.hero_otsikko %}{% include kt.html arvo=m.hero_otsikko %}{% else %}{% include nimi.html moskeija=m %}{% endif %}</h1>
+      {% if m.esittely %}<p class="u-alku__esittely">{% include kt.html arvo=m.esittely %}</p>{% endif %}
+    </div>
+    {% if _alku_ajat != "" %}<div class="u-alku__ajat">{{ _alku_ajat }}</div>{% endif %}
     <div class="u-alku__napit">{% include osat/alkunapit.html moskeija=m %}
     </div>
   </div>
