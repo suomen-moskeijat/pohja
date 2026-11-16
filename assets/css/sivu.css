@@ -409,7 +409,7 @@ html.u-lukittu { overflow: hidden; }
 
 .u-rukoussivu { display: grid; gap: 20px; align-items: start; }
 .u-rukoussivu__tanaan { display: grid; gap: 14px; }
-@media (min-width: 1024px) { .u-rukoussivu { grid-template-columns: .9fr 1.1fr; gap: 28px; } .u-rukoussivu__tanaan { position: sticky; top: calc(var(--yla) + 20px); } }
+@media (min-width: 1024px) { .u-rukoussivu { grid-template-columns: .9fr 1.1fr; gap: 28px; } }
 .u-juma { display: flex; align-items: center; gap: 14px; padding: 16px 20px; }
 .u-juma > span:nth-child(2) { display: flex; flex-direction: column; flex: 1; }
 .u-juma small { color: var(--hieno); }
