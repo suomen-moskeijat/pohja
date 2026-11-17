@@ -815,6 +815,31 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-17"
+    },
+    {
+      "id": "palvelukortit-yhtenaiset",
+      "otsikko": "Palvelukortit samanlaisiksi kuin entiset Toimintamme-kortit",
+      "alue": "sivut",
+      "kuvaus": "Palvelut näkyvät kaikkialla samoina kortteina: puhelimella rivi (kuvake, nimi, lyhyt kuvaus ja nuoli), tietokoneella ruudukko. Koko kortti vie palvelun omalle sivulle. Sama etusivulla, Palvelut-sivulla ja palvelun sivun Muut palvelut -kohdassa.",
+      "aloitus": "Avaa testimoskeijan etusivu puhelimella ja selaa Palvelut-osioon.",
+      "kohdat": [
+        "Etusivun palvelukortit ovat rivejä nuolella ja vievät suoraan palvelun sivulle — Missä: Testimoskeija → Etusivu → Palvelut",
+        "Palvelut-sivulla ja Muut palvelut -kohdassa samat kortit — Missä: Testimoskeija → Palvelut; palvelu → Muut palvelut",
+        "Tietokoneella kortit ruudukkona, nuoli kortin alareunassa — Missä: samat sivut tietokoneella",
+        "Ulkoasu → Palvelujen näkymä: Ruudukko ja Lista toimivat edelleen — Missä: Testipaneeli → Ulkoasu"
+      ],
+      "linkit": [
+        {
+          "nimi": "Sivu: Etusivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        },
+        {
+          "nimi": "Sivu: Palvelut",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-17"
     }
   ]
 }

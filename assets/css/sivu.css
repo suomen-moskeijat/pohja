@@ -431,32 +431,41 @@ html.u-lukittu { overflow: hidden; }
 .u-galleria { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); }
 .u-galleria img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--r-s); }
 
-.u-palvelut { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-@media (min-width: 640px) { .u-palvelut { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 1024px) { .u-palvelut { grid-template-columns: repeat(3, 1fr); gap: 18px; } }
+/* Palvelut (oletus "kortit"): samat kortit kuin entiset Toimintamme-kortit etusivulla.
+   Puhelimella rivi (kuvake, nimi ja lyhyt kuvaus, nuoli), tabletilla kaksi riviä vierekkäin, tietokoneella ruudukko. */
+.u-palvelut { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+@media (min-width: 720px) { .u-palvelut { grid-template-columns: 1fr 1fr; } }
 .u-palvelu { display: flex; }
-.u-palvelu__linkki { position: relative; display: flex; flex-direction: column; gap: 10px; width: 100%; padding: 24px; overflow: hidden; background: var(--pinta); border: 1px solid var(--raja); border-radius: var(--r-l); box-shadow: var(--varjo-1); color: inherit; text-decoration: none; transition: border-color .15s, transform .15s, box-shadow .15s; }
+.u-palvelu__linkki { position: relative; display: flex; align-items: center; gap: 14px; width: 100%; padding: 16px; overflow: hidden; background: var(--pinta); border: 1px solid var(--raja); border-radius: var(--r-m); box-shadow: var(--varjo-1); color: inherit; text-decoration: none; transition: border-color .15s, transform .15s, box-shadow .15s; }
 a.u-palvelu__linkki:hover, a.u-palvelu__linkki:focus-visible { border-color: var(--kulta); box-shadow: var(--varjo-2); }
-.u-palvelu__kuva { display: block; width: calc(100% + 48px); max-width: none; margin: -24px -24px 6px; aspect-ratio: 16 / 9; object-fit: cover; }
-.u-palvelu__teksti { display: grid; gap: 6px; }
-.u-palvelu__nimi { font: 600 19px/1.25 var(--fo); color: var(--paa); }
-.u-palvelu__kuvaus { color: var(--hieno); }
-.u-palvelu__lisaa { margin-top: auto; padding-top: 4px; font-weight: 700; font-size: 14.5px; color: var(--paa); }
+.u-palvelu__kuva { display: none; }
+.u-palvelu__teksti { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
+.u-palvelu__nimi { font: 600 16px/1.3 var(--fo); color: var(--paa); }
+.u-palvelu__kuvaus { font-size: 14.5px; line-height: 1.45; color: var(--hieno); }
+.u-palvelu__lisaa { flex: none; color: var(--kulta-teksti); font-weight: 700; }
 div.u-palvelu__linkki .u-palvelu__lisaa { display: none; }
+@media (min-width: 1080px) {
+  .u-palvelut { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .u-palvelu__linkki { flex-direction: column; align-items: flex-start; padding: 24px; }
+  .u-palvelu__lisaa { margin-top: auto; }
+  .u-palvelu__kuva { display: block; width: calc(100% + 48px); max-width: none; margin: -24px -24px 4px; aspect-ratio: 16 / 9; object-fit: cover; }
+}
 /* Palvelut: ruudukko (pienet ruudut: kuvake ja nimi) */
 html[data-kortit-palvelut="ruudukko"] .u-palvelut { grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr)); gap: 12px; }
+html[data-kortit-palvelut="ruudukko"] .u-palvelu__linkki { flex-direction: column; }
 html[data-kortit-palvelut="ruudukko"] .u-palvelu__linkki { align-items: center; justify-content: center; text-align: center; padding: 20px 14px; gap: 10px; }
 html[data-kortit-palvelut="ruudukko"] .u-palvelu__kuva, html[data-kortit-palvelut="ruudukko"] .u-palvelu__kuvaus, html[data-kortit-palvelut="ruudukko"] .u-palvelu__lisaa { display: none; }
 html[data-kortit-palvelut="ruudukko"] .u-palvelu__nimi { font-size: 15.5px; }
 /* Palvelut: lista (rivi: kuvake, nimi, lyhyt kuvaus, nuoli) */
 html[data-kortit-palvelut="lista"] .u-palvelut { grid-template-columns: 1fr; gap: 10px; }
+html[data-kortit-palvelut="lista"] .u-palvelu__linkki { flex-direction: row; align-items: center; }
+html[data-kortit-palvelut="lista"] .u-palvelu__lisaa { margin-top: 0; }
 html[data-kortit-palvelut="lista"] .u-palvelu__linkki { flex-direction: row; align-items: center; gap: 16px; padding: 14px 18px; }
 html[data-kortit-palvelut="lista"] .u-palvelu__kuva { display: none; }
 html[data-kortit-palvelut="lista"] .u-palvelu__teksti { flex: 1; gap: 2px; }
 html[data-kortit-palvelut="lista"] .u-palvelu__nimi { font-size: 17px; }
 html[data-kortit-palvelut="lista"] .u-palvelu__kuvaus { font-size: 14.5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-html[data-kortit-palvelut="lista"] .u-palvelu__lisaa { margin: 0; padding: 0; font-size: 0; }
-html[data-kortit-palvelut="lista"] .u-palvelu__lisaa .u-flip { font-size: 20px; }
+html[data-kortit-palvelut="lista"] .u-palvelu__lisaa { margin: 0; }
 /* Palvelun oma sivu */
 .u-palvelusivu { display: grid; gap: 18px; }
 .u-palvelusivu__kortti { overflow: hidden; }

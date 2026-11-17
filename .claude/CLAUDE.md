@@ -17,6 +17,11 @@ moskeijan tiedon (m.kentta, teema t.kentta, ramadan, rukousajat …), lisää sa
 Etusivun osiot eivät tallenna omaa sisältöä: ne näyttävät tiedon sieltä, missä sitä muokataan (palvelut, tapahtumat …),
 ettei samaa tietoa ylläpidetä kahdessa paikassa. Vanhat tiedot siirretään paneelin muotoon (esim. palvelut omiksi sivuikseen), ei jätetä piiloon.
 
+## Yhtenäisyys
+Sama asia näyttää samalta kaikkialla: kortit, napit, lomakkeet, tekstit ja välit. Kun lisäät tai muutat osaa
+(esim. palvelukortti, toimintonappi, lomakkeen kenttä), käytä olemassa olevaa osaa (_includes/osat) ja tarkista sen
+kaikki esiintymät (etusivu, listasivu, oma sivu, "Muut …"). Ei uusia rinnakkaisia tyylejä samalle asialle.
+
 ## Kehitysprosessi
 - Uudet muutokset `testi`-haaraan, ei suoraan `main`-haaraan.
 - Jokaisesta muutoksesta kohta `testit.json`-tiedostoon (testi-haarassa): otsikko, kuvaus, aloitus,
