@@ -1302,6 +1302,15 @@ html[lang="ar"] .u-viikko__laatta b { font-size: 13px; }
 .u-viikko { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin: 0; }
 .u-viikko .u-viikko__paiva { display: flex; align-items: flex-start; gap: 16px; padding: 14px; }
 .u-viikko__sisus { padding-top: 4px; }
+/* Lista (oletus): laatta ja rivit samalle linjalle. Yksi rivi keskelle laattaa, useampi alkaa laatan keskeltä. */
+[data-kortit-tapahtumat="lista"] .u-viikko { --laatta: 60px; }
+[data-kortit-tapahtumat="lista"] .u-viikko .u-viikko__paiva { padding: 16px; }
+[data-kortit-tapahtumat="lista"] .u-viikko__laatta { width: var(--laatta); height: var(--laatta); }
+[data-kortit-tapahtumat="lista"] .u-viikko__sisus { padding-top: calc((var(--laatta) - 26px) / 2); }
+[data-kortit-tapahtumat="lista"] .u-viikko .u-viikko__paiva:has(.u-viikko__rivi:only-child) { align-items: center; }
+[data-kortit-tapahtumat="lista"] .u-viikko .u-viikko__paiva:has(.u-viikko__rivi:only-child) .u-viikko__sisus { padding-top: 0; }
+/* Etusivu ilman tulevia tapahtumia: viikko-ohjelma koko leveydellä, tietokoneella kaksi päivää rinnakkain */
+@media (min-width: 1024px) { [data-kortit-tapahtumat="lista"] .u-tapahtumaosio__sisus--viikko .u-viikko { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; } }
 [data-kortit-tapahtumat="kortit"] .u-viikko { grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 14px; }
 [data-kortit-tapahtumat="kortit"] .u-viikko .u-viikko__paiva { flex-direction: column; gap: 12px; padding: 16px; height: 100%; }
 [data-kortit-tapahtumat="kortit"] .u-viikko__sisus { padding-top: 0; width: 100%; }
@@ -1322,6 +1331,8 @@ html[lang="ar"] .u-viikko__laatta b { font-size: 13px; }
   .u-viikko__rivi a { grid-template-columns: 96px minmax(0, 1fr); gap: 8px; font-size: 15px; }
   .u-viikko .u-viikko__paiva { gap: 12px; padding: 12px; }
   .u-viikko__laatta { width: 48px; height: 48px; }
+  [data-kortit-tapahtumat="lista"] .u-viikko { --laatta: 48px; }
+  [data-kortit-tapahtumat="lista"] .u-viikko .u-viikko__paiva { padding: 12px; }
   [data-kortit-tapahtumat="tiivis"] .u-viikko { padding-inline: 16px; }
   [data-kortit-tapahtumat="tiivis"] .u-viikko .u-viikko__paiva { margin-inline: -16px; padding-inline: 16px; }
 }

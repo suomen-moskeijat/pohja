@@ -840,6 +840,30 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-17"
+    },
+    {
+      "id": "viikko-ohjelma-hionta",
+      "otsikko": "Etusivun tapahtumat: ei tyhjää Tulevat-korttia, päivälaatat linjassa",
+      "alue": "sivut",
+      "kuvaus": "Jos tulevia tapahtumia ei ole, etusivulla näkyy vain viikko-ohjelma koko leveydellä (tietokoneella kaksi päivää rinnakkain), ei tyhjää Tulevat-korttia. Päivälaatta (La, Su) ja tapahtumarivit ovat samalla linjalla: yksi rivi laatan keskellä, useampi alkaa laatan keskeltä.",
+      "aloitus": "Avaa testimoskeijan etusivu ja selaa Tapahtumat-osioon.",
+      "kohdat": [
+        "Päivälaatta ja ensimmäinen rivi ovat samalla korkeudella — Missä: Testimoskeija → Etusivu → Tapahtumat → Joka viikko",
+        "Kun tulevia tapahtumia ei ole (poista tai siirrä ne menneisyyteen), Tulevat-sarake katoaa ja viikko-ohjelma levenee — Missä: Testipaneeli → Tapahtumat → Etusivu",
+        "Puhelimella (320 ja 390 px) ei vaakavieritystä — Missä: Etusivu"
+      ],
+      "linkit": [
+        {
+          "nimi": "Sivu: Etusivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        },
+        {
+          "nimi": "Sivu: Tapahtumat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-17"
     }
   ]
 }
