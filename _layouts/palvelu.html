@@ -36,7 +36,8 @@ layout: sivu
     <div class="u-palvelusivu__sisus">
     {% if _johd_t != "" %}<p class="u-palvelusivu__johdanto">{{ _johd | strip }}</p>{% endif %}
     {% if _tyhja != "" %}<div class="u-proosa u-proosa--iso">{{ _teksti }}</div>{% endif %}
-  {% unless page.yhteys == false %}
+  {%- comment -%} Yhteydenotto vain, kun moskeija on ottanut sen käyttöön (paneeli: Palvelut → palvelu → Yhteydenotto) {%- endcomment %}
+  {% if page.yhteys == true %}
   <div class="u-palvelusivu__yhteys">
     {%- comment -%} Moskeijan oma teksti ja napin teksti (paneeli: Palvelut → palvelu → Yhteydenotto), muuten oletus {%- endcomment -%}
     {%- capture _yt -%}{% if page.yhteys_teksti %}{% include kt.html arvo=page.yhteys_teksti %}{% endif %}{%- endcapture -%}{%- assign _yt = _yt | strip -%}
@@ -52,7 +53,7 @@ layout: sivu
       {% if wa != "" %}<a class="u-nappi u-nappi--reuna" href="https://wa.me/{{ wa }}?text={{ page.title | url_encode }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" koko=18 %} WhatsApp</a>{% endif %}
     </div>
   </div>
-  {% endunless %}
+  {% endif %}
     </div>
   </article>
   {% if _oma_lomake %}{% include osat/lomake-oma.html lomake=page.lomake moskeija=m aihe=page.title %}{% endif %}

@@ -665,9 +665,10 @@
       "id": "palvelu-nappi-teksti",
       "otsikko": "Palvelun yhteydenotto: nappi päälle/pois, oma teksti ja napin teksti + esikatselu",
       "alue": "paneeli",
-      "kuvaus": "Palvelun muokkauksessa voi valita, näytetäänkö yhteydenotto ja Kysy tästä -nappi, sekä kirjoittaa oman tekstin napin yläpuolelle ja napin tekstin. Palvelun ja uuden oman sivun muokkauksessa on nyt esikatselu, joka päivittyy kirjoittaessa.",
+      "kuvaus": "Palvelun sivulla ei ole oletuksena yhteydenottoa eikä nappia. Moskeija ottaa sen käyttöön palvelukohtaisesti ja kirjoittaa tekstin napin yläpuolelle ja napin tekstin. Palvelun ja uuden oman sivun muokkauksessa on esikatselu.",
       "aloitus": "Avaa testipaneelin Palvelut ja jokin palvelu muokattavaksi.",
       "kohdat": [
+        "Uudessa palvelussa Yhteydenotto on oletuksena pois, eikä palvelun sivulla ole nappia — Missä: Testipaneeli → Palvelut → Uusi palvelu → Tallenna → sivu",
         "Esikatselu näkyy oikealla (puhelimella Näytä esikatselu -napista) ja päivittyy kirjoittaessa — Missä: Testipaneeli → Palvelut → palvelu",
         "Teksti napin yläpuolella ja Napin teksti näkyvät esikatselussa heti ja sivulla tallennuksen jälkeen — Missä: Testipaneeli → Palvelut → palvelu → Tallenna → sivu",
         "Tyhjä teksti = oletus (Ota yhteyttä … / Kysy tästä) — Missä: Testimoskeija → Palvelut → palvelu",
@@ -688,7 +689,7 @@
           "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/kouluvierailut-ja-tutustumiset/"
         }
       ],
-      "versio": 1,
+      "versio": 2,
       "lisatty": "2026-11-16"
     },
     {
