@@ -57,7 +57,8 @@ layout: sivu
   </article>
 </div>
 {%- capture _muut -%}{% include osat/palvelut.html moskeija=m ohita=page.url maara=6 %}{%- endcapture -%}{%- assign _muut = _muut | strip -%}
-{% if _muut != "" %}
+{%- comment -%} Muut palvelut vain, jos niitä on (ainoan palvelun sivulla ei tyhjää otsikkoa) {%- endcomment -%}
+{% if _muut contains "<li" %}
 <section class="u-osio u-kehys">
   <div class="u-osio__yla"><h2>{% include k.html a="muut_palvelut" %}</h2><a class="u-linkki" href="{{ '/palvelut/' | relative_url }}">{% include k.html a="kaikki_palvelut" %} <span class="u-flip" aria-hidden="true">→</span></a></div>
   {{ _muut }}
