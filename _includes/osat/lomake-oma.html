@@ -1,0 +1,30 @@
+{%- comment -%}
+  Moskeijan oma lomake (paneeli: samat kentät kaikkialla – omien sivujen Lomake-osio, palvelu, tapahtuma, lasten opetus).
+  Parametrit: lomake = { otsikko, teksti, kentat, suostumus, suostumus_teksti, nappi }, moskeija, aihe (viestin aihe suomeksi),
+  nappi_oletus (käännösavain, oletus laheta_viesti), otsikko_oletus (käännösavain, jos otsikkoa ei ole kirjoitettu), id (ankkuri, oletus lomake), suostumus_oletus (käännösavain).
+  Lähetys, kuittaus ja lähetystapa kuten muissa lomakkeissa (sivu.js: [data-lomake]).
+{%- endcomment -%}
+{%- assign m = include.moskeija -%}
+{%- assign _lo = include.lomake -%}
+{%- if _lo.kentat and _lo.kentat.size > 0 -%}
+{%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+{%- include osat/lomake-tapa.html moskeija=m -%}
+{%- capture _ot -%}{% if _lo.otsikko %}{% include kt.html arvo=_lo.otsikko %}{% endif %}{%- endcapture -%}{%- assign _ot = _ot | strip -%}
+{%- capture _te -%}{% if _lo.teksti %}{% include kt.html arvo=_lo.teksti %}{% endif %}{%- endcapture -%}{%- assign _te = _te | strip -%}
+{%- capture _st -%}{% if _lo.suostumus_teksti %}{% include kt.html arvo=_lo.suostumus_teksti %}{% endif %}{%- endcapture -%}{%- assign _st = _st | strip -%}
+{%- assign _so = include.suostumus_oletus | default: "lomake_suostumus" -%}{%- assign _no = include.nappi_oletus | default: "laheta_viesti" -%}
+{%- capture _na -%}{% if _lo.nappi %}{% include kt.html arvo=_lo.nappi %}{% endif %}{%- endcapture -%}{%- assign _na = _na | strip -%}
+<form class="u-kortti u-lomake" id="{{ include.id | default: 'lomake' }}" data-lomake data-osoite="{{ m.lomake_osoite }}" data-wa="{{ wa }}" data-tapa="{{ _tapa }}"{{ _lomake_attr }} data-sahkoposti="{{ m.sahkoposti }}" data-aihe="{{ include.aihe | escape }}" novalidate>
+  {% if _ot != "" %}<h2>{{ _ot }}</h2>{% elsif include.otsikko_oletus %}<h2>{% include k.html a=include.otsikko_oletus %}</h2>{% endif %}
+  {% if _te != "" %}<p class="u-hieno">{{ _te }}</p>{% endif %}
+  {% include osat/lomakekentat.html kentat=_lo.kentat %}
+  {%- if _lo.suostumus %}
+  <label class="u-hyvaksy"><input type="checkbox" name="hyvaksyn" required><span>{% if _st != "" %}{{ _st }}{% else %}{% include k.html a=_so %}{% endif %} <a href="{{ '/tietosuoja/' | relative_url }}">{% include k.html a="tietosuoja" %}</a></span></label>
+  {%- endif %}
+  {{ _tapavalinta }}
+  {{ _ansa }}
+  {% include osat/lomakeviestit.html %}
+  <button type="submit" class="u-nappi u-nappi--kulta u-nappi--levea">{% if _na != "" %}{{ _na }}{% else %}{% include k.html a=_no %}{% endif %}</button>
+  {% if _lo.suostumus %}<p class="u-hieno u-lomake__huom">{% include k.html a="lomake_huom" %}</p>{% endif %}
+</form>
+{%- endif -%}

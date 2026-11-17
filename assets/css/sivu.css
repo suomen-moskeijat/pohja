@@ -494,6 +494,10 @@ html[data-kortit-palvelut="lista"] .u-palvelu__lisaa .u-flip { font-size: 20px; 
 .u-lomake legend { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding: 0; font: 600 17px/1.2 var(--fo); color: var(--paa); }
 .u-lomake__nro { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--kulta-vaalea); color: var(--kulta-teksti); font: 600 14px/1 var(--ft); }
 .u-kentat { display: grid; gap: 14px; }
+/* Paneelin lomakkeet (osat/lomakekentat.html): osa = fieldset, puoli = kaksi kenttää vierekkäin */
+.u-lomake__osa:not(:has(> :not(legend))) { display: none; }
+.u-lomakeosio { margin-inline: auto; }
+@media (min-width: 560px) { .u-lomake__osa { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .u-lomake__osa > * { grid-column: 1 / -1; } .u-lomake__osa > .u-kentta--puoli { grid-column: auto; } }
 @media (min-width: 560px) { .u-kentat { grid-template-columns: 1fr 1fr; } .u-kentat:has(.u-kentta--kapea) { grid-template-columns: 1fr 120px; } }
 .u-kentta { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .u-kentta > span { font-size: 14px; font-weight: 700; color: var(--paa); }
@@ -1160,7 +1164,7 @@ a.u-palvelu__linkki:hover, .u-tapahtuma a:hover, .u-rj__kortti:hover, a.u-rmh:ho
 
 /* Tapahtuman sivu: tietokortti (milloin, aika, paikka, kenelle + Ilmoittaudu) ja kuvaus */
 .u-tapsivu { display: grid; gap: 18px; align-items: start; }
-@media (min-width: 900px) { .u-tapsivu { grid-template-columns: minmax(0, 1fr) 340px; } .u-taptieto { grid-column: 2; grid-row: 1; position: sticky; top: calc(var(--yla, 76px) + 16px); } .u-tapsivu__kuvaus { grid-column: 1; grid-row: 1; } .u-tapsivu--yksi { grid-template-columns: minmax(0, 460px); } .u-tapsivu--yksi .u-taptieto { grid-column: 1; position: static; } }
+@media (min-width: 900px) { .u-tapsivu { grid-template-columns: minmax(0, 1fr) 340px; } .u-taptieto { grid-column: 2; grid-row: 1; position: sticky; top: calc(var(--yla, 76px) + 16px); } .u-tapsivu__kuvaus { grid-column: 1; grid-row: 1; } .u-tapsivu--yksi { grid-template-columns: minmax(0, 460px); } .u-tapsivu--yksi .u-taptieto { grid-column: 1; position: static; } .u-tapsivu > .u-lomake { grid-column: 1; } .u-tapsivu:has(> .u-lomake):not(.u-tapsivu--yksi) .u-taptieto { grid-row: 1 / span 2; } }
 .u-taptieto { padding: 8px 24px 24px; }
 .u-taptieto__rivit { list-style: none; margin: 0; padding: 0; }
 .u-taptieto__rivit li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--raja); }

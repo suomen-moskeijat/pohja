@@ -777,6 +777,43 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-16"
+    },
+    {
+      "id": "lomakkeet-kaikkialla",
+      "otsikko": "Omat lomakkeet: samat kentät palveluun, tapahtumaan, omalle sivulle ja lasten opetukseen",
+      "alue": "paneeli",
+      "kuvaus": "Lomakkeen voi rakentaa itse samalla kenttäeditorilla kaikkialla: kentän nimi ja tyyppi (lyhyt/pitkä teksti, sähköposti, puhelin, numero, päivä, valinta, väliotsikko), pakollinen ja puolet leveydestä. Valinnainen suostumus omalla tekstillä ja lähetysnapin teksti. Lomakkeet näyttävät samalta ja lähtevät samalla tavalla (sähköposti/WhatsApp). Lasten opetuksen lomake on nyt muokattava: vanhat kentät ja opetuksen vaihtoehdot siirtyvät paneeliin itsestään.",
+      "aloitus": "Avaa testipaneelissa Palvelut → Kouluvierailut ja tutustumiset.",
+      "kohdat": [
+        "Oma lomake -kohdassa kytkin; kentät tulevat näkyviin vasta kun lomake on käytössä — Missä: Testipaneeli → Palvelut → palvelu → Oma lomake",
+        "Lisää kenttiä: väliotsikko, valinta (vaihtoehdot näkyvät vain valintakentälle), pakollinen; esikatselu päivittyy — Missä: sama",
+        "Tallennuksen jälkeen lomake näkyy palvelun sivulla ja Kysy tästä -nappi vie siihen — Missä: Testimoskeija → Palvelut → Kouluvierailut",
+        "Tapahtumassa Ilmoittautuminen: Omalla lomakkeella tapahtuman sivulla → lomake tapahtuman sivulle, Ilmoittaudu-nappi vie siihen — Missä: Testipaneeli → Tapahtumat → tapahtuma",
+        "Omalle sivulle voi lisätä Lomake-osion (esim. palaute) — Missä: Testipaneeli → Sivut → oma sivu → Lisää osio → Lomake",
+        "Lasten opetuksen lomakkeen kentät näkyvät paneelissa valmiina, ja sivu näyttää samalta kuin ennen; kenttiä voi lisätä ja poistaa — Missä: Testipaneeli → Sivut → Palvelut → Lasten opetukseen ilmoittautuminen → Ilmoittautumislomake",
+        "Täytä lomake sivulla ja lähetä: viestissä kenttien nimet ja vastaukset — Missä: lomakkeen sivu",
+        "Puhelimella (320 px) ja arabiaksi lomake toimii ilman vaakavieritystä — Missä: samat sivut"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi tapahtuma",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat/uusi"
+        },
+        {
+          "nimi": "Testipaneeli: Lasten opetus",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/palvelut?k=lasten_opetus"
+        },
+        {
+          "nimi": "Sivu: Lasten opetus",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/lasten-opetus/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-17"
     }
   ]
 }

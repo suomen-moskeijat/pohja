@@ -1,0 +1,47 @@
+{%- comment -%}
+  Lomakkeen kentät paneelin listasta (samat kaikissa lomakkeissa: Kysy moskeijalta, oma lomake, lasten opetus).
+  Parametri: kentat = [{ nimi, tyyppi, vaihtoehdot, pakollinen, puoli }].
+  Tyypit: rivi, pitka, sahkoposti, puhelin, numero, paiva, valinta, valiotsikko (aloittaa uuden numeroidun osan).
+  Kentät ovat osissa (fieldset); puoli = kaksi kenttää vierekkäin leveällä näytöllä.
+{%- endcomment -%}
+{%- assign _osassa = 0 -%}{%- assign _nro = 0 -%}
+<fieldset class="u-lomake__osa">
+{%- for _f in include.kentat -%}
+  {%- assign _n = "kentta_" | append: forloop.index -%}
+  {%- capture _nimi -%}{% include kt.html arvo=_f.nimi %}{%- endcapture -%}
+  {%- if _f.tyyppi == "valiotsikko" -%}
+    {%- assign _nro = _nro | plus: 1 -%}
+    {%- if _osassa > 0 %}
+</fieldset>
+<fieldset class="u-lomake__osa">
+    {%- endif %}
+  <legend><span class="u-lomake__nro">{{ _nro }}</span>{{ _nimi }}</legend>
+    {%- assign _osassa = 0 -%}
+    {%- continue -%}
+  {%- endif -%}
+  {%- assign _osassa = _osassa | plus: 1 -%}
+  {%- if _f.tyyppi == "valinta" -%}
+  {%- assign _vfi = _f.vaihtoehdot.fi | default: _f.vaihtoehdot -%}{%- assign _vfi = _vfi | split: "," -%}
+  {%- assign _vo_json = _f.vaihtoehdot | jsonify | slice: 0 %}
+  <div class="u-kentta" role="radiogroup"><span>{{ _nimi }}{% if _f.pakollinen %} *{% endif %}</span>
+    <div class="u-valinnat">
+    {%- for _v in _vfi -%}{%- assign _i = forloop.index0 -%}
+      <label class="u-valinta"><input type="radio" name="{{ _n }}" value="{{ _v | strip | escape }}"{% if _f.pakollinen and forloop.first %} required{% endif %}><span>
+      {%- if _vo_json == "{" -%}{%- for _l in site.kielet -%}{%- assign _lv = _f.vaihtoehdot[_l] | default: _f.vaihtoehdot.en | default: _f.vaihtoehdot.fi | split: "," -%}<span data-l="{{ _l }}">{{ _lv[_i] | default: _v | strip }}</span>{%- endfor -%}{%- else -%}{{ _v | strip }}{%- endif -%}
+      </span></label>
+    {%- endfor %}
+    </div>
+  </div>
+  {%- else %}
+  <label class="u-kentta{% if _f.puoli %} u-kentta--puoli{% endif %}"><span>{{ _nimi }}{% if _f.pakollinen %} *{% endif %}</span>
+  {%- case _f.tyyppi -%}
+  {%- when "pitka" -%}<textarea name="{{ _n }}" rows="4"{% if _f.pakollinen %} required{% endif %}></textarea>
+  {%- when "sahkoposti" -%}<input name="{{ _n }}" type="email" autocomplete="email" inputmode="email" dir="ltr"{% if _f.pakollinen %} required{% endif %}>
+  {%- when "puhelin" -%}<input name="{{ _n }}" type="tel" autocomplete="tel" inputmode="tel" pattern="[0-9+ \(\)\-]{6,20}" dir="ltr"{% if _f.pakollinen %} required{% endif %}>
+  {%- when "numero" -%}<input name="{{ _n }}" type="number" inputmode="numeric" min="0" dir="ltr"{% if _f.pakollinen %} required{% endif %}>
+  {%- when "paiva" -%}<input name="{{ _n }}" type="date"{% if _f.pakollinen %} required{% endif %}>
+  {%- else -%}<input name="{{ _n }}"{% if _f.pakollinen %} required{% endif %}>
+  {%- endcase -%}</label>
+  {%- endif -%}
+{%- endfor %}
+</fieldset>

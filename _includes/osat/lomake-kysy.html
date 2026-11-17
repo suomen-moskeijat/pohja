@@ -1,6 +1,6 @@
 {%- comment -%}
   Kysy moskeijalta -lomake. Moskeija päättää paneelissa (Yhteystiedot → Kysy moskeijalta -lomake):
-  yhteydenotto.kysy.pois (piilossa), otsikko, teksti ja kentat [{ nimi, tyyppi, vaihtoehdot, pakollinen }].
+  yhteydenotto.kysy.pois (piilossa), otsikko, teksti ja kentat (osat/lomakekentat.html, samat kuin muissa lomakkeissa).
   Ilman omia kenttiä: nimi, sähköposti, aihe ja viesti. Kenttien nimet ja vastaukset menevät viestiin suomeksi.
 {%- endcomment -%}
 {%- assign m = include.moskeija -%}
@@ -14,32 +14,7 @@
   <h2>{% if _ky.otsikko %}{% include kt.html arvo=_ky.otsikko %}{% else %}{% include k.html a="kysy_otsikko" %}{% endif %}</h2>
   <p class="u-hieno">{% if _ky.teksti %}{% include kt.html arvo=_ky.teksti %}{% else %}{% include k.html a="kysy_teksti" %}{% endif %}</p>
   {%- if _ky.kentat and _ky.kentat.size > 0 %}
-  {%- for _f in _ky.kentat -%}
-  {%- assign _n = "kentta_" | append: forloop.index -%}
-  {%- capture _nimi -%}{% include kt.html arvo=_f.nimi %}{%- endcapture -%}
-  {%- if _f.tyyppi == "valinta" -%}
-  {%- assign _vfi = _f.vaihtoehdot.fi | default: _f.vaihtoehdot -%}{%- assign _vfi = _vfi | split: "," -%}
-  <div class="u-kentta" role="radiogroup"><span>{{ _nimi }}{% if _f.pakollinen %} *{% endif %}</span>
-    <div class="u-valinnat">
-    {%- for _v in _vfi -%}{%- assign _i = forloop.index0 -%}
-      <label class="u-valinta"><input type="radio" name="{{ _n }}" value="{{ _v | strip | escape }}"{% if _f.pakollinen and forloop.first %} required{% endif %}><span>
-      {%- assign _vo_json = _f.vaihtoehdot | jsonify | slice: 0 -%}
-      {%- if _vo_json == "{" -%}{%- for _l in site.kielet -%}{%- assign _lv = _f.vaihtoehdot[_l] | default: _f.vaihtoehdot.en | default: _f.vaihtoehdot.fi | split: "," -%}<span data-l="{{ _l }}">{{ _lv[_i] | default: _v | strip }}</span>{%- endfor -%}{%- else -%}{{ _v | strip }}{%- endif -%}
-      </span></label>
-    {%- endfor %}
-    </div>
-  </div>
-  {%- else %}
-  <label class="u-kentta"><span>{{ _nimi }}{% if _f.pakollinen %} *{% endif %}</span>
-  {%- case _f.tyyppi -%}
-  {%- when "pitka" -%}<textarea name="{{ _n }}" rows="4"{% if _f.pakollinen %} required{% endif %}></textarea>
-  {%- when "sahkoposti" -%}<input name="{{ _n }}" type="email" autocomplete="email" inputmode="email" dir="ltr"{% if _f.pakollinen %} required{% endif %}>
-  {%- when "puhelin" -%}<input name="{{ _n }}" type="tel" autocomplete="tel" inputmode="tel" dir="ltr"{% if _f.pakollinen %} required{% endif %}>
-  {%- when "paiva" -%}<input name="{{ _n }}" type="date"{% if _f.pakollinen %} required{% endif %}>
-  {%- else -%}<input name="{{ _n }}"{% if _f.pakollinen %} required{% endif %}>
-  {%- endcase -%}</label>
-  {%- endif -%}
-  {%- endfor %}
+  {% include osat/lomakekentat.html kentat=_ky.kentat %}
   {%- else %}
   <div class="u-kentat">
     <label class="u-kentta"><span>{% include k.html a="nimi" %} *</span><input name="nimi" required autocomplete="name"></label>
