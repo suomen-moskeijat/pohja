@@ -1,10 +1,15 @@
 {%- comment -%}
   Tulevat (kertaluonteiset) tapahtumat. Toistuvat ovat viikko-ohjelmassa (osat/viikko-ohjelma.html).
-  Parametri: maara (enimmäismäärä). Menneet piilotetaan myös selaimessa.
+  Parametri: maara (enimmäismäärä). Menneet piilotetaan myös selaimessa. Kiinnitetyt ensin, sitten oma järjestys, sitten päivämäärä.
   Jos tulevia ei ole, näytetään tyhjä tila (paitsi jos piilota_tyhja=true).
 {%- endcomment -%}
 {%- assign tanaan = site.time | date: '%Y-%m-%d' -%}
-{%- assign kaikki = site.tapahtumat | sort: 'paiva' -%}
+{%- comment -%} Järjestys: kiinnitetyt (kiinnitetty: true) ensin, sitten paneelissa nuolilla järjestetyt (jarjestys), sitten päivämäärän mukaan {%- endcomment -%}
+{%- assign _tk = "" | split: "" -%}{%- assign _tj = "" | split: "" -%}{%- assign _tm = "" | split: "" -%}
+{%- assign _tp = site.tapahtumat | sort: 'paiva' -%}
+{%- for t in _tp -%}{%- if t.kiinnitetty == true -%}{%- assign _tk = _tk | push: t -%}{%- elsif t.jarjestys -%}{%- assign _tj = _tj | push: t -%}{%- else -%}{%- assign _tm = _tm | push: t -%}{%- endif -%}{%- endfor -%}
+{%- assign _tj = _tj | sort: 'jarjestys' -%}
+{%- assign kaikki = _tk | concat: _tj | concat: _tm -%}
 {%- assign naytetty = 0 -%}
 <ul class="u-tapahtumat" data-tulevat{% if include.maara %} data-maara="{{ include.maara }}"{% endif %}>
   {%- for t in kaikki -%}
@@ -16,17 +21,18 @@
   <li class="u-tapahtuma" data-paiva="{{ loppu }}">
     <a href="{{ t.url | relative_url }}">
       {% if t.kuva and t.kuva != "" %}<img class="u-tapahtuma__kuva" src="{{ t.kuva | relative_url }}" alt="" loading="lazy">{% endif %}
-      <time class="u-tapahtuma__pvm" datetime="{{ alku }}" dir="ltr"><b>{{ t.paiva | date: '%-d' }}</b><small>{{ t.paiva | date: '%-m/%Y' }}</small></time>
+      {%- assign _kkn = t.paiva | date: '%-m' -%}{%- assign _kka = "kk_" | append: _kkn | append: "_lyh" -%}
+      <time class="u-tapahtuma__pvm" datetime="{{ alku }}"><b dir="ltr">{{ t.paiva | date: '%-d' }}</b><small>{% include k.html a=_kka %}</small></time>
       <span class="u-tapahtuma__tiedot">
         <strong>{% include kolme.html fi=t.title doc=t %}</strong>
-        {% if t.alkaa and t.alkaa != "" %}<small>{% include k.html a="klo" %} <span dir="ltr">{{ t.alkaa }}{% if t.loppuu and t.loppuu != "" %}–{{ t.loppuu }}{% endif %}</span></small>{% endif %}
+        {% if t.alkaa and t.alkaa != "" %}<small>{% include k.html a="klo" %} <span dir="ltr" data-klo>{{ t.alkaa }}{% if t.loppuu and t.loppuu != "" %}–{{ t.loppuu }}{% endif %}</span></small>{% endif %}
       </span>
     </a>
   </li>
   {%- endfor -%}
 </ul>
 <div class="u-tyhja" data-tyhja{% if naytetty > 0 %} hidden{% endif %}>
-  <span class="u-ikoni">{% include ikoni-ph.html nimi="kalenteri" koko=26 %}</span>
-  <p>{% include k.html a="ei_tapahtumia" %}</p>
-  {% assign ig = include.moskeija.some.instagram %}{% if ig and ig != "" %}<a class="u-nappi u-nappi--reuna u-nappi--pieni" href="{{ ig }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="ig" koko=18 %} Instagram</a>{% endif %}
+  {% assign ig = include.moskeija.some.instagram %}
+  <p>{% if ig and ig != "" %}{% include k.html a="ei_tapahtumia" %}{% else %}{% include k.html a="ei_tulevia" %}{% endif %}</p>
+  {% if ig and ig != "" %}<a class="u-nappi u-nappi--reuna u-nappi--pieni" href="{{ ig }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="ig" koko=18 %} Instagram</a>{% endif %}
 </div>

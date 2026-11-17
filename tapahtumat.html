@@ -5,14 +5,25 @@ permalink: /tapahtumat/
 ---
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {% include osat/sivuhero.html avain="nav_tapahtumat" johdanto_avain="tapahtumat_teksti" %}
-<div class="u-kehys u-sivu u-sivu--kapea">
-  {%- capture _ohjelma -%}{% include osat/viikko-ohjelma.html %}{%- endcapture -%}{%- assign _ohjelma = _ohjelma | strip -%}
+{%- comment -%}
+  Sama asettelu kuin etusivun Tapahtumat-osiossa: tietokoneella Joka viikko (leveämpi) ja Tulevat rinnakkain, kun
+  molemmissa on sisältöä. Ilman tulevia viikko-ohjelma käyttää koko leveyden; ilman viikko-ohjelmaa kapea sarake.
+{%- endcomment -%}
+{%- assign tanaan = site.time | date: '%Y-%m-%d' -%}
+{%- assign tulevia = 0 -%}
+{%- for t in site.tapahtumat -%}{%- if t.toistuu == "viikoittain" -%}{%- continue -%}{%- endif -%}{%- assign loppu = t.paiva_loppuu | default: t.paiva | date: '%Y-%m-%d' -%}{%- if loppu >= tanaan -%}{%- assign tulevia = tulevia | plus: 1 -%}{%- endif -%}{%- endfor -%}
+{%- capture _ohjelma -%}{% include osat/viikko-ohjelma.html %}{%- endcapture -%}{%- assign _ohjelma = _ohjelma | strip -%}
+<div class="u-kehys u-sivu{% if _ohjelma == "" %} u-sivu--kapea{% endif %}">
+  <div class="u-tapahtumaosio__sisus{% if _ohjelma != "" and tulevia > 0 %} u-tapahtumaosio__sisus--kaksi{% elsif _ohjelma != "" %} u-tapahtumaosio__sisus--viikko{% endif %}">
   {% if _ohjelma != "" %}
-  <section class="u-viikko-osio" id="joka-viikko">
-    <h2>{% include k.html a="joka_viikko" %}</h2>
+  <section class="u-tapahtumaosio__lohko" id="joka-viikko">
+    <h2 class="u-tapahtumaosio__otsikko">{% include k.html a="joka_viikko" %}</h2>
     {{ _ohjelma }}
   </section>
-  <h2 class="u-tulevat-otsikko">{% include k.html a="tulevat_tapahtumat" %}</h2>
   {% endif %}
-  {% include osat/tapahtumat.html moskeija=m %}
+  <section class="u-tapahtumaosio__lohko" id="tulevat">
+    <h2 class="u-tapahtumaosio__otsikko">{% include k.html a="tulevat" %}</h2>
+    {% include osat/tapahtumat.html moskeija=m %}
+  </section>
+  </div>
 </div>

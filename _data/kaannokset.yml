@@ -328,4 +328,32 @@ rk_nousu:           { fi: "Nousu", en: "Sunrise", ar: "الشروق", so: "Qorra
 
 # --- Konekäännösmerkintä (näkyy kieliversioissa, joita ei ole merkitty ihmisen tarkistamiksi) ---
 kone_kaannos:       { fi: "Tämä kieliversio on käännetty tekoälyn avulla, ja siinä voi olla virheitä.", en: "This language version was translated with the help of AI and may contain errors.", ar: "تمت ترجمة هذه النسخة بمساعدة الذكاء الاصطناعي وقد تحتوي على أخطاء.", so: "Noocan luqadda waxaa lagu turjumay caawimaadda AI, waxaana laga yaabaa inay ku jiraan khaladaad." }
-
+# Tapahtumat (päivälaatat, kuukaudet, tulevat)
+vp_ma_lyh:          { fi: "Ma", en: "Mon", ar: "الاثنين", so: "Isn" }
+vp_ti_lyh:          { fi: "Ti", en: "Tue", ar: "الثلاثاء", so: "Tal" }
+vp_ke_lyh:          { fi: "Ke", en: "Wed", ar: "الأربعاء", so: "Arb" }
+vp_to_lyh:          { fi: "To", en: "Thu", ar: "الخميس", so: "Kha" }
+vp_pe_lyh:          { fi: "Pe", en: "Fri", ar: "الجمعة", so: "Jim" }
+vp_la_lyh:          { fi: "La", en: "Sat", ar: "السبت", so: "Sab" }
+vp_su_lyh:          { fi: "Su", en: "Sun", ar: "الأحد", so: "Axd" }
+vp_ma_t:            { fi: "Maanantaisin", en: "Mondays", ar: "كل اثنين", so: "Isniin kasta" }
+vp_ti_t:            { fi: "Tiistaisin", en: "Tuesdays", ar: "كل ثلاثاء", so: "Talaado kasta" }
+vp_ke_t:            { fi: "Keskiviikkoisin", en: "Wednesdays", ar: "كل أربعاء", so: "Arbaco kasta" }
+vp_to_t:            { fi: "Torstaisin", en: "Thursdays", ar: "كل خميس", so: "Khamiis kasta" }
+vp_pe_t:            { fi: "Perjantaisin", en: "Fridays", ar: "كل جمعة", so: "Jimce kasta" }
+vp_la_t:            { fi: "Lauantaisin", en: "Saturdays", ar: "كل سبت", so: "Sabti kasta" }
+vp_su_t:            { fi: "Sunnuntaisin", en: "Sundays", ar: "كل أحد", so: "Axad kasta" }
+kk_1_lyh:          { fi: "tammi", en: "Jan", ar: "يناير", so: "Jan" }
+kk_2_lyh:          { fi: "helmi", en: "Feb", ar: "فبراير", so: "Feb" }
+kk_3_lyh:          { fi: "maalis", en: "Mar", ar: "مارس", so: "Mar" }
+kk_4_lyh:          { fi: "huhti", en: "Apr", ar: "أبريل", so: "Apr" }
+kk_5_lyh:          { fi: "touko", en: "May", ar: "مايو", so: "May" }
+kk_6_lyh:          { fi: "kesä", en: "Jun", ar: "يونيو", so: "Jun" }
+kk_7_lyh:          { fi: "heinä", en: "Jul", ar: "يوليو", so: "Jul" }
+kk_8_lyh:          { fi: "elo", en: "Aug", ar: "أغسطس", so: "Aug" }
+kk_9_lyh:          { fi: "syys", en: "Sep", ar: "سبتمبر", so: "Sep" }
+kk_10_lyh:         { fi: "loka", en: "Oct", ar: "أكتوبر", so: "Oct" }
+kk_11_lyh:         { fi: "marras", en: "Nov", ar: "نوفمبر", so: "Nov" }
+kk_12_lyh:         { fi: "joulu", en: "Dec", ar: "ديسمبر", so: "Dec" }
+ei_tulevia:         { fi: "Ei tulevia tapahtumia juuri nyt", en: "No upcoming events right now", ar: "لا توجد فعاليات قادمة حالياً", so: "Ma jiraan dhacdooyin soo socda hadda" }
+tulevat:            { fi: "Tulevat", en: "Upcoming", ar: "القادمة", so: "Soo socda" }

@@ -12,8 +12,8 @@ layout: sivu
     {%- assign _vp = page.viikonpaivat -%}
     {%- if _vp == nil or _vp.size == 0 -%}{%- assign _wi = page.paiva | date: '%w' | plus: 0 -%}{%- assign _vp = _w[_wi] | split: "," -%}{%- endif -%}
     {%- assign _jarj = "ma,ti,ke,to,pe,la,su" | split: "," -%}
-    {%- capture _vpt -%}{%- for _p in _jarj -%}{%- if _vp contains _p -%}{% assign _a = "vp_" | append: _p %}{% include k.html a=_a %}|{%- endif -%}{%- endfor -%}{%- endcapture -%}
-    {% include k.html a="joka_viikko" %}: {{ _vpt | split: "|" | join: ", " }}
+    {%- capture _vpt -%}{%- for _p in _jarj -%}{%- if _vp contains _p -%}{% assign _a = "vp_" | append: _p | append: "_t" %}{% include k.html a=_a %}|{%- endif -%}{%- endfor -%}{%- endcapture -%}
+    {{ _vpt | split: "|" | join: ", " }}
     {%- assign _alku = page.paiva | date: '%Y-%m-%d' -%}{%- assign _nyt = site.time | date: '%Y-%m-%d' -%}
     {%- if _alku > _nyt %}<small>{% include k.html a="alkaen" %} <span dir="ltr">{{ page.paiva | date: '%-d.%-m.%Y' }}</span>{% if page.paiva_loppuu and page.paiva_loppuu != "" %} · {% include k.html a="asti" %} <span dir="ltr">{{ page.paiva_loppuu | date: '%-d.%-m.%Y' }}</span>{% endif %}</small>
     {%- elsif page.paiva_loppuu and page.paiva_loppuu != "" %}<small>{% include k.html a="asti" %} <span dir="ltr">{{ page.paiva_loppuu | date: '%-d.%-m.%Y' }}</span></small>{% endif -%}
@@ -26,12 +26,14 @@ layout: sivu
   {%- if page.toistuu == "viikoittain" -%}{% include k.html a="joka_viikko" %}{%- else -%}<span dir="ltr">{{ page.paiva | date: '%-d.%-m.%Y' }}{% if page.paiva_loppuu and page.paiva_loppuu != "" %}–{{ page.paiva_loppuu | date: '%-d.%-m.' }}{% endif %}</span>{%- endif -%}
 {%- endcapture -%}
 {%- assign _ilmo = "" -%}
-{%- if page.ilmoittaudu == "lomake" -%}
+{%- assign _oma_lomake = false -%}
+{%- if page.ilmoittaudu == "lomake" or page.ilmoittaudu == "oma" -%}
   {%- if page.toistuu == "viikoittain" -%}{%- assign _ia = page.title -%}{%- else -%}{%- capture _ia -%}{{ page.title }} ({{ page.paiva | date: '%-d.%-m.%Y' }}){%- endcapture -%}{%- endif -%}
   {%- capture _ia -%}{{ site.data.kaannokset.ilmoittautuminen.fi }}: {{ _ia }}{%- endcapture -%}
-  {%- capture _ilmo -%}{{ '/yhteystiedot/' | relative_url }}?aihe={{ _ia | url_encode }}#kysy{%- endcapture -%}
+  {%- if _oma_lomake -%}{%- assign _ilmo = "#lomake" -%}{%- else -%}{%- capture _ilmo -%}{{ '/yhteystiedot/' | relative_url }}?aihe={{ _ia | url_encode }}#kysy{%- endcapture -%}{%- endif -%}
 {%- elsif page.ilmoittaudu != "ei" and page.ilmoittautuminen and page.ilmoittautuminen != "" -%}
-  {%- assign _ilmo = page.ilmoittautuminen -%}{%- assign _ulk = true -%}
+  {%- assign _ilmo = page.ilmoittautuminen | strip -%}{%- assign _i1 = _ilmo | slice: 0 -%}
+  {%- if _i1 == "/" -%}{%- assign _ilmo = _ilmo | relative_url -%}{%- assign _ulk = false -%}{%- else -%}{%- assign _ulk = true -%}{%- endif -%}
 {%- endif -%}
 {%- comment -%} Toimintonappi samoilla kentillä kuin palvelussa ja lasten opetuksessa (paneeli: yhteys_teksti, yhteys_nappi) {%- endcomment -%}
 {%- capture _yt -%}{% if page.yhteys_teksti %}{% include kt.html arvo=page.yhteys_teksti %}{% endif %}{%- endcapture -%}{%- assign _yt = _yt | strip -%}
@@ -42,11 +44,6 @@ layout: sivu
   <div class="u-kehys">
     <p class="u-eyebrow u-eyebrow--vaalea"><a href="{{ '/tapahtumat/' | relative_url }}">{% include k.html a="nav_tapahtumat" %}</a></p>
     <h1>{% include kolme.html fi=page.title doc=page %}</h1>
-    <p class="u-tapsivu__pika">
-      <span>{% include ikoni-ph.html nimi="kalenteri" koko=16 %} {{ _milloin_lyhyt | strip }}</span>
-      {% if page.alkaa and page.alkaa != "" %}<span dir="ltr">{% include ikoni-ph.html nimi="kello" koko=16 %} {{ page.alkaa }}{% if page.loppuu and page.loppuu != "" %}–{{ page.loppuu }}{% endif %}</span>{% endif %}
-      <span>{% include ikoni-ph.html nimi="sijainti" koko=16 %} {% if page.paikka and page.paikka != "" %}{{ page.paikka }}{% else %}{{ m.title }}{% endif %}</span>
-    </p>
   </div>
 </section>
 {%- capture _kuvaus -%}{{ content }}{%- endcapture -%}
@@ -58,13 +55,13 @@ layout: sivu
   <aside class="u-kortti u-taptieto" id="ilmoittaudu">
     <ul class="u-taptieto__rivit">
       <li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="kalenteri" koko=20 %}</span><span><small>{% include k.html a="tap_milloin" %}</small><strong>{{ _milloin | strip }}</strong></span></li>
-      {% if page.alkaa and page.alkaa != "" %}<li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="kello" koko=20 %}</span><span><small>{% include k.html a="tap_aika" %}</small><strong dir="ltr">{{ page.alkaa }}{% if page.loppuu and page.loppuu != "" %}–{{ page.loppuu }}{% endif %}</strong></span></li>{% endif %}
+      {% if page.alkaa and page.alkaa != "" %}<li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="kello" koko=20 %}</span><span><small>{% include k.html a="tap_aika" %}</small><strong dir="ltr" data-klo>{{ page.alkaa }}{% if page.loppuu and page.loppuu != "" %}–{{ page.loppuu }}{% endif %}</strong></span></li>{% endif %}
       <li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="sijainti" koko=20 %}</span><span><small>{% include k.html a="tap_paikka" %}</small><strong>{% if page.paikka and page.paikka != "" %}{{ page.paikka }}{% else %}{{ m.title }}{% if m.osoite and m.osoite != "" %}<small class="u-taptieto__osoite">{{ m.osoite }}</small>{% endif %}{% endif %}</strong></span></li>
       {% if page.kenelle and page.kenelle != "" and page.kenelle != "kaikki" %}{% assign _ka = "kenelle_" | append: page.kenelle %}<li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="ryhma" koko=20 %}</span><span><small>{% include k.html a="tap_kenelle" %}</small><strong>{% include k.html a=_ka %}</strong></span></li>{% endif %}
     </ul>
     {% if _ilmo != "" %}
     <div class="u-taptieto__toiminto">
-      {% if _yt != "" %}<small>{{ _yt }}</small>{% elsif page.ilmoittaudu == "lomake" %}<small>{% include k.html a="ilmoittaudu_teksti" %}</small>{% endif %}
+      {% if _yt != "" %}<small>{{ _yt }}</small>{% elsif page.ilmoittaudu == "lomake" or page.ilmoittaudu == "oma" %}<small>{% include k.html a="ilmoittaudu_teksti" %}</small>{% endif %}
       <a class="u-nappi u-nappi--kulta u-taptieto__nappi" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{{ _nappi_t | strip }}</a>
     </div>
     {% endif %}
@@ -72,7 +69,7 @@ layout: sivu
 </div>
 {% if _ilmo != "" %}
 <div class="u-ilmopalkki" data-ilmopalkki hidden>
-  <span><b>{% include kolme.html fi=page.title doc=page %}</b><small>{{ _milloin_lyhyt | strip }}{% if page.alkaa and page.alkaa != "" %} · <span dir="ltr">{{ page.alkaa }}</span>{% endif %}</small></span>
+  <span><b>{% include kolme.html fi=page.title doc=page %}</b><small>{{ _milloin_lyhyt | strip }}{% if page.alkaa and page.alkaa != "" %} · <span dir="ltr" data-klo>{{ page.alkaa }}</span>{% endif %}</small></span>
   <a class="u-nappi u-nappi--kulta" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{{ _nappi_t | strip }}</a>
 </div>
 {% endif %}

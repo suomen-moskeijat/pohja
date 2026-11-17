@@ -20,13 +20,16 @@
 {%- for t in site.tapahtumat -%}{%- if t.toistuu == "viikoittain" -%}{%- continue -%}{%- endif -%}{%- assign loppu = t.paiva_loppuu | default: t.paiva | date: '%Y-%m-%d' -%}{%- if loppu >= tanaan -%}{%- assign tulevia = tulevia | plus: 1 -%}{%- endif -%}{%- endfor -%}
 {%- capture _ohjelma -%}{% include osat/viikko-ohjelma.html %}{%- endcapture -%}{%- assign _ohjelma = _ohjelma | strip -%}
 {% if tulevia > 0 or _ohjelma != "" %}
-<section class="u-osio u-kehys">
+<section class="u-osio u-kehys u-tapahtumaosio">
   <div class="u-osio__yla">
-    <h2>{% include k.html a="tulevat_tapahtumat" %}</h2>
+    <h2>{% include k.html a="nav_tapahtumat" %}</h2>
     <a class="u-linkki" href="{{ '/tapahtumat/' | relative_url }}">{% include k.html a="kaikki_tapahtumat" %} <span class="u-flip" aria-hidden="true">→</span></a>
   </div>
-  {% if tulevia > 0 %}{% include osat/tapahtumat.html maara=3 moskeija=m piilota_tyhja=true %}{% endif %}
-  {% if _ohjelma != "" %}<h3 class="u-viikko-otsikko">{% include k.html a="joka_viikko" %}</h3>{{ _ohjelma }}{% endif %}
+  {%- comment -%} Tulevat vain, kun niitä on: muuten viikko-ohjelma käyttää koko leveyden (ei tyhjää korttia vieressä) {%- endcomment %}
+  <div class="u-tapahtumaosio__sisus{% if _ohjelma != "" and tulevia > 0 %} u-tapahtumaosio__sisus--kaksi{% elsif _ohjelma != "" %} u-tapahtumaosio__sisus--viikko{% endif %}">
+    {% if _ohjelma != "" %}<div class="u-tapahtumaosio__lohko"><h3 class="u-tapahtumaosio__otsikko">{% include k.html a="joka_viikko" %}</h3>{{ _ohjelma }}</div>{% endif %}
+    {% if tulevia > 0 %}<div class="u-tapahtumaosio__lohko"><h3 class="u-tapahtumaosio__otsikko">{% include k.html a="tulevat" %}</h3>{% include osat/tapahtumat.html maara=3 moskeija=m %}</div>{% endif %}
+  </div>
 </section>
 {% endif %}
 {%- when "palvelut" %}
