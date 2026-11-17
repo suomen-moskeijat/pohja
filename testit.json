@@ -865,6 +865,26 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-17"
+    },
+    {
+      "id": "linkkivalitsin-palvelut",
+      "otsikko": "Linkin valitsimessa myös palvelut",
+      "alue": "paneeli",
+      "kuvaus": "Kun linkin kohteen valitsee (esim. tapahtuman Ilmoittautuminen → Oma linkki → Valitse sivu tai tiedosto), palvelut näkyvät omana ryhmänään. Näin tapahtuman Ilmoittaudu-napin voi ohjata palvelun sivulle ja sen lomakkeeseen.",
+      "aloitus": "Avaa testipaneelissa Tapahtumat → Uusi tapahtuma.",
+      "kohdat": [
+        "Ilmoittautuminen: Oma linkki → Valitse sivu tai tiedosto → Palvelut-ryhmässä kaikki palvelut järjestyksessä — Missä: Testipaneeli → Tapahtumat → Uusi",
+        "Palvelun valinta täyttää osoitteen (esim. /palvelut/kouluvierailut-ja-tutustumiset/) ja tapahtuman nappi vie sinne — Missä: sama → Tallenna → tapahtuman sivu",
+        "Valitsin toimii puhelimella ilman vaakavieritystä — Missä: sama puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Uusi tapahtuma",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat/uusi"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-17"
     }
   ]
 }
