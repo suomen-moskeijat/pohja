@@ -1,6 +1,7 @@
 {%- comment -%}
   Moskeijan palvelut korteina (_palvelut/*.md, järjestys: jarjestys). Kortti vie palvelun omalle sivulle.
   Ulkoasu tulee moskeijan valinnasta (teema.tyyli_palvelut → html[data-kortit-palvelut]: kortit | ruudukko | lista).
+  Oletus (kortit) on sama kuin entiset Toimintamme-kortit: puhelimella rivi nuolella, tietokoneella ruudukko.
   Vanhat palvelut moskeijan tiedoissa (palvelut: [ { kuvake, nimi, kuvaus } ]) näytetään, kunnes ne on siirretty.
   Parametrit: moskeija, maara (enimmäismäärä), ohita (palvelun url, joka jätetään pois).
 {%- endcomment -%}
@@ -19,7 +20,7 @@
       <strong class="u-palvelu__nimi">{% include kolme.html fi=p.title doc=p %}</strong>
       {% if p.kuvaus %}<span class="u-palvelu__kuvaus">{% include kt.html arvo=p.kuvaus %}</span>{% endif %}
     </span>
-    <span class="u-palvelu__lisaa">{% include k.html a="lue_lisaa" %} <span class="u-flip" aria-hidden="true">→</span></span>
+    <span class="u-palvelu__lisaa"><span class="u-nakymaton">{% include k.html a="lue_lisaa" %}</span><span class="u-flip" aria-hidden="true">→</span></span>
   </a></li>
   {%- endfor -%}
 </ul>
