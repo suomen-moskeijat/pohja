@@ -3,7 +3,7 @@ layout: sivu
 ---
 {%- comment -%}
   Yksittäisen tapahtuman sivu (_tapahtumat/*.md): otsikko, tietokortti (milloin, kellonaika, paikka, kenelle)
-  ja Ilmoittaudu-painike (ilmoittaudu: lomake → yhteydenottolomake aiheella, tai oma linkki), sitten kuvaus.
+  ja Ilmoittaudu-painike (ilmoittaudu: linkki → oma osoite tai tyhjänä kysymyslomake aiheella, oma → lomake sivulla; vanha arvo lomake = kysymyslomake), sitten kuvaus.
 {%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {%- assign _w = "su,ma,ti,ke,to,pe,la" | split: "," -%}
@@ -22,12 +22,12 @@ layout: sivu
     {% include k.html a=_vpa %} <span dir="ltr">{{ page.paiva | date: '%-d.%-m.%Y' }}{% if page.paiva_loppuu and page.paiva_loppuu != "" %} – {{ page.paiva_loppuu | date: '%-d.%-m.%Y' }}{% endif %}</span>
   {%- endif -%}
 {%- endcapture -%}
-{%- capture _milloin_lyhyt -%}
-  {%- if page.toistuu == "viikoittain" -%}{% include k.html a="joka_viikko" %}{%- else -%}<span dir="ltr">{{ page.paiva | date: '%-d.%-m.%Y' }}{% if page.paiva_loppuu and page.paiva_loppuu != "" %}–{{ page.paiva_loppuu | date: '%-d.%-m.' }}{% endif %}</span>{%- endif -%}
-{%- endcapture -%}
 {%- assign _ilmo = "" -%}
 {%- assign _oma_lomake = false -%}{%- if page.ilmoittaudu == "oma" and page.lomake.kentat and page.lomake.kentat.size > 0 -%}{%- assign _oma_lomake = true -%}{%- endif -%}
-{%- if page.ilmoittaudu == "lomake" or page.ilmoittaudu == "oma" -%}
+{%- assign _ilmo_l = page.ilmoittautuminen | default: "" | strip -%}
+{%- comment -%} Ilmoittaudu-nappi ilman osoitetta (linkki, vanha arvo lomake) vie kysymyslomakkeeseen aiheella {%- endcomment -%}
+{%- assign _kysy = false -%}{%- if page.ilmoittaudu == "lomake" or page.ilmoittaudu == "linkki" and _ilmo_l == "" -%}{%- assign _kysy = true -%}{%- endif -%}
+{%- if _kysy or page.ilmoittaudu == "oma" -%}
   {%- if page.toistuu == "viikoittain" -%}{%- assign _ia = page.title -%}{%- else -%}{%- capture _ia -%}{{ page.title }} ({{ page.paiva | date: '%-d.%-m.%Y' }}){%- endcapture -%}{%- endif -%}
   {%- capture _ia -%}{{ site.data.kaannokset.ilmoittautuminen.fi }}: {{ _ia }}{%- endcapture -%}
   {%- if _oma_lomake -%}{%- assign _ilmo = "#lomake" -%}{%- else -%}{%- capture _ilmo -%}{{ '/yhteystiedot/' | relative_url }}?aihe={{ _ia | url_encode }}#kysy{%- endcapture -%}{%- endif -%}
@@ -56,21 +56,22 @@ layout: sivu
     <ul class="u-taptieto__rivit">
       <li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="kalenteri" koko=20 %}</span><span><small>{% include k.html a="tap_milloin" %}</small><strong>{{ _milloin | strip }}</strong></span></li>
       {% if page.alkaa and page.alkaa != "" %}<li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="kello" koko=20 %}</span><span><small>{% include k.html a="tap_aika" %}</small><strong dir="ltr" data-klo>{{ page.alkaa }}{% if page.loppuu and page.loppuu != "" %}–{{ page.loppuu }}{% endif %}</strong></span></li>{% endif %}
-      <li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="sijainti" koko=20 %}</span><span><small>{% include k.html a="tap_paikka" %}</small><strong>{% if page.paikka and page.paikka != "" %}{{ page.paikka }}{% else %}{{ m.title }}{% if m.osoite and m.osoite != "" %}<small class="u-taptieto__osoite">{{ m.osoite }}</small>{% endif %}{% endif %}</strong></span></li>
+      {%- comment -%} Paikka: oma paikan nimi ja osoite (paneeli) tai moskeija; Reittiohjeet avaa Google Mapsin (ei avainta) {%- endcomment -%}
+      {%- assign _pn = page.paikka | default: "" | strip -%}{%- assign _po = page.osoite | default: "" | strip -%}
+      {%- if _po != "" -%}{%- assign _rk = _po | url_encode -%}{%- elsif _pn != "" -%}{%- assign _rk = _pn | url_encode -%}
+      {%- else -%}{%- capture _rk -%}{% include osat/reitti.html moskeija=m %}{%- endcapture -%}{%- assign _rk = _rk | strip -%}{%- endif %}
+      <li data-rivi="paikka"><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="sijainti" koko=20 %}</span><span><small>{% include k.html a="tap_paikka" %}</small><strong>{% if _pn != "" or _po != "" %}{% if _pn != "" %}{{ _pn }}{% if _po != "" %}<small class="u-taptieto__osoite">{{ _po }}</small>{% endif %}{% else %}{{ _po }}{% endif %}{% else %}{{ m.title }}{% if m.osoite and m.osoite != "" %}<small class="u-taptieto__osoite">{{ m.osoite }}</small>{% endif %}{% endif %}</strong>{% if _rk != "" %}<a class="u-linkki u-taptieto__reitti" href="https://www.google.com/maps/dir/?api=1&amp;destination={{ _rk | strip }}" target="_blank" rel="noopener">{% include k.html a="reittiohjeet" %} <span class="u-flip" aria-hidden="true">→</span></a>{% endif %}</span></li>
       {% if page.kenelle and page.kenelle != "" and page.kenelle != "kaikki" %}{% assign _ka = "kenelle_" | append: page.kenelle %}<li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="ryhma" koko=20 %}</span><span><small>{% include k.html a="tap_kenelle" %}</small><strong>{% include k.html a=_ka %}</strong></span></li>{% endif %}
     </ul>
     {% if _ilmo != "" %}
     <div class="u-taptieto__toiminto">
-      {% if _yt != "" %}<small>{{ _yt }}</small>{% elsif page.ilmoittaudu == "lomake" or page.ilmoittaudu == "oma" %}<small>{% include k.html a="ilmoittaudu_teksti" %}</small>{% endif %}
+      {% if page.yhteys_teksti == false %}{% elsif _yt != "" %}<small>{{ _yt }}</small>{% elsif _kysy or page.ilmoittaudu == "oma" %}<small>{% include k.html a="ilmoittaudu_teksti" %}</small>{% endif %}
       <a class="u-nappi u-nappi--kulta" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{{ _nappi_t | strip }}</a>
     </div>
     {% endif %}
   </aside>
-  {% if _oma_lomake %}{% include osat/lomake-oma.html lomake=page.lomake moskeija=m aihe=_ia nappi_oletus="laheta_ilmoittautuminen" otsikko_oletus="ilmoittaudu" %}{% endif %}
+  {% if _oma_lomake %}{% include osat/lomake-oma.html lomake=page.lomake moskeija=m aihe=_ia lahde=page.path nappi_oletus="laheta_ilmoittautuminen" otsikko_oletus="ilmoittaudu" %}{% endif %}
 </div>
-{% if _ilmo != "" %}
-<div class="u-ilmopalkki" data-ilmopalkki hidden>
-  <span><b>{% include kolme.html fi=page.title doc=page %}</b><small>{{ _milloin_lyhyt | strip }}{% if page.alkaa and page.alkaa != "" %} · <span dir="ltr" data-klo>{{ page.alkaa }}</span>{% endif %}</small></span>
-  <a class="u-nappi u-nappi--kulta" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{{ _nappi_t | strip }}</a>
-</div>
-{% endif %}
+{%- comment -%} Kuvakkeet hallintapaneelin reaaliaikaiseen esikatseluun (sivu.js: esikSivu) {%- endcomment %}
+{%- assign _esik_ik = "kalenteri,kello,sijainti,ryhma" | split: "," -%}
+<template id="u-esik-ikonit">{% for _i in _esik_ik %}<span data-ikoni="{{ _i }}">{% include ikoni-ph.html nimi=_i koko=20 %}</span>{% endfor %}</template>

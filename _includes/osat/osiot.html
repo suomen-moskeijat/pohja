@@ -85,7 +85,18 @@
 {%- when "lomake" %}
 {%- capture _la -%}{% if o.otsikko %}{{ o.otsikko.fi | default: o.otsikko }}{% else %}{{ page.title | default: m.title }}{% endif %}{%- endcapture -%}
 {%- capture _lid -%}lomake-{{ forloop.index }}{%- endcapture -%}
-<section class="u-osio u-kehys"><div class="u-sivu--kapea u-lomakeosio">{% include osat/lomake-oma.html lomake=o moskeija=m aihe=_la id=_lid %}</div></section>
+<section class="u-osio u-kehys"><div class="u-sivu--kapea u-lomakeosio">{% include osat/lomake-oma.html lomake=o moskeija=m aihe=_la id=_lid lahde=page.path osio=forloop.index0 %}</div></section>
+{%- when "nosto" %}
+{%- comment -%} Nosto: korostettu laatikko ja nappi (esim. Ilmoita lapsesi opetukseen). Kaikki tekstit paneelista, mitään ei lisätä itsestään. {%- endcomment -%}
+<div class="u-kehys"><section class="u-nosto">
+  {% if o.kuvake and o.kuvake != "" %}<span class="u-nosto__ikoni">{% include ikoni-ph.html nimi=o.kuvake koko=28 %}</span>{% endif %}
+  <div class="u-nosto__teksti">
+    {% if o.yla %}<p class="u-eyebrow">{% include kt.html arvo=o.yla %}</p>{% endif %}
+    {% if o.otsikko %}<h2>{% include kt.html arvo=o.otsikko %}</h2>{% endif %}
+    {% if o.teksti %}<p>{% include kt.html arvo=o.teksti %}</p>{% endif %}
+  </div>
+  {% if o.nappi_teksti and o.nappi_linkki and o.nappi_linkki != "" %}{%- assign _nl = o.nappi_linkki | slice: 0, 4 -%}<a class="u-nappi u-nappi--kulta" href="{% if _nl == 'http' %}{{ o.nappi_linkki }}{% else %}{{ o.nappi_linkki | relative_url }}{% endif %}"{% if _nl == 'http' %} target="_blank" rel="noopener"{% endif %}>{% include kt.html arvo=o.nappi_teksti %}</a>{% endif %}
+</section></div>
 {%- when "teksti" %}
 {% include osat/osio-teksti.html o=o %}
 {%- when "ilmoitus" %}

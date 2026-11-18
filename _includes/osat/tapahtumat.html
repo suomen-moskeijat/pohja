@@ -33,6 +33,6 @@
 </ul>
 <div class="u-tyhja" data-tyhja{% if naytetty > 0 %} hidden{% endif %}>
   {% assign ig = include.moskeija.some.instagram %}
-  <p>{% if ig and ig != "" %}{% include k.html a="ei_tapahtumia" %}{% else %}{% include k.html a="ei_tulevia" %}{% endif %}</p>
-  {% if ig and ig != "" %}<a class="u-nappi u-nappi--reuna u-nappi--pieni" href="{{ ig }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="ig" koko=18 %} Instagram</a>{% endif %}
+  {% unless include.moskeija.tapahtumat_tyhja == false %}<p>{% if include.moskeija.tapahtumat_tyhja %}{% include kt.html arvo=include.moskeija.tapahtumat_tyhja %}{% elsif ig and ig != "" %}{% include k.html a="ei_tapahtumia" %}{% else %}{% include k.html a="ei_tulevia" %}{% endif %}</p>{% endunless %}
+  {% if ig and ig != "" and include.moskeija.tapahtumat_ig != false %}<a class="u-nappi u-nappi--reuna u-nappi--pieni" href="{{ ig }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="ig" koko=18 %} Instagram</a>{% endif %}
 </div>

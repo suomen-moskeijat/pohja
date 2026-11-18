@@ -4,17 +4,13 @@ title: Palvelut
 permalink: /palvelut/
 ---
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- comment -%}
+  Palvelut-sivulla on vain se, mitä moskeija on lisännyt paneelissa: johdanto (Palvelut → Palvelut-sivun teksti) ja palvelut.
+  Ei automaattista sisältöä. Vanha lasten opetus (lasten_opetus) näkyy nostona, kunnes paneeli siirtää sen tavalliseksi palveluksi.
+{%- endcomment -%}
 {% include osat/sivuhero.html avain="palvelut_otsikko" johdanto=m.palvelut_esittely %}
 <div class="u-kehys u-sivu">
-  {%- capture _pl -%}{% include osat/palvelut.html moskeija=m %}{%- endcapture -%}{%- assign _pl = _pl | strip -%}
-  {% if _pl != "" %}
-  {{ _pl }}
-  {% else %}
-  <div class="u-tyhja">
-    <span class="u-ikoni">{% include ikoni-ph.html nimi="moskeija" koko=26 %}</span>
-    <p>{% include k.html a="kysyttavaa" %}</p>
-    <a class="u-nappi u-nappi--reuna u-nappi--pieni" href="{{ '/yhteystiedot/' | relative_url }}">{% include k.html a="ota_yhteytta" %}</a>
-  </div>
-  {% endif %}
-  {% include osat/lapset.html moskeija=m %}
+  {% include osat/palvelut.html moskeija=m %}
+  {%- assign _lp = site.palvelut | where_exp: "p", "p.ilmoittautuminen contains 'lasten-opetus'" -%}
+  {% if _lp.size == 0 %}{% include osat/lapset.html moskeija=m %}{% endif %}
 </div>

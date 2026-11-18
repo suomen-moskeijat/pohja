@@ -4,7 +4,7 @@ title: Tapahtumat
 permalink: /tapahtumat/
 ---
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
-{% include osat/sivuhero.html avain="nav_tapahtumat" johdanto_avain="tapahtumat_teksti" %}
+{% if m.tapahtumat_johdanto == false %}{% include osat/sivuhero.html avain="nav_tapahtumat" %}{% elsif m.tapahtumat_johdanto %}{% include osat/sivuhero.html avain="nav_tapahtumat" johdanto=m.tapahtumat_johdanto %}{% else %}{% include osat/sivuhero.html avain="nav_tapahtumat" johdanto_avain="tapahtumat_teksti" %}{% endif %}
 {%- comment -%}
   Sama asettelu kuin etusivun Tapahtumat-osiossa: tietokoneella Joka viikko (leveämpi) ja Tulevat rinnakkain, kun
   molemmissa on sisältöä. Ilman tulevia viikko-ohjelma käyttää koko leveyden; ilman viikko-ohjelmaa kapea sarake.

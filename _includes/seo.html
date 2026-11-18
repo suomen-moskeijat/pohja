@@ -164,7 +164,7 @@
     "eventSchedule": { "@type": "Schedule", "repeatFrequency": "P1W", "scheduleTimezone": "Europe/Helsinki", "startDate": {{ page.paiva | date: "%Y-%m-%d" | jsonify }}{% if page.paiva_loppuu and page.paiva_loppuu != "" %}, "endDate": {{ page.paiva_loppuu | date: "%Y-%m-%d" | jsonify }}{% endif %}{% if _bd != "" %}, "byDay": [{{ _bd | split: "," | join: "," }}]{% endif %}{% if page.alkaa and page.alkaa != "" %}, "startTime": {{ page.alkaa | replace: ".", ":" | jsonify }}{% endif %}{% if page.loppuu and page.loppuu != "" %}, "endTime": {{ page.loppuu | replace: ".", ":" | jsonify }}{% endif %} },
     {%- endif %}
     "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-    "location": { "@type": "Place", "name": {{ page.paikka | default: m.title | jsonify }}, "address": {{ page.paikka | default: m.osoite | jsonify }} },
+    "location": { "@type": "Place", "name": {{ page.paikka | default: page.osoite | default: m.title | jsonify }}, "address": {{ page.osoite | default: page.paikka | default: m.osoite | jsonify }} },
     "organizer": { "@id": {{ kotisivu | append: "#moskeija" | jsonify }} },
     "description": {{ kuvaus | jsonify }}{% if kuva and kuva != "" %}, "image": {{ kuva | jsonify }}{% endif %}
   }
