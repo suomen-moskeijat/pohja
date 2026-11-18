@@ -1170,6 +1170,29 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "kaannospalkki",
+      "otsikko": "Käännökset: yksi palkki sivun yläreunassa kääntää kaiken",
+      "alue": "paneeli",
+      "kuvaus": "Muokkaussivun yläreunassa on palkki, kun sivulla on kääntämättömiä tekstejä: se kertoo, montako kohtaa puuttuu ja millä kielillä, ja Käännä kaikki tekoälyllä -nappi kääntää ne kerralla (nimi, lyhyt kuvaus, koko kuvaus, napin tekstit, lomakkeen tekstit jne.). Käännetyt kohdat aukeavat tarkistettaviksi. Jokaisen kentän Muut kielet -kohdassa on lisäksi Käännä tämä kohta -nappi. Palvelun ja tapahtuman alareunan kohta on nimeltään Nimi ja koko kuvaus muilla kielillä.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Palvelut → Janaza.",
+      "kohdat": [
+        "Yläreunassa palkki: Käännös puuttuu N kohdasta: englanti, arabia, somali — Missä: Testipaneeli → Palvelut → palvelu",
+        "Käännä kaikki tekoälyllä: palkki katoaa ja käännetyt kohdat aukeavat; tarkista tekstit — Missä: Testipaneeli → Palvelut → palvelu",
+        "Sama palkki tapahtumassa, etusivulla ja muilla sivuilla — Missä: Testipaneeli → Tapahtumat / Etusivu / Meistä",
+        "Kentän Muut kielet → Käännä tämä kohta tekoälyllä kääntää vain sen kentän — Missä: Testipaneeli → Etusivu",
+        "Tallennettaessa kysytään, käännetäänkö puuttuvat, jos niitä on — Missä: Testipaneeli → Tapahtumat → Uusi",
+        "Puhelimella palkki mahtuu ruutuun — Missä: Testipaneeli puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Janaza",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut/janaza-hautajaiset"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }
