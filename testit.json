@@ -1265,6 +1265,25 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "esikatselu-oma-verkkotunnus",
+      "otsikko": "Esikatselu toimii myös omalla verkkotunnuksella ja vanhalla sivulla",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Paneeli lukee sivun oikean osoitteen moskeijan asetuksista (esim. hyvinkaaislamkeskus.fi tai Masjid-sunnah isolla M:llä) ja lähettää esikatselun sinne, mistä sivu ilmoittaa olevansa valmis. Jos sivulla on vielä vanha versio, esikatselun alle tulee huomautus ja paneeli käynnistää sivun päivityksen itse. Uusi tarkistus testi/esikatselu-sivuilla.mjs käy kaikki moskeijoiden sivut läpi.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Palvelut → palvelu.",
+      "kohdat": [
+        "Kirjoita nimeen: esikatselu päivittyy heti — Missä: Testipaneeli → Palvelut → palvelu",
+        "Jos esikatselun alle tulee huomautus vanhasta versiosta, odota muutama minuutti ja paina ↻: esikatselu toimii — Missä: Testipaneeli → Palvelut → palvelu"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }
