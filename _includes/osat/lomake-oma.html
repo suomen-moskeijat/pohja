@@ -15,7 +15,7 @@
 {%- assign _so = include.suostumus_oletus | default: "lomake_suostumus" -%}{%- assign _no = include.nappi_oletus | default: "laheta_viesti" -%}
 {%- capture _na -%}{% if _lo.nappi %}{% include kt.html arvo=_lo.nappi %}{% endif %}{%- endcapture -%}{%- assign _na = _na | strip -%}
 <form class="u-kortti u-lomake" id="{{ include.id | default: 'lomake' }}" data-lomake data-osoite="{{ m.lomake_osoite }}" data-wa="{{ wa }}" data-tapa="{{ _tapa }}"{{ _lomake_attr }} data-sahkoposti="{{ m.sahkoposti }}" data-aihe="{{ include.aihe | escape }}" novalidate>
-  {% if _ot != "" %}<h2>{{ _ot }}</h2>{% elsif include.otsikko_oletus %}<h2>{% include k.html a=include.otsikko_oletus %}</h2>{% endif %}
+  {% if _lo.otsikko == false %}{% elsif _ot != "" %}<h2>{{ _ot }}</h2>{% elsif include.otsikko_oletus %}<h2>{% include k.html a=include.otsikko_oletus %}</h2>{% endif %}
   {% if _te != "" %}<p class="u-hieno">{{ _te }}</p>{% endif %}
   {% include osat/lomakekentat.html kentat=_lo.kentat %}
   {%- if _lo.suostumus %}

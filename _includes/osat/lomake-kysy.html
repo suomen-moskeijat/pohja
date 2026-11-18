@@ -11,8 +11,8 @@
 {%- assign _aihe = site.data.kaannokset.kysy_otsikko.fi -%}
 {%- if _ky.otsikko -%}{%- assign _ot_json = _ky.otsikko | jsonify | slice: 0 -%}{%- if _ot_json == "{" -%}{%- assign _aihe = _ky.otsikko.fi | default: _aihe -%}{%- else -%}{%- assign _aihe = _ky.otsikko -%}{%- endif -%}{%- endif -%}
 <form class="u-kortti u-lomake" data-lomake data-osoite="{{ m.lomake_osoite }}" data-wa="{{ wa }}" data-tapa="{{ _tapa }}"{{ _lomake_attr }} data-sahkoposti="{{ m.sahkoposti }}" data-aihe="{{ _aihe | escape }}" novalidate>
-  <h2>{% if _ky.otsikko %}{% include kt.html arvo=_ky.otsikko %}{% else %}{% include k.html a="kysy_otsikko" %}{% endif %}</h2>
-  <p class="u-hieno">{% if _ky.teksti %}{% include kt.html arvo=_ky.teksti %}{% else %}{% include k.html a="kysy_teksti" %}{% endif %}</p>
+  {% unless _ky.otsikko == false %}<h2>{% if _ky.otsikko %}{% include kt.html arvo=_ky.otsikko %}{% else %}{% include k.html a="kysy_otsikko" %}{% endif %}</h2>{% endunless %}
+  {% unless _ky.teksti == false %}<p class="u-hieno">{% if _ky.teksti %}{% include kt.html arvo=_ky.teksti %}{% else %}{% include k.html a="kysy_teksti" %}{% endif %}</p>{% endunless %}
   {%- if _ky.kentat and _ky.kentat.size > 0 %}
   {% include osat/lomakekentat.html kentat=_ky.kentat %}
   {%- else %}

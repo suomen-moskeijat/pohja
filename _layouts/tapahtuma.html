@@ -61,14 +61,15 @@ layout: sivu
     </ul>
     {% if _ilmo != "" %}
     <div class="u-taptieto__toiminto">
-      {% if _yt != "" %}<small>{{ _yt }}</small>{% elsif page.ilmoittaudu == "lomake" or page.ilmoittaudu == "oma" %}<small>{% include k.html a="ilmoittaudu_teksti" %}</small>{% endif %}
+      {% if page.yhteys_teksti == false %}{% elsif _yt != "" %}<small>{{ _yt }}</small>{% elsif page.ilmoittaudu == "lomake" or page.ilmoittaudu == "oma" %}<small>{% include k.html a="ilmoittaudu_teksti" %}</small>{% endif %}
       <a class="u-nappi u-nappi--kulta" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{{ _nappi_t | strip }}</a>
     </div>
     {% endif %}
   </aside>
   {% if _oma_lomake %}{% include osat/lomake-oma.html lomake=page.lomake moskeija=m aihe=_ia nappi_oletus="laheta_ilmoittautuminen" otsikko_oletus="ilmoittaudu" %}{% endif %}
 </div>
-{% if _ilmo != "" %}
+{%- comment -%} Puhelimen alareunan Ilmoittaudu-palkki: paneelissa kytkin (Tapahtumat → Tapahtumat-sivun tekstit ja osat), oletus päällä {%- endcomment -%}
+{% if _ilmo != "" and m.tapahtumat_palkki != false %}
 <div class="u-ilmopalkki" data-ilmopalkki hidden>
   <span><b>{% include kolme.html fi=page.title doc=page %}</b><small>{{ _milloin_lyhyt | strip }}{% if page.alkaa and page.alkaa != "" %} · <span dir="ltr" data-klo>{{ page.alkaa }}</span>{% endif %}</small></span>
   <a class="u-nappi u-nappi--kulta" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{{ _nappi_t | strip }}</a>

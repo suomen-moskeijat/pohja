@@ -1036,6 +1036,33 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "ei-automaattista-sisaltoa",
+      "otsikko": "Sivulla vain se, minkä moskeija lisää paneelissa",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Paneelin valikko on sivuston järjestyksessä (Sivut: Etusivu, Rukousajat, Meistä, Palvelut, Tapahtumat, Tiedotteet, Yhteystiedot, Tuki; Työkalut; Sivusto; Hallinta). Lasten opetus siirtyy tavalliseksi palveluksi omalla lomakkeella, kun moskeija avataan paneelissa: sen voi muokata, siirtää ja poistaa kuten muutkin palvelut, ja etusivun Ilmoita lapsesi -nappi ja nosto ovat muokattavia (Oma nappi, Nosto-osio). Oletustekstit ovat kentissä valmiina; tyhjennetty teksti ei näy sivulla. Muut palvelut -osio, puhelimen Ilmoittaudu-palkki, Instagram-nappi ja palvelun puhelin/WhatsApp-napit ovat kytkimiä paneelissa.",
+      "aloitus": "Avaa testipaneeli ja testimoskeija.",
+      "kohdat": [
+        "Valikossa ryhmät Sivut, Työkalut, Sivusto, Hallinta; jokainen sivu omana kohtanaan — Missä: Testipaneeli, vasen valikko",
+        "Tapahtumat → Tapahtumat-sivun tekstit ja osat: johdanto ja ei tapahtumia -teksti valmiina, tyhjennys poistaa tekstin sivulta — Missä: Testipaneeli → Tapahtumat",
+        "Palvelut → Palvelut-sivun teksti ja osat: Muut palvelut -kytkin pois → palvelun sivulla ei Muut palvelut -osiota — Missä: Testipaneeli → Palvelut",
+        "Palvelun Teksti napin yläpuolella ja Napin teksti valmiina; puhelin ja WhatsApp kytkimillä — Missä: Testipaneeli → Palvelut → palvelu",
+        "Etusivun osioihin voi lisätä Nosto-osion (otsikko, teksti, nappi) — Missä: Testipaneeli → Etusivu → Etusivun osiot",
+        "Palvelut-sivulla ei tyhjää Kysyttävää-laatikkoa, vain lisätyt palvelut — Missä: testimoskeija → Palvelut"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija"
+        },
+        {
+          "nimi": "Testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }

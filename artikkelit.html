@@ -10,7 +10,7 @@ permalink: /artikkelit/
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {%- assign kaikki = site.artikkelit | sort: 'paiva' | reverse -%}
 {%- assign aiheet = kaikki | where_exp: 'a', 'a.aihe' | group_by: 'aihe' | sort: 'size' | reverse -%}
-{% if m.artikkelit_johdanto %}{% include osat/sivuhero.html avain="nav_artikkelit" johdanto=m.artikkelit_johdanto %}{% else %}{% include osat/sivuhero.html avain="nav_artikkelit" johdanto_avain="artikkelit_johdanto" %}{% endif %}
+{% if m.artikkelit_johdanto == false %}{% include osat/sivuhero.html avain="nav_artikkelit" %}{% elsif m.artikkelit_johdanto %}{% include osat/sivuhero.html avain="nav_artikkelit" johdanto=m.artikkelit_johdanto %}{% else %}{% include osat/sivuhero.html avain="nav_artikkelit" johdanto_avain="artikkelit_johdanto" %}{% endif %}
 <div class="u-kehys u-sivu" data-artikkelit>
   {% if kaikki.size > 0 %}
   <div class="u-artikkelit__haku">
