@@ -1246,6 +1246,25 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "sivut-paivittyvat-pohjan-jalkeen",
+      "otsikko": "Sivut päivittyvät puolessa tunnissa sivupohjan muutoksen jälkeen",
+      "alue": "paneeli",
+      "kuvaus": "Valvonta (puolen tunnin välein) käynnistää uudelleen jokaisen moskeijan sivun, joka on rakennettu ennen sivupohjan uusinta versiota. Ennen sivu saattoi jäädä vanhaan versioon 2–3 tunniksi, koska GitHubin tunnin välein tapahtuva ajastus jättää ajoja väliin (esim. reaaliaikainen esikatselu ei toiminut sivuilla, joita ei ollut vielä päivitetty).",
+      "aloitus": "Tee pieni muutos sivupohjan testi-haaraan (kehittäjä) ja odota puoli tuntia.",
+      "kohdat": [
+        "Testimoskeijan sivu rakentuu uudelleen viimeistään puolen tunnin kuluttua sivupohjan muutoksesta — Missä: Testipaneeli → Ylläpito → Valvonta / testimoskeijan julkaisuajot",
+        "Tuoreita julkaisuja ei käynnistetä turhaan — Missä: Testipaneeli → Ylläpito → Valvonta"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Valvonta",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/yllapito/valvonta"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }
