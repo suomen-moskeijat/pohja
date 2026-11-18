@@ -1097,13 +1097,13 @@
       "id": "reaaliaikainen-esikatselu-ja-tapahtuman-jarjestys",
       "otsikko": "Esikatselu päivittyy heti kirjoittaessa, tapahtuman kentät sivun järjestyksessä",
       "alue": "sivu ja paneeli",
-      "kuvaus": "Palvelun ja tapahtuman muokkauksessa esikatselu näyttää oikean sivun, ja muutokset näkyvät siinä heti kirjoittaessa (ei tarvitse tallentaa ja odottaa). Tapahtuman kentät ovat sivun järjestyksessä: nimi, kuva, kuvaus, milloin, missä, ilmoittautuminen. Päivämäärän vieressä näkyy viikonpäivä, jonka sivu laskee päivämäärästä itse. Tapahtuman sivu on ennallaan.",
+      "kuvaus": "Palvelun ja tapahtuman muokkauksessa esikatselu näyttää oikean sivun, ja muutokset näkyvät siinä heti kirjoittaessa (ei tarvitse tallentaa ja odottaa). Tapahtuman kentät ovat sivun järjestyksessä: nimi, kuinka usein, kuva, kuvaus, milloin, missä, ilmoittautuminen. Päivämäärän vieressä näkyy viikonpäivä, jonka sivu laskee päivämäärästä itse. Tapahtuman sivu on ennallaan.",
       "aloitus": "Avaa testipaneeli → testimoskeija → Tapahtumat → Avoimet ovet.",
       "kohdat": [
         "Kirjoita nimeen tai kuvaukseen: esikatselu muuttuu heti — Missä: Testipaneeli → Tapahtumat → tapahtuma",
         "Vaihda kellonaika tai paikka: esikatselun tietokortti muuttuu heti — Missä: Testipaneeli → Tapahtumat → tapahtuma",
         "Päivä-kentän vieressä viikonpäivä (esim. Lauantai), joka vaihtuu päivää vaihtaessa — Missä: Testipaneeli → Tapahtumat → tapahtuma",
-        "Kentät järjestyksessä Nimi, Kuva, Kuvaus, Kuinka usein, päivät ja kellonajat, Paikka, Ilmoittautuminen — Missä: Testipaneeli → Tapahtumat → tapahtuma",
+        "Kentät järjestyksessä Nimi, Kuinka usein, Kuva, Kuvaus, päivät ja kellonajat, Paikka, Ilmoittautuminen — Missä: Testipaneeli → Tapahtumat → tapahtuma",
         "Palvelun lyhyt kuvaus, teksti, nappi ja lomake näkyvät esikatselussa heti — Missä: Testipaneeli → Palvelut → palvelu",
         "Tapahtuman sivu ennallaan (kuva ja kuvaus ensin, sitten Milloin/Kellonaika/Paikka) — Missä: testimoskeija → Tapahtumat → tapahtuma"
       ],
