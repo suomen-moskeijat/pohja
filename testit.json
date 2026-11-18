@@ -1105,7 +1105,8 @@
         "Päivä-kentän vieressä viikonpäivä (esim. Lauantai), joka vaihtuu päivää vaihtaessa — Missä: Testipaneeli → Tapahtumat → tapahtuma",
         "Kentät järjestyksessä Nimi, Kuinka usein, Kuva, Kuvaus, päivät ja kellonajat, Paikka, Ilmoittautuminen — Missä: Testipaneeli → Tapahtumat → tapahtuma",
         "Palvelun lyhyt kuvaus, teksti, nappi ja lomake näkyvät esikatselussa heti — Missä: Testipaneeli → Palvelut → palvelu",
-        "Tapahtuman sivu ennallaan (kuva ja kuvaus ensin, sitten Milloin/Kellonaika/Paikka) — Missä: testimoskeija → Tapahtumat → tapahtuma"
+        "Tapahtuman sivu ennallaan (kuva ja kuvaus ensin, sitten Milloin/Kellonaika/Paikka) — Missä: testimoskeija → Tapahtumat → tapahtuma",
+        "Päivä ja Alkaa klo samalla rivillä, Päättymispäivä ja Päättyy klo samalla rivillä; puhelimella allekkain — Missä: Testipaneeli → Tapahtumat → tapahtuma"
       ],
       "linkit": [
         {
