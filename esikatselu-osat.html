@@ -1,0 +1,28 @@
+---
+layout: null
+permalink: /esikatselu-osat/
+sitemap: false
+---
+{%- comment -%}
+  Hallintapaneelin etusivun esikatselu: valmiit osiot ja yläosan napit tällä moskeijan tiedoilla,
+  samoista sivupohjan osista kuin etusivulla. Paneeli valitsee, mitkä näytetään (sivu.js hakee tämän
+  sivun vasta esikatselussa). Ei näy valikossa, sivukartassa eikä hakukoneissa.
+{%- endcomment -%}
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+<!doctype html>
+<html lang="fi"><head><meta charset="utf-8"><meta name="robots" content="noindex, nofollow"><title>Esikatselu</title></head><body>
+{%- assign _valmiit = "palvelut,lapset,tapahtumat,artikkelit,meista,galleria,somet,lahjoitus,vierailu" | split: "," -%}
+{%- for _esiko in _valmiit -%}{%- assign _l = "" | split: "" | push: _esiko %}
+<template data-osio="{{ _esiko }}">{% include osat/osiot.html osiot=_l moskeija=m %}</template>
+{%- endfor -%}
+{%- comment -%} Yläosan napit yksi kerrallaan (sivu.js korostaa ensimmäisen) ja oletusnapit, kun moskeija ei ole valinnut {%- endcomment -%}
+{%- assign _esik_napit = "lapsi,toiminta,rukousajat,lahjoita,yhteys" | split: "," -%}
+{%- for s in site.sivut -%}{%- assign _sl = s.url | split: "/" | last -%}{%- if _sl and _sl != "" -%}{%- assign _esik_napit = _esik_napit | push: _sl -%}{%- endif -%}{%- endfor -%}
+{%- for _esikn in _esik_napit -%}{%- assign _l = "" | split: "" | push: _esikn %}
+<template data-nappi="{{ _esikn }}">{% include osat/alkunapit.html moskeija=m napit=_l %}</template>
+{%- endfor %}
+<template data-nappi-oletus>{% include osat/alkunapit.html moskeija=m napit=nil %}</template>
+{%- comment -%} Kuvakkeet paneelin rakentamiin omiin osioihin (data-ikoni) {%- endcomment -%}
+{%- assign _ik = "kello,kirja,ryhma,kalenteri,moskeija,hattu,tahti,kuu,sydan,puhelin,sijainti,posti,maailma,lapsi,oikea,toista,albumi" | split: "," %}
+<template id="u-esik-ikonit">{% for _i in _ik %}<span data-ikoni="{{ _i }}">{% include ikoni-ph.html nimi=_i koko=24 %}</span>{% endfor %}</template>
+</body></html>

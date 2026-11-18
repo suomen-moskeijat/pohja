@@ -3,11 +3,12 @@
   [lapsi, toiminta]. Vaihtoehdot: lapsi, toiminta, rukousajat, lahjoita, yhteys, oma
   (alku.oma_nappi: teksti + linkki) tai oman sivun nimi (esim. hyvat-lahteet).
   Oletus: lapsi (jos lasten opetus on käytössä) ja toiminta. Ensimmäinen nappi korostetaan.
+  Parametri napit (valinnainen): lista napeista moskeijan valinnan sijaan (paneelin esikatselu, esikatselu-osat.html).
   lapsi vie Lasten opetus -palveluun (/palvelut/lasten-opetus/), kun sellainen palvelu on (tai vanha lasten_opetus).
 {%- endcomment -%}
 {%- assign m = include.moskeija -%}
 {%- assign a = m.alku -%}
-{%- if a.napit and a.napit.size > 0 -%}{%- assign _napit = a.napit -%}{%- else -%}
+{%- if include.napit -%}{%- assign _napit = include.napit -%}{%- elsif a.napit and a.napit.size > 0 -%}{%- assign _napit = a.napit -%}{%- else -%}
   {%- capture _o -%}{% if m.lasten_opetus.kaytossa %}lapsi,{% endif %}toiminta{%- endcapture -%}{%- assign _napit = _o | split: "," -%}
 {%- endif -%}
 {%- assign _maara = 0 -%}
