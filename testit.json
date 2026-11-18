@@ -1009,6 +1009,33 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "palvelut-tapahtumat-paneelista",
+      "otsikko": "Palvelut- ja Tapahtumat-sivu kokonaan paneelista, lasten opetus palvelukorttina",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Palvelut-sivulla lasten opetus näkyy samanlaisena korttina kuin muut palvelut (ei erillistä nostoa eikä tyhjää Kysyttävää-laatikkoa). Paneelin Palvelut-listassa sama Lasten opetus -rivi on listan lopussa, ja listan yläpuolella on Palvelut-sivun teksti. Tapahtumat-sivun johdannon ja tekstin, kun tapahtumia ei ole, voi kirjoittaa paneelissa (Tapahtumat → Tapahtumat-sivun tekstit). Sivut-listan Palvelut, Tapahtumat ja Artikkelit vievät samaan listaan, jossa sivun tekstit ovat. Etusivulla Ilmoita lapsesi ei näy kahdesti, ja Tutustu toimintaamme -nappi jää pois, jos Palvelut-sivu olisi tyhjä.",
+      "aloitus": "Avaa testipaneelissa Palvelut ja testimoskeijan Palvelut-sivu.",
+      "kohdat": [
+        "Palvelut-sivulla lasten opetus on kortti muiden palveluiden joukossa (jos käytössä eikä mikään palvelu jo vie sen lomakkeeseen) — Missä: testimoskeija → Palvelut",
+        "Paneelin Palvelut-listan lopussa Lasten opetus -rivi, Muokkaa avaa lasten opetuksen asetukset — Missä: Testipaneeli → Palvelut",
+        "Palvelut-sivun teksti -rivi listan yläpuolella avaa johdannon muokkauksen — Missä: Testipaneeli → Palvelut",
+        "Tapahtumat-sivun tekstit: johdanto ja ei tapahtumia -teksti tallentuvat ja näkyvät sivulla — Missä: Testipaneeli → Tapahtumat → Tapahtumat-sivun tekstit",
+        "Sivut-listassa Palvelut, Tapahtumat ja Artikkelit vievät listaan, ei erilliseen asetussivuun — Missä: Testipaneeli → Sivut",
+        "Etusivulla Ilmoita lapsesi -kehotus vain kerran (yläosan nappi tai nosto) — Missä: testimoskeija → Etusivu"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
+        },
+        {
+          "nimi": "Testimoskeija: Palvelut",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }

@@ -58,7 +58,7 @@ layout: sivu
   </article>
   {% if _oma_lomake %}{% include osat/lomake-oma.html lomake=page.lomake moskeija=m aihe=page.title %}{% endif %}
 </div>
-{%- capture _muut -%}{% include osat/palvelut.html moskeija=m ohita=page.url maara=6 %}{%- endcapture -%}{%- assign _muut = _muut | strip -%}
+{%- capture _muut -%}{% include osat/palvelut.html moskeija=m ohita=page.url maara=6 lapset=true %}{%- endcapture -%}{%- assign _muut = _muut | strip -%}
 {%- comment -%} Muut palvelut vain, jos niitä on (ainoan palvelun sivulla ei tyhjää otsikkoa) {%- endcomment -%}
 {% if _muut contains "<li" %}
 <section class="u-osio u-kehys">

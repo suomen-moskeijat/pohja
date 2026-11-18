@@ -3,10 +3,26 @@
   Ulkoasu tulee moskeijan valinnasta (teema.tyyli_palvelut → html[data-kortit-palvelut]: kortit | ruudukko | lista).
   Oletus (kortit) on sama kuin entiset Toimintamme-kortit: puhelimella rivi nuolella, tietokoneella ruudukko.
   Vanhat palvelut moskeijan tiedoissa (palvelut: [ { kuvake, nimi, kuvaus } ]) näytetään, kunnes ne on siirretty.
-  Parametrit: moskeija, maara (enimmäismäärä), ohita (palvelun url, joka jätetään pois).
+  Parametrit: moskeija, maara (enimmäismäärä), ohita (palvelun url, joka jätetään pois),
+  lapset (true: lasten opetus omana korttinaan listan lopussa, jos se on käytössä eikä mikään palvelu jo vie sen lomakkeeseen;
+  paneelissa sama rivi on Palvelut-listan lopussa).
 {%- endcomment -%}
 {%- assign _pv = site.palvelut | sort: "jarjestys", "last" -%}
-{%- if _pv.size > 0 -%}
+{%- capture _lk -%}
+{%- assign _lom = include.moskeija.lasten_opetus -%}
+{%- assign _lp = site.palvelut | where_exp: "p", "p.ilmoittautuminen contains 'lasten-opetus'" -%}
+{%- if include.lapset and _lom.kaytossa and _lp.size == 0 -%}{%- assign tx = _lom.teksti -%}
+  <li class="u-palvelu"><a class="u-palvelu__linkki" href="{{ '/palvelut/lasten-opetus/' | relative_url }}">
+    <span class="u-ikoni u-palvelu__ikoni">{% include ikoni-ph.html nimi="hattu" koko=24 %}</span>
+    <span class="u-palvelu__teksti">
+      <strong class="u-palvelu__nimi">{% include k.html a="lasten_opetus" %}</strong>
+      {% if tx %}<span class="u-palvelu__kuvaus">{% for l in site.kielet %}{% assign teksti = tx[l] | default: tx.en | default: tx.fi | default: tx %}<span data-l="{{ l }}">{{ teksti | split: '. ' | first | remove: '.' }}.</span>{% endfor %}</span>{% endif %}
+    </span>
+    <span class="u-palvelu__lisaa"><span class="u-nakymaton">{% include k.html a="lue_lisaa" %}</span><span class="u-flip" aria-hidden="true">→</span></span>
+  </a></li>
+{%- endif -%}
+{%- endcapture -%}{%- assign _lk = _lk | strip -%}
+{%- if _pv.size > 0 or _lk != "" -%}
 <ul class="u-palvelut" data-palvelut>
   {%- assign _pvn = 0 -%}
   {%- for p in _pv -%}
@@ -23,6 +39,7 @@
     <span class="u-palvelu__lisaa"><span class="u-nakymaton">{% include k.html a="lue_lisaa" %}</span><span class="u-flip" aria-hidden="true">→</span></span>
   </a></li>
   {%- endfor -%}
+  {{ _lk }}
 </ul>
 {%- elsif include.moskeija.palvelut.size > 0 -%}
 <ul class="u-palvelut" data-palvelut>

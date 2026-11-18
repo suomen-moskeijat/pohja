@@ -14,7 +14,9 @@
 {%- case _t -%}
 {%- when "lapset" %}
 {%- assign _lp = site.palvelut | where_exp: "p", "p.ilmoittautuminen contains 'lasten-opetus'" -%}
-{% if _lp.size == 0 %}<div class="u-kehys">{% include osat/lapset.html moskeija=m %}</div>{% endif %}
+{%- comment -%} Ei samaa kehotusta kahdesti: nosto jää pois, jos yläosassa on jo Ilmoita lapsesi -nappi (alku.napit, oletus lapsi + toiminta) {%- endcomment -%}
+{%- if m.alku.napit and m.alku.napit.size > 0 -%}{%- assign _yn = m.alku.napit | slice: 0, 2 -%}{%- else -%}{%- assign _yn = "lapsi" | split: "," -%}{%- endif -%}
+{% if _lp.size == 0 %}{% unless _yn contains "lapsi" %}<div class="u-kehys">{% include osat/lapset.html moskeija=m %}</div>{% endunless %}{% endif %}
 {%- when "tapahtumat" %}
 {%- assign tanaan = site.time | date: '%Y-%m-%d' -%}
 {%- assign tulevia = 0 -%}
