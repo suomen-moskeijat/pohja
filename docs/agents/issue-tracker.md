@@ -4,7 +4,9 @@ Tämän repon (pohja) tiketit ovat paneelin repossa. Kaikki tiketit ja spesifika
 sivupohjaa (suomen-moskeijat/pohja) koskevat. Tiketin otsikon alussa kerrotaan, kumpaa repoa se koskee:
 `[pohja]`, `[hallinta]` tai `[pohja+hallinta]`.
 
-Repot ovat julkisia: ei henkilötietoja, sähköpostiosoitteita, puhelinnumeroita, avaimia eikä salaisuuksia tiketteihin.
+suomen-moskeijat/hallinta on **yksityinen** repo: tiketit näkyvät vain organisaation jäsenille. Silti ei avaimia eikä
+salaisuuksia tiketteihin, eikä moskeijoiden jäsenten tai kävijöiden henkilötietoja (pohja ja moskeijoiden repot ovat julkisia,
+ja tiketeistä voidaan viitata niihin).
 
 ## Työkalut tässä ympäristössä
 
