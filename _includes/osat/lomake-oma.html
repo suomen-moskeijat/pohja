@@ -10,7 +10,7 @@
 {%- assign m = include.moskeija -%}
 {%- assign _lo = include.lomake -%}
 {%- if _lo.kentat and _lo.kentat.size > 0 -%}
-{%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+{%- assign wa = m.yhteydenotto.whatsapp_numero | default: m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
 {%- include osat/lomake-tapa.html moskeija=m -%}
 {%- assign _lsp = m.sahkoposti -%}{%- assign _los = m.lomake_osoite -%}
 {%- if _lo.lahetys == "sahkoposti" or _lo.lahetys == "whatsapp" -%}{%- assign _tapa = _lo.lahetys -%}{%- assign _tapavalinta = "" -%}{%- endif -%}
