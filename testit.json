@@ -890,12 +890,12 @@
       "id": "viikko-rivit-kuin-tulevat",
       "otsikko": "Joka viikko -rivit samanlaisiksi kuin Tulevat",
       "alue": "sivu",
-      "kuvaus": "Joka viikko -ohjelman rivit näyttävät nyt samalta kuin Tulevat-tapahtumat: nimi lihavoituna ja sen alla harmaalla kellonaika ja kenelle (esim. klo 13.00–15.00 · Lapsille). Kortit ovat yhtä korkeat ja päivälaatta on samankokoinen kuin Tulevat-kortin päivämäärä myös pienellä puhelimella.",
+      "kuvaus": "Joka viikko -ohjelman rivit näyttävät nyt samalta kuin Tulevat-tapahtumat: nimi lihavoituna ja sen alla harmaalla kellonaika, kenelle ja voimassaolo (esim. klo 18.00–19.30 · Naisille · 3.12.–27.5.). Kortit ovat yhtä korkeat ja päivälaatta on samankokoinen kuin Tulevat-kortin päivämäärä myös pienellä puhelimella. Versio 2: alkaen ja asti yhdeksi päiväväliksi, eikä rivi ala pisteellä puhelimella.",
       "aloitus": "Avaa testimoskeijan Tapahtumat-sivu.",
       "kohdat": [
         "Joka viikko -rivissä nimi ylhäällä lihavoituna, kello ja kenelle sen alla harmaalla, kuten Tulevat-korteissa — Missä: testimoskeija → Tapahtumat",
         "Joka viikko- ja Tulevat-kortit ovat yhtä korkeat ja laatat samankokoiset — Missä: sama tietokoneella ja puhelimella",
-        "Pitkä rivi (esim. alkaen ja asti -päivä) rivittyy osien välistä, ei kesken \"alkaen 3.12.\" — Missä: sama puhelimella",
+        "Pitkä rivi rivittyy osien välistä, eikä uusi rivi ala pisteellä; alkaen ja asti näkyvät yhtenä päivävälinä (3.12.–27.5.) — Missä: sama puhelimella (myös 320 px)",
         "Etusivun Tapahtumat-osiossa sama ulkoasu — Missä: testimoskeija → Etusivu",
         "Arabiaksi kello ja päivät oikein päin, ei vaakavieritystä — Missä: Tapahtumat → kieli العربية"
       ],
@@ -907,6 +907,36 @@
         {
           "nimi": "Testimoskeija: Etusivu",
           "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 2,
+      "lisatty": "2026-11-18"
+    },
+    {
+      "id": "napit-yhtenaiset-2",
+      "otsikko": "Napit samanlaisiksi joka paikassa",
+      "alue": "sivu",
+      "kuvaus": "Toimintonapit ovat kaikkialla tekstinsä levyisiä: tapahtuman Ilmoittaudu ei enää täytä koko korttia, ja sen teksti on vasemmalla kuten palvelun sivulla. Lasten opetuksen Kysy tästä on samankokoinen kuin muut napit. Puhelimessa napautettu nappi ei jää eri väriseksi, kun sivulle palataan (hover-väri vain hiirellä). Lomakkeiden Lähetä-napit ovat edelleen koko lomakkeen levyisiä.",
+      "aloitus": "Avaa testimoskeijan tapahtuma, jossa on ilmoittautuminen, ja palvelun sivu, jossa on Kysy tästä.",
+      "kohdat": [
+        "Ilmoittaudu-nappi on tekstinsä levyinen ja vasemmalla, teksti napin yllä vasemmalla — Missä: testimoskeija → Tapahtumat → tapahtuma, jossa on ilmoittautuminen",
+        "Kysy tästä näyttää samalta kuin tapahtuman nappi (koko, muoto, väri) — Missä: testimoskeija → Palvelut → palvelu, jossa on yhteydenotto",
+        "Kysyttävää?-kortin Kysy tästä on tekstinsä levyinen — Missä: testimoskeija → Lasten opetus",
+        "Puhelimella: napauta nappia, palaa takaisin: nappi on samanvärinen kuin muut — Missä: Etusivu → Ilmoittaudu (lasten opetus) → takaisin",
+        "Hiirellä nappi tummuu, kun osoitin on sen päällä — Missä: mikä tahansa nappi tietokoneella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testimoskeija: Tapahtumat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
+        },
+        {
+          "nimi": "Testimoskeija: Palvelut",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/"
+        },
+        {
+          "nimi": "Testimoskeija: Lasten opetus",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/lasten-opetus/"
         }
       ],
       "versio": 1,

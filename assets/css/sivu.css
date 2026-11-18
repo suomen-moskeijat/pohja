@@ -87,20 +87,21 @@ html[dir="rtl"] .u-flip { display: inline-block; transform: scaleX(-1); }
 .u-nappi:active { transform: translateY(1px); }
 .u-nappi svg { flex: none; }
 .u-nappi--kulta { background: var(--kulta); color: var(--paa-tumma); }
-.u-nappi--kulta:hover { background: color-mix(in srgb, var(--kulta) 88%, var(--paa)); }
 .u-nappi--tumma { background: var(--paa); color: #fff; }
-.u-nappi--tumma:hover { background: var(--paa-tumma); }
 .u-nappi--reuna { background: var(--pinta); color: var(--paa); border-color: var(--raja); }
-.u-nappi--reuna:hover { border-color: var(--kulta); background: var(--kulta-vaalea); }
 .u-nappi--haamu { background: transparent; color: #fff; border-color: rgb(255 255 255 / .35); }
-.u-nappi--haamu:hover { background: rgb(255 255 255 / .08); border-color: rgb(255 255 255 / .7); }
 .u-nappi--wa { background: #25d366; color: #063d1f; }
-.u-nappi--wa:hover { background: #1fbd5a; }
+/* Hover vain hiirellä: puhelimessa napautettu nappi ei jää eri väriseksi, kun sivulle palataan */
+@media (hover: hover) {
+  .u-nappi--kulta:hover { background: color-mix(in srgb, var(--kulta) 88%, var(--paa)); }
+  .u-nappi--tumma:hover { background: var(--paa-tumma); }
+  .u-nappi--reuna:hover { border-color: var(--kulta); background: var(--kulta-vaalea); }
+  .u-nappi--haamu:hover { background: rgb(255 255 255 / .08); border-color: rgb(255 255 255 / .7); }
+  .u-nappi--wa:hover { background: #1fbd5a; }
+}
 .u-nappi--pieni { min-height: 40px; padding: 8px 16px; font-size: 14px; }
 .u-nappi--levea { width: 100%; }
 .u-napit { display: flex; flex-wrap: wrap; gap: 10px; }
-.u-napit--pino { flex-direction: column; }
-.u-napit--pino .u-nappi { width: 100%; }
 .u-linkki { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 700; color: var(--kulta-teksti); text-decoration: none; }
 .u-linkki:hover { text-decoration: underline; text-underline-offset: 4px; }
 
@@ -769,7 +770,7 @@ html[dir="rtl"] .u-seur__palkki span { background: linear-gradient(-90deg, var(-
 :is(.u-alku--kuva, .u-alku--vari) .u-alku__tunniste { color: rgb(255 255 255 / .88); }
 :is(.u-alku--kuva, .u-alku--vari) .u-alku__tunniste span[data-l] { color: inherit; }
 :is(.u-alku--kuva, .u-alku--vari) .u-alku__napit .u-nappi--reuna { background: rgb(255 255 255 / .1); color: #fff; border-color: rgb(255 255 255 / .5); }
-:is(.u-alku--kuva, .u-alku--vari) .u-alku__napit .u-nappi--reuna:hover { background: rgb(255 255 255 / .2); }
+@media (hover: hover) { :is(.u-alku--kuva, .u-alku--vari) .u-alku__napit .u-nappi--reuna:hover { background: rgb(255 255 255 / .2); } }
 
 /* ---------- Omat sivut (_sivut/): teksti ja linkkikortit (kirjat, lähteet …) ---------- */
 .u-omasivu { display: grid; gap: 20px; }
@@ -1178,8 +1179,8 @@ a.u-palvelu__linkki:hover, .u-tapahtuma a:hover, .u-rj__kortti:hover, a.u-rmh:ho
 .u-taptieto__rivit small { color: var(--hieno); font-size: 13px; font-weight: 600; letter-spacing: .02em; }
 .u-taptieto__rivit strong { font-size: 16.5px; color: var(--paa-tumma); line-height: 1.35; }
 .u-taptieto__rivit strong small { display: block; margin-top: 2px; font-weight: 500; letter-spacing: 0; }
-.u-taptieto__toiminto { display: grid; gap: 12px; margin-top: 8px; text-align: center; }
-.u-taptieto__nappi { width: 100%; justify-content: center; }
+/* Sama kuin palvelun sivulla: teksti ja sen alla tekstin levyinen nappi */
+.u-taptieto__toiminto { display: grid; justify-items: start; gap: 12px; margin-top: 8px; }
 .u-taptieto__toiminto small { color: var(--hieno); font-size: 15px; text-wrap: balance; }
 
 /* Tapahtuman pikatiedot otsikon alla ja puhelimen kiinteä Ilmoittaudu-palkki */
@@ -1283,7 +1284,11 @@ body.on-ilmopalkki .u-pikanapit { bottom: calc(92px + env(safe-area-inset-bottom
 .u-viikko__rivi a { display: block; padding: 8px 0; text-decoration: none; color: inherit; }
 .u-viikko__rivi:first-child a { padding-top: 0; }
 .u-viikko__rivi:last-child a { padding-bottom: 0; }
+/* Osat erotetaan pisteellä. Rivin ensimmäisen osan piste jää piiloon (negatiivinen marginaali + overflow), joten rivi ei ala pisteellä. */
+.u-viikko__meta { overflow: hidden; }
+.u-viikko__osat { display: flex; flex-wrap: wrap; margin-inline-start: -14px; }
 .u-viikko__osa { white-space: nowrap; }
+.u-viikko__osa::before { content: "·" / ""; display: inline-block; width: 14px; text-align: center; }
 .u-viikko__tanaan { font-size: 13px; font-weight: 600; color: var(--kulta-teksti); }
 .u-viikko__tanaan[hidden] { display: none; }
 .u-viikko__laatta { display: flex; align-items: center; justify-content: center; flex: none; width: 60px; height: 60px; border-radius: var(--kulma, 14px); background: var(--paa); color: #fff; }

@@ -62,7 +62,7 @@ layout: sivu
     {% if _ilmo != "" %}
     <div class="u-taptieto__toiminto">
       {% if _yt != "" %}<small>{{ _yt }}</small>{% elsif page.ilmoittaudu == "lomake" or page.ilmoittaudu == "oma" %}<small>{% include k.html a="ilmoittaudu_teksti" %}</small>{% endif %}
-      <a class="u-nappi u-nappi--kulta u-taptieto__nappi" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{{ _nappi_t | strip }}</a>
+      <a class="u-nappi u-nappi--kulta" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{{ _nappi_t | strip }}</a>
     </div>
     {% endif %}
   </aside>

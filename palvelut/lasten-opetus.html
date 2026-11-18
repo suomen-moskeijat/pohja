@@ -25,7 +25,7 @@ seo_avain: ilmoita_lapsesi
   <aside class="u-kortti u-sivupalkki">
     <h2>{% include k.html a="kysyttavaa" %}</h2>
     <p class="u-hieno">{% if _kt != "" %}{{ _kt }}{% else %}{% include k.html a="lapset_kysy_teksti" %}{% endif %}</p>
-    <div class="u-napit u-napit--pino">
+    <div class="u-napit">
       <a class="u-nappi u-nappi--reuna" href="{{ '/yhteystiedot/' | relative_url }}?aihe={{ site.data.kaannokset.lasten_opetus.fi | url_encode }}#kysy">{% if _kn != "" %}{{ _kn }}{% else %}{% include k.html a="kysy_tasta" %}{% endif %}</a>
     </div>
   </aside>
