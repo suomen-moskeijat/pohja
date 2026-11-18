@@ -3,7 +3,7 @@ layout: sivu
 ---
 {%- comment -%}
   Yksittäisen tapahtuman sivu (_tapahtumat/*.md): otsikko, tietokortti (milloin, kellonaika, paikka, kenelle)
-  ja Ilmoittaudu-painike (ilmoittaudu: lomake → yhteydenottolomake aiheella, tai oma linkki), sitten kuvaus.
+  ja Ilmoittaudu-painike (ilmoittaudu: linkki → oma osoite tai tyhjänä kysymyslomake aiheella, oma → lomake sivulla; vanha arvo lomake = kysymyslomake), sitten kuvaus.
 {%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {%- assign _w = "su,ma,ti,ke,to,pe,la" | split: "," -%}
@@ -27,7 +27,10 @@ layout: sivu
 {%- endcapture -%}
 {%- assign _ilmo = "" -%}
 {%- assign _oma_lomake = false -%}{%- if page.ilmoittaudu == "oma" and page.lomake.kentat and page.lomake.kentat.size > 0 -%}{%- assign _oma_lomake = true -%}{%- endif -%}
-{%- if page.ilmoittaudu == "lomake" or page.ilmoittaudu == "oma" -%}
+{%- assign _ilmo_l = page.ilmoittautuminen | default: "" | strip -%}
+{%- comment -%} Ilmoittaudu-nappi ilman osoitetta (linkki, vanha arvo lomake) vie kysymyslomakkeeseen aiheella {%- endcomment -%}
+{%- assign _kysy = false -%}{%- if page.ilmoittaudu == "lomake" or page.ilmoittaudu == "linkki" and _ilmo_l == "" -%}{%- assign _kysy = true -%}{%- endif -%}
+{%- if _kysy or page.ilmoittaudu == "oma" -%}
   {%- if page.toistuu == "viikoittain" -%}{%- assign _ia = page.title -%}{%- else -%}{%- capture _ia -%}{{ page.title }} ({{ page.paiva | date: '%-d.%-m.%Y' }}){%- endcapture -%}{%- endif -%}
   {%- capture _ia -%}{{ site.data.kaannokset.ilmoittautuminen.fi }}: {{ _ia }}{%- endcapture -%}
   {%- if _oma_lomake -%}{%- assign _ilmo = "#lomake" -%}{%- else -%}{%- capture _ilmo -%}{{ '/yhteystiedot/' | relative_url }}?aihe={{ _ia | url_encode }}#kysy{%- endcapture -%}{%- endif -%}
@@ -61,7 +64,7 @@ layout: sivu
     </ul>
     {% if _ilmo != "" %}
     <div class="u-taptieto__toiminto">
-      {% if page.yhteys_teksti == false %}{% elsif _yt != "" %}<small>{{ _yt }}</small>{% elsif page.ilmoittaudu == "lomake" or page.ilmoittaudu == "oma" %}<small>{% include k.html a="ilmoittaudu_teksti" %}</small>{% endif %}
+      {% if page.yhteys_teksti == false %}{% elsif _yt != "" %}<small>{{ _yt }}</small>{% elsif _kysy or page.ilmoittaudu == "oma" %}<small>{% include k.html a="ilmoittaudu_teksti" %}</small>{% endif %}
       <a class="u-nappi u-nappi--kulta" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{{ _nappi_t | strip }}</a>
     </div>
     {% endif %}
