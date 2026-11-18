@@ -1284,6 +1284,37 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "muokattava-kieli",
+      "otsikko": "Kielet yhdestä paikasta: Muokattava kieli ylhäällä",
+      "alue": "paneeli",
+      "kuvaus": "Kenttien alla ei ole enää omia Muut kielet -kohtia eikä käännösnappeja. Lomakkeen yläreunassa valitaan Muokattava kieli (Suomi, Englanti, Arabia, Somali); valinnassa näkyy, montako käännöstä puuttuu. Muulla kielellä näkyvät vain tekstikentät, ja jokaisen yläpuolella on suomenkielinen teksti. Käännä tekoälyllä -nappi kääntää koko sivun valituille kielille. Sama tapa etusivulla, palveluissa, tapahtumissa ja omilla sivuilla.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Etusivu.",
+      "kohdat": [
+        "Kenttien alla ei ole kielikohtia, kielet valitaan ylhäältä kohdasta Muokattava kieli — Missä: Testipaneeli → Etusivu",
+        "Valitse Englanti: näkyvissä vain tekstit, jokaisen yläpuolella suomenkielinen teksti — Missä: Testipaneeli → Etusivu",
+        "Kirjoita englanninkielinen teksti, palaa Suomeen ja tallenna: teksti säilyy — Missä: Testipaneeli → Etusivu",
+        "Palvelussa sama tapa: valitse Englanti, palvelun nimi ja kuvaus näkyvät englanniksi — Missä: Testipaneeli → Palvelut → palvelu",
+        "Uusi tapahtuma: kirjoita nimi, tallenna ja vastaa OK käännökseen: valinnassa ei enää puuttuvia — Missä: Testipaneeli → Tapahtumat → Lisää",
+        "Puhelimella kielivalinta mahtuu ruutuun eikä sivu vierity sivuttain — Missä: Testipaneeli puhelimella → Palvelut → palvelu"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: etusivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/etusivu"
+        },
+        {
+          "nimi": "Testipaneeli: palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
+        },
+        {
+          "nimi": "Testipaneeli: tapahtumat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }
