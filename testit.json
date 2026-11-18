@@ -987,6 +987,28 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "tallennusilmoitus-yksi",
+      "otsikko": "Paneeli: tallennuksen jälkeen yksi selkeä ilmoitus",
+      "alue": "paneeli",
+      "kuvaus": "Tallennuksen jälkeen alareunaan tulee yksi ilmoitus: Tallennettu – näkyy sivulla 1–2 minuutissa, voit jatkaa muuta sillä aikaa. Ylhäälle ei enää tule toista ilmoitusta samasta asiasta. Ilmoituksen voi sulkea ruksista; kun muutos on sivulla, ilmoitus kertoo sen ja antaa linkin sivulle.",
+      "aloitus": "Avaa testipaneelissa jokin tapahtuma ja muuta kellonaikaa.",
+      "kohdat": [
+        "Tallenna: alareunassa yksi ilmoitus (Tallennettu ja aika), ei toista ilmoitusta ylhäällä — Missä: Testipaneeli → Tapahtumat → tapahtuma → Tallenna",
+        "Ilmoituksen aikana voi siirtyä muualle ja muokata muuta — Missä: sama, esim. Uusi tapahtuma",
+        "Ruksi sulkee ilmoituksen — Missä: sama",
+        "1–2 minuutin päästä ilmoitus: Muutos näkyy nyt sivulla + Avaa sivu — Missä: sama, odota",
+        "Puhelimella ilmoitus ei peitä alavalikkoa — Missä: sama puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Tapahtumat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }
