@@ -1170,8 +1170,6 @@ a.u-palvelu__linkki:hover, .u-tapahtuma a:hover, .u-rj__kortti:hover, a.u-rmh:ho
 
 /* Tapahtuman sivu: tietokortti (milloin, aika, paikka, kenelle + Ilmoittaudu) ja kuvaus */
 .u-tapsivu { display: grid; gap: 18px; align-items: start; }
-/* Puhelimella ensin Milloin, Kellonaika, Paikka ja Ilmoittaudu, sitten kuva ja kuvaus (sama järjestys kuin paneelissa) */
-@media (max-width: 899px) { .u-taptieto { order: -1; } }
 @media (min-width: 900px) { .u-tapsivu { grid-template-columns: minmax(0, 1fr) 340px; } .u-taptieto { grid-column: 2; grid-row: 1; position: sticky; top: calc(var(--yla, 76px) + 16px); } .u-tapsivu__kuvaus { grid-column: 1; grid-row: 1; } .u-tapsivu--yksi { grid-template-columns: minmax(0, 460px); } .u-tapsivu--yksi .u-taptieto { grid-column: 1; position: static; } .u-tapsivu > .u-lomake { grid-column: 1; } .u-tapsivu:has(> .u-lomake):not(.u-tapsivu--yksi) .u-taptieto { grid-row: 1 / span 2; } }
 .u-taptieto { padding: 8px 24px 24px; }
 .u-taptieto__rivit { list-style: none; margin: 0; padding: 0; }
