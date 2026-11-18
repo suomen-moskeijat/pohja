@@ -641,7 +641,7 @@
         viesti(lomake, 'lahetetaan');
         var ansa = lomake.querySelector('[name="_sivu"]'), email = lomake.querySelector('input[type="email"]');
         fetch(lomake.dataset.api, { method: 'POST', headers: { 'content-type': 'text/plain;charset=UTF-8' }, body: JSON.stringify({
-          repo: lomake.dataset.repo, aihe: lomake.dataset.aihe, rivit: rivit.slice(2), vastaus: email ? email.value.trim() : '', hp: ansa ? ansa.value : '', aika: Date.now() - avattu,
+          repo: lomake.dataset.repo, lahde: lomake.dataset.lahde || '', osio: lomake.dataset.osio || '', aihe: lomake.dataset.aihe, rivit: rivit.slice(2), vastaus: email ? email.value.trim() : '', hp: ansa ? ansa.value : '', aika: Date.now() - avattu,
           kieli: kieli(), turnstile: (lomake.querySelector('[name="cf-turnstile-response"]') || {}).value || '',
         }) })
           .then(function (v) { if (!v.ok) throw new Error(v.status); viesti(lomake, 'kiitos'); lomake.reset(); lomake.classList.remove('on-tarkistettu'); avattu = Date.now(); if (window.turnstile) try { window.turnstile.reset(); } catch (e) {} })

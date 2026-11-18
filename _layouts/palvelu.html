@@ -3,13 +3,22 @@ layout: sivu
 ---
 {%- comment -%}
   Palvelun oma sivu (_palvelut/<nimi>.md): title + otsikko_xx, kuvake, kuvaus (lyhyt, monikielinen),
-  sisältö (markdown) + teksti_xx, kuva, yhteys (false = ei Kysy tästä -nappia), yhteys_teksti ja yhteys_nappi (omat tekstit), jarjestys,
-  ilmoittautuminen (sivuston polku kuten /palvelut/lasten-opetus/ tai ulkoinen osoite → Ilmoittaudu-pääpainike).
+  sisältö (markdown) + teksti_xx, kuva, jarjestys.
+  Sivun lopussa on yksi asia (paneeli: Palvelut → palvelu → Mitä sivun lopussa on?), toiminto:
+  ei = ei mitään, lomake = Kysy tästä -nappi (Yhteystiedot-sivun lomakkeeseen), linkki = nappi muualle (ilmoittautuminen),
+  oma = oma lomake tällä sivulla (lomake). Tekstit: yhteys_teksti ja yhteys_nappi (false = ei tekstiä).
+  Vanhat tiedot ilman toimintoa: lomake.kaytossa → oma, ilmoittautuminen → linkki, yhteys: true → lomake.
 {%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
-{%- assign _oma_lomake = false -%}{%- if page.lomake.kaytossa and page.lomake.kentat and page.lomake.kentat.size > 0 -%}{%- assign _oma_lomake = true -%}{%- endif -%}
-{%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
-{%- if m.yhteydenotto.whatsapp == "piilossa" -%}{%- assign wa = "" -%}{%- endif -%}
+{%- assign _toim = page.toiminto | default: "" -%}
+{%- assign _pi = page.ilmoittautuminen | default: "" | strip -%}
+{%- if _toim == "" -%}
+  {%- if page.lomake.kaytossa and page.lomake.kentat and page.lomake.kentat.size > 0 -%}{%- assign _toim = "oma" -%}
+  {%- elsif _pi != "" -%}{%- assign _toim = "linkki" -%}
+  {%- elsif page.yhteys == true -%}{%- assign _toim = "lomake" -%}{%- endif -%}
+{%- endif -%}
+{%- if _toim == "linkki" and _pi == "" -%}{%- assign _toim = "" -%}{%- endif -%}
+{%- if _toim == "oma" -%}{%- unless page.lomake.kentat and page.lomake.kentat.size > 0 -%}{%- assign _toim = "" -%}{%- endunless -%}{%- endif -%}
 <section class="u-sivuhero">
   <div class="u-kuvio" aria-hidden="true"></div>
   <div class="u-kehys">
@@ -36,27 +45,25 @@ layout: sivu
     <div class="u-palvelusivu__sisus">
     {% if _johd_t != "" %}<p class="u-palvelusivu__johdanto">{{ _johd | strip }}</p>{% endif %}
     {% if _tyhja != "" %}<div class="u-proosa u-proosa--iso">{{ _teksti }}</div>{% endif %}
-  {%- comment -%} Yhteydenotto vain, kun moskeija on ottanut sen käyttöön (paneeli: Palvelut → palvelu → Yhteydenotto) {%- endcomment %}
-  {% if page.yhteys == true %}
+  {%- comment -%} Yksi asia sivun lopussa: Kysy tästä -nappi tai nappi muualle (oma lomake tulee kortin alle) {%- endcomment %}
+  {% if _toim == "lomake" or _toim == "linkki" %}
   <div class="u-palvelusivu__yhteys">
-    {%- comment -%} Moskeijan oma teksti ja napin teksti (paneeli: Palvelut → palvelu → Yhteydenotto), muuten oletus {%- endcomment -%}
     {%- capture _yt -%}{% if page.yhteys_teksti %}{% include kt.html arvo=page.yhteys_teksti %}{% endif %}{%- endcapture -%}{%- assign _yt = _yt | strip -%}
     {%- capture _yn -%}{% if page.yhteys_nappi %}{% include kt.html arvo=page.yhteys_nappi %}{% endif %}{%- endcapture -%}{%- assign _yn = _yn | strip -%}
-    {% unless page.yhteys_teksti == false %}<p>{% if _yt != "" %}{{ _yt }}{% elsif page.ilmoittautuminen and page.ilmoittautuminen != "" %}{% include k.html a="palvelut_ohje_ilmo" %}{% else %}{% include k.html a="palvelut_ohje" %}{% endif %}</p>{% endunless %}
+    {% unless page.yhteys_teksti == false %}<p>{% if _yt != "" %}{{ _yt }}{% elsif _toim == "linkki" %}{% include k.html a="palvelut_ohje_ilmo" %}{% else %}{% include k.html a="palvelut_ohje" %}{% endif %}</p>{% endunless %}
     <div class="u-napit">
-      {%- assign _pi = page.ilmoittautuminen | default: "" | strip -%}
-      {%- if _pi != "" -%}{%- assign _pi1 = _pi | slice: 0 -%}{%- if _pi1 == "/" -%}{%- assign _pi = _pi | relative_url -%}{%- assign _pu = false -%}{%- else -%}{%- assign _pu = true -%}{%- endif %}
-      <a class="u-nappi u-nappi--kulta" href="{{ _pi }}"{% if _pu %} target="_blank" rel="noopener"{% endif %}>{% include k.html a="ilmoittaudu" %}</a>
+      {%- if _toim == "linkki" -%}
+        {%- assign _pi1 = _pi | slice: 0 -%}{%- if _pi1 == "/" -%}{%- assign _pi = _pi | relative_url -%}{%- assign _pu = false -%}{%- else -%}{%- assign _pu = true -%}{%- endif %}
+      <a class="u-nappi u-nappi--kulta" href="{{ _pi }}"{% if _pu %} target="_blank" rel="noopener"{% endif %}>{% if _yn != "" %}{{ _yn }}{% else %}{% include k.html a="ilmoittaudu" %}{% endif %}</a>
+      {%- else %}
+      <a class="u-nappi u-nappi--kulta" href="{{ '/yhteystiedot/' | relative_url }}?aihe={{ page.title | url_encode }}#kysy">{% if _yn != "" %}{{ _yn }}{% else %}{% include k.html a="kysy_tasta" %}{% endif %}</a>
       {%- endif %}
-      <a class="u-nappi {% if _pi != "" or _oma_lomake %}u-nappi--reuna{% else %}u-nappi--kulta{% endif %}" href="{% if _oma_lomake %}#lomake{% else %}{{ '/yhteystiedot/' | relative_url }}?aihe={{ page.title | url_encode }}#kysy{% endif %}">{% if _yn != "" %}{{ _yn }}{% else %}{% include k.html a="kysy_tasta" %}{% endif %}</a>
-      {% if m.puhelin and m.puhelin != "" and page.yhteys_puhelin != false %}<a class="u-nappi u-nappi--reuna" href="tel:{{ m.puhelin | remove: ' ' }}" dir="ltr">{% include ikoni-ph.html nimi="puhelin" koko=18 %} {{ m.puhelin }}</a>{% endif %}
-      {% if wa != "" and page.yhteys_whatsapp != false %}<a class="u-nappi u-nappi--reuna" href="https://wa.me/{{ wa }}?text={{ page.title | url_encode }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" koko=18 %} WhatsApp</a>{% endif %}
     </div>
   </div>
   {% endif %}
     </div>
   </article>
-  {% if _oma_lomake %}{% include osat/lomake-oma.html lomake=page.lomake moskeija=m aihe=page.title %}{% endif %}
+  {% if _toim == "oma" %}{% include osat/lomake-oma.html lomake=page.lomake moskeija=m aihe=page.title lahde=page.path %}{% endif %}
 </div>
 {%- capture _muut -%}{% include osat/palvelut.html moskeija=m ohita=page.url maara=6 %}{%- endcapture -%}{%- assign _muut = _muut | strip -%}
 {%- comment -%} Muut palvelut vain, jos niitä on (ainoan palvelun sivulla ei tyhjää otsikkoa) {%- endcomment -%}

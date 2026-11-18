@@ -1041,13 +1041,13 @@
       "id": "ei-automaattista-sisaltoa",
       "otsikko": "Sivulla vain se, minkä moskeija lisää paneelissa",
       "alue": "sivu ja paneeli",
-      "kuvaus": "Paneelin valikko on sivuston järjestyksessä (Sivut: Etusivu, Rukousajat, Meistä, Palvelut, Tapahtumat, Tiedotteet, Yhteystiedot, Tuki; Työkalut; Sivusto; Hallinta). Lasten opetus siirtyy tavalliseksi palveluksi omalla lomakkeella, kun moskeija avataan paneelissa: sen voi muokata, siirtää ja poistaa kuten muutkin palvelut, ja etusivun Ilmoita lapsesi -nappi ja nosto ovat muokattavia (Oma nappi, Nosto-osio). Oletustekstit ovat kentissä valmiina; tyhjennetty teksti ei näy sivulla. Muut palvelut -osio, puhelimen Ilmoittaudu-palkki, Instagram-nappi ja palvelun puhelin/WhatsApp-napit ovat kytkimiä paneelissa.",
+      "kuvaus": "Paneelin valikko on sivuston järjestyksessä (Sivut: Etusivu, Rukousajat, Meistä, Palvelut, Tapahtumat, Tiedotteet, Yhteystiedot, Tuki; Työkalut; Sivusto; Hallinta). Lasten opetus siirtyy tavalliseksi palveluksi omalla lomakkeella, kun moskeija avataan paneelissa: sen voi muokata, siirtää ja poistaa kuten muutkin palvelut, ja etusivun Ilmoita lapsesi -nappi ja nosto ovat muokattavia (Oma nappi, Nosto-osio). Oletustekstit ovat kentissä valmiina; tyhjennetty teksti ei näy sivulla. Muut palvelut -osio, puhelimen Ilmoittaudu-palkki ja Instagram-nappi ovat kytkimiä paneelissa.",
       "aloitus": "Avaa testipaneeli ja testimoskeija.",
       "kohdat": [
         "Valikossa ryhmät Sivut, Työkalut, Sivusto, Hallinta; jokainen sivu omana kohtanaan — Missä: Testipaneeli, vasen valikko",
         "Tapahtumat → Tapahtumat-sivun tekstit ja osat: johdanto ja ei tapahtumia -teksti valmiina, tyhjennys poistaa tekstin sivulta — Missä: Testipaneeli → Tapahtumat",
         "Palvelut → Palvelut-sivun teksti ja osat: Muut palvelut -kytkin pois → palvelun sivulla ei Muut palvelut -osiota — Missä: Testipaneeli → Palvelut",
-        "Palvelun Teksti napin yläpuolella ja Napin teksti valmiina; puhelin ja WhatsApp kytkimillä — Missä: Testipaneeli → Palvelut → palvelu",
+        "Palvelun Teksti napin yläpuolella ja Napin teksti valmiina — Missä: Testipaneeli → Palvelut → palvelu",
         "Etusivun osioihin voi lisätä Nosto-osion (otsikko, teksti, nappi) — Missä: Testipaneeli → Etusivu → Etusivun osiot",
         "Palvelut-sivulla ei tyhjää Kysyttävää-laatikkoa, vain lisätyt palvelut — Missä: testimoskeija → Palvelut"
       ],
@@ -1059,6 +1059,34 @@
         {
           "nimi": "Testimoskeija",
           "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
+    },
+    {
+      "id": "palvelun-loppu-ja-lomakkeen-vastaanottaja",
+      "otsikko": "Palvelun sivun loppu yhdellä valinnalla ja lomakkeen oma vastaanottaja",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Palvelun muokkauksessa valitaan, mitä sivun lopussa on: Ei mitään, Kysy tästä -nappi, Oma lomake tai Nappi muualle. Sivulla näkyy vain valittu asia; erilliset puhelin- ja WhatsApp-napit poistuivat. Jokaisessa omassa lomakkeessa (palvelu, tapahtuma, Lomake-osio) valitaan, tulevatko vastaukset sähköpostiin vai WhatsAppiin, ja niille voi kirjoittaa oman osoitteen tai numeron. Tyhjä kenttä = moskeijan oma osoite tai numero Yhteystiedoista. Tallennetun palvelun esikatselu näyttää oikean sivun.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Palvelut → Kouluvierailut ja tutustumiset.",
+      "kohdat": [
+        "Kohdassa Mitä sivun lopussa on? neljä vaihtoehtoa; valinta näyttää vain siihen kuuluvat kentät — Missä: Testipaneeli → Palvelut → palvelu",
+        "Ei puhelin- tai WhatsApp-kohtia palvelun muokkauksessa — Missä: Testipaneeli → Palvelut → palvelu",
+        "Oma lomake → Mihin vastaukset tulevat? Sähköpostiin näyttää osoitekentän, WhatsAppiin numerokentän — Missä: Testipaneeli → Palvelut → palvelu → Lomake",
+        "Esikatselussa palvelun oikea sivu (päivittyy noin minuutin päästä tallennuksesta) — Missä: Testipaneeli → Palvelut → palvelu",
+        "Tallennuksen jälkeen palvelun sivulla vain valittu asia (nappi tai lomake), ei ylimääräisiä nappeja — Missä: testimoskeija → Palvelut → palvelu",
+        "Lomakkeen viesti tulee kirjoitettuun osoitteeseen; tyhjällä osoitteella moskeijan sähköpostiin — Missä: testimoskeija → palvelun lomake",
+        "Sama Mihin vastaukset tulevat? -valinta tapahtuman ilmoittautumislomakkeessa ja Lomake-osiossa — Missä: Testipaneeli → Tapahtumat / Sivut"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: palvelu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut/kouluvierailut-ja-tutustumiset"
+        },
+        {
+          "nimi": "Testimoskeija: palvelut",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/"
         }
       ],
       "versio": 1,

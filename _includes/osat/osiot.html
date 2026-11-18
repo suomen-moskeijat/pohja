@@ -86,7 +86,7 @@
 {%- when "lomake" %}
 {%- capture _la -%}{% if o.otsikko %}{{ o.otsikko.fi | default: o.otsikko }}{% else %}{{ page.title | default: m.title }}{% endif %}{%- endcapture -%}
 {%- capture _lid -%}lomake-{{ forloop.index }}{%- endcapture -%}
-<section class="u-osio u-kehys"><div class="u-sivu--kapea u-lomakeosio">{% include osat/lomake-oma.html lomake=o moskeija=m aihe=_la id=_lid %}</div></section>
+<section class="u-osio u-kehys"><div class="u-sivu--kapea u-lomakeosio">{% include osat/lomake-oma.html lomake=o moskeija=m aihe=_la id=_lid lahde=page.path osio=forloop.index0 %}</div></section>
 {%- when "nosto" %}
 {%- comment -%} Nosto: korostettu laatikko ja nappi (esim. Ilmoita lapsesi opetukseen). Kaikki tekstit paneelista, mitään ei lisätä itsestään. {%- endcomment -%}
 <div class="u-kehys"><section class="u-nosto">
