@@ -934,6 +934,6 @@
       }
     });
     // Paneelille tieto, että sivu on valmis esikatseluun (paneeli lähettää muutokset tälle sivulle, myös omalla verkkotunnuksella)
-    try { window.parent.postMessage({ tyyppi: 'moskeija-esikatselu-valmis', versio: 3 }, '*'); } catch (e) { /* ei kehyksessä */ }
+    try { window.parent.postMessage({ tyyppi: 'moskeija-esikatselu-valmis', versio: 4 }, '*'); } catch (e) { /* ei kehyksessä */ }
   }
 })();

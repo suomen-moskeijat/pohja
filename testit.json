@@ -1373,6 +1373,31 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "uusi-esikatselu-sivupohjalla",
+      "otsikko": "Uuden palvelun ja tapahtuman esikatselu näyttää samalta kuin julkaistu",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Ennen uuden palvelun tai tapahtuman esikatselu oli paneelin oma yksinkertainen kuva, koska sivua ei vielä ollut. Nyt uusi esikatsellaan oikealla sivupohjalla (piilotettu esikatselusivu), joten se näyttää samalta kuin julkaisun jälkeen.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Palvelut → Lisää palvelu.",
+      "kohdat": [
+        "Uuden palvelun esikatselussa on sivun yläosa, otsikko 'Uusi palvelu' ja Muut palvelut, kuten oikealla sivulla — Missä: Testipaneeli → Palvelut → Lisää",
+        "Kirjoita nimi ja lyhyt kuvaus: ne vaihtuvat esikatseluun heti — Missä: Testipaneeli → Palvelut → Lisää",
+        "Julkaise ja avaa palvelu uudelleen: esikatselu näyttää samalta kuin ennen julkaisua — Missä: Testipaneeli → Palvelut → palvelu",
+        "Sama uudelle tapahtumalle: esikatselu on tapahtuman sivupohja (Milloin, Kellonaika …) — Missä: Testipaneeli → Tapahtumat → Lisää"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
+        },
+        {
+          "nimi": "Testipaneeli: tapahtumat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }
