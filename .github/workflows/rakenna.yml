@@ -55,6 +55,8 @@ jobs:
       - name: Lisää moskeijan tiedot (voittavat pohjan)
         run: |
           (cd moskeija && tar --exclude=.git --exclude=.github -cf - .) | (cd sivu && tar -xf -)
+          # Lasten opetus siirretty tavalliseksi palveluksi (paneeli): moskeijan palvelusivu korvaa pohjan vanhan lasten opetuksen sivun
+          if [ -f sivu/_palvelut/lasten-opetus.md ]; then rm -f sivu/palvelut/lasten-opetus.html; fi
           cat pohja/_config.yml moskeija/_config.yml > sivu/_config.yml
           printf '\nrepo: "%s"\n' "${GITHUB_REPOSITORY#*/}" >> sivu/_config.yml
 
