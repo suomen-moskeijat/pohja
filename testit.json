@@ -1092,6 +1092,34 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "reaaliaikainen-esikatselu-ja-tapahtuman-jarjestys",
+      "otsikko": "Esikatselu päivittyy heti kirjoittaessa, tapahtuman tiedot samassa järjestyksessä",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Palvelun ja tapahtuman muokkauksessa esikatselu näyttää oikean sivun, ja muutokset näkyvät siinä heti kirjoittaessa (ei tarvitse tallentaa ja odottaa). Tapahtuman kentät ovat sivun järjestyksessä: nimi, milloin, missä, kuva, kuvaus, ilmoittautuminen. Päivämäärän vieressä näkyy viikonpäivä, jonka sivu laskee päivämäärästä itse. Puhelimella tapahtuman sivulla näkyvät ensin Milloin, Kellonaika, Paikka ja Ilmoittaudu, sitten kuva ja kuvaus.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Tapahtumat → Avoimet ovet.",
+      "kohdat": [
+        "Kirjoita nimeen tai kuvaukseen: esikatselu muuttuu heti — Missä: Testipaneeli → Tapahtumat → tapahtuma",
+        "Vaihda kellonaika tai paikka: esikatselun tietokortti muuttuu heti — Missä: Testipaneeli → Tapahtumat → tapahtuma",
+        "Päivä-kentän vieressä viikonpäivä (esim. Lauantai), joka vaihtuu päivää vaihtaessa — Missä: Testipaneeli → Tapahtumat → tapahtuma",
+        "Kentät järjestyksessä Nimi, Kuinka usein, päivät ja kellonajat, Paikka, Kuva, Kuvaus, Ilmoittautuminen — Missä: Testipaneeli → Tapahtumat → tapahtuma",
+        "Palvelun lyhyt kuvaus, teksti, nappi ja lomake näkyvät esikatselussa heti — Missä: Testipaneeli → Palvelut → palvelu",
+        "Puhelimella tapahtuman sivulla Milloin/Kellonaika/Paikka ensin, kuvaus sen jälkeen — Missä: testimoskeija → Tapahtumat → tapahtuma (puhelin)",
+        "Tietokoneella tapahtuman sivu ennallaan: kuvaus vasemmalla, tiedot oikealla — Missä: testimoskeija → Tapahtumat → tapahtuma"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: tapahtuma",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat"
+        },
+        {
+          "nimi": "Testimoskeija: tapahtumat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }

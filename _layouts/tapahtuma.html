@@ -59,7 +59,7 @@ layout: sivu
     <ul class="u-taptieto__rivit">
       <li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="kalenteri" koko=20 %}</span><span><small>{% include k.html a="tap_milloin" %}</small><strong>{{ _milloin | strip }}</strong></span></li>
       {% if page.alkaa and page.alkaa != "" %}<li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="kello" koko=20 %}</span><span><small>{% include k.html a="tap_aika" %}</small><strong dir="ltr" data-klo>{{ page.alkaa }}{% if page.loppuu and page.loppuu != "" %}–{{ page.loppuu }}{% endif %}</strong></span></li>{% endif %}
-      <li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="sijainti" koko=20 %}</span><span><small>{% include k.html a="tap_paikka" %}</small><strong>{% if page.paikka and page.paikka != "" %}{{ page.paikka }}{% else %}{{ m.title }}{% if m.osoite and m.osoite != "" %}<small class="u-taptieto__osoite">{{ m.osoite }}</small>{% endif %}{% endif %}</strong></span></li>
+      <li data-rivi="paikka"><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="sijainti" koko=20 %}</span><span><small>{% include k.html a="tap_paikka" %}</small><strong>{% if page.paikka and page.paikka != "" %}{{ page.paikka }}{% else %}{{ m.title }}{% if m.osoite and m.osoite != "" %}<small class="u-taptieto__osoite">{{ m.osoite }}</small>{% endif %}{% endif %}</strong></span></li>
       {% if page.kenelle and page.kenelle != "" and page.kenelle != "kaikki" %}{% assign _ka = "kenelle_" | append: page.kenelle %}<li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="ryhma" koko=20 %}</span><span><small>{% include k.html a="tap_kenelle" %}</small><strong>{% include k.html a=_ka %}</strong></span></li>{% endif %}
     </ul>
     {% if _ilmo != "" %}
@@ -78,3 +78,6 @@ layout: sivu
   <a class="u-nappi u-nappi--kulta" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{{ _nappi_t | strip }}</a>
 </div>
 {% endif %}
+{%- comment -%} Kuvakkeet hallintapaneelin reaaliaikaiseen esikatseluun (sivu.js: esikSivu) {%- endcomment %}
+{%- assign _esik_ik = "kalenteri,kello,sijainti,ryhma" | split: "," -%}
+<template id="u-esik-ikonit">{% for _i in _esik_ik %}<span data-ikoni="{{ _i }}">{% include ikoni-ph.html nimi=_i koko=20 %}</span>{% endfor %}</template>

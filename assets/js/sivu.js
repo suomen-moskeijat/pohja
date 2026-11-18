@@ -749,6 +749,42 @@
   if (window.parent !== window) {
     var SALLITUT = /^(https:\/\/hallinta(\.[a-z0-9-]+)*\.(workers\.dev|fi|com|org)|http:\/\/(localhost|127\.0\.0\.1):\d+)$/;
     var VARI = /^#[0-9a-f]{6}$/i, KUVA = /^https:\/\/[A-Za-z0-9._~\/%-]+$/;
+    // Palvelun ja tapahtuman sisältö reaaliajassa: paneeli lähettää sisällön sivupohjan luokilla, sivu vaihtaa sen paikalleen.
+    // Vain sallitut tagit ja attribuutit; skriptit, tapahtumakäsittelijät ja javascript:-linkit poistetaan.
+    var ESIK_ALUE = { palvelu: '.u-palvelusivu', tapahtuma: '.u-tapsivu' };
+    var SALLITUT_TAGIT = /^(ARTICLE|ASIDE|DIV|SPAN|P|A|IMG|UL|OL|LI|H2|H3|H4|STRONG|EM|B|I|BR|SMALL|BLOCKQUOTE|FIGURE|FIGCAPTION|FORM|FIELDSET|LEGEND|LABEL|INPUT|TEXTAREA|BUTTON)$/;
+    var SALLITUT_ATTR = /^(class|href|src|alt|id|type|name|rows|role|target|rel|loading|data-ikoni|data-rivi|data-sailyta)$/;
+    var esikAlkup = {};
+    function puhdas(html) {
+      var t = document.createElement('template'); t.innerHTML = String(html || '');
+      [].slice.call(t.content.querySelectorAll('*')).forEach(function (el) {
+        if (!SALLITUT_TAGIT.test(el.tagName)) { el.remove(); return; }
+        [].slice.call(el.attributes).forEach(function (a) {
+          if (!SALLITUT_ATTR.test(a.name) || (/^(href|src)$/.test(a.name) && !/^(https:\/\/|\/|#|mailto:)/i.test(a.value.trim()))) el.removeAttribute(a.name);
+        });
+      });
+      return t.content;
+    }
+    function esikSivu(x) {
+      var alue = document.querySelector(ESIK_ALUE[x.laji] || '#ei-ole');
+      if (!alue || typeof x.html !== 'string') return;
+      // Alkuperäiset osat talteen ensimmäisellä kerralla (esim. moskeijan osoite Paikka-rivillä ja kuvakkeet)
+      if (!esikAlkup.alue) {
+        esikAlkup.alue = alue.className.replace(/\s*u-tapsivu--yksi/, '');
+        var pr = alue.querySelector('[data-rivi="paikka"]'); if (pr) esikAlkup.paikka = pr.cloneNode(true);
+      }
+      var sisus = puhdas(x.html);
+      [].slice.call(sisus.querySelectorAll('[data-ikoni]')).forEach(function (s) {
+        var ik = document.querySelector('#u-esik-ikonit'); var l = ik && ik.content.querySelector('[data-ikoni="' + s.getAttribute('data-ikoni') + '"]');
+        if (l) s.appendChild(l.firstElementChild.cloneNode(true));
+      });
+      [].slice.call(sisus.querySelectorAll('[data-sailyta="paikka"]')).forEach(function (s) { if (esikAlkup.paikka) s.replaceWith(esikAlkup.paikka.cloneNode(true)); else s.remove(); });
+      [].slice.call(sisus.querySelectorAll('form, button')).forEach(function (f) { f.addEventListener('submit', function (e) { e.preventDefault(); }); });
+      alue.textContent = ''; alue.appendChild(sisus);
+      alue.className = esikAlkup.alue + (Array.isArray(x.luokat) && x.luokat.indexOf('u-tapsivu--yksi') >= 0 ? ' u-tapsivu--yksi' : '');
+      var h1 = document.querySelector('.u-sivuhero h1');
+      if (h1 && typeof x.otsikko === 'string') h1.textContent = x.otsikko;
+    }
     window.addEventListener('message', function (e) {
       var d = e.data;
       if (!SALLITUT.test(e.origin) || !d || d.tyyppi !== 'moskeija-esikatselu') return;
@@ -788,6 +824,7 @@
       // Korttien tyylit (Ulkoasu): tapahtumat lista | kortit | tiivis, palvelut kortit | ruudukko | lista
       if (typeof d.kortti === 'string' && /^[a-z]{2,12}$/.test(d.kortti)) document.documentElement.setAttribute('data-kortti', d.kortti);
       if (d.kortit && typeof d.kortit === 'object') ['tapahtumat', 'palvelut', 'artikkelit'].forEach(function (x) { var v = d.kortit[x]; if (typeof v === 'string' && /^[a-z]{2,12}$/.test(v)) document.documentElement.setAttribute('data-kortit-' + x, v); });
+      if (d.sivu && typeof d.sivu === 'object') esikSivu(d.sivu);
       teksti('.u-alku__esittely', d.esittely);
       teksti('.u-alku__tunniste', d.tunniste);
       // Ilmoituspalkki: { teksti, linkki } tai null (piiloon). Palkki luodaan, jos sivulla ei vielä ole sitä.
