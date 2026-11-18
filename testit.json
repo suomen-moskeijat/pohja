@@ -1218,6 +1218,34 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "tekoalykaannos-tarkistus-ja-huomautukset",
+      "otsikko": "Tekoälykäännösten tarkistus, Yleiskatsauksen huomautukset ja yläosan lapsi-nappi",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Kun sivu käännetään Käännä tekoälyllä -napilla, sivuun tallentuu tieto tarkistamattomista käännöksistä. Käännöspalkissa näkyy Tekoälyn käännös, ei vielä tarkistettu: kielet, ja rasti Olen tarkistanut: kieli kuittaa ne. Myös käännöksen muokkaaminen käsin kuittaa sen kohdan. Sivun alalaidan tekoälyhuomautus näkyy kielellä vain, jos sivupohjan kieltä ei ole tarkistettu tai sivulla on tarkistamattomia käännöksiä. Yleiskatsauksessa on Huomautukset-kortti: tarkistamattomat käännökset, etusivun osiot ja yläosan napit, jotka eivät näy sivulla, sekä ylläpitäjälle tarkistamattomat kielet – jokainen linkkinä korjattavaan kohtaan. Yläosan Ilmoita lapsesi opetukseen -nappi vie nyt Lasten opetus -palveluun (aiemmin nappi katosi, kun vanha lasten opetus siirrettiin palveluksi).",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Palvelut → Janaza.",
+      "kohdat": [
+        "Käännä tekoälyllä → palkissa Tekoälyn käännös, ei vielä tarkistettu: englanti, arabia, somali — Missä: Testipaneeli → Palvelut → palvelu",
+        "Tallenna → Yleiskatsauksen Huomautukset-kortissa Palvelu …: tekoälyn käännös tarkistamatta; rivi vie palveluun — Missä: Testipaneeli → Yleiskatsaus",
+        "Rasti Olen tarkistanut: englanti ja tallennus poistaa englannin huomautuksesta — Missä: Testipaneeli → Palvelut → palvelu",
+        "Käännöksen muokkaus käsin (Muut kielet) kuittaa sen kohdan — Missä: Testipaneeli → Palvelut → palvelu",
+        "Huomautuksissa etusivun osiot, jotka eivät näy (esim. Kuvagalleria: galleriassa ei ole kuvia) — Missä: Testipaneeli → Yleiskatsaus",
+        "Ylläpitäjälle: Kieli englanti: sivupohjan tekstit tarkistamatta → vie Kielet ja tekstit -sivulle — Missä: Testipaneeli → Yleiskatsaus",
+        "Etusivun yläosan Ilmoita lapsesi opetukseen -nappi näkyy ja vie Lasten opetus -palveluun, kun palvelu on olemassa — Missä: testimoskeija etusivu (valitse nappi Etusivu → Yläosan napit)"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Yleiskatsaus",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija"
+        },
+        {
+          "nimi": "Testipaneeli: Janaza",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut/janaza-hautajaiset"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }
