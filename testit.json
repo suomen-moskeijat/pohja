@@ -1097,7 +1097,7 @@
       "id": "reaaliaikainen-esikatselu-ja-tapahtuman-jarjestys",
       "otsikko": "Esikatselu päivittyy heti kirjoittaessa, tapahtuman kentät sivun järjestyksessä",
       "alue": "sivu ja paneeli",
-      "kuvaus": "Palvelun ja tapahtuman muokkauksessa esikatselu näyttää oikean sivun, ja muutokset näkyvät siinä heti kirjoittaessa (ei tarvitse tallentaa ja odottaa). Tapahtuman kentät ovat sivun järjestyksessä: nimi, kuinka usein, kuva, kuvaus, milloin, missä, ilmoittautuminen. Päivämäärän vieressä näkyy viikonpäivä, jonka sivu laskee päivämäärästä itse. Tapahtuman sivu on ennallaan.",
+      "kuvaus": "Palvelun ja tapahtuman muokkauksessa esikatselu näyttää oikean sivun, ja muutokset näkyvät siinä heti kirjoittaessa (ei tarvitse tallentaa ja odottaa). Tapahtuman kentät ovat sivun järjestyksessä: nimi, kuinka usein, kuva, kuvaus, milloin, missä, ilmoittautuminen. Päivämäärän vieressä näkyy viikonpäivä, jonka sivu laskee päivämäärästä itse. Tapahtuman sivu on ennallaan. Korjattu: testipaneelin (hallinta-testi) muutokset eivät näkyneet esikatselussa, koska sivu hyväksyi vain tuotantopaneelin viestit.",
       "aloitus": "Avaa testipaneeli → testimoskeija → Tapahtumat → Avoimet ovet.",
       "kohdat": [
         "Kirjoita nimeen tai kuvaukseen: esikatselu muuttuu heti — Missä: Testipaneeli → Tapahtumat → tapahtuma",
@@ -1118,7 +1118,7 @@
           "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
         }
       ],
-      "versio": 1,
+      "versio": 2,
       "lisatty": "2026-11-18"
     }
   ]
