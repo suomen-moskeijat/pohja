@@ -1194,6 +1194,30 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "etusivun-osioiden-tila",
+      "otsikko": "Etusivun osiot: näkyykö osio sivulla nyt",
+      "alue": "paneeli",
+      "kuvaus": "Etusivun osioiden listassa jokaisen valmiin osion alla lukee, näkyykö se sivulla nyt (vihreä: Näkyy sivulla · esim. 3 palvelua) vai ei ja miksi (oranssi: Ei näy sivulla nyt: ei tulevia tapahtumia eikä viikko-ohjelmaa · Lisää sisältöä). Ehto on sama kuin sivulla, joten paneeli ja sivu täsmäävät. Tarkistettu kaikki 34 moskeijaa: osioiden järjestys, palvelujen järjestys ja valikko täsmäävät.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Etusivu → Etusivun osiot.",
+      "kohdat": [
+        "Jokaisen valmiin osion alla tila: Näkyy sivulla tai Ei näy sivulla nyt ja syy — Missä: Testipaneeli → Etusivu",
+        "Tila vastaa sivua: osiot, joilla on Ei näy, puuttuvat etusivulta — Missä: testimoskeija etusivu",
+        "Lisää sisältöä -linkki vie oikeaan paikkaan (esim. Tapahtumat, Kuvat ja tiedostot) — Missä: Testipaneeli → Etusivu"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Etusivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/etusivu"
+        },
+        {
+          "nimi": "Testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }
