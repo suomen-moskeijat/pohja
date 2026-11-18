@@ -1132,7 +1132,7 @@
         "Kirjoita nimi ja osoite: esikatselun Paikka-rivi ja Reittiohjeet muuttuvat heti — Missä: Testipaneeli → Tapahtumat → tapahtuma",
         "Tallennuksen jälkeen sivulla nimi, osoite ja Reittiohjeet; linkki avaa kartan oikeaan osoitteeseen — Missä: testimoskeija → Tapahtumat → tapahtuma",
         "Ilman paikkaa: moskeijan nimi, osoite ja Reittiohjeet moskeijaan — Missä: testimoskeija → Tapahtumat → tapahtuma",
-        "Puhelimella ei vanhaa Ilmoittaudu-alapalkkia esikatselussa kirjoittaessa — Missä: Testipaneeli → Tapahtumat → tapahtuma (puhelin)"
+        "Esikatselussa ei puhelimen Ilmoittaudu-alapalkkia koskaan (sivulla puhelimella se näkyy, jos kytkin on päällä) — Missä: Testipaneeli → Tapahtumat → tapahtuma"
       ],
       "linkit": [
         {

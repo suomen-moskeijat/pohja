@@ -747,6 +747,8 @@
   // Hallintapaneelin esikatselu: paneeli näyttää sivun kehyksessä ja lähettää värit, taustan ja
   // tekstin postMessagella. Vain ulkoasu muuttuu selaimessa; mitään ei tallenneta.
   if (window.parent !== window) {
+    // Esikatselussa (sivu paneelin kehyksessä) puhelimen Ilmoittaudu-alapalkki ei peitä sivua
+    var ipEsik = document.querySelector('[data-ilmopalkki]'); if (ipEsik) { ipEsik.remove(); document.body.classList.remove('on-ilmopalkki'); }
     // Hallintapaneeli (tuotanto ja testi: hallinta[-testi].suomenmoskeijat.fi tai workers.dev) ja paikallinen kehitys
     var SALLITUT = /^(https:\/\/hallinta(-[a-z0-9]+)?\.suomenmoskeijat\.fi|https:\/\/hallinta(-[a-z0-9]+)?(\.[a-z0-9-]+)*\.workers\.dev|http:\/\/(localhost|127\.0\.0\.1):\d+)$/;
     var VARI = /^#[0-9a-f]{6}$/i, KUVA = /^https:\/\/[A-Za-z0-9._~\/%-]+$/;
