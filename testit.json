@@ -1315,6 +1315,39 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "etusivu-esikatselu-heti",
+      "otsikko": "Etusivun esikatselu: napit ja osiot päivittyvät heti",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Etusivun muokkauksessa esikatselu päivittyy heti myös silloin, kun vaihdat yläosan napit, pääotsikon tai osioiden järjestyksen, poistat osion tai lisäät uuden. Valmiit osiot (palvelut, tapahtumat …) ja napit tulevat sivupohjasta, joten ne näyttävät samalta kuin sivulla. Kun valitset ylhäältä Muokattava kieli, esikatselu näyttää sivun samalla kielellä (myös palveluissa ja tapahtumissa).",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Etusivu. Odota, että esikatselu on latautunut.",
+      "kohdat": [
+        "Vaihda yläosan napit (esim. Ota yhteyttä ja Katso rukousajat): napit vaihtuvat esikatselussa heti — Missä: Testipaneeli → Etusivu",
+        "Kirjoita pääotsikko: otsikko vaihtuu heti — Missä: Testipaneeli → Etusivu",
+        "Siirrä osiota nuolella ja poista yksi osio: esikatselu muuttuu heti — Missä: Testipaneeli → Etusivu → Etusivun osiot",
+        "Lisää osio Oma teksti ja kirjoita otsikko: osio näkyy esikatselun lopussa heti — Missä: Testipaneeli → Etusivu → Etusivun osiot",
+        "Lisää poistamasi valmis osio takaisin: se näkyy heti — Missä: Testipaneeli → Etusivu → Etusivun osiot",
+        "Valitse ylhäältä Englanti: esikatselu vaihtuu englanniksi; Suomi palauttaa suomeksi — Missä: Testipaneeli → Etusivu",
+        "Palvelussa Englanti valittuna: kirjoita nimi englanniksi, esikatselun otsikko vaihtuu heti — Missä: Testipaneeli → Palvelut → palvelu",
+        "Tallenna ja avaa sivu: etusivu näyttää samalta kuin esikatselussa — Missä: testimoskeijan sivu"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: etusivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/etusivu"
+        },
+        {
+          "nimi": "Testipaneeli: palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
+        },
+        {
+          "nimi": "Testimoskeijan sivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }

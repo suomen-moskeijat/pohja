@@ -745,7 +745,7 @@
     // Palvelun ja tapahtuman sisältö reaaliajassa: paneeli lähettää sisällön sivupohjan luokilla, sivu vaihtaa sen paikalleen.
     // Vain sallitut tagit ja attribuutit; skriptit, tapahtumakäsittelijät ja javascript:-linkit poistetaan.
     var ESIK_ALUE = { palvelu: '.u-palvelusivu', tapahtuma: '.u-tapsivu' };
-    var SALLITUT_TAGIT = /^(ARTICLE|ASIDE|DIV|SPAN|P|A|IMG|UL|OL|LI|H2|H3|H4|STRONG|EM|B|I|BR|SMALL|BLOCKQUOTE|FIGURE|FIGCAPTION|FORM|FIELDSET|LEGEND|LABEL|INPUT|TEXTAREA|BUTTON)$/;
+    var SALLITUT_TAGIT = /^(SECTION|ARTICLE|ASIDE|DIV|SPAN|P|A|IMG|UL|OL|LI|H2|H3|H4|STRONG|EM|B|I|BR|SMALL|BLOCKQUOTE|FIGURE|FIGCAPTION|FORM|FIELDSET|LEGEND|LABEL|INPUT|TEXTAREA|BUTTON|DETAILS|SUMMARY)$/;
     var SALLITUT_ATTR = /^(class|href|src|alt|id|type|name|rows|role|target|rel|loading|data-ikoni|data-rivi|data-sailyta)$/;
     var esikAlkup = {};
     function puhdas(html) {
@@ -758,6 +758,92 @@
       });
       return t.content;
     }
+    // Kuvakkeet (data-ikoni) sivun tai esikatselu-osat-sivun kuvakemallista
+    function ikonit(juuri, lahde) {
+      [].slice.call(juuri.querySelectorAll('[data-ikoni]')).forEach(function (s) {
+        if (s.firstElementChild) return;
+        var ik = document.querySelector('#u-esik-ikonit') || (lahde && lahde.querySelector('#u-esik-ikonit'));
+        var l = ik && ik.content.querySelector('[data-ikoni="' + s.getAttribute('data-ikoni') + '"]');
+        if (l) s.appendChild(document.importNode(l.firstElementChild, true));
+      });
+    }
+    // Etusivu: valmiit osiot ja yläosan napit tulevat sivupohjan osista (esikatselu-osat.html, haetaan vasta tarvittaessa),
+    // omat osiot paneelin rakentamana. Osioiden paikat merkitty kommenteilla <!--osio:N:tyyppi--> … <!--/osio-->.
+    var osatLupaus = null, etu = null, etuKierros = 0;
+    var VALMIIT = /^(palvelut|lapset|tapahtumat|artikkelit|meista|galleria|somet|lahjoitus|vierailu)$/;
+    function osat() {
+      var a = document.querySelector('[data-esik-osat]');
+      if (!osatLupaus) osatLupaus = !a ? Promise.resolve(null) : fetch(a.getAttribute('data-esik-osat'), { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.text() : ''; }).then(function (t) { return t ? new DOMParser().parseFromString(t, 'text/html') : null; }).catch(function () { return null; });
+      return osatLupaus;
+    }
+    function etuAlusta() {
+      if (etu) return etu;
+      var w = document.createTreeWalker(document.body, NodeFilter.SHOW_COMMENT), c, merkit = [];
+      while ((c = w.nextNode())) if (/^\s*\/?osio(:|\s*$)/.test(c.data)) merkit.push(c);
+      var alkup = [], ankkuri = null;
+      merkit.forEach(function (c) {
+        var m = /^\s*osio:(\d+):([a-z]+)\s*$/.exec(c.data); if (!m) return;
+        var o = { i: +m[1], tyyppi: m[2], solmut: [] }, n = c.nextSibling;
+        while (n && !(n.nodeType === 8 && /^\s*\/osio\s*$/.test(n.data))) { o.solmut.push(n); n = n.nextSibling; }
+        if (!ankkuri) { ankkuri = document.createComment('esikatselu-osiot'); c.parentNode.insertBefore(ankkuri, c); }
+        alkup.push(o);
+      });
+      if (!ankkuri) return null;
+      merkit.forEach(function (c) { c.remove(); });
+      etu = { ankkuri: ankkuri, alkup: alkup, naytetyt: [], mallit: {} };
+      alkup.forEach(function (o) { o.solmut.forEach(function (n) { etu.naytetyt.push(n); }); });
+      return etu;
+    }
+    function solmuja(f) { return [].slice.call(f.childNodes); }
+    function etuOsiot(lista, lahde) {
+      var e = etuAlusta(); if (!e) return;
+      e.naytetyt.forEach(function (n) { if (n.parentNode) n.parentNode.removeChild(n); }); e.naytetyt = [];
+      var frag = document.createDocumentFragment();
+      lista.forEach(function (o) {
+        if (!o || typeof o.osio !== 'string') return;
+        var solmut = null, a;
+        if (typeof o.sama === 'number') { a = e.alkup.filter(function (x) { return x.i === o.sama; })[0]; if (a) solmut = a.solmut; }
+        if (!solmut && VALMIIT.test(o.osio)) {
+          a = e.alkup.filter(function (x) { return x.tyyppi === o.osio; })[0];
+          if (a) solmut = a.solmut;
+          else if (e.mallit[o.osio]) solmut = e.mallit[o.osio];
+          else if (lahde) { var t = lahde.querySelector('template[data-osio="' + o.osio + '"]'); if (t) solmut = e.mallit[o.osio] = solmuja(document.importNode(t.content, true)); }
+        }
+        if (!solmut && typeof o.html === 'string') { var f = puhdas(o.html); ikonit(f, lahde); solmut = solmuja(f); }
+        (solmut || []).forEach(function (n) { frag.appendChild(n); e.naytetyt.push(n); });
+      });
+      e.ankkuri.parentNode.insertBefore(frag, e.ankkuri);
+    }
+    function etuNapit(lista, oma, lahde) {
+      var kohde = document.querySelector('.u-alku__napit'); if (!kohde || !lahde) return;
+      var napit = [];
+      function malli(sel) { var t = lahde.querySelector(sel); return t ? [].slice.call(t.content.querySelectorAll('a.u-nappi')) : []; }
+      if (!lista.length) napit = malli('template[data-nappi-oletus]').map(function (x) { return document.importNode(x, true); });
+      lista.forEach(function (n) {
+        if (napit.length >= 2 || typeof n !== 'string') return;
+        if (n === 'oma') {
+          var l = oma && typeof oma.linkki === 'string' ? oma.linkki.trim() : '';
+          if (!l || !/^(https:\/\/|\/|#|mailto:)/i.test(l)) return;
+          var a = document.createElement('a'); a.className = 'u-nappi u-nappi--iso';
+          var pohja = (document.querySelector('[data-esik-osat]').getAttribute('data-esik-osat') || '/').replace(/esikatselu-osat\/$/, '');
+          a.href = l.charAt(0) === '/' ? pohja + l.slice(1) : l; a.textContent = typeof oma.teksti === 'string' ? oma.teksti : '';
+          napit.push(a); return;
+        }
+        var x = malli('template[data-nappi="' + n.replace(/[^a-z0-9-]/g, '') + '"]')[0]; if (x) napit.push(document.importNode(x, true));
+      });
+      kohde.textContent = '';
+      napit.forEach(function (a, i) { a.classList.remove('u-nappi--kulta', 'u-nappi--reuna'); a.classList.add(i === 0 ? 'u-nappi--kulta' : 'u-nappi--reuna'); kohde.appendChild(a); });
+    }
+    function esikEtusivu(x) {
+      var k = ++etuKierros;
+      var tarvitsee = Array.isArray(x.napit) || (Array.isArray(x.osiot) && x.osiot.some(function (o) { return o && VALMIIT.test(o.osio); }));
+      (tarvitsee ? osat() : Promise.resolve(null)).then(function (lahde) {
+        if (k !== etuKierros) return;
+        if (Array.isArray(x.napit)) etuNapit(x.napit, x.oma, lahde);
+        if (Array.isArray(x.osiot)) etuOsiot(x.osiot, lahde);
+      });
+    }
     function esikSivu(x) {
       var alue = document.querySelector(ESIK_ALUE[x.laji] || '#ei-ole');
       if (!alue || typeof x.html !== 'string') return;
@@ -767,10 +853,7 @@
         var pr = alue.querySelector('[data-rivi="paikka"]'); if (pr) esikAlkup.paikka = pr.cloneNode(true);
       }
       var sisus = puhdas(x.html);
-      [].slice.call(sisus.querySelectorAll('[data-ikoni]')).forEach(function (s) {
-        var ik = document.querySelector('#u-esik-ikonit'); var l = ik && ik.content.querySelector('[data-ikoni="' + s.getAttribute('data-ikoni') + '"]');
-        if (l) s.appendChild(l.firstElementChild.cloneNode(true));
-      });
+      ikonit(sisus);
       [].slice.call(sisus.querySelectorAll('[data-sailyta="paikka"]')).forEach(function (s) { if (esikAlkup.paikka) s.replaceWith(esikAlkup.paikka.cloneNode(true)); else s.remove(); });
       [].slice.call(sisus.querySelectorAll('form, button')).forEach(function (f) { f.addEventListener('submit', function (e) { e.preventDefault(); }); });
       alue.textContent = ''; alue.appendChild(sisus);
@@ -781,6 +864,8 @@
     window.addEventListener('message', function (e) {
       var d = e.data;
       if (!SALLITUT.test(e.origin) || !d || d.tyyppi !== 'moskeija-esikatselu') return;
+      // Paneelissa valittu muokattava kieli: esikatselu näyttää sivun samalla kielellä (ei tallenneta)
+      if (typeof d.kieli === 'string' && LOKAALIT[d.kieli] && html.lang !== d.kieli) asetaKieli(d.kieli);
       var r = document.documentElement.style;
       if ('teema' in d) {
         var t = d.teema;
@@ -809,7 +894,7 @@
       function teksti(valitsin, arvo) {
         if (typeof arvo !== 'string') return;
         var el = document.querySelector(valitsin); if (!el) return;
-        var fi = el.querySelector('[data-l="fi"]');
+        var fi = el.querySelector('[data-l="' + kieli() + '"]') || el.querySelector('[data-l="fi"]');
         (fi || el).textContent = arvo;
       }
       // Etusivun Ramadan-rivin asettelu ja väri (Rukousajat → Ramadan)
@@ -818,8 +903,18 @@
       if (typeof d.kortti === 'string' && /^[a-z]{2,12}$/.test(d.kortti)) document.documentElement.setAttribute('data-kortti', d.kortti);
       if (d.kortit && typeof d.kortit === 'object') ['tapahtumat', 'palvelut', 'artikkelit'].forEach(function (x) { var v = d.kortit[x]; if (typeof v === 'string' && /^[a-z]{2,12}$/.test(v)) document.documentElement.setAttribute('data-kortit-' + x, v); });
       if (d.sivu && typeof d.sivu === 'object') esikSivu(d.sivu);
-      teksti('.u-alku__esittely', d.esittely);
-      teksti('.u-alku__tunniste', d.tunniste);
+      // Yläosan tekstit: tyhjä = piiloon, puuttuva kohta luodaan (kuten sivupohjassa)
+      function alkuTeksti(luokka, arvo, ennen) {
+        if (typeof arvo !== 'string') return;
+        var el = document.querySelector('.' + luokka), h1 = document.querySelector('.u-alku h1');
+        if (!el && arvo && h1) { el = document.createElement('p'); el.className = luokka; h1.parentNode.insertBefore(el, ennen ? h1 : h1.nextSibling); }
+        if (!el) return;
+        el.hidden = !arvo; teksti('.' + luokka, arvo);
+      }
+      alkuTeksti('u-alku__esittely', d.esittely, false);
+      alkuTeksti('u-alku__tunniste', d.tunniste, true);
+      teksti('.u-alku h1', d.otsikko);
+      if (d.etusivu && typeof d.etusivu === 'object') esikEtusivu(d.etusivu);
       // Ilmoituspalkki: { teksti, linkki } tai null (piiloon). Palkki luodaan, jos sivulla ei vielä ole sitä.
       if ('ilmoitus' in d) {
         var il = d.ilmoitus, pal = document.querySelector('[data-ilmoitus]');
@@ -839,6 +934,6 @@
       }
     });
     // Paneelille tieto, että sivu on valmis esikatseluun (paneeli lähettää muutokset tälle sivulle, myös omalla verkkotunnuksella)
-    try { window.parent.postMessage({ tyyppi: 'moskeija-esikatselu-valmis', versio: 2 }, '*'); } catch (e) { /* ei kehyksessä */ }
+    try { window.parent.postMessage({ tyyppi: 'moskeija-esikatselu-valmis', versio: 3 }, '*'); } catch (e) { /* ei kehyksessä */ }
   }
 })();
