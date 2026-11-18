@@ -17,14 +17,22 @@
     {%- if _vp == nil or _vp.size == 0 -%}{%- assign _wi = t.paiva | date: '%w' | plus: 0 -%}{%- assign _vp = _vo_w[_wi] | split: "," -%}{%- endif -%}
     {%- unless _vp contains _p -%}{%- continue -%}{%- endunless -%}
     {%- assign _alku = t.paiva | date: '%Y-%m-%d' -%}
-    <li class="u-viikko__rivi"><a href="{{ t.url | relative_url }}">
-      <span class="u-viikko__klo" dir="ltr" data-klo>{% if t.alkaa and t.alkaa != "" %}{{ t.alkaa }}{% if t.loppuu and t.loppuu != "" %}–{{ t.loppuu }}{% endif %}{% else %}–{% endif %}</span>
-      <span class="u-viikko__tiedot"><strong>{% include kolme.html fi=t.title doc=t %}</strong>
-        {%- if t.kenelle and t.kenelle != "" and t.kenelle != "kaikki" %}{% assign _ka = "kenelle_" | append: t.kenelle %} <small class="u-viikko__kenelle">{% include k.html a=_ka %}</small>{% endif %}
-        {%- if _alku > _vo_nyt %} <small>{% include k.html a="alkaen" %} <span dir="ltr">{{ t.paiva | date: '%-d.%-m.' }}</span></small>{% endif %}
-        {%- if _loppu != '9999-12-31' %} <small>{% include k.html a="asti" %} <span dir="ltr">{{ t.paiva_loppuu | date: '%-d.%-m.' }}</span></small>{% endif %}
-      </span>
-    </a></li>
+    {%- comment -%} Tiedot osina (¦ erottaa): klo 13.00–15.00 · Lapsille · 3.12.–27.5. Pisteet tulevat CSS:stä, eikä rivi ala pisteellä. {%- endcomment -%}
+    {%- capture _vo_meta -%}
+      {%- if t.alkaa and t.alkaa != "" -%}{% include k.html a="klo" %} <span dir="ltr" data-klo>{{ t.alkaa }}{% if t.loppuu and t.loppuu != "" %}–{{ t.loppuu }}{% endif %}</span>¦{%- endif -%}
+      {%- if t.kenelle and t.kenelle != "" and t.kenelle != "kaikki" -%}{% assign _ka = "kenelle_" | append: t.kenelle %}{% include k.html a=_ka %}¦{%- endif -%}
+      {%- if _alku > _vo_nyt and _loppu != '9999-12-31' -%}<span dir="ltr">{{ t.paiva | date: '%-d.%-m.' }}–{{ t.paiva_loppuu | date: '%-d.%-m.' }}</span>¦
+      {%- elsif _alku > _vo_nyt -%}{% include k.html a="alkaen" %} <span dir="ltr">{{ t.paiva | date: '%-d.%-m.' }}</span>¦
+      {%- elsif _loppu != '9999-12-31' -%}{% include k.html a="asti" %} <span dir="ltr">{{ t.paiva_loppuu | date: '%-d.%-m.' }}</span>¦{%- endif -%}
+    {%- endcapture -%}
+    {%- comment -%} Jokainen osa pysyy yhdellä rivillä, rivitys osien välistä {%- endcomment -%}
+    {%- assign _vo_meta = _vo_meta | strip | split: "¦" | join: '</span><span class="u-viikko__osa">' -%}
+    {%- if _vo_meta != "" -%}{%- assign _vo_meta = '<span class="u-viikko__osat"><span class="u-viikko__osa">' | append: _vo_meta | append: '</span></span>' -%}{%- endif -%}
+    {%- comment -%} Sama rivi kuin Tulevat-kortissa (osat/tapahtumat.html): nimi lihavoituna, kello ja kenelle sen alla {%- endcomment -%}
+    <li class="u-viikko__rivi"><a href="{{ t.url | relative_url }}"><span class="u-tapahtuma__tiedot">
+      <strong>{% include kolme.html fi=t.title doc=t %}</strong>
+      {%- if _vo_meta != "" %}<small class="u-viikko__meta">{{ _vo_meta }}</small>{% endif %}
+    </span></a></li>
   {%- endfor -%}
   {%- endcapture -%}
   {%- assign _vo_rivit = _vo_rivit | strip -%}

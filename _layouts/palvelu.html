@@ -7,6 +7,7 @@ layout: sivu
   ilmoittautuminen (sivuston polku kuten /palvelut/lasten-opetus/ tai ulkoinen osoite → Ilmoittaudu-pääpainike).
 {%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- assign _oma_lomake = false -%}{%- if page.lomake.kaytossa and page.lomake.kentat and page.lomake.kentat.size > 0 -%}{%- assign _oma_lomake = true -%}{%- endif -%}
 {%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
 {%- if m.yhteydenotto.whatsapp == "piilossa" -%}{%- assign wa = "" -%}{%- endif -%}
 <section class="u-sivuhero">
@@ -47,7 +48,7 @@ layout: sivu
       {%- if _pi != "" -%}{%- assign _pi1 = _pi | slice: 0 -%}{%- if _pi1 == "/" -%}{%- assign _pi = _pi | relative_url -%}{%- assign _pu = false -%}{%- else -%}{%- assign _pu = true -%}{%- endif %}
       <a class="u-nappi u-nappi--kulta" href="{{ _pi }}"{% if _pu %} target="_blank" rel="noopener"{% endif %}>{% include k.html a="ilmoittaudu" %}</a>
       {%- endif %}
-      <a class="u-nappi {% if _pi != "" %}u-nappi--reuna{% else %}u-nappi--kulta{% endif %}" href="{{ '/yhteystiedot/' | relative_url }}?aihe={{ page.title | url_encode }}#kysy">{% if _yn != "" %}{{ _yn }}{% else %}{% include k.html a="kysy_tasta" %}{% endif %}</a>
+      <a class="u-nappi {% if _pi != "" or _oma_lomake %}u-nappi--reuna{% else %}u-nappi--kulta{% endif %}" href="{% if _oma_lomake %}#lomake{% else %}{{ '/yhteystiedot/' | relative_url }}?aihe={{ page.title | url_encode }}#kysy{% endif %}">{% if _yn != "" %}{{ _yn }}{% else %}{% include k.html a="kysy_tasta" %}{% endif %}</a>
       {% if m.puhelin and m.puhelin != "" %}<a class="u-nappi u-nappi--reuna" href="tel:{{ m.puhelin | remove: ' ' }}" dir="ltr">{% include ikoni-ph.html nimi="puhelin" koko=18 %} {{ m.puhelin }}</a>{% endif %}
       {% if wa != "" %}<a class="u-nappi u-nappi--reuna" href="https://wa.me/{{ wa }}?text={{ page.title | url_encode }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" koko=18 %} WhatsApp</a>{% endif %}
     </div>
@@ -55,6 +56,7 @@ layout: sivu
   {% endif %}
     </div>
   </article>
+  {% if _oma_lomake %}{% include osat/lomake-oma.html lomake=page.lomake moskeija=m aihe=page.title %}{% endif %}
 </div>
 {%- capture _muut -%}{% include osat/palvelut.html moskeija=m ohita=page.url maara=6 %}{%- endcapture -%}{%- assign _muut = _muut | strip -%}
 {%- comment -%} Muut palvelut vain, jos niitä on (ainoan palvelun sivulla ei tyhjää otsikkoa) {%- endcomment -%}

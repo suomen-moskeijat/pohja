@@ -82,6 +82,10 @@
 <section class="u-osio u-kehys">
   {% include osat/vierailu.html moskeija=m %}
 </section>
+{%- when "lomake" %}
+{%- capture _la -%}{% if o.otsikko %}{{ o.otsikko.fi | default: o.otsikko }}{% else %}{{ page.title | default: m.title }}{% endif %}{%- endcapture -%}
+{%- capture _lid -%}lomake-{{ forloop.index }}{%- endcapture -%}
+<section class="u-osio u-kehys"><div class="u-sivu--kapea u-lomakeosio">{% include osat/lomake-oma.html lomake=o moskeija=m aihe=_la id=_lid %}</div></section>
 {%- when "teksti" %}
 {% include osat/osio-teksti.html o=o %}
 {%- when "ilmoitus" %}
