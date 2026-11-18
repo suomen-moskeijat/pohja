@@ -1041,7 +1041,7 @@
       "id": "ei-automaattista-sisaltoa",
       "otsikko": "Sivulla vain se, minkä moskeija lisää paneelissa",
       "alue": "sivu ja paneeli",
-      "kuvaus": "Paneelin valikko on sivuston järjestyksessä (Sivut: Etusivu, Rukousajat, Meistä, Palvelut, Tapahtumat, Tiedotteet, Yhteystiedot, Tuki; Työkalut; Sivusto; Hallinta). Lasten opetus siirtyy tavalliseksi palveluksi omalla lomakkeella, kun moskeija avataan paneelissa: sen voi muokata, siirtää ja poistaa kuten muutkin palvelut, ja etusivun Ilmoita lapsesi -nappi ja nosto ovat muokattavia (Oma nappi, Nosto-osio). Oletustekstit ovat kentissä valmiina; tyhjennetty teksti ei näy sivulla. Muut palvelut -osio, puhelimen Ilmoittaudu-palkki ja Instagram-nappi ovat kytkimiä paneelissa.",
+      "kuvaus": "Paneelin valikko on sivuston järjestyksessä (Sivut: Etusivu, Rukousajat, Meistä, Palvelut, Tapahtumat, Tiedotteet, Yhteystiedot, Tuki; Työkalut; Sivusto; Hallinta). Lasten opetus siirtyy tavalliseksi palveluksi omalla lomakkeella, kun moskeija avataan paneelissa: sen voi muokata, siirtää ja poistaa kuten muutkin palvelut, ja etusivun Ilmoita lapsesi -nappi ja nosto ovat muokattavia (Oma nappi, Nosto-osio). Oletustekstit ovat kentissä valmiina; tyhjennetty teksti ei näy sivulla. Muut palvelut -osio ja Instagram-nappi ovat kytkimiä paneelissa.",
       "aloitus": "Avaa testipaneeli ja testimoskeija.",
       "kohdat": [
         "Valikossa ryhmät Sivut, Työkalut, Sivusto, Hallinta; jokainen sivu omana kohtanaan — Missä: Testipaneeli, vasen valikko",
@@ -1131,8 +1131,7 @@
         "Paikan nimi ja Osoite samalla rivillä, ohjeina Tyhjä = moskeija ja Reittiohjeet-linkki — Missä: Testipaneeli → Tapahtumat → tapahtuma",
         "Kirjoita nimi ja osoite: esikatselun Paikka-rivi ja Reittiohjeet muuttuvat heti — Missä: Testipaneeli → Tapahtumat → tapahtuma",
         "Tallennuksen jälkeen sivulla nimi, osoite ja Reittiohjeet; linkki avaa kartan oikeaan osoitteeseen — Missä: testimoskeija → Tapahtumat → tapahtuma",
-        "Ilman paikkaa: moskeijan nimi, osoite ja Reittiohjeet moskeijaan — Missä: testimoskeija → Tapahtumat → tapahtuma",
-        "Esikatselussa ei puhelimen Ilmoittaudu-alapalkkia koskaan (sivulla puhelimella se näkyy, jos kytkin on päällä) — Missä: Testipaneeli → Tapahtumat → tapahtuma"
+        "Ilman paikkaa: moskeijan nimi, osoite ja Reittiohjeet moskeijaan — Missä: testimoskeija → Tapahtumat → tapahtuma"
       ],
       "linkit": [
         {
@@ -1142,6 +1141,31 @@
         {
           "nimi": "Testimoskeija: tapahtumat",
           "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
+    },
+    {
+      "id": "ei-kelluvaa-ilmoittaudu-palkkia",
+      "otsikko": "Kelluva Ilmoittaudu-palkki poistettu",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Tapahtuman sivulla puhelimen alareunaan kiinnittynyt Ilmoittaudu-palkki on poistettu kokonaan, myös esikatselusta. Ilmoittaudu-nappi on vain tapahtuman tietokortissa. Paneelista poistui palkin kytkin.",
+      "aloitus": "Avaa testimoskeijan tapahtuma puhelimella, jossa on Ilmoittaudu-nappi.",
+      "kohdat": [
+        "Vieritä sivua: alareunassa ei ole kiinteää Ilmoittaudu-palkkia — Missä: testimoskeija → Tapahtumat → Avoimet ovet (puhelin)",
+        "Ilmoittaudu-nappi tietokortissa toimii — Missä: testimoskeija → Tapahtumat → Avoimet ovet",
+        "Paneelin esikatselussa ei palkkia — Missä: Testipaneeli → Tapahtumat → tapahtuma",
+        "Tapahtumat-sivun tekstit ja osat -kohdassa ei enää palkin kytkintä — Missä: Testipaneeli → Tapahtumat"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testimoskeija: Avoimet ovet",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
+        },
+        {
+          "nimi": "Testipaneeli: tapahtumat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat"
         }
       ],
       "versio": 1,

@@ -1193,14 +1193,6 @@ a.u-palvelu__linkki:hover, .u-tapahtuma a:hover, .u-rj__kortti:hover, a.u-rmh:ho
 .u-tapsivu__kuvaus .u-proosa { padding: 24px; }
 @media (min-width: 900px) { .u-tapsivu__kuvaus .u-proosa { padding: 32px 36px; } }
 .u-tapsivu__kuva { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; margin: 0 !important; border-radius: 0 !important; }
-.u-ilmopalkki { position: fixed; z-index: 45; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 12px; padding: 10px 10px 10px 16px; border-radius: var(--kortti-r, 20px); background: var(--kortti-bg, #fff); border: 1px solid var(--kortti-reuna, var(--raja)); box-shadow: var(--varjo-2); transition: transform .2s, opacity .2s; }
-.u-ilmopalkki[hidden] { display: flex; opacity: 0; transform: translateY(120%); pointer-events: none; }
-.u-ilmopalkki > span { flex: 1; min-width: 0; display: grid; }
-.u-ilmopalkki b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--paa-tumma); }
-.u-ilmopalkki small { color: var(--hieno); font-size: 13px; }
-.u-ilmopalkki .u-nappi { flex: none; }
-@media (min-width: 900px) { .u-ilmopalkki { display: none !important; } }
-body.on-ilmopalkki .u-pikanapit { bottom: calc(92px + env(safe-area-inset-bottom)); }
 
 /* ---------- Aloitusnäyttö jaettuna (unslop-hionta) ----------
    Puhelimella kaikki allekkain keskellä kuten ennen (teksti, rukousajat, napit).
@@ -1344,3 +1336,4 @@ html[lang="ar"] .u-viikko__laatta b { font-size: 13px; }
 .u-eyebrow a { display: inline-block; padding-block: 12px; margin-block: -12px; }
 .u-aihe small { font-size: 12px; opacity: .75; }
 .kk__taulu th small { font-size: 12px; }
+

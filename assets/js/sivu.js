@@ -731,14 +731,6 @@
     document.addEventListener('kielivaihto', paikka);
     paikka(); paivita();
   });
-  // Tapahtuman Ilmoittaudu-palkki (puhelin): näkyy, kun tietokortti ei ole näkyvissä
-  var ilmoPalkki = document.querySelector('[data-ilmopalkki]'), ilmoKortti = document.getElementById('ilmoittaudu');
-  if (ilmoPalkki && ilmoKortti && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (e) {
-      var nayta = !e[0].isIntersecting && e[0].boundingClientRect.top > 0; // kortti alempana (ei vielä vieritetty ohi)
-      ilmoPalkki.hidden = !nayta; document.body.classList.toggle('on-ilmopalkki', nayta);
-    }).observe(ilmoKortti);
-  }
   // Ilmoituspalkki: piilotetaan, jos päivä ei ole ilmoituksen voimassaoloajalla (sivu rakennetaan kerran tunnissa)
   kaikki('[data-ilmoitus]').forEach(function (el) {
     var d = new Date(), t = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
@@ -747,8 +739,6 @@
   // Hallintapaneelin esikatselu: paneeli näyttää sivun kehyksessä ja lähettää värit, taustan ja
   // tekstin postMessagella. Vain ulkoasu muuttuu selaimessa; mitään ei tallenneta.
   if (window.parent !== window) {
-    // Esikatselussa (sivu paneelin kehyksessä) puhelimen Ilmoittaudu-alapalkki ei peitä sivua
-    var ipEsik = document.querySelector('[data-ilmopalkki]'); if (ipEsik) { ipEsik.remove(); document.body.classList.remove('on-ilmopalkki'); }
     // Hallintapaneeli (tuotanto ja testi: hallinta[-testi].suomenmoskeijat.fi tai workers.dev) ja paikallinen kehitys
     var SALLITUT = /^(https:\/\/hallinta(-[a-z0-9]+)?\.suomenmoskeijat\.fi|https:\/\/hallinta(-[a-z0-9]+)?(\.[a-z0-9-]+)*\.workers\.dev|http:\/\/(localhost|127\.0\.0\.1):\d+)$/;
     var VARI = /^#[0-9a-f]{6}$/i, KUVA = /^https:\/\/[A-Za-z0-9._~\/%-]+$/;
@@ -784,8 +774,6 @@
       [].slice.call(sisus.querySelectorAll('[data-sailyta="paikka"]')).forEach(function (s) { if (esikAlkup.paikka) s.replaceWith(esikAlkup.paikka.cloneNode(true)); else s.remove(); });
       [].slice.call(sisus.querySelectorAll('form, button')).forEach(function (f) { f.addEventListener('submit', function (e) { e.preventDefault(); }); });
       alue.textContent = ''; alue.appendChild(sisus);
-      // Puhelimen alapalkki (Ilmoittaudu) näyttäisi vanhat tiedot, joten se piilotetaan esikatselussa
-      var ip = document.querySelector('[data-ilmopalkki]'); if (ip) { ip.remove(); document.body.classList.remove('on-ilmopalkki'); }
       alue.className = esikAlkup.alue + (Array.isArray(x.luokat) && x.luokat.indexOf('u-tapsivu--yksi') >= 0 ? ' u-tapsivu--yksi' : '');
       var h1 = document.querySelector('.u-sivuhero h1');
       if (h1 && typeof x.otsikko === 'string') h1.textContent = x.otsikko;
