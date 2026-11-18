@@ -1120,6 +1120,32 @@
       ],
       "versio": 2,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "tapahtuman-paikka-ja-reittiohjeet",
+      "otsikko": "Tapahtuman paikka: nimi, osoite ja Reittiohjeet",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Tapahtuman paikalle on kaksi kenttää: Paikan nimi ja Osoite (rinnakkain). Molemmat tyhjinä paikka on moskeija. Sivun Paikka-rivillä näkyy nimi, osoite ja Reittiohjeet-linkki, joka avaa Google Mapsin valmiiksi osoitteeseen (ei Googlen avainta eikä kuluja). Moskeijassa pidettävään tapahtumaan tulee Reittiohjeet moskeijan osoitteeseen. Google saa nimen ja osoitteen erikseen tapahtuman tiedoissa. Vanhat paikkatekstit näkyvät paikan nimenä.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Tapahtumat → jokin tapahtuma.",
+      "kohdat": [
+        "Paikan nimi ja Osoite samalla rivillä, ohjeina Tyhjä = moskeija ja Reittiohjeet-linkki — Missä: Testipaneeli → Tapahtumat → tapahtuma",
+        "Kirjoita nimi ja osoite: esikatselun Paikka-rivi ja Reittiohjeet muuttuvat heti — Missä: Testipaneeli → Tapahtumat → tapahtuma",
+        "Tallennuksen jälkeen sivulla nimi, osoite ja Reittiohjeet; linkki avaa kartan oikeaan osoitteeseen — Missä: testimoskeija → Tapahtumat → tapahtuma",
+        "Ilman paikkaa: moskeijan nimi, osoite ja Reittiohjeet moskeijaan — Missä: testimoskeija → Tapahtumat → tapahtuma",
+        "Puhelimella ei vanhaa Ilmoittaudu-alapalkkia esikatselussa kirjoittaessa — Missä: Testipaneeli → Tapahtumat → tapahtuma (puhelin)"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: tapahtumat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat"
+        },
+        {
+          "nimi": "Testimoskeija: tapahtumat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }

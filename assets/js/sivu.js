@@ -782,6 +782,8 @@
       [].slice.call(sisus.querySelectorAll('[data-sailyta="paikka"]')).forEach(function (s) { if (esikAlkup.paikka) s.replaceWith(esikAlkup.paikka.cloneNode(true)); else s.remove(); });
       [].slice.call(sisus.querySelectorAll('form, button')).forEach(function (f) { f.addEventListener('submit', function (e) { e.preventDefault(); }); });
       alue.textContent = ''; alue.appendChild(sisus);
+      // Puhelimen alapalkki (Ilmoittaudu) näyttäisi vanhat tiedot, joten se piilotetaan esikatselussa
+      var ip = document.querySelector('[data-ilmopalkki]'); if (ip) { ip.remove(); document.body.classList.remove('on-ilmopalkki'); }
       alue.className = esikAlkup.alue + (Array.isArray(x.luokat) && x.luokat.indexOf('u-tapsivu--yksi') >= 0 ? ' u-tapsivu--yksi' : '');
       var h1 = document.querySelector('.u-sivuhero h1');
       if (h1 && typeof x.otsikko === 'string') h1.textContent = x.otsikko;
