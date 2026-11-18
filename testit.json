@@ -965,6 +965,28 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "tapahtuma-esikatselu-kuten-sivu",
+      "otsikko": "Paneeli: tapahtuman esikatselu näyttää samalta kuin sivu",
+      "alue": "paneeli",
+      "kuvaus": "Tapahtuman muokkauksen esikatselu näyttää kortin kuten Tapahtumat-sivulla (Joka viikko: viikonpäivälaatta, alla kello, kenelle ja päiväväli; kertatapahtuma: päivämäärälaatta ja kello) sekä tapahtuman sivun tietokortin (Milloin, Kellonaika, Paikka, Kenelle, teksti ja Ilmoittaudu-nappi) moskeijan omilla väreillä. Kuvauksen muotoilut (otsikot, lihavointi, listat) näkyvät valmiina, ja pitkä kuvaus lyhenee kokonaisin sanoin. Teksti napin yläpuolella -kentän ohje kertoo, ettei oman linkin kanssa näytetä oletustekstiä.",
+      "aloitus": "Avaa testipaneelissa Tapahtumat ja jokin tapahtuma.",
+      "kohdat": [
+        "Joka viikko -tapahtuma: esikatselussa viikonpäivälaatta (esim. Su) ja alla klo … · Kenelle — Missä: Testipaneeli → Tapahtumat → joka viikko -tapahtuma",
+        "Kertatapahtuma: päivämäärälaatta (esim. 28 marras) ja klo … — Missä: Testipaneeli → Tapahtumat → kertatapahtuma",
+        "Tietokortti: Milloin, Kellonaika, Paikka, Kenelle ja Ilmoittaudu-nappi päivittyvät heti, kun kenttää muuttaa — Missä: sama",
+        "Värit ovat moskeijan omat (esim. vihreä tai ruskea), eivät paneelin kulta — Missä: sama",
+        "Kuvauksen ## otsikko ja **lihavointi** näkyvät muotoiltuina, ei merkkeinä — Missä: tapahtuma, jolla on kuvaus"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Tapahtumat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }
