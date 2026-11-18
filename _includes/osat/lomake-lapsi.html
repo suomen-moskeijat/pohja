@@ -1,6 +1,6 @@
 {%- comment -%} Lasten opetukseen ilmoittautuminen. {%- endcomment -%}
 {%- assign m = include.moskeija -%}
-{%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+{%- assign wa = m.yhteydenotto.whatsapp_numero | default: m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
 {%- include osat/lomake-tapa.html moskeija=m -%}
 <form class="u-kortti u-lomake" data-lomake data-osoite="{{ m.lomake_osoite }}" data-wa="{{ wa }}" data-tapa="{{ _tapa }}"{{ _lomake_attr }} data-sahkoposti="{{ m.sahkoposti }}" data-aihe="{{ site.data.kaannokset.ilmoittautuminen_aihe.fi }}" novalidate>
   <fieldset>

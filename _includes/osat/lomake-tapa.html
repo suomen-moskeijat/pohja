@@ -7,8 +7,9 @@
 {%- assign _m = include.moskeija -%}
 {%- assign _tapa = _m.yhteydenotto.lomakkeet | default: "" -%}
 {%- if _tapa == "" and _m.yhteydenotto.whatsapp == "piilossa" -%}{%- assign _tapa = "sahkoposti" -%}{%- endif -%}
-{%- assign _wa = _m.whatsapp | default: "" | remove: " " -%}
-{%- assign _sp = _m.lomake_osoite | default: _m.sahkoposti | default: "" -%}
+{%- comment -%} Viestien numero ja osoite: paneelin "johon viestit tulevat" -kentät, tyhjä = moskeijan yhteystiedot {%- endcomment -%}
+{%- assign _wa = _m.yhteydenotto.whatsapp_numero | default: _m.whatsapp | default: "" | remove: " " -%}
+{%- assign _sp = _m.lomake_osoite | default: _m.yhteydenotto.sahkoposti | default: _m.sahkoposti | default: "" -%}
 {%- if _tapa == "molemmat" -%}{%- if _wa == "" or _sp == "" -%}{%- assign _tapa = "" -%}{%- endif -%}{%- endif -%}
 {%- comment -%} Suora lähetys palvelimen kautta: repo (julkaisu lisää site.repo; muuten baseurlista) {%- endcomment -%}
 {%- assign _repo = site.repo | default: site.baseurl | remove: "/" -%}

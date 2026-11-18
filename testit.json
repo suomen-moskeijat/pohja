@@ -1398,6 +1398,32 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "lomakeviestien-vastaanottaja",
+      "otsikko": "Yhteystiedot: valitse mihin viestit tulevat ja kirjoita osoite tai numero samaan kohtaan",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Kohdassa Mihin lomakkeiden viestit tulevat? valinnat ovat kortteja selityksineen. Kun valitset Sähköpostiin, alle tulee kenttä sähköpostiosoitteelle; WhatsAppiin → numerokenttä; Kävijä saa valita → molemmat. Tyhjä = moskeijan sähköposti tai WhatsApp ylempää. Sama tapa kuin palvelun ja tapahtuman lomakkeissa (Mihin vastaukset tulevat?).",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Yhteystiedot ja lomakkeet ja vieritä kohtaan Mihin lomakkeiden viestit tulevat?",
+      "kohdat": [
+        "Valitse Sähköpostiin: alle tulee kenttä Sähköpostiosoite, johon viestit tulevat — Missä: Testipaneeli → Yhteystiedot ja lomakkeet",
+        "Valitse WhatsAppiin: alle tulee kenttä WhatsApp-numero, johon viestit tulevat — Missä: Testipaneeli → Yhteystiedot ja lomakkeet",
+        "Valitse Kävijä saa valita: molemmat kentät näkyvät — Missä: Testipaneeli → Yhteystiedot ja lomakkeet",
+        "Kirjoita oma osoite, tallenna ja lähetä Kysy moskeijalta -lomake sivulta: viesti tulee kirjoittamaasi osoitteeseen — Missä: testimoskeijan Yhteystiedot-sivu",
+        "Sähköpostiosoite, johon viestit tulevat, ei näy sivulla — Missä: testimoskeijan Yhteystiedot-sivu"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: yhteystiedot",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/yhteystiedot"
+        },
+        {
+          "nimi": "Testimoskeijan yhteystiedot",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/yhteystiedot/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }

@@ -6,7 +6,7 @@
 {%- assign m = include.moskeija -%}
 {%- assign _ky = m.yhteydenotto.kysy -%}
 {%- unless _ky.pois -%}
-{%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
+{%- assign wa = m.yhteydenotto.whatsapp_numero | default: m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
 {%- include osat/lomake-tapa.html moskeija=m -%}
 {%- assign _aihe = site.data.kaannokset.kysy_otsikko.fi -%}
 {%- if _ky.otsikko -%}{%- assign _ot_json = _ky.otsikko | jsonify | slice: 0 -%}{%- if _ot_json == "{" -%}{%- assign _aihe = _ky.otsikko.fi | default: _aihe -%}{%- else -%}{%- assign _aihe = _ky.otsikko -%}{%- endif -%}{%- endif -%}
