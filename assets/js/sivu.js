@@ -901,7 +901,7 @@
       if (d.ramadanHero && typeof d.ramadanHero === 'object') kaikki('.u-rmh').forEach(function (x) { ['tyyli', 'vari'].forEach(function (k) { var v = d.ramadanHero[k]; if (typeof v === 'string' && /^[a-z]{2,12}$/.test(v)) x.setAttribute('data-' + k, v); }); });
       // Korttien tyylit (Ulkoasu): tapahtumat lista | kortit | tiivis, palvelut kortit | ruudukko | lista
       if (typeof d.kortti === 'string' && /^[a-z]{2,12}$/.test(d.kortti)) document.documentElement.setAttribute('data-kortti', d.kortti);
-      if (d.kortit && typeof d.kortit === 'object') ['tapahtumat', 'palvelut', 'artikkelit'].forEach(function (x) { var v = d.kortit[x]; if (typeof v === 'string' && /^[a-z]{2,12}$/.test(v)) document.documentElement.setAttribute('data-kortit-' + x, v); });
+      if (d.kortit && typeof d.kortit === 'object') ['tapahtumat', 'palvelut', 'artikkelit', 'somet'].forEach(function (x) { var v = d.kortit[x]; if (typeof v === 'string' && /^[a-z]{2,12}$/.test(v)) document.documentElement.setAttribute('data-kortit-' + x, v); });
       if (d.sivu && typeof d.sivu === 'object') esikSivu(d.sivu);
       // Yläosan tekstit: tyhjä = piiloon, puuttuva kohta luodaan (kuten sivupohjassa)
       function alkuTeksti(luokka, arvo, ennen) {

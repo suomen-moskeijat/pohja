@@ -2,6 +2,8 @@
   Seuraa meitä: moskeijan somet yhdessä osiossa. Välilehdet niille, joiden julkaisut
   näytetään sivulla (Instagram, YouTube, Telegram) – vain ne joita moskeijalla on;
   muut palvelut linkkeinä ("Löydät meidät myös"). Ei näy, jos someja ei ole.
+  Näkymä (teema.tyyli_somet → html[data-kortit-somet]): valilehdet (oletus) | allekkain (kaikki kanavat peräkkäin
+  omine otsikkoineen, välilehdet piilossa).
 {%- endcomment -%}
 {%- assign m = include.moskeija -%}
 {%- assign s = m.some -%}
@@ -34,6 +36,7 @@
   {% endif %}
   {% for v in valilehdet %}
   <div class="u-somet__paneeli" id="somet-{{ v }}"{% if valilehdet.size > 1 %} role="tabpanel" aria-labelledby="somet-tab-{{ v }}"{% endif %}{% unless forloop.first %} hidden{% endunless %}>
+    {% if valilehdet.size > 1 %}<h3 class="u-somet__kanava">{% include osat/somekuvake.html nimi=v koko=20 %}<span>{% case v %}{% when "ig" %}Instagram{% when "yt" %}YouTube{% when "tg" %}Telegram{% endcase %}</span></h3>{% endif %}
     {% case v %}{% when "ig" %}{% include osat/instagram.html moskeija=m upotettu=true %}{% when "yt" %}{% include osat/youtube.html moskeija=m upotettu=true %}{% when "tg" %}{% include osat/telegram.html moskeija=m upotettu=true %}{% endcase %}
   </div>
   {% endfor %}

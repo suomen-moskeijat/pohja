@@ -1348,6 +1348,31 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "somet-allekkain",
+      "otsikko": "Somejulkaisut allekkain tai välilehdillä",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Ulkoasu → Näkymät -kohdassa on uusi valinta Somejulkaisujen näkymä: Välilehdet (yksi kanava kerrallaan, kuten ennen) tai Allekkain (Instagram, YouTube ja Telegram peräkkäin, jokaisella oma otsikko). Esikatselu näyttää valinnan heti.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Ulkoasu → Näkymät.",
+      "kohdat": [
+        "Kohdassa Somejulkaisujen näkymä on kaksi vaihtoehtoa kuvineen: Välilehdet ja Allekkain — Missä: Testipaneeli → Ulkoasu → Näkymät",
+        "Valitse Allekkain, tallenna ja avaa sivu: Seuraa meitä -osiossa kanavat ovat allekkain omilla otsikoillaan — Missä: testimoskeijan etusivu",
+        "Puhelimella allekkain-näkymä mahtuu ruutuun eikä vierity sivuttain — Missä: testimoskeijan etusivu puhelimella",
+        "Valitse Välilehdet: osio näkyy taas välilehdillä kuten ennen — Missä: Testipaneeli → Ulkoasu → Näkymät"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: ulkoasu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/ulkoasu"
+        },
+        {
+          "nimi": "Testimoskeijan sivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }
