@@ -1173,15 +1173,16 @@
     },
     {
       "id": "kaannospalkki",
-      "otsikko": "Käännökset: yksi palkki sivun yläreunassa kääntää kaiken",
+      "otsikko": "Käännökset: yksi nappi sivun yläreunassa, kielet valittavissa",
       "alue": "paneeli",
-      "kuvaus": "Muokkaussivun yläreunassa on palkki, kun sivulla on kääntämättömiä tekstejä: se kertoo, montako kohtaa puuttuu ja millä kielillä, ja Käännä kaikki tekoälyllä -nappi kääntää ne kerralla (nimi, lyhyt kuvaus, koko kuvaus, napin tekstit, lomakkeen tekstit jne.). Käännetyt kohdat aukeavat tarkistettaviksi. Jokaisen kentän Muut kielet -kohdassa on lisäksi Käännä tämä kohta -nappi. Palvelun ja tapahtuman alareunan kohta on nimeltään Nimi ja koko kuvaus muilla kielillä.",
+      "kuvaus": "Muokkaussivun yläreunassa on käännöspalkki aina, kun sivustolla on muita kieliä. Se kertoo, montako kohtaa sivulla on kääntämättä, ja kielet (esim. Englanti, Arabia, Somali) voi valita rasteilla. Käännä tekoälyllä kääntää kaikki sivun tekstit valituille kielille kerralla (nimi, lyhyt ja koko kuvaus, napin tekstit, lomake, etusivun osiot). Kenttien omat käännösnapit on poistettu; kenttien Muut kielet -kohdissa voi tarkistaa ja korjata käännökset käsin. Kun kaikki on käännetty, palkissa lukee Kaikki tämän sivun tekstit on käännetty.",
       "aloitus": "Avaa testipaneeli → testimoskeija → Palvelut → Janaza.",
       "kohdat": [
-        "Yläreunassa palkki: Käännös puuttuu N kohdasta: englanti, arabia, somali — Missä: Testipaneeli → Palvelut → palvelu",
-        "Käännä kaikki tekoälyllä: palkki katoaa ja käännetyt kohdat aukeavat; tarkista tekstit — Missä: Testipaneeli → Palvelut → palvelu",
+        "Yläreunassa palkki: Käännös puuttuu N kohdasta, kielet rasteina ja Käännä tekoälyllä — Missä: Testipaneeli → Palvelut → palvelu",
+        "Ota yksi kieli pois: vain valitut kielet käännetään — Missä: Testipaneeli → Palvelut → palvelu",
+        "Käännöksen jälkeen palkissa: Kaikki tämän sivun tekstit on käännetty; käännökset näkyvät kenttien Muut kielet -kohdissa — Missä: Testipaneeli → Palvelut → palvelu",
+        "Kentissä ei omia käännösnappeja — Missä: Testipaneeli → Palvelut / Etusivu",
         "Sama palkki tapahtumassa, etusivulla ja muilla sivuilla — Missä: Testipaneeli → Tapahtumat / Etusivu / Meistä",
-        "Kentän Muut kielet → Käännä tämä kohta tekoälyllä kääntää vain sen kentän — Missä: Testipaneeli → Etusivu",
         "Tallennettaessa kysytään, käännetäänkö puuttuvat, jos niitä on — Missä: Testipaneeli → Tapahtumat → Uusi",
         "Puhelimella palkki mahtuu ruutuun — Missä: Testipaneeli puhelimella"
       ],
