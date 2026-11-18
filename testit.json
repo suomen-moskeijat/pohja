@@ -941,6 +941,30 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "lasten-kysyttavaa-oletus-pois",
+      "otsikko": "Lasten opetus: Kysyttävää-kortti oletuksena pois",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Lasten opetuksen sivulla on oletuksena vain ilmoittautumislomake ja yksi nappi. Kysymyksen voi kirjoittaa lomakkeen Lisätiedot-kenttään. Kysyttävää-kortin voi ottaa käyttöön paneelissa, samoin kuin palvelun yhteydenoton; kortin tekstikentät näkyvät paneelissa vasta, kun kortti on käytössä.",
+      "aloitus": "Avaa testimoskeijan Lasten opetus -sivu ja testipaneelissa Palvelut → Lasten opetukseen ilmoittautuminen.",
+      "kohdat": [
+        "Sivulla vain lomake, ei Kysyttävää-korttia, lomake keskellä — Missä: testimoskeija → Lasten opetus",
+        "Kysyttävää-kortti -kytkin on oletuksena pois, eikä napin tekstikenttiä näy ennen kuin kytkin on päällä — Missä: Testipaneeli → Palvelut → Lasten opetukseen ilmoittautuminen",
+        "Kytkin päälle → Tallenna → kortti näkyy lomakkeen vieressä ja nappi vie Yhteystiedot-sivun kysymyslomakkeeseen — Missä: sama → Lasten opetus -sivu"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testimoskeija: Lasten opetus",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/lasten-opetus/"
+        },
+        {
+          "nimi": "Testipaneeli: Palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/palvelut?k=lasten_opetus"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }
