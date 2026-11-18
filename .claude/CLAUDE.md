@@ -28,3 +28,24 @@ kaikki esiintymät (etusivu, listasivu, oma sivu, "Muut …"). Ei uusia rinnakka
   kohdat muodossa "Mitä tarkistetaan — Missä: polku", nimetyt linkit. Hylätyn korjauksen jälkeen `versio` + 1.
 - Testaajat kuittaavat paneelin Testaus ja julkaisu -sivulla; ylläpitäjä julkaisee kaikille.
 - Repo on julkinen: ei henkilötietoja, avaimia tai salaisuuksia tiedostoihin eikä commit-viesteihin.
+
+## Työtapa: skillit (mattpocock/skills, .claude/skills)
+- Isompi muutos: `/grill-with-docs` (kysy ennen kuin teet, päivitä sanasto GLOSSARY.md ja päätökset docs/adr/) →
+  `/to-spec` → `/to-tickets` → `/implement` (testi ensin `/tdd`, lopuksi `/code-review`).
+- Vika: `/diagnosing-bugs` – toista vika ensin testillä, sitten korjaa.
+- Testit kuuluvat repoon (hallinta: `testi/`), ei väliaikaiskansioon, ja niiden pitää mennä läpi ennen tuotantoon vientiä.
+- Käytä sanaston termejä (GLOSSARY.md) koodissa, tiketeissä ja vastauksissa.
+
+## Agent skills
+
+### Issue tracker
+
+GitHub Issues repossa suomen-moskeijat/hallinta (myös pohjaa koskevat), MCP-työkaluilla. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Oletusnimet: needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context, yksi yhteinen sanasto hallinta-repon GLOSSARY.md:ssä. See `docs/agents/domain.md`.
