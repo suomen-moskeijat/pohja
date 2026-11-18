@@ -33,7 +33,9 @@ kaikki esiintymät (etusivu, listasivu, oma sivu, "Muut …"). Ei uusia rinnakka
 - Isompi muutos: `/grill-with-docs` (kysy ennen kuin teet, päivitä sanasto GLOSSARY.md ja päätökset docs/adr/) →
   `/to-spec` → `/to-tickets` → `/implement` (testi ensin `/tdd`, lopuksi `/code-review`).
 - Vika: `/diagnosing-bugs` – toista vika ensin testillä, sitten korjaa.
-- Testit kuuluvat repoon (hallinta: `testi/`), ei väliaikaiskansioon, ja niiden pitää mennä läpi ennen tuotantoon vientiä.
+- Testit kuuluvat repoon (hallinta: `testi/`), ei väliaikaiskansioon. Kaikki testit: hallinnassa `npm run testi`
+  (puhdas ympäristö jokaiselle testille, ks. hallinta `testi/README.md`). Ei GitHub Actionsia raskaisiin testeihin.
+- Tuotantoon vain, kun kaikki testit ovat vihreällä.
 - Käytä sanaston termejä (GLOSSARY.md) koodissa, tiketeissä ja vastauksissa.
 
 ## Agent skills
