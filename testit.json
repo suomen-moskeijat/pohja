@@ -885,6 +885,32 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-17"
+    },
+    {
+      "id": "viikko-rivit-kuin-tulevat",
+      "otsikko": "Joka viikko -rivit samanlaisiksi kuin Tulevat",
+      "alue": "sivu",
+      "kuvaus": "Joka viikko -ohjelman rivit näyttävät nyt samalta kuin Tulevat-tapahtumat: nimi lihavoituna ja sen alla harmaalla kellonaika ja kenelle (esim. klo 13.00–15.00 · Lapsille). Kortit ovat yhtä korkeat ja päivälaatta on samankokoinen kuin Tulevat-kortin päivämäärä myös pienellä puhelimella.",
+      "aloitus": "Avaa testimoskeijan Tapahtumat-sivu.",
+      "kohdat": [
+        "Joka viikko -rivissä nimi ylhäällä lihavoituna, kello ja kenelle sen alla harmaalla, kuten Tulevat-korteissa — Missä: testimoskeija → Tapahtumat",
+        "Joka viikko- ja Tulevat-kortit ovat yhtä korkeat ja laatat samankokoiset — Missä: sama tietokoneella ja puhelimella",
+        "Pitkä rivi (esim. alkaen ja asti -päivä) rivittyy osien välistä, ei kesken \"alkaen 3.12.\" — Missä: sama puhelimella",
+        "Etusivun Tapahtumat-osiossa sama ulkoasu — Missä: testimoskeija → Etusivu",
+        "Arabiaksi kello ja päivät oikein päin, ei vaakavieritystä — Missä: Tapahtumat → kieli العربية"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testimoskeija: Tapahtumat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
+        },
+        {
+          "nimi": "Testimoskeija: Etusivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-18"
     }
   ]
 }
