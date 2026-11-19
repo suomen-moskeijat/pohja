@@ -87,7 +87,7 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 
 | Paneelin valikossa | Mitä siellä tehdään |
 |---|---|
-| **Yleiskatsaus** | sivun tila, mitä on vielä tekemättä, pikanapit |
+| **Yleiskatsaus** | sivun tila, mitä on vielä tekemättä, pikanapit; uudella sivulla linkki kesken jääneeseen aloitukseen |
 | **Sivusto** | sivut samassa järjestyksessä ja samoilla nimillä kuin kävijän valikossa: Etusivu, Rukousajat (lähde, iqamah, Jumua, päivien muutokset), Meistä, Palvelut, Tapahtumat, Artikkelit (omat tiedotteet ja valmiit artikkelit), omat sivut ja Yhteystiedot. Valikon ulkopuoliset sivut (esim. Tuki ja jäsenyys) ovat omana rivinään. **Järjestä** muuttaa valikon järjestystä samassa listassa, **+ Lisää sivu** lisää oman sivun. Sivu, jolla ei ole vielä sisältöä, on merkitty *Ei näy – ei vielä sisältöä*. |
 | **Muut** | Ilmoituspalkki (lyhyt ilmoitus kaikkien sivujen ylälaitaan), Kuvat (kuvat ja PDF-tiedostot), Jakokuva someen (valmiit pohjat, esim. tarawih-vuorot, tapahtuma, tiedote, Eid: kuva someen ja WhatsAppiin sekä tiedote sivulle yhdellä kertaa) |
 | **Asetukset** | Ulkoasu (värit, logo, taustakuviot, kulmat ja varjot), Käyttäjät (kutsut ja oikeudet), Historia, Sivuston asetukset (kielet, oma verkkotunnus, sivun tila, käyttöehdot) |
@@ -324,6 +324,11 @@ suomen-moskeijat/<moskeija>       ← yhden moskeijan tiedot + julkaisu.yml, jok
    He katsovat sivun puhelimella ja kertovat korjaukset, tai korjaavat itse paneelissa.
 4. **Hyväksyntä:** pääkäyttäjä hyväksyy käyttöehdot ja painaa paneelin etusivulla **Julkaise sivu**.
    Palkki katoaa noin 2 minuutissa, ja Google saa näyttää sivun.
+   Kutsuttu pääkäyttäjä saa ensimmäisellä kirjautumisella **aloituksen**: askel kerrallaan käyttöehdot ja oma nimi,
+   perustiedot ja mihin viestit tulevat, rukousajat ja Jumua, logo ja värit, kielet (sivu on aluksi vain suomeksi) ja
+   valmiit artikkelit, ensimmäiset palvelut sekä lopuksi sivun katsominen ja julkaisu. Jokaisessa askeleessa voi valita
+   **Jatka myöhemmin**, ja kesken jäänyt aloitus jatkuu Yleiskatsauksen linkistä. Aloitus tulee vain, kun pääkäyttäjä
+   kutsutaan julkaisemattomalle sivulle, jonka käyttöehtoja ei ole vielä hyväksytty; muokkaaja ei näe sitä.
 5. Myöhemmin halutessa **oma verkkotunnus** (kohta 8).
 
 > Luonnos ei ole salainen: kuka tahansa, jolla on linkki, voi avata sen. Se ei kuitenkaan näy

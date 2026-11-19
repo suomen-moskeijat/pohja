@@ -282,6 +282,10 @@ def karsi(kansio):
             l = re.search(r"lahteet:\s*\[([^\]]*)\]", m.group(1))
             if l:
                 valitut |= {x.strip().strip("\"'") for x in l.group(1).split(",") if x.strip()}
+            # Lohkomuoto (paneeli tallentaa listan näin):  lahteet:\n    - islaminusko
+            b = re.search(r"lahteet:[ \t]*(?:#.*)?\n((?:[ \t]+-[^\n]*\n?)+)", m.group(1))
+            if b:
+                valitut |= {re.sub(r"\s+#.*$", "", x.strip()[1:]).strip().strip("\"'") for x in b.group(1).splitlines() if x.strip().startswith("-")}
     for lahde in LAHTEET:
         p = os.path.join(kansio, "_artikkelit", lahde)
         if lahde not in valitut and os.path.isdir(p):

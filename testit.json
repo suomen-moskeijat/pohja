@@ -1891,6 +1891,46 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-19"
+    },
+    {
+      "id": "aloitus",
+      "otsikko": "Ohjattu aloitus pääkäyttäjälle",
+      "alue": "paneeli",
+      "kuvaus": "Uuden moskeijan pääkäyttäjän ensimmäinen kirjautuminen avaa aloituksen, joka käy sivun tärkeimmät tiedot läpi askel kerrallaan: 1 Tervetuloa (käyttöehdot ja oma nimi), 2 Perustiedot (nimi, osoite, puhelin ja mihin viestit tulevat), 3 Rukousajat (lähde ja Jumua), 4 Ulkoasu (logo ja värit), 5 Kielet (sivuston kielet, käännösasetus, valmiit artikkelit), 6 Toiminta (ensimmäiset palvelut, nimi riittää) ja 7 Valmis (katso sivu ja julkaise). Jokaisessa askeleessa on Jatka myöhemmin, ja kesken jäänyt aloitus jatkuu Yleiskatsauksen jatkolinkistä. Askeleet tallentavat samat tiedot kuin muu paneeli. Muokkaaja ei näe aloitusta, eikä se aukea olemassa olevilla moskeijoilla. Uudella moskeijalla sivuston kieli on aluksi vain suomi. Testipaneelissa aloituksen voi käydä läpi testimoskeijalla suoralla linkillä (testimoskeija on jo julkaistu, joten viimeisessä askeleessa on Valmis-nappi).",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä puhelimella ja avaa linkki Testipaneeli: Aloitus.",
+      "kohdat": [
+        "Aloituksessa näkyy Askel 1/7 ja edistymispalkki; jokaisessa askeleessa on Jatka, Jatka myöhemmin ja (2. askeleesta alkaen) Takaisin — Missä: Testipaneeli → Aloitus",
+        "Tervetuloa: oma nimi -kenttä ja käyttöehdot (jos ehtoja ei ole hyväksytty, Jatka vaatii hyväksynnän) — Missä: Testipaneeli → Aloitus → Tervetuloa",
+        "Perustiedot: kentät ovat samat kuin Yhteystiedoissa; ilman sähköpostia tai WhatsApp-numeroa näkyy huomautus, ettei lomake näy sivulla, ja se muuttuu vihreäksi, kun vastaanottaja on annettu — Missä: Testipaneeli → Aloitus → Perustiedot",
+        "Rukousajat: valitse lähde ja kirjoita Jumua-aika, paina Jatka myöhemmin: palaat Yleiskatsaukseen, jossa on Jatka aloitusta (Askel 3/7: Rukousajat), ja linkki vie samaan kohtaan tallennettu aika näkyvissä — Missä: Testipaneeli → Yleiskatsaus",
+        "Ulkoasu: logo ja värimaailma; valittu väri näkyy myös Ulkoasu-sivulla — Missä: Testipaneeli → Aloitus → Ulkoasu, ja Testipaneeli → Ulkoasu",
+        "Kielet: samat kielivalinnat ja käännösasetus kuin Sivuston asetuksissa sekä valmiit artikkelit (islaminusko.fi); yksi Jatka tallentaa kaiken — Missä: Testipaneeli → Aloitus → Kielet, ja Testipaneeli → Sivuston asetukset → Sivuston kielet",
+        "Toiminta: kirjoita palvelun nimi (+ Lisää palvelu lisää rivin) ja paina Jatka: palvelu näkyy Palvelut-listassa ja parin minuutin päästä sivun Palvelut-sivulla, ja sen oma sivu aukeaa ilman kuvausta — Missä: Testipaneeli → Palvelut, ja Testimoskeijan sivu → Palvelut",
+        "Valmis: Katso sivua avaa moskeijan sivun; Valmis-napin jälkeen jatkolinkki poistuu Yleiskatsauksesta — Missä: Testipaneeli → Aloitus → Valmis",
+        "Puhelimella (myös 320 px) pääpainike on koko leveydeltä ylimpänä, eikä sivu vieri sivuttain — Missä: Testipaneeli puhelimella → Aloitus",
+        "Muokkaajana aloitusta ei ole: Yleiskatsauksessa ei jatkolinkkiä, eikä aloituksen linkki avaa sitä — Missä: Testipaneeli muokkaajan tunnuksella",
+        "Poista lopuksi aloituksessa lisätyt testipalvelut ja palauta muutetut tiedot — Missä: Testipaneeli → Palvelut ja Sivusto → Yhteystiedot"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Aloitus",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/aloitus"
+        },
+        {
+          "nimi": "Testipaneeli: Yleiskatsaus",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija"
+        },
+        {
+          "nimi": "Testipaneeli: Palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
+        },
+        {
+          "nimi": "Sivu: Testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
     }
   ]
 }

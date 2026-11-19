@@ -7,3 +7,6 @@ moskeija: SLUG                 # tiedosto _moskeijat/SLUG.md
 # Omalla verkkotunnuksella (esim. moskeija.fi): url: "https://moskeija.fi" ja baseurl: ""
 url: "https://suomen-moskeijat.github.io"
 baseurl: "/REPO"
+
+# Sivuston kielet: uusi moskeija alkaa vain suomeksi, muut kielet valitaan paneelissa (Asetukset → Sivuston kielet)
+kielet: [fi]   # sivuston kielivalikko (hallintapaneeli → Asetukset)

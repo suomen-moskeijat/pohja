@@ -178,7 +178,10 @@ def tiedostot(t, repo, org):
               f"moskeija: {t['slug']}     # tiedosto _moskeijat/{t['slug']}.md\n\n"
               f"# Osoite: {perus}/{repo}/\n"
               f"# Omalla verkkotunnuksella (esim. moskeija.fi): url: \"https://moskeija.fi\" ja baseurl: \"\"\n"
-              f"url: \"{perus}\"\nbaseurl: \"/{repo}\"\n")
+              f"url: \"{perus}\"\nbaseurl: \"/{repo}\"\n\n"
+              # Uusi moskeija alkaa vain suomeksi (ADR-0001): muut kielet moskeija valitsee itse (paneeli: aloitus tai
+              # Asetukset → Sivuston kielet). Sama rivimuoto kuin paneelin tallennuksessa (hallinta: src/kaannosasetus.js).
+              f"kielet: [fi]   # sivuston kielivalikko (hallintapaneeli → Asetukset)\n")
     lahde_kommentti = {"mawaqit": "Mawaqitista automaattisesti (adhan, iqamah, Jumuah, kuvat)",
                        "masjidbox": "Masjidboxista automaattisesti (adhan, iqamah, Jumuah)",
                        "": "rukousajat.fi (Helsinki/Espoo/Vantaa) tai laskenta sijainnista"}[t["lahde"]]
