@@ -1,6 +1,8 @@
-{%- comment -%} Lahjoitusnosto. Ilman rahankeräyslupaa ei kehoteta lahjoittamaan (ks. lahjoitus-lupa.html). {%- endcomment -%}
+{%- comment -%} Lahjoitusnosto. Ilman rahankeräyslupaa ei kehoteta lahjoittamaan (ks. lahjoitus-lupa.html).
+  Ei näy, kun Tuki-sivulla ei ole sisältöä (osat/tyhjat-sivut.html) tai sivu on piilotettu. {%- endcomment -%}
 {%- assign m = include.moskeija -%}
-{%- if m.lahjoitus and m.valikko_piilota contains 'lahjoita' -%}{%- elsif m.lahjoitus -%}
+{%- include osat/tyhjat-sivut.html moskeija=m -%}
+{%- if m.valikko_piilota contains 'lahjoita' or _tyhjat contains ',lahjoita,' -%}{%- else -%}
 {%- include osat/lahjoitus-lupa.html moskeija=m -%}
 <section class="u-lahjoitus">
   <div class="u-kuvio" aria-hidden="true"></div>

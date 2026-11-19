@@ -5,8 +5,10 @@
   Oletus: lapsi (jos lasten opetus on käytössä) ja toiminta. Ensimmäinen nappi korostetaan.
   Parametri napit (valinnainen): lista napeista moskeijan valinnan sijaan (paneelin esikatselu, esikatselu-osat.html).
   lapsi vie Lasten opetus -palveluun (/palvelut/lasten-opetus/), kun sellainen palvelu on (tai vanha lasten_opetus).
+  Nappi tyhjälle sivulle (Palvelut, Tuki, Lasten opetus ilman sisältöä) ei näy: sääntö osat/tyhjat-sivut.html.
 {%- endcomment -%}
 {%- assign m = include.moskeija -%}
+{%- include osat/tyhjat-sivut.html moskeija=m -%}
 {%- assign a = m.alku -%}
 {%- if include.napit -%}{%- assign _napit = include.napit -%}{%- elsif a.napit and a.napit.size > 0 -%}{%- assign _napit = a.napit -%}{%- else -%}
   {%- capture _o -%}{% if m.lasten_opetus.kaytossa %}lapsi,{% endif %}toiminta{%- endcapture -%}{%- assign _napit = _o | split: "," -%}
@@ -16,10 +18,10 @@
   {%- if _maara >= 2 -%}{%- break -%}{%- endif -%}
   {%- capture _h -%}
   {%- case n -%}
-  {%- when "lapsi" -%}{%- assign _lp = site.palvelut | where_exp: "p", "p.url contains '/palvelut/lasten-opetus/'" -%}{% if m.lasten_opetus.kaytossa or _lp.size > 0 %}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/palvelut/lasten-opetus/' | relative_url }}">{% include ikoni-ph.html nimi="hattu" koko=20 %} {% include k.html a="ilmoita_lapsesi" %}</a>{% endif %}
-  {%- when "toiminta" -%}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/palvelut/' | relative_url }}">{% include k.html a="tutustu_toimintaan" %}</a>
+  {%- when "lapsi" -%}{% if _lapset %}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/palvelut/lasten-opetus/' | relative_url }}">{% include ikoni-ph.html nimi="hattu" koko=20 %} {% include k.html a="ilmoita_lapsesi" %}</a>{% endif %}
+  {%- when "toiminta" -%}{% unless _tyhjat contains ",palvelut," %}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/palvelut/' | relative_url }}">{% include k.html a="tutustu_toimintaan" %}</a>{% endunless %}
   {%- when "rukousajat" -%}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/rukousajat/' | relative_url }}">{% include ikoni-ph.html nimi="kello" koko=20 %} {% include k.html a="katso_rukousajat" %}</a>
-  {%- when "lahjoita" -%}{% if m.lahjoitus and m.valikko_piilota contains "lahjoita" %}{% elsif m.lahjoitus %}{% include osat/lahjoitus-lupa.html moskeija=m %}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/lahjoita/' | relative_url }}">{% include ikoni-ph.html nimi="sydan" koko=20 %} {% if _lupa %}{% include k.html a="lahjoita_nyt" %}{% else %}{% include k.html a="nav_tuki" %}{% endif %}</a>{% endif %}
+  {%- when "lahjoita" -%}{% if m.valikko_piilota contains "lahjoita" or _tyhjat contains ",lahjoita," %}{% else %}{% include osat/lahjoitus-lupa.html moskeija=m %}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/lahjoita/' | relative_url }}">{% include ikoni-ph.html nimi="sydan" koko=20 %} {% if _lupa %}{% include k.html a="lahjoita_nyt" %}{% else %}{% include k.html a="nav_tuki" %}{% endif %}</a>{% endif %}
   {%- when "yhteys" -%}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ '/yhteystiedot/' | relative_url }}">{% include ikoni-ph.html nimi="sijainti" koko=20 %} {% include k.html a="ota_yhteytta" %}</a>
   {%- when "oma" -%}{%- assign _on = a.oma_nappi -%}
     {%- if _on.linkki and _on.linkki != "" -%}{%- assign _ulk = _on.linkki | slice: 0, 4 -%}

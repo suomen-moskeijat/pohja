@@ -1,6 +1,8 @@
-{%- comment -%} Nosto: lasten opetukseen ilmoittautuminen (näytetään, jos lasten_opetus.kaytossa). {%- endcomment -%}
+{%- comment -%} Nosto: lasten opetukseen ilmoittautuminen (näytetään, jos lasten_opetus.kaytossa ja Lasten opetus -sivulla on
+  sisältöä: sääntö osat/tyhjat-sivut.html). {%- endcomment -%}
 {%- assign m = include.moskeija -%}
-{%- if m.lasten_opetus.kaytossa -%}
+{%- include osat/tyhjat-sivut.html moskeija=m -%}
+{%- if m.lasten_opetus.kaytossa and _lapset -%}
 {%- assign tx = m.lasten_opetus.teksti -%}
 <section class="u-nosto">
   <span class="u-nosto__ikoni">{% include ikoni-ph.html nimi="hattu" koko=28 %}</span>

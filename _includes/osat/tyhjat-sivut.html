@@ -1,0 +1,63 @@
+{%- comment -%}
+  Tyhjät sivut: yksi sääntö sille, millä valikon sivuilla ei ole vielä sisältöä (ADR-0001). Tyhjä sivu ei näy valikossa,
+  alapalkin pikalinkeissä, etusivun yläosan napeissa eikä siihen vievissä osioissa, ja se tulee näkyviin heti, kun sille
+  lisätään ensimmäinen sisältö. Suora osoite toimii yhä: sivu näkyy tyhjänä, mutta ei hakukoneissa eikä sivukartassa.
+  Sama sääntö paneelissa ("Ei näy – ei vielä sisältöä"): hallinta public/tyhjyys.js.
+  Parametri: moskeija
+
+  Sivulla on sisältöä, kun
+  palvelut    palvelu (_palvelut/), vanha palvelulista tai vanha lasten opetus, jolla on sisältöä (alla)
+  tapahtumat  tuleva tapahtuma tai viikoittainen tapahtuma, joka ei ole päättynyt
+  artikkelit  oma tiedote tai valittu valmis artikkeli
+  meista      esittely, Meistä-teksti (lyhyt tai pitkä), missio tai galleriakuva
+  lahjoita    Tuki-sivun teksti tai voimassa oleva rahankeräyslupa tai pienkeräys (maksutiedot)
+  Vanha Lasten opetus -sivu (/palvelut/lasten-opetus/, lasten_opetus.kaytossa): ilmoittautumislomake näkyy (viesteillä on
+  vastaanottaja, ks. lomake-tapa.html) tai johdantoteksti. Lasten opetus -palvelu (_palvelut/lasten-opetus.md) on tavallinen palvelu.
+
+  Asettaa:
+  _tyhjat   tyhjät sivut pilkuin ympäröityinä, esim. ",palvelut,meista," (tarkistus: _tyhjat contains ",palvelut,")
+  _lapset   true, kun Lasten opetus -sivulla on sisältöä (Ilmoita lapsesi -nappi, valikon linkki ja nosto näkyvät)
+  Huom.: käyttää lomake-tapa.html:ää ja lahjoitus-lupa.html:ää, joiden muuttujat (_vastaanottaja, _lupa …) asettuvat uudelleen.
+{%- endcomment -%}
+{%- assign _ty_m = include.moskeija -%}
+{%- assign _ty_nyt = site.time | date: '%Y-%m-%d' -%}
+{%- assign _tyhjat = "," -%}
+{%- comment -%} Monikielisen tai tavallisen tekstikentän sisältö yhtenä merkkijonona (tyhjä = ei tekstiä) {%- endcomment -%}
+{%- capture _ty_teksti -%}
+  {%- assign _ty_arvot = "" | split: "" | push: _ty_m.esittely | push: _ty_m.meista_lyhyt | push: _ty_m.meista -%}
+  {%- for _ty_v in _ty_arvot -%}{%- assign _ty_j = _ty_v | jsonify | slice: 0 -%}
+    {%- if _ty_j == "{" -%}{%- for _ty_x in _ty_v -%}{{ _ty_x[1] }}{%- endfor -%}{%- elsif _ty_v -%}{{ _ty_v }}{%- endif -%}
+  {%- endfor -%}
+  {{ _ty_m.content }}
+{%- endcapture -%}
+{%- assign _ty_teksti = _ty_teksti | strip_html | strip -%}
+{%- unless _ty_teksti != "" or _ty_m.missio.size > 0 or _ty_m.galleria.size > 0 -%}{%- assign _tyhjat = _tyhjat | append: "meista," -%}{%- endunless -%}
+{%- comment -%} Lasten opetus {%- endcomment -%}
+{%- assign _lapset = false -%}
+{%- assign _ty_lp = site.palvelut | where_exp: "p", "p.url contains '/palvelut/lasten-opetus/'" -%}
+{%- assign _ty_lo = _ty_m.lasten_opetus -%}
+{%- if _ty_lp.size > 0 -%}{%- assign _lapset = true -%}
+{%- elsif _ty_lo.kaytossa -%}
+  {%- if _ty_lo.lomake.kentat and _ty_lo.lomake.kentat.size > 0 -%}{%- include osat/lomake-tapa.html moskeija=_ty_m lomake=_ty_lo.lomake -%}{%- else -%}{%- include osat/lomake-tapa.html moskeija=_ty_m -%}{%- endif -%}
+  {%- capture _ty_lt -%}{%- assign _ty_j = _ty_lo.teksti | jsonify | slice: 0 -%}{%- if _ty_j == "{" -%}{%- for _ty_x in _ty_lo.teksti -%}{{ _ty_x[1] }}{%- endfor -%}{%- elsif _ty_lo.teksti -%}{{ _ty_lo.teksti }}{%- endif -%}{%- endcapture -%}
+  {%- assign _ty_lt = _ty_lt | strip -%}
+  {%- if _vastaanottaja or _ty_lt != "" -%}{%- assign _lapset = true -%}{%- endif -%}
+{%- endif -%}
+{%- comment -%} Palvelut {%- endcomment -%}
+{%- unless site.palvelut.size > 0 or _ty_m.palvelut.size > 0 or _ty_lo.kaytossa and _lapset -%}{%- assign _tyhjat = _tyhjat | append: "palvelut," -%}{%- endunless -%}
+{%- comment -%} Tapahtumat: sama raja kuin Tulevat (osat/tapahtumat.html) ja viikko-ohjelma (osat/viikko-ohjelma.html) {%- endcomment -%}
+{%- assign _ty_tap = false -%}
+{%- for _ty_t in site.tapahtumat -%}
+  {%- if _ty_t.toistuu == "viikoittain" -%}{%- assign _ty_l = _ty_t.paiva_loppuu | date: '%Y-%m-%d' | default: '9999-12-31' -%}
+  {%- else -%}{%- assign _ty_l = _ty_t.paiva_loppuu | default: _ty_t.paiva | date: '%Y-%m-%d' -%}{%- endif -%}
+  {%- if _ty_l >= _ty_nyt -%}{%- assign _ty_tap = true -%}{%- break -%}{%- endif -%}
+{%- endfor -%}
+{%- unless _ty_tap -%}{%- assign _tyhjat = _tyhjat | append: "tapahtumat," -%}{%- endunless -%}
+{%- comment -%} Artikkelit: julkaisu karsii valitsemattomat valmiit artikkelit (artikkelit.py) {%- endcomment -%}
+{%- if site.artikkelit.size == 0 -%}{%- assign _tyhjat = _tyhjat | append: "artikkelit," -%}{%- endif -%}
+{%- comment -%} Tuki: teksti tai maksutiedot (vain luvalla, ks. lahjoitus-lupa.html) {%- endcomment -%}
+{%- include osat/lahjoitus-lupa.html moskeija=_ty_m -%}
+{%- assign _ty_lt = _ty_m.lahjoitus.teksti -%}
+{%- capture _ty_tt -%}{%- assign _ty_j = _ty_lt | jsonify | slice: 0 -%}{%- if _ty_j == "{" -%}{%- for _ty_x in _ty_lt -%}{{ _ty_x[1] }}{%- endfor -%}{%- elsif _ty_lt -%}{{ _ty_lt }}{%- endif -%}{%- endcapture -%}
+{%- assign _ty_tt = _ty_tt | strip -%}
+{%- unless _lupa or _ty_tt != "" -%}{%- assign _tyhjat = _tyhjat | append: "lahjoita," -%}{%- endunless -%}

@@ -1,7 +1,12 @@
 {%- comment -%}
   Saako sivu näkyä hakukoneissa? Kyllä, kun moskeija on julkaissut sivun hallintapaneelissa.
-  Piilossa: luonnos, ehdotus, site.noindex (pohjan esittelykopiot) ja page.noindex.
+  Piilossa: luonnos, ehdotus, site.noindex (pohjan esittelykopiot), page.noindex ja tyhjä sivu (ei vielä sisältöä,
+  osat/tyhjat-sivut.html: suora osoite toimii, mutta sivua ei näytetä hakukoneille).
   Asettaa: _piilota (true/false). Parametri: moskeija
 {%- endcomment -%}
 {%- assign _piilota = false -%}
 {%- if site.noindex or include.moskeija.luonnos or include.moskeija.ehdotus or page.noindex -%}{%- assign _piilota = true -%}{%- endif -%}
+{%- include osat/tyhjat-sivut.html moskeija=include.moskeija -%}
+{%- capture _hn_k -%},{{ page.url | remove: "/" }},{%- endcapture -%}
+{%- if _tyhjat contains _hn_k -%}{%- assign _piilota = true -%}{%- endif -%}
+{%- if page.url == "/palvelut/lasten-opetus/" -%}{%- unless include.moskeija.lasten_opetus.kaytossa and _lapset -%}{%- assign _piilota = true -%}{%- endunless -%}{%- endif -%}

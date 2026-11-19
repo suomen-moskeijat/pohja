@@ -7,10 +7,17 @@ permalink: /palvelut/
 {%- comment -%}
   Palvelut-sivulla on vain se, mitä moskeija on lisännyt paneelissa: johdanto (Palvelut → Palvelut-sivun teksti) ja palvelut.
   Ei automaattista sisältöä. Vanha lasten opetus (lasten_opetus) näkyy nostona, kunnes paneeli siirtää sen tavalliseksi palveluksi.
+  Ilman palveluita sivu ei näy valikossa eikä napeissa (osat/tyhjat-sivut.html); suora osoite näyttää otsikon ja johdannon.
 {%- endcomment -%}
 {% include osat/sivuhero.html avain="palvelut_otsikko" johdanto=m.palvelut_esittely %}
 <div class="u-kehys u-sivu">
+  {%- include osat/tyhjat-sivut.html moskeija=m -%}
+  {%- if _tyhjat contains ",palvelut," %}
+  {%- comment -%} Suora osoite tyhjälle sivulle: sama tyhjä tila kuin Artikkelit-sivulla {%- endcomment %}
+  <div class="u-tyhja"><span class="u-ikoni">{% include ikoni-ph.html nimi="sydan" koko=26 %}</span><p>{% include k.html a="ei_palveluita" %}</p></div>
+  {%- else %}
   {% include osat/palvelut.html moskeija=m %}
   {%- assign _lp = site.palvelut | where_exp: "p", "p.ilmoittautuminen contains 'lasten-opetus'" -%}
   {% if _lp.size == 0 %}{% include osat/lapset.html moskeija=m %}{% endif %}
+  {%- endif %}
 </div>

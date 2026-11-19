@@ -1484,6 +1484,47 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-19"
+    },
+    {
+      "id": "tyhjat-sivut-piiloon",
+      "otsikko": "Tyhjät sivut ja niihin vievät napit piiloon",
+      "alue": "sivut",
+      "kuvaus": "Valikon sivu, jolla ei ole vielä sisältöä (Palvelut, Tapahtumat, Artikkelit, Meistä, Tuki), ei näy kävijän valikossa, alapalkin pikalinkeissä eikä etusivun yläosan napeissa (Tutustu toimintaamme, Tuki, Ilmoita lapsesi). Sivu tulee näkyviin heti, kun sille lisätään ensimmäinen sisältö. Paneelin Valikko ja omat sivut -listassa ja valikon muokkauksessa tyhjällä sivulla on merkintä \"Ei näy – ei vielä sisältöä\". Suora osoite tyhjälle sivulle toimii: sivu näkyy tyhjänä (otsikko ja pohjan tyhjä tila), mutta ei hakukoneissa eikä sivukartassa.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Valikko ja omat sivut. Testimoskeijalla ei ole Tuki-sivun tietoja, joten Tuki on tyhjä sivu.",
+      "kohdat": [
+        "Tuki ja lahjoitukset -kortissa on merkintä \"Ei näy – ei vielä sisältöä\" ja syy (tuen tekstiä tai rahankeräysluvan tietoja ei ole) — Missä: Testipaneeli → Valikko ja omat sivut → Muut sivut",
+        "Palvelut, Tapahtumat, Artikkelit ja Meistä ovat Valikossa-listassa numeroituina ilman merkintää, koska niillä on sisältöä — Missä: Testipaneeli → Valikko ja omat sivut",
+        "Alapalkin pikalinkeissä ei ole Tukea, mutta Palvelut, Tapahtumat, Artikkelit ja Meistä ovat — Missä: Testimoskeijan sivu → alapalkki → Pikalinkit",
+        "Suora osoite /lahjoita/ avautuu (otsikko Tuki ja jäsenyys ja yhteystietolinkki), sivu ei ole rikki — Missä: Testimoskeijan sivu → /lahjoita/",
+        "Valitse etusivun yläosan napeiksi Tutustu toimintaamme ja Tuki ja tallenna: Yleiskatsauksessa on huomautus \"Etusivun yläosa: nappi Lahjoita ei näy\", ja sivulla näkyy vain Tutustu toimintaamme — Missä: Testipaneeli → Etusivu → Yläosan napit, Yleiskatsaus → Huomautukset ja Testimoskeijan etusivu",
+        "Kirjoita Tuki-sivun teksti ja tallenna: merkintä poistuu paneelista, ja muutaman minuutin päästä Tuki näkyy alapalkissa ja Tuki-nappi etusivun yläosassa — Missä: Testipaneeli → Tuki ja lahjoitukset ja Testimoskeijan sivu",
+        "Tyhjennä Tuki-sivun teksti ja tallenna: Tuki ja nappi poistuvat taas sivulta ja paneeliin palaa merkintä — Missä: Testipaneeli → Tuki ja lahjoitukset ja Testimoskeijan sivu",
+        "Valikon muokkauksessa tyhjän sivun rivillä lukee \"Sivu · Ei näy – ei vielä sisältöä\" — Missä: Testipaneeli → Valikko ja omat sivut → Muokkaa valikkoa"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: valikko ja omat sivut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut"
+        },
+        {
+          "nimi": "Testipaneeli: Tuki ja lahjoitukset",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/lahjoita"
+        },
+        {
+          "nimi": "Testipaneeli: etusivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/etusivu"
+        },
+        {
+          "nimi": "Testimoskeijan etusivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        },
+        {
+          "nimi": "Testimoskeijan Tuki-sivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/lahjoita/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
     }
   ]
 }

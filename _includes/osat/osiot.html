@@ -17,7 +17,7 @@
 {%- case _t -%}
 {%- when "lapset" %}
 {%- assign _lp = site.palvelut | where_exp: "p", "p.ilmoittautuminen contains 'lasten-opetus'" -%}
-{% if _lp.size == 0 %}<div class="u-kehys">{% include osat/lapset.html moskeija=m %}</div>{% endif %}
+{%- if _lp.size == 0 -%}{%- capture _ln -%}{% include osat/lapset.html moskeija=m %}{%- endcapture -%}{%- assign _ln = _ln | strip -%}{% if _ln != "" %}<div class="u-kehys">{{ _ln }}</div>{% endif %}{%- endif -%}
 {%- when "tapahtumat" %}
 {%- assign tanaan = site.time | date: '%Y-%m-%d' -%}
 {%- assign tulevia = 0 -%}
@@ -81,7 +81,8 @@
 {%- when "somet" %}
 {% include osat/somet.html moskeija=m %}
 {%- when "lahjoitus" %}
-<div class="u-kehys">{% include osat/lahjoitus.html moskeija=m %}</div>
+{%- capture _lh -%}{% include osat/lahjoitus.html moskeija=m %}{%- endcapture -%}{%- assign _lh = _lh | strip -%}
+{% if _lh != "" %}<div class="u-kehys">{{ _lh }}</div>{% endif %}
 {%- when "vierailu" %}
 <section class="u-osio u-kehys">
   {% include osat/vierailu.html moskeija=m %}

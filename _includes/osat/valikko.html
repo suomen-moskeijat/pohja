@@ -4,9 +4,11 @@
     valikko: [{sivu: rukousajat}, {oma: hyvat-lahteet}, {nimi: {fi: …}, linkki: https://…}]
   joka määrää järjestyksen ja sisällön. Ilman listaa: oletusjärjestys, valikko_piilota ja
   omat sivut (valikossa: true, jarjestys).
+  Tyhjä sivu (ei vielä sisältöä, ks. osat/tyhjat-sivut.html) ei näy valikossa eikä alapalkin pikalinkeissä.
 {%- endcomment -%}
 {%- assign m = include.moskeija -%}
 {%- assign j = '/' | relative_url -%}
+{%- include osat/tyhjat-sivut.html moskeija=m -%}
 {%- include osat/lahjoitus-lupa.html moskeija=m -%}
 {%- assign _nav_lahjoita = "nav_tuki" -%}{%- if _lupa -%}{%- assign _nav_lahjoita = "nav_lahjoita" -%}{%- endif -%}
 {%- comment -%} Ramadan-sivu valikkoon rukousaikojen perään 3 viikkoa ennen alkua – Eid-päivän loppuun {%- endcomment -%}
@@ -28,8 +30,8 @@
   {%- assign _href = "" -%}{%- assign _ulk = false -%}{%- assign _nyt = "" -%}{%- assign _nimi = "" -%}
   {%- if o.sivu -%}
     {%- if m.valikko_piilota contains o.sivu -%}{%- continue -%}{%- endif -%}
-    {%- if o.sivu == "lahjoita" -%}{%- assign _lahjoita_listassa = true -%}{%- if m.lahjoitus == nil -%}{%- continue -%}{%- endif -%}{%- endif -%}
-    {%- if o.sivu == "artikkelit" and site.artikkelit.size == 0 -%}{%- continue -%}{%- endif -%}
+    {%- if o.sivu == "lahjoita" -%}{%- assign _lahjoita_listassa = true -%}{%- endif -%}
+    {%- capture _ty_k -%},{{ o.sivu }},{%- endcapture -%}{%- if _tyhjat contains _ty_k -%}{%- continue -%}{%- endif -%}
     {%- assign _href = j | append: o.sivu | append: "/" -%}
     {%- assign _avain = "nav_" | append: o.sivu -%}{%- if o.sivu == "lahjoita" -%}{%- assign _avain = _nav_lahjoita -%}{%- endif -%}
     {%- capture _nimi -%}{% if o.nimi %}{% include kt.html arvo=o.nimi %}{% else %}{% include k.html a=_avain %}{% endif %}{%- endcapture -%}
@@ -55,7 +57,7 @@
   {%- if o.sivu == "rukousajat" -%}{{ _rm_linkki }}{%- assign _rm_tehty = true -%}{%- endif -%}
 {%- endfor -%}
 {%- unless _rm_tehty -%}{{ _rm_linkki }}{%- endunless -%}
-{%- if include.tapa == "ala" and _lahjoita_listassa == false and m.lahjoitus -%}{%- unless m.valikko_piilota contains "lahjoita" -%}<li><a href="{{ j }}lahjoita/">{% include k.html a=_nav_lahjoita %}</a></li>{%- endunless -%}{%- endif -%}
+{%- if include.tapa == "ala" and _lahjoita_listassa == false -%}{%- unless m.valikko_piilota contains "lahjoita" or _tyhjat contains ",lahjoita," -%}<li><a href="{{ j }}lahjoita/">{% include k.html a=_nav_lahjoita %}</a></li>{%- endunless -%}{%- endif -%}
 {%- else -%}
 {%- assign _omat = site.sivut | where: "valikossa", true | sort: "jarjestys", "last" -%}
 {%- capture _linkit -%}rukousajat:nav_rukousajat,meista:nav_meista,palvelut:nav_palvelut,tapahtumat:nav_tapahtumat,artikkelit:nav_artikkelit,OMAT,yhteystiedot:nav_yhteystiedot{% if include.tapa == "ala" %},lahjoita:nav_lahjoita{% endif %}{%- endcapture -%}
@@ -76,8 +78,7 @@
   {%- endif -%}
   {%- assign _o = _l | split: ":" -%}{%- assign _sivu = _o[0] -%}{%- assign _avain = _o[1] -%}{%- if _sivu == "lahjoita" -%}{%- assign _avain = _nav_lahjoita -%}{%- endif -%}
   {%- if m.valikko_piilota contains _sivu -%}{%- continue -%}{%- endif -%}
-  {%- if _sivu == "lahjoita" and m.lahjoitus == nil -%}{%- continue -%}{%- endif -%}
-  {%- if _sivu == "artikkelit" and site.artikkelit.size == 0 -%}{%- continue -%}{%- endif -%}
+  {%- capture _ty_k -%},{{ _sivu }},{%- endcapture -%}{%- if _tyhjat contains _ty_k -%}{%- continue -%}{%- endif -%}
   {%- capture _nyt -%}{% if page.url contains _sivu %} aria-current="page"{% endif %}{%- endcapture -%}
   {%- case include.tapa -%}
   {%- when "mobiili" -%}<a class="u-mv-linkki" href="{{ j }}{{ _sivu }}/"{{ _nyt }}>{% include k.html a=_avain %}<span class="u-nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span></a>

@@ -53,6 +53,7 @@ lataa_aikataulu:    { fi: "Lataa moskeijan virallinen aikataulu", en: "Download 
 # --- Palvelut ---
 palvelut_otsikko:   { fi: "Palvelut", en: "Services", ar: "الخدمات", so: "Adeegyada" }
 kaikki_palvelut:    { fi: "Kaikki palvelut", en: "All services", ar: "كل الخدمات", so: "Dhammaan adeegyada" }
+ei_palveluita:      { fi: "Ei vielä palveluita.", en: "No services yet.", ar: "لا توجد خدمات بعد.", so: "Weli adeeg ma jiro." }
 muut_palvelut:      { fi: "Muut palvelut", en: "Other services", ar: "خدمات أخرى", so: "Adeegyo kale" }
 kysy_tasta:         { fi: "Kysy tästä", en: "Ask about this", ar: "اسأل عن هذا", so: "Wax ka weydii" }
 palvelut_ohje:      { fi: "Ota yhteyttä, niin sovitaan aika ja kerromme lisää.", en: "Get in touch and we will arrange a time and tell you more.", ar: "تواصل معنا لتحديد موعد ومعرفة المزيد.", so: "Nala soo xiriir si aan waqti u ballanno oo aan kuu sheegno wax dheeraad ah." }

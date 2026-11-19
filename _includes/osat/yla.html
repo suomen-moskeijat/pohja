@@ -45,7 +45,8 @@
     <nav class="u-kehys" aria-label="Valikko">
       <a class="u-mv-linkki" href="{{ j }}">{% include k.html a="nav_etusivu" %}<span class="u-nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span></a>
       {% include osat/valikko.html moskeija=m tapa="mobiili" %}
-      {% if m.lasten_opetus.kaytossa %}<a class="u-mv-linkki" href="{{ j }}palvelut/lasten-opetus/">{% include k.html a="ilmoita_lapsesi" %}<span class="u-nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span></a>{% endif %}
+      {%- include osat/tyhjat-sivut.html moskeija=m %}
+      {% if m.lasten_opetus.kaytossa and _lapset %}<a class="u-mv-linkki" href="{{ j }}palvelut/lasten-opetus/">{% include k.html a="ilmoita_lapsesi" %}<span class="u-nuoli" aria-hidden="true">{% include ikoni-ph.html nimi="oikea" koko=18 luokka="u-flip" %}</span></a>{% endif %}
       <div class="u-mv-napit">
         {% if _lahjoita %}<a class="u-nappi u-nappi--kulta" href="{{ j }}lahjoita/">{% include k.html a="nav_lahjoita" %}</a>{% endif %}
         {% if wa != "" %}<a class="u-nappi u-nappi--reuna" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" %} WhatsApp</a>{% endif %}

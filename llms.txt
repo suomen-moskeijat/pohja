@@ -50,7 +50,9 @@ sitemap: false
 {% for p in m.palvelut %}
 - {{ p.nimi.fi | default: p.nimi }}{% if p.kuvaus %}: {{ p.kuvaus.fi | default: p.kuvaus | strip_html | normalize_whitespace }}{% endif %}
 {%- endfor %}
-{%- if m.lasten_opetus.kaytossa %}
+{%- comment -%} Tyhjät sivut (ei vielä sisältöä) jäävät pois kuten valikosta: osat/tyhjat-sivut.html {%- endcomment -%}
+{%- include osat/tyhjat-sivut.html moskeija=m -%}
+{%- if m.lasten_opetus.kaytossa and _lapset %}
 - Lasten opetus: {{ m.lasten_opetus.teksti.fi | default: m.lasten_opetus.teksti | strip_html | normalize_whitespace }} Ilmoittautuminen: {{ juuri }}/palvelut/lasten-opetus/
 {%- endif %}
 
@@ -58,17 +60,17 @@ sitemap: false
 
 - [Etusivu]({{ juuri }}/): seuraava rukous, toiminta ja ajankohtaiset asiat
 - [Rukousajat]({{ juuri }}/rukousajat/): päivän ja kuukauden rukousajat
-{%- unless m.valikko_piilota contains "meista" %}
+{%- unless m.valikko_piilota contains "meista" or _tyhjat contains ",meista," %}
 - [Meistä]({{ juuri }}/meista/): {{ m.meista_lyhyt.fi | default: m.meista_lyhyt | default: "moskeijan esittely" | strip_html | normalize_whitespace | truncate: 200 }}
 {%- endunless %}
-{%- unless m.valikko_piilota contains "palvelut" %}
+{%- unless m.valikko_piilota contains "palvelut" or _tyhjat contains ",palvelut," %}
 - [Opetus ja palvelut]({{ juuri }}/palvelut/)
 {%- endunless %}
-{%- unless m.valikko_piilota contains "tapahtumat" %}
+{%- unless m.valikko_piilota contains "tapahtumat" or _tyhjat contains ",tapahtumat," %}
 - [Tapahtumat]({{ juuri }}/tapahtumat/)
 {%- endunless %}
 - [Yhteystiedot]({{ juuri }}/yhteystiedot/): osoite, kartta ja yhteydenotto
-{%- if m.lahjoitus %}{% unless m.valikko_piilota contains "lahjoita" %}
+{%- if m.lahjoitus %}{% unless m.valikko_piilota contains "lahjoita" or _tyhjat contains ",lahjoita," %}
 - [Tuki ja jäsenyys]({{ juuri }}/lahjoita/): {{ m.lahjoitus.teksti.fi | default: m.lahjoitus.teksti | strip_html | normalize_whitespace | truncate: 160 }}
 {%- endunless %}{% endif %}
 {%- for s in site.sivut %}
