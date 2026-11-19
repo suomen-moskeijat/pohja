@@ -1931,6 +1931,79 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-19"
+    },
+    {
+      "id": "paneelin-kieli",
+      "otsikko": "Paneelin kieli: suomi tai englanti (kirjautuminen, navigaatio, Oma tili)",
+      "alue": "paneeli",
+      "kuvaus": "Jokainen käyttäjä voi valita paneelin kielen: suomi tai englanti. Valinta tehdään kirjautumisruudun oikeasta yläkulmasta tai Oma tili -sivulta, se tallentuu käyttäjälle ja säilyy uudelleenkirjautumisessa (myös toisella laitteella). Englanniksi on tässä vaiheessa käännetty kirjautuminen (myös kirjautumiskoodin sähköposti), navigaatio (Sivusto-lista, ryhmät Other ja Settings, puhelimen alapalkki) ja Oma tili; muut näkymät käännetään myöhemmin ja näkyvät siihen asti suomeksi. Paneelin kieli ei muuta sivuston kieliä eikä muokattavaa kieltä, eikä moskeijan omia sivujen nimiä käännetä.",
+      "aloitus": "Avaa testipaneelin kirjautumisruutu (kirjaudu ensin ulos, jos olet kirjautunut) tietokoneella.",
+      "kohdat": [
+        "Kirjautumisruudun oikeassa yläkulmassa on Suomi | English; English vaihtaa ruudun englanniksi (Sign in, Send login code) — Missä: Testipaneeli → kirjautumisruutu",
+        "Kirjaudu englanniksi: kirjautumiskoodin sähköposti on englanniksi (Login code: …) — Missä: oma sähköposti",
+        "Kirjautumisen jälkeen navigaatio on englanniksi: Overview, ryhmät Site, Other ja Settings, sivut Home, Prayer times, About, Services … ja + Add page — Missä: Testipaneeli → vasen navigaatio",
+        "Moskeijan itse antamat nimet (omat sivut, omat valikkolinkit) näkyvät sellaisinaan, eivät käännettyinä — Missä: Testipaneeli → Site-lista",
+        "Puhelimella alapalkki on Overview · Site · Add · All, tekstit mahtuvat eikä sivu vieri sivuttain (myös 320 px) — Missä: Testipaneeli puhelimella",
+        "Oma tili on englanniksi (My account, Your name, Passkeys, Sign out), ja siinä on Panel language -valinta — Missä: Testipaneeli → nimesi vasemmalla alhaalla (My account)",
+        "Kirjaudu ulos ja uudelleen: paneeli on yhä englanniksi; samoin toisella selaimella tai puhelimella kirjautumisen jälkeen — Missä: Testipaneeli → Sign out → kirjaudu",
+        "Muokattavan sivun yläreunan Muokattava kieli on yhä Suomi, ja sivuston kielet ovat ennallaan; tallennus ei tuo sivulle englanninkielisiä paneelin tekstejä — Missä: Testipaneeli → Site → Home, ja Testimoskeijan sivu",
+        "Näkymät, joita ei vielä ole käännetty (esim. Yleiskatsauksen sisältö), näkyvät suomeksi eivätkä ole rikki — Missä: Testipaneeli → Overview",
+        "Vaihda lopuksi takaisin suomeksi: Oma tili → Paneelin kieli → Suomi; paneeli vaihtuu heti — Missä: Testipaneeli → My account → Panel language"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: kirjautuminen",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/"
+        },
+        {
+          "nimi": "Testipaneeli: Oma tili",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/profiili"
+        },
+        {
+          "nimi": "Testipaneeli: Sivusto",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut"
+        },
+        {
+          "nimi": "Sivu: Testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
+    },
+    {
+      "id": "aloitus-kutsu-ja-kaannos",
+      "otsikko": "Aloitus: kutsu kertoo aloituksesta, palvelujen nimet käännetään",
+      "alue": "paneeli",
+      "kuvaus": "Uuden moskeijan pääkäyttäjän kutsuviesti kertoo, että ensimmäinen kirjautuminen avaa ohjatun aloituksen – vain silloin, kun kutsu tosiaan avasi aloituksen (ei muokkaajalle eikä olemassa olevan moskeijan pääkäyttäjälle). Aloituksen askeleessa Toiminta lisätyt palvelut käännetään automaattisesti sivuston muille kielille, jos Kielet-askeleessa valittiin Käännä automaattisesti tekoälyllä (sama käännös kuin palvelun tallennuksessa, merkitään tekoälykäännökseksi). Kutsu tulee kutsutun paneelin kielellä.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa linkki Testipaneeli: Aloitus.",
+      "kohdat": [
+        "Kielet-askeleessa valitse English ja Käännä automaattisesti tekoälyllä, paina Jatka — Missä: Testipaneeli → Aloitus → Kielet",
+        "Toiminta-askeleessa kirjoita palvelun nimi ja paina Jatka: palvelun Nimi englanniksi on täytetty tekoälyn käännöksellä ja sivulla näkyy tekoälyhuomautus englanniksi — Missä: Testipaneeli → Palvelut → palvelu → Muokattava kieli English, ja Testimoskeijan sivu englanniksi",
+        "Vain suomi -valinnalla Toiminta-askeleen palveluja ei käännetä — Missä: Testipaneeli → Aloitus → Kielet ja Toiminta",
+        "Kutsu muokkaaja: kutsussa ei mainita ohjattua aloitusta — Missä: Testipaneeli → Käyttäjät → Kutsu, ja kutsutun sähköposti",
+        "Poista lopuksi lisätyt testipalvelut, kutsutut käyttäjät ja palauta sivuston kielet ja käännösasetus — Missä: Testipaneeli → Palvelut, Käyttäjät ja Sivuston asetukset"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Aloitus",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/aloitus/kielet"
+        },
+        {
+          "nimi": "Testipaneeli: Palvelut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut"
+        },
+        {
+          "nimi": "Testipaneeli: Käyttäjät",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/kayttajat"
+        },
+        {
+          "nimi": "Sivu: Testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
     }
   ]
 }
