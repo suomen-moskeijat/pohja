@@ -164,7 +164,7 @@ näkyviin, ilman kulman pikanappia tai kokonaan piiloon.
 | `kuva` | oma valokuva, joka tummennetaan automaattisesti, jotta teksti erottuu. Lisää kuva kenttään **Taustakuva**. |
 | `vari` | moskeijan oma pääväri |
 
-**Napit** (enintään 2, ensimmäinen korostetaan):
+**Napit** (enintään 2, ensimmäinen korostetaan; ilman valintaa yläosassa ei ole nappeja):
 
 | Valinta | Nappi |
 |---|---|
@@ -419,7 +419,7 @@ Moskeijan tiedostossa `_moskeijat/<slug>.md`:
 rukousajat:
   lahde: masjidbox        # masjidbox | mawaqit | rukousajat | taulukko | laskenta
   tunnus: masjid-sunnah-helsinki
-  iqamah_oletus: { fajr: 10, dhuhr: 10, asr: 10, maghrib: 5, isha: 10 }
+  iqamah: { fajr: 10, dhuhr: 10, asr: 10, maghrib: 5, isha: 10 }   # valinnainen: moskeijan antamat minuutit adhanin jälkeen
 ```
 
 - `rukousajat`: Helsingin taulukko rukousajat.fi:stä. Se on oletus Helsingissä, Espoossa ja Vantaalla.

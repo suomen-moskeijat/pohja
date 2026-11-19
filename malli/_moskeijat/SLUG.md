@@ -11,7 +11,6 @@ sijainti: { lat: 0, lon: 0 }   # kartta ja rukousaikojen laskenta
 puhelin: ""
 whatsapp: ""          # näkyy pikanappina; lomakkeet lähetetään tähän, jos lomakeosoitetta ei ole
 sahkoposti: ""
-kielet: [suomi]
 juma: ""              # perjantairukous, esim. "13.30" (Masjidbox/Mawaqit antaa sen itse)
 
 # ===== Rukousajat =====
@@ -20,7 +19,7 @@ juma: ""              # perjantairukous, esim. "13.30" (Masjidbox/Mawaqit antaa 
 rukousajat:
   lahde: ""
   tunnus: ""          # Masjidbox: masjidbox.com/prayer-times/TUNNUS · Mawaqit: mawaqit.net/fi/TUNNUS
-  iqamah_oletus: { fajr: 10, dhuhr: 10, asr: 10, maghrib: 5, isha: 10 }
+  # iqamah: { fajr: 10, dhuhr: 10, asr: 10, maghrib: 5, isha: 10 }   # vain moskeijan antamat minuutit adhanin jälkeen
 
 # ===== Some (valinnainen) =====
 some:
@@ -47,18 +46,18 @@ teema:
 
 # ===== Tekstit (valinnainen; suomi riittää, muut kielet näkyvät kun ne lisätään) =====
 hero_tunniste: { fi: "KAUPUNKI" }
-esittely: { fi: "Rukouksen, oppimisen ja yhteisön paikka." }
+# esittely: { fi: "…" }   # moskeijan oma esittely; ilman sitä nimen alla ei ole tekstiä
 
 # Etusivun yläosa: tausta (kuvio | kuva | vari) ja enintään 2 nappia
-# (lapsi, toiminta, rukousajat, lahjoita, yhteys, oma tai oman sivun nimi)
+# (lapsi, toiminta, rukousajat, lahjoita, yhteys, oma tai oman sivun nimi); tyhjä = ei nappeja
 alku:
   tausta: kuvio
   kuva: ""            # kun tausta: kuva, esim. /tiedostot/sali.jpg
-  napit: [lapsi, toiminta]
+  napit: []
 
-# Yhteiset artikkelit (islaminusko.fi, lähdemerkinnällä). Tyhjä lista = vain omat artikkelit.
+# Yhteiset artikkelit (islaminusko.fi, lähdemerkinnällä), esim. [islaminusko]. Tyhjä lista = vain omat artikkelit.
 artikkelit:
-  lahteet: [islaminusko]
+  lahteet: []
 
 # Sivut, joita ei ole käytössä (piilotetaan valikosta), esim. [tapahtumat, lahjoita]
 valikko_piilota: []

@@ -19,8 +19,8 @@ rukousajat: true
       {% if m.esittely %}<p class="u-alku__esittely">{% include kt.html arvo=m.esittely %}</p>{% endif %}
     </div>
     {% if _alku_ajat != "" %}<div class="u-alku__ajat">{{ _alku_ajat }}</div>{% endif %}
-    <div class="u-alku__napit">{% include osat/alkunapit.html moskeija=m %}
-    </div>
+    {%- comment -%} Ilman nappeja (moskeija ei ole valinnut, ADR-0001) tyhjä ja piilossa; esikatselu lisää napit tähän {%- endcomment %}
+    <div class="u-alku__napit">{%- include osat/alkunapit.html moskeija=m -%}</div>
   </div>
 </section>
 

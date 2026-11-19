@@ -25,7 +25,7 @@
 {%- elsif page.collection == "tapahtumat" -%}{%- assign kuvaus = page.content | strip_html | strip_newlines | default: page.title -%}
 {%- elsif page.johdanto -%}{%- assign kuvaus = page.johdanto.fi | default: page.johdanto -%}
 {%- elsif page.url == "/rukousajat/" -%}{%- capture kuvaus -%}Rukousajat {{ m.kaupunki }}: päivän fajr-, dhuhr-, asr-, maghrib- ja isha-ajat, iqamah ja perjantairukous. {{ m.title }}, {{ m.osoite }}.{%- endcapture -%}
-{%- elsif page.url == "/artikkelit/" -%}{%- assign kuvaus = site.data.kaannokset.artikkelit_johdanto.fi -%}
+{%- elsif page.url == "/artikkelit/" and m.artikkelit_johdanto -%}{%- assign kuvaus = m.artikkelit_johdanto.fi | default: m.artikkelit_johdanto -%}
 {%- else -%}{%- assign kuvaus = m.esittely.fi | default: m.esittely | default: site.description -%}{%- endif -%}
 {%- assign kuvaus = kuvaus | strip_html | strip_newlines | normalize_whitespace | truncate: 160 -%}
 {%- comment -%} Jakokuva {%- endcomment -%}

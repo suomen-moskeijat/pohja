@@ -576,6 +576,7 @@ html[lang="ar"] .u-alku__tunniste { letter-spacing: 0; font-size: 14px; }
 .u-alku__aikataulu { align-items: center; gap: 6px; min-height: 44px; margin-top: 6px; font-weight: 700; color: var(--kulta-teksti); text-decoration: underline; text-decoration-color: var(--kulta); text-decoration-thickness: 2px; text-underline-offset: 6px; }
 
 .u-alku__napit { display: grid; gap: 12px; width: min(100%, 360px); margin-top: 18px; }
+.u-alku__napit:empty { display: none; } /* moskeija ei ole valinnut nappeja */
 .u-alku__napit .u-nappi { width: 100%; white-space: normal; }
 @media (min-width: 640px) { .u-alku__napit { display: flex; width: auto; justify-content: center; } .u-alku__napit .u-nappi { width: auto; } }
 @media (min-width: 1024px) { .u-alku__sisalto { padding-block: 80px 88px; } }
@@ -1222,6 +1223,7 @@ a.u-palvelu__linkki:hover, .u-tapahtuma a:hover, .u-rj__kortti:hover, a.u-rmh:ho
   .u-alku__sisalto--jako .u-alku__teksti { grid-area: teksti; align-items: flex-start; align-self: end; }
   .u-alku__sisalto--jako .u-alku__ajat { grid-area: ajat; align-items: stretch; }
   .u-alku__sisalto--jako .u-alku__napit { grid-area: napit; align-self: start; justify-content: flex-start; margin-top: 28px; }
+  .u-alku__sisalto--jako:has(> .u-alku__napit:empty) .u-alku__teksti { grid-row: 1 / -1; align-self: center; }
   .u-alku__sisalto--jako h1 { margin: 0; max-width: 12em; font-size: clamp(44px, 4.4vw, 64px); line-height: 1.06; }
   .u-alku__sisalto--jako .u-alku__esittely { margin: 18px 0 0; max-width: 30em; text-wrap: pretty; }
   .u-alku__sisalto--jako .u-alku__ajat .u-seur { width: 100%; margin-top: 0; }

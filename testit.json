@@ -1815,6 +1815,43 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-19"
+    },
+    {
+      "id": "oletukset-pois",
+      "otsikko": "Oletukset pois: uusi moskeija alkaa tyhjästä",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Sivulla näkyy vain se, minkä moskeija on itse lisännyt tai valinnut (ADR-0001). Uusi moskeija luodaan ilman oletusesittelyä, iqamah-oletusminuutteja, valmiita artikkeleita, toiminnan kieliä ja yläosan nappeja; käännösasetus on Vain suomi. Moskeijaa kuvaavat oletustekstit (Yhteystiedot-, Tapahtumat- ja Artikkelit-sivun johdanto, Kysy moskeijalta -lomakkeen teksti, palvelun ja tapahtuman teksti napin yläpuolella) ovat paneelissa harmaita kehotteita: ne eivät tallennu eivätkä näy sivulla. Yleiset otsikot ja napit (Kysy moskeijalta, Kysy tästä, Ilmoittaudu) näkyvät edelleen. Yläosa ilman nappeja ei jätä tyhjää väliä. Nykyisten moskeijoiden oletukset poistetaan erillisellä siirrolla ylläpitäjän hyväksynnän jälkeen (Masjid Sunnah ja Hyvinkää ennallaan).",
+      "aloitus": "Kirjaudu testipaneeliin ja avaa testimoskeija → Sivut → Yhteystiedot.",
+      "kohdat": [
+        "Yhteystiedot-sivun johdanto -kenttä on tyhjä ja siinä on harmaa kehote \"Esim. Tervetuloa käymään moskeijassa…\"; samoin Kysy moskeijalta -lomakkeen Teksti otsikon alla (\"Esim. Onko sinulla kysyttävää…\") — Missä: Testipaneeli → Sivut → Yhteystiedot",
+        "Kun kenttiin ei kirjoita mitään, sivulla otsikon alla ei ole johdantoa eikä lomakkeen otsikon alla tekstiä; lomakkeen otsikko Kysy moskeijalta näkyy — Missä: Testimoskeijan sivu → Yhteystiedot",
+        "Kirjoita johdantoon oma teksti ja tallenna: teksti näkyy sivulla parin minuutin päästä; tyhjennä se lopuksi — Missä: Testipaneeli → Sivut → Yhteystiedot",
+        "Tapahtumat- ja Artikkelit-sivun johdanto: tyhjä kenttä ja harmaa kehote, sivulla ei oletusjohdantoa — Missä: Testipaneeli → Sivut → Tapahtumat ja Artikkelit",
+        "Uusi palvelu, jonka lopussa on Nappi: Teksti napin yläpuolella on tyhjä ja harmaa kehote; julkaistulla palvelusivulla on vain Kysy tästä -nappi ilman tekstiä \"Ota yhteyttä, niin sovitaan aika…\" — Missä: Testipaneeli → Palvelut → + Uusi palvelu",
+        "Uusi tapahtuma, jossa Ilmoittaudu-nappi: Teksti napin yläpuolella on tyhjä ja harmaa kehote — Missä: Testipaneeli → Tapahtumat → + Uusi tapahtuma",
+        "Poista etusivun yläosan napit (Yläosan napit: ei valintoja) ja tallenna: yläosassa ei ole nappeja eikä tyhjää väliä nimen ja rukousaikojen alla, puhelimella eikä tietokoneella; valitse napit lopuksi takaisin — Missä: Testipaneeli → Sivut → Etusivu → Yläosan napit",
+        "Poista lopuksi testipalvelu ja -tapahtuma — Missä: Testipaneeli → Palvelut, Tapahtumat"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Yhteystiedot",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/yhteystiedot"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi palvelu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut/uusi"
+        },
+        {
+          "nimi": "Testipaneeli: Etusivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/etusivu"
+        },
+        {
+          "nimi": "Sivu: Yhteystiedot",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/yhteystiedot/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
     }
   ]
 }

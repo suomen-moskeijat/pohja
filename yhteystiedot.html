@@ -4,7 +4,8 @@ title: Yhteystiedot
 permalink: /yhteystiedot/
 ---
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
-{% if m.yhteystiedot_johdanto == false %}{% include osat/sivuhero.html avain="yhteystiedot" %}{% elsif m.yhteystiedot_johdanto %}{% include osat/sivuhero.html avain="yhteystiedot" johdanto=m.yhteystiedot_johdanto %}{% else %}{% include osat/sivuhero.html avain="yhteystiedot" johdanto_avain="yhteystiedot_teksti" %}{% endif %}
+{%- comment -%} Johdanto vain moskeijan omasta tekstistä (ADR-0001: ei oletustekstiä; paneelissa kehote) {%- endcomment -%}
+{% include osat/sivuhero.html avain="yhteystiedot" johdanto=m.yhteystiedot_johdanto %}
 <div class="u-kehys u-sivu">
   {% include osat/vierailu.html moskeija=m otsikko=false %}
   {%- comment -%} Kysy moskeijalta -lomake vain, kun viesteillä on vastaanottaja eikä lomaketta ole piilotettu (osat/lomake-tapa.html) {%- endcomment -%}

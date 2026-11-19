@@ -182,6 +182,9 @@ def tiedostot(t, repo, org):
     lahde_kommentti = {"mawaqit": "Mawaqitista automaattisesti (adhan, iqamah, Jumuah, kuvat)",
                        "masjidbox": "Masjidboxista automaattisesti (adhan, iqamah, Jumuah)",
                        "": "rukousajat.fi (Helsinki/Espoo/Vantaa) tai laskenta sijainnista"}[t["lahde"]]
+    # Uusi moskeija alkaa tyhjästä (ADR-0001): ei oletusesittelyä, iqamah-minuutteja, toiminnan kieliä, yläosan nappeja eikä
+    # valmiita artikkeleita. Vain tuotu tieto (vanhan sivun esittely ja Meistä-teksti, yhteystiedot, somet) tulee sivulle.
+    esittely_rivi = f"esittely: {{ fi: {yaml_str(t['esittely'])} }}\n" if t.get("esittely") else ""
     meista_lohko = ""
     if t.get("meista"):
         lyhyt = t["meista"].split("\n\n")[0]
@@ -201,14 +204,12 @@ puhelin: {yaml_str(t['puhelin'])}
 whatsapp: {yaml_str(t['whatsapp'])}
 sahkoposti: {yaml_str(t['sahkoposti'])}
 nettisivu: {yaml_str(t['nettisivu'])}
-kielet: [suomi]
 juma: {yaml_str(t['juma'])}
 
 # Rukousajat: {lahde_kommentti}
 rukousajat:
   lahde: {yaml_str(t['lahde'])}
   tunnus: {yaml_str(t['tunnus'])}
-  iqamah_oletus: {{ fajr: 10, dhuhr: 10, asr: 10, maghrib: 5, isha: 10 }}
 
 some:
   instagram: {yaml_str(t['instagram'])}
@@ -231,18 +232,17 @@ teema:
   korostus_vaalea: {yaml_str(t['teema'].get('korostus_vaalea'))}
 
 hero_tunniste: {{ fi: {yaml_str(t['kaupunki'])} }}
-esittely: {{ fi: {yaml_str(t['esittely'] or "Rukouksen, oppimisen ja yhteisön paikka.")} }}
-{meista_lohko}
-# Etusivun yläosa: tausta kuvio | kuva | vari, napit (enintään 2):
+{esittely_rivi}{meista_lohko}
+# Etusivun yläosa: tausta kuvio | kuva | vari, napit (enintään 2, moskeija valitsee itse):
 # lapsi, toiminta, rukousajat, lahjoita, yhteys, oma tai oman sivun nimi
 alku:
   tausta: kuvio
   kuva: ""
-  napit: [toiminta, yhteys]
+  napit: []
 
-# Yhteiset artikkelit (islaminusko.fi, lähdemerkinnällä). Tyhjä lista = vain omat artikkelit.
+# Yhteiset artikkelit (islaminusko.fi, lähdemerkinnällä), kun moskeija valitsee ne. Tyhjä lista = vain omat artikkelit.
 artikkelit:
-  lahteet: [islaminusko]
+  lahteet: []
 
 # Valikosta piilotettavat sivut, esim. [tapahtumat]. Lahjoita näkyy, kun lahjoitustiedot on lisätty.
 valikko_piilota: []

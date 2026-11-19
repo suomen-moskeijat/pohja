@@ -38,6 +38,10 @@ Masjidboxissa ei tyhjennä sivua.
    `suomen-moskeijat/<moskeijan-nimi>` ja sivu julkaistaan noin kahdessa minuutissa.
 4. Täydennä tiedot (osoite, puhelin, logo, tekstit) hallintapaneelissa: https://hallinta.suomenmoskeijat.fi/
 
+Uusi moskeija alkaa tyhjästä (ADR-0001): sivulla ei ole oletusesittelyä, iqamah-minuutteja, valmiita artikkeleita,
+toiminnan kieliä eikä yläosan nappeja, ennen kuin moskeija lisää tai valitsee ne. Vain tuotu tieto (nimi, osoite,
+yhteystiedot, somet, vanhan sivun tekstit) tulee sivulle valmiiksi.
+
 **Kokeilu ilman että mitään luodaan:**
 `python3 .github/scripts/lisaa_moskeija.py --kuiva /tmp/kokeilu --kaupunki Hyvinkää --mawaqit <linkki>`
 
@@ -132,7 +136,7 @@ moskeijan repon tiedostossa `_moskeijat/<moskeija>.md`, ja niitä muokataan hall
 rukousajat:
   lahde: masjidbox        # masjidbox | mawaqit | rukousajat | taulukko | laskenta
   tunnus: masjid-sunnah-helsinki
-  iqamah_oletus: { fajr: 10, dhuhr: 10, asr: 10, maghrib: 5, isha: 10 }
+  iqamah: { fajr: 10, dhuhr: 10, asr: 10, maghrib: 5, isha: 10 }   # valinnainen: moskeijan antamat minuutit adhanin jälkeen
 ```
 
 | Moskeijalla on… | `lahde` | `tunnus` | Mitä tapahtuu |
@@ -173,7 +177,7 @@ pv,fajr,auringonnousu,dhuhr,asr,maghrib,isha,iqamah_fajr,iqamah_dhuhr,iqamah_asr
 2,05:21,07:42,12:06,13:52,16:25,18:37,06:00,12:16,14:02,16:30,20:00
 ```
 
-Iqamah-sarakkeet saa jättää tyhjiksi; silloin käytetään `iqamah_oletus`-minuutteja.
+Iqamah-sarakkeet saa jättää tyhjiksi; silloin käytetään moskeijan antamia iqamah-minuutteja (`rukousajat.iqamah`), muuten iqamah-aikaa ei näytetä.
 Puuttuville päiville sivu laskee ajat koordinaateista.
 
 ### 2. Kuvat

@@ -67,7 +67,7 @@ layout: sivu
     </ul>
     {% if _ilmo != "" %}
     <div class="u-taptieto__toiminto">
-      {% if page.yhteys_teksti == false %}{% elsif _yt != "" %}<small>{{ _yt }}</small>{% elsif _kysy or page.ilmoittaudu == "oma" %}<small>{% include k.html a="ilmoittaudu_teksti" %}</small>{% endif %}
+      {% if _yt != "" %}<small>{{ _yt }}</small>{% endif %}
       <a class="u-nappi u-nappi--kulta" href="{{ _ilmo }}"{% if _ulk %} target="_blank" rel="noopener"{% endif %}>{{ _nappi_t | strip }}</a>
     </div>
     {% endif %}

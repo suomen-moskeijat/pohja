@@ -2,6 +2,8 @@
 # Sivustolla näkyvät kielet valitaan _config.yml-tiedoston asetuksella `kielet`.
 # Moskeijan omat tekstit (esittely, palvelut, tapahtumat ym.) kirjoitetaan moskeijan tietoihin.
 # Puuttuva käännös korvataan englannilla ja sen puuttuessa suomella.
+# Moskeijaa kuvaavat tekstit (palvelut_ohje, palvelut_ohje_ilmo, tapahtumat_teksti, ilmoittaudu_teksti, yhteystiedot_teksti,
+# kysy_teksti, artikkelit_johdanto) ovat vain paneelin kehotteita: sivulla ne eivät näy ilman moskeijan omaa tekstiä (ADR-0001).
 
 # --- Valikko ---
 nav_etusivu:        { fi: "Etusivu", en: "Home", ar: "الرئيسية", so: "Bogga hore" }

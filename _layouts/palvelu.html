@@ -53,7 +53,7 @@ layout: sivu
   <div class="u-palvelusivu__yhteys">
     {%- capture _yt -%}{% if page.yhteys_teksti %}{% include kt.html arvo=page.yhteys_teksti %}{% endif %}{%- endcapture -%}{%- assign _yt = _yt | strip -%}
     {%- capture _yn -%}{% if page.yhteys_nappi %}{% include kt.html arvo=page.yhteys_nappi %}{% endif %}{%- endcapture -%}{%- assign _yn = _yn | strip -%}
-    {% unless page.yhteys_teksti == false %}<p>{% if _yt != "" %}{{ _yt }}{% elsif _pi != "" %}{% include k.html a="palvelut_ohje_ilmo" %}{% else %}{% include k.html a="palvelut_ohje" %}{% endif %}</p>{% endunless %}
+    {% if _yt != "" %}<p>{{ _yt }}</p>{% endif %}
     <div class="u-napit">
       {%- if _pi != "" -%}
         {%- assign _pi1 = _pi | slice: 0 -%}{%- if _pi1 == "/" -%}{%- assign _ph = _pi | relative_url -%}{%- assign _pu = false -%}{%- else -%}{%- assign _ph = _pi -%}{%- assign _pu = true -%}{%- endif %}
