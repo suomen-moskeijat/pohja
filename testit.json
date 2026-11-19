@@ -1776,6 +1776,45 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-19"
+    },
+    {
+      "id": "hionnat-galleria-palkki-otsikot",
+      "otsikko": "Hionnat: galleria, puhelimen tallennuspalkki ja otsikot",
+      "alue": "paneeli",
+      "kuvaus": "Galleriakentässä lisätyt kuvat valitaan galleriaan heti, ja valitut kuvat näkyvät valintaikkunassa merkittyinä (napautus poistaa valinnan). Logo ei ole galleriavalinnoissa eikä sillä ole Galleriaan-nappia. Puhelimella tallennuspalkki on yhdellä rivillä: Poista ja Näytä esikatselu ovat kuvakkeita, Peruuta jää pois (takaisin-linkki on ylhäällä) ja tallentamattomista muutoksista kertoo piste. Muokkausnäkymien otsikot ovat yhtenäiset: tallennettu \"Muokkaa: <nimi>\" (esim. Muokkaa: Koraanikoulu, Muokkaa: Etusivu), uusi \"Uusi palvelu\", \"Uusi tapahtuma\", \"Uusi tiedote\" tai \"Uusi sivu\". Osion lisäysikkuna ja poistokysymys kertovat oikean sivun (etusivu tai oman sivun nimi).",
+      "aloitus": "Kirjaudu testipaneeliin ja avaa testimoskeija → Sivut → Meistä.",
+      "kohdat": [
+        "Paina Kuvagalleria-kohdassa + Lisää kuvia ja lisää kaksi kuvaa puhelimesta tai tietokoneelta: ne näkyvät ikkunassa heti valittuina (reunus ja ✓), eikä niitä tarvitse napauttaa erikseen — Missä: Testipaneeli → Sivut → Meistä → Kuvagalleria → + Lisää kuvia",
+        "Napauta valittua kuvaa: valinta poistuu; napauta uudelleen: valinta palaa. Paina Valmis: kuvat ovat galleriakentässä — Missä: Testipaneeli → Sivut → Meistä → Kuvagalleria",
+        "Tallenna ja odota pari minuuttia: kuvat näkyvät Meistä-sivun kuvagalleriassa — Missä: Testimoskeijan sivu → Meistä",
+        "Lisää testimoskeijalle logo (Ulkoasu → Värit ja logo → Logo) ja tallenna: logo ei näy galleriakentän valintaikkunassa — Missä: Testipaneeli → Ulkoasu, sitten Sivut → Meistä → + Lisää kuvia",
+        "Logon kohdalla ei ole + Galleriaan -nappia vaan merkintä Logo — Missä: Testipaneeli → Kuvat ja tiedostot",
+        "Avaa puhelimella palvelu, tapahtuma ja etusivu: tallennuspalkki on yhdellä rivillä (roskakori, silmä, Tallenna), eikä sivu vieri sivuttain (myös 320 px) — Missä: Testipaneeli puhelimella → Palvelut → palvelu, Tapahtumat → tapahtuma, Sivut → Etusivu",
+        "Muuta jotain puhelimella: palkin vasempaan reunaan tulee piste merkiksi tallentamattomista muutoksista; tietokoneella teksti Tallentamattomia muutoksia — Missä: Testipaneeli → Palvelut → palvelu",
+        "Otsikot: Muokkaa: Koraanikoulu (tapahtuma), Muokkaa: <palvelun nimi>, Muokkaa: Etusivu, Muokkaa: Meistä; uudet Uusi tapahtuma, Uusi palvelu, Uusi tiedote ja Uusi sivu — Missä: Testipaneeli → Tapahtumat, Palvelut, Tiedotteet, Sivut",
+        "Etusivulla + Lisää osio -ikkunan otsikko on Lisää osio etusivulle; uudella omalla sivulla (kirjoita nimi) Lisää osio sivulle <nimi>, ja osion Poista kysyy poistetaanko osio sivulta <nimi> — Missä: Testipaneeli → Sivut → Etusivu ja Valikko ja omat sivut → Uusi sivu",
+        "Poista lopuksi testikuvat galleriasta ja testisivut — Missä: Testipaneeli → Kuvat ja tiedostot, Valikko ja omat sivut"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Meistä",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/meista"
+        },
+        {
+          "nimi": "Testipaneeli: Kuvat ja tiedostot",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tiedostot"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi sivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/omat/uusi?pohja=tyhja"
+        },
+        {
+          "nimi": "Sivu: Meistä",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/meista/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
     }
   ]
 }
