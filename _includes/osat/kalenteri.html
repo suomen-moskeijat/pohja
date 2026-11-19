@@ -1,8 +1,11 @@
 {%- comment -%}
   "Lisää kalenteriin": rastit (rukousajat, Jumua, tapahtumat, Ramadan) → tilattava kalenteri, joka päivittyy itsestään.
+  Ramadan-rasti vain, kun Ramadan on käytössä (testimoskeija, osat/ramadan-tiedot.html).
   Tiedostot tekee julkaisuajo (.github/scripts/kalenteri.js). Parametri: valitut (esim. "rukous,jumua")
 {%- endcomment -%}
 {%- assign _val = include.valitut | default: "rukous,jumua" | split: "," -%}
+{%- assign _kal_m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- include osat/ramadan-tiedot.html moskeija=_kal_m -%}
 <section class="u-kortti u-kalenteri" id="kalenteri" data-kalenteri data-pohja="{{ '/kalenteri/' | absolute_url }}">
   <div class="u-kalenteri__yla">
     <span class="u-ikoni">{% include ikoni-ph.html nimi="kalenteri" koko=22 %}</span>
@@ -13,7 +16,8 @@
   </div>
   <fieldset class="u-kalenteri__valinnat">
     <legend class="u-nakymaton">{% include k.html a="kalenteri_otsikko" %}</legend>
-    {%- assign _lajit = "rukous:kal_rukous,jumua:jumua,tapahtumat:nav_tapahtumat,ramadan:kal_ramadan" | split: "," -%}
+    {%- capture _lajit -%}rukous:kal_rukous,jumua:jumua,tapahtumat:nav_tapahtumat{% if _rm_kaytossa %},ramadan:kal_ramadan{% endif %}{%- endcapture -%}
+    {%- assign _lajit = _lajit | split: "," -%}
     {%- for _x in _lajit -%}{%- assign _o = _x | split: ":" -%}{%- assign _laji = _o[0] -%}{%- assign _avain = _o[1] %}
     <label class="u-kalenteri__valinta"><input type="checkbox" value="{{ _laji }}"{% if _val contains _laji %} checked{% endif %}> <span>{% include k.html a=_avain %}</span></label>
     {%- endfor %}

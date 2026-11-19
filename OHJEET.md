@@ -91,7 +91,7 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 | **Luo julkaisu** | valmiit pohjat (esim. tarawih-vuorot, tapahtuma, tiedote, Eid): kuva someen ja WhatsAppiin sekä tiedote sivulle yhdellä kertaa |
 | **Tapahtumat** | tulevat tapahtumat (menneet katoavat sivulta itsestään) |
 | **Tiedotteet** | moskeijan omat kirjoitukset ja tiedotteet |
-| **Rukousajat ja Jumua** | lähde, iqamah, Jumua, yksittäisten päivien muutokset ja Ramadan |
+| **Rukousajat ja Jumua** | lähde, iqamah, Jumua ja yksittäisten päivien muutokset (testimoskeijassa myös Ramadan) |
 | **Ilmoituspalkki** | lyhyt ilmoitus kaikkien sivujen ylälaitaan |
 | **Kuvat ja tiedostot** | kuvat ja PDF-tiedostot |
 | **Sivut** | etusivu, Meistä, Opetus ja palvelut, Tuki ja lahjoitukset, Yhteystiedot ja lomakkeet, valikko ja omat sivut |
@@ -225,9 +225,9 @@ näkymä päivittyy heti asetuksia muutettaessa. Lisäksi:
 - **Mawaqit:** koko vuoden aikataulu, iqamah ja Jumua julkiselta sivulta, avainta ei tarvita.
 - **rukousajat.fi:** Helsingin vuosiaikataulu; ei iqamahia eikä Jumuaa.
 
-**Ramadan.** Rukousajat-sivulle tulee Ramadan-osio itsestään kolme viikkoa ennen alkua: tämän päivän suhur ja iftar, koko kuukauden aikataulu (tulostettava) ja Eid-rukous. Etusivulla näkyy lyhyt rivi "Ramadan, päivä 5 · Suhur … · Iftar …". Paneelissa (Rukousajat → Ramadan) voi lisätä tarawih-ajan, Eid-rukouksen ajan ja paikan, fitran ja muuta tietoa. Päivät ovat oletuksena arvio (Umm al-Qura); jos moskeija seuraa eri ilmoitusta, täytä alkamis- ja Eid-päivä itse. Ylläpito korjaa yhteiset oletuspäivät tiedostoon `_data/ramadan.yml`.
+**Ramadan.** Ramadan on toistaiseksi vain testimoskeijassa (ADR-0002, `ramadan.testi: true`): muiden moskeijoiden sivuille ei tule Ramadan-sivua, valikkokohtaa, etusivun riviä eikä Ramadania kalenteriin, eikä paneelissa näy Ramadan-kohtia. Testimoskeijassa Rukousajat-sivulla on Ramadan-osio: tämän päivän suhur ja iftar, koko kuukauden aikataulu (tulostettava) ja Eid-rukous, ja etusivulla lyhyt rivi "Ramadan, päivä 5 · Suhur … · Iftar …". Paneelissa (Rukousajat → Ramadan) voi lisätä tarawih-ajan, Eid-rukouksen ajan ja paikan, fitran ja muuta tietoa. Päivät ovat oletuksena arvio (Umm al-Qura, `_data/ramadan.yml`).
 
-**Lisää kalenteriin.** Rukousajat- ja Tapahtumat-sivuilla kävijä voi rastia, mitä haluaa puhelimensa kalenteriin (rukousajat, Jumua, tapahtumat, Ramadan), ja tilata sen. Kalenteri päivittyy itsestään: uudet tapahtumat ja muuttuneet ajat tulevat puhelimeen muutaman tunnin sisällä. Moskeijan ei tarvitse tehdä mitään.
+**Lisää kalenteriin.** Rukousajat- ja Tapahtumat-sivuilla kävijä voi rastia, mitä haluaa puhelimensa kalenteriin (rukousajat, Jumua, tapahtumat; testimoskeijassa myös Ramadan), ja tilata sen. Kalenteri päivittyy itsestään: uudet tapahtumat ja muuttuneet ajat tulevat puhelimeen muutaman tunnin sisällä. Moskeijan ei tarvitse tehdä mitään.
 
 ### 11. Somet
 

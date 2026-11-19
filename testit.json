@@ -1525,6 +1525,45 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-19"
+    },
+    {
+      "id": "ramadan-vain-testissa",
+      "otsikko": "Ramadan vain testimoskeijassa",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Ramadan ei enää tule kaikille moskeijoille automaattisesti arvioidulla päivällä (ADR-0002). Muiden moskeijoiden sivuilla ei ole Ramadan-sivua valikossa, etusivun Ramadan-riviä, Rukousajat-sivun Ramadan-linkkiä eikä Ramadania Lisää kalenteriin -valinnoissa, ja paneelissa ei ole Ramadan-välilehteä eikä tiedotteen Näytä Ramadan-sivulla -kytkintä. Suora osoite /ramadan/ näyttää niillä vain linkin rukousaikoihin (ei hakukoneissa). Testimoskeija pitää Ramadanin ennallaan, jotta sille voidaan kehittää pohja ja käyttöönotto. Muiden moskeijoiden näkymä tarkistetaan automaattisella testillä, koska testipaneelissa näkyy vain testimoskeija.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Rukousajat.",
+      "kohdat": [
+        "Rukousajat-sivulla on yhä neljä välilehteä (Lähde ja iqamah, Jumua, Poikkeuspäivät, Ramadan), ja Ramadan-välilehdellä on tarawih-, Eid- ja fitra-kentät sekä oma aikataulu — Missä: Testipaneeli → Rukousajat → Ramadan",
+        "Muuta tarawih-aikaa ja tallenna: tallennus onnistuu, ja muutaman minuutin päästä uusi aika näkyy Ramadan-sivulla — Missä: Testipaneeli → Rukousajat → Ramadan ja Testimoskeijan Ramadan-sivu",
+        "Valikossa on Ramadan rukousaikojen perässä ja etusivun yläosassa Ramadan-rivi — Missä: Testimoskeijan etusivu",
+        "Ramadan-sivulla on suhur, iftar, kuukauden aikataulu ja Eid-rukous kuten ennen; esikatselun napit (Ennen ramadania, Päivä 1 …) toimivat — Missä: Testimoskeijan Ramadan-sivu",
+        "Rukousajat-sivulla on Ramadan-linkki, ja Lisää kalenteriin -kortissa on Ramadan-rasti — Missä: Testimoskeijan Rukousajat-sivu",
+        "Uudessa tiedotteessa on kytkin Näytä Ramadan-sivulla — Missä: Testipaneeli → Tiedotteet → Uusi tiedote"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Rukousajat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/rukousajat"
+        },
+        {
+          "nimi": "Testipaneeli: uusi tiedote",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/artikkelit/uusi"
+        },
+        {
+          "nimi": "Testimoskeijan etusivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        },
+        {
+          "nimi": "Testimoskeijan Ramadan-sivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/ramadan/"
+        },
+        {
+          "nimi": "Testimoskeijan Rukousajat-sivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
     }
   ]
 }

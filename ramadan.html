@@ -6,8 +6,10 @@ rukousajat: true
 ---
 {%- comment -%}
   Ramadanin oma sivu: yläosassa Ramadan-banneri (laskuri / päivä N, suhur ja iftar), sitten koko Ramadan-osio
-  (tarawih, Eid, fitra, julkaisut ja kuukauden aikataulu) ja kalenterin tilaus (jos käytössä: kalenteri_tilaus). Valikossa ja etusivun yläosassa
-  linkki tänne 3 viikkoa ennen alkua – Eid-päivän loppuun. Muulloin sivu kertoo, milloin aikataulu tulee.
+  (tarawih, Eid, fitra, julkaisut ja kuukauden aikataulu) ja kalenterin tilaus (jos käytössä: kalenteri_tilaus).
+  Ramadan vain testimoskeijassa (ADR-0002, osat/ramadan-tiedot.html: _rm_kaytossa). Muilla moskeijoilla suora osoite
+  näyttää vain linkin Rukousajat-sivulle: ei arvioitua alkupäivää eikä lupausta aikataulusta, ei hakukoneissa eikä
+  sivukartassa (osat/hakunakyvyys.html, sitemap.xml).
 {%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {% include osat/rukousdata.html moskeija=m %}
@@ -21,6 +23,7 @@ rukousajat: true
 {% else %}
 {% include osat/sivuhero.html avain="ramadan" %}
 <div class="u-kehys u-sivu u-sivu--kapea">
+  {% if _rm_kaytossa %}
   <div class="u-kortti u-ramadansivu__tyhja">
     <span class="u-ikoni">{% include ikoni-ph.html nimi="kuu" koko=22 %}</span>
     <div>
@@ -28,5 +31,9 @@ rukousajat: true
       <a class="u-linkki" href="{{ '/rukousajat/' | relative_url }}">{% include k.html a="nav_rukousajat" %} <span class="u-flip" aria-hidden="true">→</span></a>
     </div>
   </div>
+  {% else %}
+  {%- comment -%} Ramadan ei käytössä: tyhjä sivu kuten muutkin (Palvelut, Artikkelit), vain linkki rukousaikoihin {%- endcomment %}
+  <div class="u-tyhja"><span class="u-ikoni">{% include ikoni-ph.html nimi="kuu" koko=26 %}</span><a class="u-linkki" href="{{ '/rukousajat/' | relative_url }}">{% include k.html a="nav_rukousajat" %} <span class="u-flip" aria-hidden="true">→</span></a></div>
+  {% endif %}
 </div>
 {% endif %}

@@ -8,8 +8,10 @@ permalink: /sitemap.xml
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {%- comment -%} Tyhjät sivut (ei vielä sisältöä) eivät ole sivukartassa: osat/tyhjat-sivut.html {%- endcomment -%}
 {%- include osat/tyhjat-sivut.html moskeija=m -%}
+{%- comment -%} Ramadan-sivu vain, kun Ramadan on käytössä (testimoskeija): osat/ramadan-tiedot.html {%- endcomment -%}
+{%- include osat/ramadan-tiedot.html moskeija=m -%}
 {%- for p in site.html_pages %}{% if p.url contains "404" or p.sitemap == false %}{% continue %}{% endif %}
-  {%- assign _nimi = p.url | remove: "/" -%}{% if m.valikko_piilota contains _nimi %}{% continue %}{% endif %}{% capture _ty_k %},{{ _nimi }},{% endcapture %}{% if _tyhjat contains _ty_k %}{% continue %}{% endif %}{% if p.url == "/palvelut/lasten-opetus/" %}{% unless m.lasten_opetus.kaytossa and _lapset %}{% continue %}{% endunless %}{% endif %}
+  {%- assign _nimi = p.url | remove: "/" -%}{% if m.valikko_piilota contains _nimi %}{% continue %}{% endif %}{% capture _ty_k %},{{ _nimi }},{% endcapture %}{% if _tyhjat contains _ty_k %}{% continue %}{% endif %}{% if p.url == "/ramadan/" %}{% unless _rm_kaytossa %}{% continue %}{% endunless %}{% endif %}{% if p.url == "/palvelut/lasten-opetus/" %}{% unless m.lasten_opetus.kaytossa and _lapset %}{% continue %}{% endunless %}{% endif %}
   <url><loc>{{ site.url }}{{ p.url | relative_url }}</loc>{% if p.url == "/" %}<priority>1.0</priority>{% endif %}</url>
 {%- endfor %}
 {%- for p in site.tapahtumat %}

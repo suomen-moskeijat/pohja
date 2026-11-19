@@ -1,4 +1,5 @@
-# Ramadanin oletuspäivät kaikille moskeijoille (Umm al-Qura -kalenterin mukaan laskettu arvio).
+# Ramadanin oletuspäivät (Umm al-Qura -kalenterin mukaan laskettu arvio). Ramadan on toistaiseksi käytössä vain
+# testimoskeijassa (ADR-0002, ramadan.testi: true; osat/ramadan-tiedot.html).
 # alkaa = ensimmäinen paastopäivä, eid = Eid al-Fitr (ensimmäinen päivä, jolloin ei paastota).
 # Ylläpito voi korjata päivät tähän, kun alku vahvistuu; moskeija voi asettaa omat päivänsä
 # hallintapaneelissa (Rukousajat → Ramadan), ja ne voittavat nämä.
