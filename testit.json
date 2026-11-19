@@ -2004,6 +2004,53 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-19"
+    },
+    {
+      "id": "paneelin-kieli-lomakkeet",
+      "otsikko": "Paneelin kieli: lomakkeiden kentät, ohjeet ja kehotteet englanniksi",
+      "alue": "paneeli",
+      "kuvaus": "Kun paneelin kieli on englanti, kaikkien lomakkeiden kenttien nimet, ohjeet, harmaat kehotteet (E.g. …), valintojen selitteet ja osioiden nimet näkyvät englanniksi: etusivu, palvelu, tapahtuma, tiedote, oma sivu ja sen pohjat, yhteystiedot, rukousajat, ulkoasu ja muut sivujen lomakkeet sekä aloituksen kentät. Myös lomakkeen napit (Save, Publish, Cancel), käännöspalkki (Language you are editing: Finnish, English …) ja haku. Moskeijan oma sisältö kentissä ja esikatselussa pysyy ennallaan, eikä paneelin kieli muuta tallennettua sisältöä eikä sivua. Muut näkymät (Yleiskatsaus, listat, ilmoitukset ja vahvistusikkunat) käännetään myöhemmin.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja vaihda paneelin kieli englanniksi: Oma tili → Paneelin kieli → English.",
+      "kohdat": [
+        "Etusivun lomakkeessa kenttien nimet ja ohjeet ovat englanniksi (Main heading, Small text above the name, Top section buttons), kehotteet alkavat E.g. ja osiot ovat englanniksi (Visit us, Shown on the site …) — Missä: Testipaneeli → Site → Home",
+        "Uuden palvelun lomake on englanniksi (New service, Service name, What is at the end of the service page?); valitse Form, ja lomakkeen kentät ovat englanniksi (Form fields, Where do the responses go?) — Missä: Testipaneeli → Services → New service",
+        "Uuden tapahtuman lomake on englanniksi (How often?, Every week, Starts at, viikonpäivät Mon–Sun) — Missä: Testipaneeli → Events → New event",
+        "Yhteystietojen lomake on englanniksi (Where do form messages go?, Ask the mosque form, Social media channels, Find location from address) — Missä: Testipaneeli → Site → Contact",
+        "Uuden oman sivun pohjat ja niiden kehotteet ovat englanniksi (Library and sources, FAQ …) — Missä: Testipaneeli → Site → + Add page",
+        "Muokattava kieli näkyy paneelin kielellä (Finnish, English, Arabic …), mutta muokataan edelleen suomenkielistä tekstiä, kunnes valitset toisen kielen — Missä: Testipaneeli → Site → Home, yläreunan Language you are editing",
+        "Haku löytää kentät englanninkielisillä nimillä (esim. main heading) ja yhä suomenkielisillä (pääotsikko) — Missä: Testipaneeli → haku vasemmalla ylhäällä",
+        "Tallenna jokin muutos englanninkielisestä paneelista: sivulle ei tule englanninkielisiä paneelin tekstejä eikä kehotteita, ja sivu on yhä suomeksi — Missä: Testipaneeli → Site → Home → Save, ja Testimoskeijan sivu",
+        "Puhelimella (myös 320 px) pidemmät englanninkieliset nimet rivittyvät, eikä lomake vieri sivuttain — Missä: Testipaneeli puhelimella → Home, New service, Contact",
+        "Vaihda lopuksi takaisin suomeksi: lomakkeet ovat taas suomeksi kuten ennen — Missä: Testipaneeli → My account → Panel language → Suomi"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Oma tili",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/profiili"
+        },
+        {
+          "nimi": "Testipaneeli: Etusivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/etusivu"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi palvelu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/palvelut/uusi"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi tapahtuma",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat/uusi"
+        },
+        {
+          "nimi": "Testipaneeli: Yhteystiedot",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/yhteystiedot"
+        },
+        {
+          "nimi": "Sivu: Testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
     }
   ]
 }
