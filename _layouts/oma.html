@@ -3,15 +3,18 @@ layout: sivu
 ---
 {%- comment -%}
   Moskeijan oma sivu (_sivut/<nimi>.md): esim. kirjat, hyvät lähteet, artikkelit.
-  Kentät: title (suomeksi), otsikko_en/_ar/_so, johdanto, kuva, valikossa, jarjestys,
-  teksti (sivun sisältö suomeksi, markdown) ja teksti_en/_ar/_so, linkit (kortteina:
-  nimi, kuvaus, osoite, kuvake: kirja | maailma | toista | kirja …) ja osiot (kuten etusivulla).
+  Kentät: title (suomeksi), otsikko_en/_ar/_so, johdanto, kuva, valikossa, jarjestys ja osiot (kuten etusivulla).
+  Sivun teksti ja linkit ovat osioissa (Oma teksti, Linkkikortit).
+  Vanha muoto: runko ja teksti_en/_ar/_so (Sisältö) sekä linkit (Linkit kortteina) näytetään alla, kunnes ne on siirretty
+  osioiksi (hallinta: src/omat-sivut.js, paneelin Sivut-näkymä ja tyokalut/omat-sivut-osioiksi.mjs). Siirto tekee niistä
+  sivun ensimmäiset osiot samassa järjestyksessä, joten sivu näyttää kävijälle samalta.
 {%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {%- capture _otsikko -%}{% include sivunimi.html sivu=page %}{%- endcapture -%}
 {% include osat/sivuhero.html otsikko=_otsikko johdanto=page.johdanto %}
-<div class="u-kehys u-sivu u-omasivu">
+{%- capture _omasivu -%}
   {% if page.kuva and page.kuva != "" %}<img class="u-omasivu__kuva" src="{{ page.kuva | relative_url }}" alt="" loading="lazy">{% endif %}
+  {%- comment -%} Vanha muoto (ennen siirtoa): Sisältö ja Linkit kortteina {%- endcomment -%}
   {%- capture _teksti -%}
     {%- assign _fi = content | strip -%}
     {%- assign _kaannetty = false -%}{%- for _l in site.kielet -%}{%- assign _k = "teksti_" | append: _l -%}{%- if page[_k] and page[_k] != "" -%}{%- assign _kaannetty = true -%}{%- endif -%}{%- endfor -%}
@@ -27,5 +30,8 @@ layout: sivu
   {% if page.linkit.size > 0 %}
   {% include osat/linkit-kortit.html linkit=page.linkit %}
   {% endif %}
-</div>
-{% if page.osiot.size > 0 %}{% include osat/osiot.html osiot=page.osiot moskeija=m %}{% endif %}
+{%- endcapture -%}
+{%- comment -%} Sivun kuva (ja vanhan muodon sisältö) vain, kun niitä on: ei tyhjää väliä otsikon ja osioiden väliin {%- endcomment -%}
+{%- assign _omasivu = _omasivu | strip -%}
+{% if _omasivu != "" %}<div class="u-kehys u-sivu u-omasivu">{{ _omasivu }}</div>{% endif %}
+{% if page.osiot.size > 0 %}<div class="u-omasivu__osiot">{% include osat/osiot.html osiot=page.osiot moskeija=m %}</div>{% endif %}

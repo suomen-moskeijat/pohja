@@ -81,12 +81,13 @@ Lähde: {{ juuri }}/ · Päivitetty {{ site.time | date: "%-d.%-m.%Y klo %H.%M" 
 ## Usein kysyttyä
 {{ _ukk }}
 {%- endif %}
-{%- for s in site.sivut %}{% assign _teksti = s.content | strip_html | normalize_whitespace %}{% if _teksti != "" or s.linkit.size > 0 %}
+{%- comment -%} Omat sivut: teksti ja linkit osioista (Oma teksti, Linkkikortit) ja vielä siirtämättömän sivun vanhoista kentistä {%- endcomment -%}
+{%- for s in site.sivut %}{% assign _osat = "" | split: "" %}{% assign _sl = "" | split: "" %}{% assign _st = s.content | strip_html | normalize_whitespace %}{% if _st != "" %}{% assign _osat = _osat | push: _st %}{% endif %}{% for l in s.linkit %}{% assign _sl = _sl | push: l %}{% endfor %}{% for o in s.osiot %}{% if o.osio == "teksti" %}{% assign _st = o.teksti.fi | default: o.teksti | markdownify | strip_html | normalize_whitespace %}{% if _st != "" %}{% assign _osat = _osat | push: _st %}{% endif %}{% elsif o.osio == "linkit" %}{% for l in o.linkit %}{% assign _sl = _sl | push: l %}{% endfor %}{% endif %}{% endfor %}{% assign _teksti = _osat | join: " " %}{% if _teksti != "" or _sl.size > 0 %}
 
 ## {{ s.title }}
 
 {% if s.johdanto %}{{ s.johdanto.fi | default: s.johdanto | strip_html | normalize_whitespace }} {% endif %}{{ _teksti | truncatewords: 400 }}
-{%- for l in s.linkit %}
+{%- for l in _sl %}
 - [{{ l.nimi.fi | default: l.nimi }}]({{ l.osoite }}){% if l.kuvaus %}: {{ l.kuvaus.fi | default: l.kuvaus }}{% endif %}
 {%- endfor %}
 

@@ -1604,6 +1604,38 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-19"
+    },
+    {
+      "id": "omat-sivut-osioina",
+      "otsikko": "Omat sivut vain osioilla: teksti ja linkit osioina",
+      "alue": "sivut",
+      "kuvaus": "Oman sivun teksti ja linkit tehdään nyt vain osioilla: erillisiä Sisältö- ja Linkit kortteina -kenttiä ei enää ole. Sivun teksti kirjoitetaan Oma teksti -osioon ja linkit Linkkikortit-osioon. Oma teksti -osiolla on uusi tausta Kortti, joka näyttää samalta kuin vanha sivun teksti (valkoinen kortti, isompi teksti). Vanhojen omien sivujen teksti ja linkit siirtyvät osioiksi itsestään, kun pääkäyttäjä avaa Valikko ja omat sivut -näkymän, ja sivu näyttää kävijälle samalta kuin ennen. Testimoskeijalla ei ole vanhan muodon sivuja: siirto on testattu automaattisesti, ja tuotannon moskeijoille se ajetaan ensin kuivaharjoituksena.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Valikko ja omat sivut → Uusi sivu.",
+      "kohdat": [
+        "Valitse pohja Tyhjä sivu: lomakkeessa ei ole Sisältö- eikä Linkit kortteina -kenttää, ja Sivun osioissa on valmiina Oma teksti — Missä: Testipaneeli → Valikko ja omat sivut → Uusi sivu → Tyhjä sivu",
+        "Anna sivulle nimi, avaa Oma teksti ja kirjoita teksti; lisää osio Linkkikortit ja yksi linkki. Esikatselussa näkyvät nimi, teksti ja linkin nimi — Missä: Testipaneeli → Uusi sivu → Sivun osiot",
+        "Julkaise: muutaman minuutin päästä sivulla on otsikon alla teksti valkoisessa kortissa ja sen alla linkkikortti, ilman ylimääräistä tyhjää väliä otsikon alla — Missä: Testimoskeijan sivu → valikko → uusi sivu",
+        "Avaa sivu uudelleen muokattavaksi ja vaihda Oma teksti -osion taustaksi Vaalea, tallenna: teksti näkyy vaalealla taustalla; palauta Kortti — Missä: Testipaneeli → Valikko ja omat sivut → sivu → Oma teksti → Tausta",
+        "Sivulla ei ole vaakavierintää puhelimella (myös kapealla 320 px), ja arabiaksi teksti ja kortit ovat oikealta vasemmalle — Missä: Testimoskeijan uusi sivu, kieli AR",
+        "Etusivun Oma teksti -osio näyttää samalta kuin ennen (tausta Ei taustaa, Vaalea tai Moskeijan väri) — Missä: Testimoskeijan etusivu",
+        "Poista testisivu lopuksi — Missä: Testipaneeli → Valikko ja omat sivut → sivu → Poista"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Valikko ja omat sivut",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi sivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/omat/uusi"
+        },
+        {
+          "nimi": "Testimoskeijan etusivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
     }
   ]
 }

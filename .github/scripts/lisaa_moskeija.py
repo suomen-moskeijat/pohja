@@ -137,10 +137,12 @@ def lisaa_tuodut_tiedostot(t, d):
         polku = f"tiedostot/{slug}/{nimi}"
         lisat[polku] = open(os.path.join(kansio, nimi), "rb").read()
         t["galleria"].append("/" + polku)
+    # Oman sivun teksti on osiossa (Oma teksti, tausta Kortti), kuten paneelissa tehdyillä sivuilla
     for i, s in enumerate(d.get("omat_sivut", [])):
         lisat[f"_sivut/{s['slug']}.md"] = (
             f"---\ntitle: {yaml_str(s['nimi'])}\nvalikossa: {'true' if VALIKKOON.search(s['slug'] + ' ' + s['nimi']) else 'false'}\njarjestys: {i + 1}\n"
-            f"# Tuotu vanhalta sivulta: {s['url']} – tarkista\n---\n{{% raw %}}\n{s['html']}\n{{% endraw %}}\n")
+            f"# Tuotu vanhalta sivulta: {s['url']} – tarkista\n"
+            f"osiot:\n  - osio: teksti\n    teksti: {yaml_teksti(s['html'])}\n    tausta: kortti\n---\n")
     for a in d.get("artikkelit", []):
         lisat[f"_artikkelit/{a['paiva']}-{a['slug'][:60]}.md"] = (
             f"---\ntitle: {yaml_str(a['nimi'])}\npaiva: {a['paiva']}\nkuvaus: {yaml_str(a['kuvaus'])}\n"
@@ -150,6 +152,18 @@ def lisaa_tuodut_tiedostot(t, d):
 # ------------------------------------------------------------- tiedostot
 def yaml_str(s):
     return json.dumps(s or "", ensure_ascii=False)
+
+
+# Jekyllin YAML (1.1) lukee nämä rivinvaihdoiksi myös lainausmerkeissä: \u-muodossa ne säilyvät merkkeinä
+YAML_RIVINVAIHDOT = {chr(0x85): "\\u0085", chr(0x2028): "\\u2028", chr(0x2029): "\\u2029"}
+
+
+def yaml_teksti(s):
+    """Pitkä teksti (esim. tuotu HTML) yhdelle riville lainausmerkkeihin, rivinvaihdot \\n-merkkeinä."""
+    t = yaml_str(s)
+    for merkki, koodi in YAML_RIVINVAIHDOT.items():
+        t = t.replace(merkki, koodi)
+    return t
 
 
 def tiedostot(t, repo, org):
