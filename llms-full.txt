@@ -67,11 +67,11 @@ Lähde: {{ juuri }}/ · Päivitetty {{ site.time | date: "%-d.%-m.%Y klo %H.%M" 
 {%- endif %}
 {%- comment -%} Usein kysytyt kysymykset etusivulta ja omilta sivuilta {%- endcomment -%}
 {%- capture _ukk -%}
-{%- for o in m.etusivu %}{% if o.osio == "ukk" %}{% for q in o.kysymykset %}
+{%- for o in m.etusivu %}{% if o.osio == "ukk" %}{% include osat/osio-tyhja.html o=o %}{% for q in _osio_ukk %}
 **{{ q.kysymys.fi | default: q.kysymys | strip_html | normalize_whitespace }}**
 {{ q.vastaus.fi | default: q.vastaus | strip_html | normalize_whitespace }}
 {% endfor %}{% endif %}{% endfor -%}
-{%- for s in site.sivut %}{% for o in s.osiot %}{% if o.osio == "ukk" %}{% for q in o.kysymykset %}
+{%- for s in site.sivut %}{% for o in s.osiot %}{% if o.osio == "ukk" %}{% include osat/osio-tyhja.html o=o %}{% for q in _osio_ukk %}
 **{{ q.kysymys.fi | default: q.kysymys | strip_html | normalize_whitespace }}**
 {{ q.vastaus.fi | default: q.vastaus | strip_html | normalize_whitespace }}
 {% endfor %}{% endif %}{% endfor %}{% endfor -%}
@@ -82,7 +82,7 @@ Lähde: {{ juuri }}/ · Päivitetty {{ site.time | date: "%-d.%-m.%Y klo %H.%M" 
 {{ _ukk }}
 {%- endif %}
 {%- comment -%} Omat sivut: teksti ja linkit osioista (Oma teksti, Linkkikortit) ja vielä siirtämättömän sivun vanhoista kentistä {%- endcomment -%}
-{%- for s in site.sivut %}{% assign _osat = "" | split: "" %}{% assign _sl = "" | split: "" %}{% assign _st = s.content | strip_html | normalize_whitespace %}{% if _st != "" %}{% assign _osat = _osat | push: _st %}{% endif %}{% for l in s.linkit %}{% assign _sl = _sl | push: l %}{% endfor %}{% for o in s.osiot %}{% if o.osio == "teksti" %}{% assign _st = o.teksti.fi | default: o.teksti | markdownify | strip_html | normalize_whitespace %}{% if _st != "" %}{% assign _osat = _osat | push: _st %}{% endif %}{% elsif o.osio == "linkit" %}{% for l in o.linkit %}{% assign _sl = _sl | push: l %}{% endfor %}{% endif %}{% endfor %}{% assign _teksti = _osat | join: " " %}{% if _teksti != "" or _sl.size > 0 %}
+{%- for s in site.sivut %}{% assign _osat = "" | split: "" %}{% assign _sl = "" | split: "" %}{% assign _st = s.content | strip_html | normalize_whitespace %}{% if _st != "" %}{% assign _osat = _osat | push: _st %}{% endif %}{% for l in s.linkit %}{% assign _sl = _sl | push: l %}{% endfor %}{% for o in s.osiot %}{% if o.osio == "teksti" %}{% assign _st = o.teksti.fi | default: o.teksti | markdownify | strip_html | normalize_whitespace %}{% if _st != "" %}{% assign _osat = _osat | push: _st %}{% endif %}{% elsif o.osio == "linkit" %}{% include osat/osio-tyhja.html o=o %}{% for l in _osio_linkit %}{% assign _sl = _sl | push: l %}{% endfor %}{% endif %}{% endfor %}{% assign _teksti = _osat | join: " " %}{% if _teksti != "" or _sl.size > 0 %}
 
 ## {{ s.title }}
 

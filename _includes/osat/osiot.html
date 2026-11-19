@@ -2,7 +2,8 @@
   Osiot listasta (etusivu ja omat sivut): valmiit osiot (palvelut, tapahtumat, galleria …) ja
   omat osiot (teksti, ilmoitus, video, ukk, linkit, kuvat). Parametrit: osiot, moskeija,
   merkit (true = jokaisen osion ympärille HTML-kommentit <!--osio:N:tyyppi--> … <!--/osio-->: paneelin esikatselu
-  järjestää, poistaa ja lisää osioita niiden avulla; kommentit eivät vaikuta ulkoasuun)
+  järjestää, poistaa ja lisää osioita niiden avulla; kommentit eivät vaikuta ulkoasuun).
+  Tyhjä osio (osat/osio-tyhja.html) ei näy.
 {%- endcomment -%}
 {%- assign m = include.moskeija -%}
 {%- comment -%} Vanha "toiminta" (Toimintamme-kortit) näyttää nyt moskeijan palvelut; jos listassa on jo palvelut, ei kahdesti {%- endcomment -%}
@@ -14,6 +15,9 @@
 {%- if _t == "toiminta" -%}{%- if _on_palvelut -%}{%- continue -%}{%- endif -%}{%- assign _t = "palvelut" -%}{%- endif -%}
 {%- if _t == "palvelut" -%}{%- if _palvelut_naytetty -%}{%- continue -%}{%- endif -%}{%- assign _palvelut_naytetty = true -%}{%- endif -%}
 {%- if include.merkit %}<!--osio:{{ forloop.index0 }}:{{ _t }}-->{% endif -%}
+{%- comment -%} Tyhjä osio ei näy (sääntö: osat/osio-tyhja.html); merkit jäävät, jotta paneelin esikatselu löytää paikan {%- endcomment -%}
+{%- include osat/osio-tyhja.html o=o moskeija=m -%}
+{%- unless _osio_tyhja -%}
 {%- case _t -%}
 {%- when "lapset" %}
 {%- assign _lp = site.palvelut | where_exp: "p", "p.ilmoittautuminen contains 'lasten-opetus'" -%}
@@ -59,11 +63,30 @@
 </section>
 {% endunless %}{% endif %}
 {%- when "meista" %}
-{% if m.meista_lyhyt or m.meista %}
+{%- comment -%}
+  Lyhyt Meistä-teksti; jos sitä ei ole, alku pitkästä Meistä-tekstistä (moskeijan oma teksti), jottei osiossa ole pelkkä
+  otsikko ja Lue lisää. Ilman kumpaakaan osio ei näy.
+{%- endcomment -%}
+{%- capture _me_lyhyt -%}{%- assign _me_j = m.meista_lyhyt | jsonify | slice: 0 -%}{%- if _me_j == "{" -%}{%- for _me_x in m.meista_lyhyt -%}{{ _me_x[1] }}{%- endfor -%}{%- elsif m.meista_lyhyt -%}{{ m.meista_lyhyt }}{%- endif -%}{%- endcapture -%}
+{%- assign _me_lyhyt = _me_lyhyt | strip -%}
+{%- capture _me_teksti -%}
+  {%- if _me_lyhyt != "" -%}{% include kt.html arvo=m.meista_lyhyt md=true tagi="div" %}
+  {%- else -%}
+    {%- assign _me_p = m.meista -%}{%- assign _me_j = _me_p | jsonify | slice: 0 -%}
+    {%- if _me_j == "{" -%}
+      {%- for _l in site.kielet -%}{%- assign _me_v = _me_p[_l] | default: _me_p.en | default: _me_p.fi | markdownify | strip_html | strip -%}
+        {%- if _me_v != "" -%}<div data-l="{{ _l }}"{% if _me_p[_l] and _me_p[_l] != "" %} lang="{{ _l }}"{% else %} dir="auto"{% endif %}><p>{{ _me_v | truncatewords: 40, " …" }}</p></div>{%- endif -%}
+      {%- endfor -%}
+    {%- elsif _me_p -%}{%- assign _me_v = _me_p | markdownify | strip_html | strip -%}{%- if _me_v != "" -%}<p>{{ _me_v | truncatewords: 40, " …" }}</p>{%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endcapture -%}
+{%- assign _me_teksti = _me_teksti | strip -%}
+{% if _me_teksti != "" %}
 <section class="u-osio u-kehys u-meista">
   <div class="u-meista__teksti">
     <h2>{% include k.html a="meista_otsikko" %}</h2>
-    <div class="u-proosa">{% include kt.html arvo=m.meista_lyhyt md=true tagi="div" %}</div>
+    <div class="u-proosa">{{ _me_teksti }}</div>
     <a class="u-linkki" href="{{ '/meista/' | relative_url }}">{% include k.html a="lue_lisaa" %} <span class="u-flip" aria-hidden="true">→</span></a>
   </div>
   {% if m.kielet.size > 0 %}
@@ -115,5 +138,6 @@
 {%- when "kuvat" %}
 {% include osat/osio-kuvat.html o=o %}
 {%- endcase -%}
+{%- endunless -%}
 {%- if include.merkit %}<!--/osio-->{% endif -%}
 {%- endfor %}

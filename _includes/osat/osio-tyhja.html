@@ -1,0 +1,73 @@
+{%- comment -%}
+  Tyhjä osio: yksi sääntö sille, milloin osiossa ei ole mitään näytettävää (ADR-0001). Tyhjä osio ei näy etusivulla eikä
+  omalla sivulla (osat/osiot.html), ja se tulee näkyviin heti, kun siihen lisätään sisältöä. Sama sääntö paneelissa
+  (Julkaise-varoitus "Osio X on vielä tyhjä" ja osion rivin merkintä): hallinta public/tyhjyys.js (Tyhjyys.osio).
+  Parametrit: o (osio), moskeija
+
+  Osiossa on sisältöä, kun
+  teksti     otsikko, teksti, kuva tai nappi (napin teksti ja osoite)
+  ilmoitus   otsikko tai teksti
+  nosto      pieni otsikko, otsikko, teksti tai nappi (napin teksti ja osoite)
+  video      YouTube-linkki, josta saadaan videon tunnus
+  ukk        kysymys, jolla on kysymysteksti
+  linkit     linkki, jolla on nimi tai osoite
+  kuvat      kuva
+  lomake     lomakkeen kenttä (lomake näkyy lisäksi vain, kun viesteillä on vastaanottaja: osat/lomake-tapa.html)
+  vierailu   osoite tai sijainti (reittiohjeiden kohde)
+  Muut valmiit osiot (palvelut, tapahtumat …) näyttävät muualla muokattua tietoa ja piiloutuvat itse, kun sitä ei ole
+  (osat/tyhjat-sivut.html ja osioiden omat ehdot).
+
+  Asettaa:
+  _osio_tyhja   true, kun osiossa ei ole mitään näytettävää
+  _osio_ukk     ukk: kysymykset, joilla on kysymysteksti (osat/osio-ukk.html näyttää vain ne)
+  _osio_linkit  linkit: linkit, joilla on nimi tai osoite (osat/osio-linkit.html näyttää vain ne)
+{%- endcomment -%}
+{%- assign _ot_o = include.o -%}
+{%- if _ot_o.osio -%}{%- assign _ot_t = _ot_o.osio -%}{%- else -%}{%- assign _ot_t = _ot_o -%}{%- endif -%}
+{%- assign _osio_tyhja = false -%}
+{%- comment -%} Monikielisen tai tavallisen tekstin sisältö: kentät ja niiden kaikki kielet yhtenä merkkijonona {%- endcomment -%}
+{%- capture _ot_teksti -%}
+  {%- case _ot_t -%}
+  {%- when "teksti" -%}{%- assign _ot_kentat = "" | split: "" | push: _ot_o.otsikko | push: _ot_o.teksti -%}
+  {%- when "ilmoitus" -%}{%- assign _ot_kentat = "" | split: "" | push: _ot_o.otsikko | push: _ot_o.teksti -%}
+  {%- when "nosto" -%}{%- assign _ot_kentat = "" | split: "" | push: _ot_o.yla | push: _ot_o.otsikko | push: _ot_o.teksti -%}
+  {%- else -%}{%- assign _ot_kentat = "" | split: "" -%}
+  {%- endcase -%}
+  {%- if _ot_o.nappi_linkki and _ot_o.nappi_linkki != "" -%}{%- assign _ot_kentat = _ot_kentat | push: _ot_o.nappi_teksti -%}{%- endif -%}
+  {%- for _ot_v in _ot_kentat -%}{%- assign _ot_j = _ot_v | jsonify | slice: 0 -%}
+    {%- if _ot_j == "{" -%}{%- for _ot_x in _ot_v -%}{{ _ot_x[1] }}{%- endfor -%}{%- elsif _ot_v -%}{{ _ot_v }}{%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- assign _ot_teksti = _ot_teksti | strip -%}
+{%- case _ot_t -%}
+{%- when "teksti" -%}
+  {%- assign _ot_kuva = _ot_o.kuva | default: "" -%}
+  {%- if _ot_teksti == "" and _ot_kuva == "" -%}{%- assign _osio_tyhja = true -%}{%- endif -%}
+{%- when "ilmoitus", "nosto" -%}
+  {%- if _ot_teksti == "" -%}{%- assign _osio_tyhja = true -%}{%- endif -%}
+{%- when "video" -%}
+  {%- assign _ot_u = _ot_o.osoite | default: "" -%}
+  {%- unless _ot_u contains "youtu.be/" or _ot_u contains "/shorts/" or _ot_u contains "/live/" or _ot_u contains "/embed/" or _ot_u contains "v=" -%}{%- assign _osio_tyhja = true -%}{%- endunless -%}
+{%- when "ukk" -%}
+  {%- assign _osio_ukk = "" | split: "" -%}
+  {%- for _ot_q in _ot_o.kysymykset -%}
+    {%- capture _ot_k -%}{%- assign _ot_j = _ot_q.kysymys | jsonify | slice: 0 -%}{%- if _ot_j == "{" -%}{%- for _ot_x in _ot_q.kysymys -%}{{ _ot_x[1] }}{%- endfor -%}{%- elsif _ot_q.kysymys -%}{{ _ot_q.kysymys }}{%- endif -%}{%- endcapture -%}
+    {%- assign _ot_k = _ot_k | strip -%}{%- if _ot_k != "" -%}{%- assign _osio_ukk = _osio_ukk | push: _ot_q -%}{%- endif -%}
+  {%- endfor -%}
+  {%- if _osio_ukk.size == 0 -%}{%- assign _osio_tyhja = true -%}{%- endif -%}
+{%- when "linkit" -%}
+  {%- assign _osio_linkit = "" | split: "" -%}
+  {%- for _ot_l in _ot_o.linkit -%}
+    {%- capture _ot_k -%}{%- assign _ot_j = _ot_l.nimi | jsonify | slice: 0 -%}{%- if _ot_j == "{" -%}{%- for _ot_x in _ot_l.nimi -%}{{ _ot_x[1] }}{%- endfor -%}{%- elsif _ot_l.nimi -%}{{ _ot_l.nimi }}{%- endif -%}{{ _ot_l.osoite }}{%- endcapture -%}
+    {%- assign _ot_k = _ot_k | strip -%}{%- if _ot_k != "" -%}{%- assign _osio_linkit = _osio_linkit | push: _ot_l -%}{%- endif -%}
+  {%- endfor -%}
+  {%- if _osio_linkit.size == 0 -%}{%- assign _osio_tyhja = true -%}{%- endif -%}
+{%- when "kuvat" -%}
+  {%- assign _ot_kuvat = _ot_o.kuvat | join: "" | strip -%}
+  {%- if _ot_kuvat == "" -%}{%- assign _osio_tyhja = true -%}{%- endif -%}
+{%- when "lomake" -%}
+  {%- unless _ot_o.kentat and _ot_o.kentat.size > 0 -%}{%- assign _osio_tyhja = true -%}{%- endunless -%}
+{%- when "vierailu" -%}
+  {%- assign _ot_m = include.moskeija -%}{%- assign _ot_os = _ot_m.osoite | default: "" | strip -%}
+  {%- if _ot_os == "" -%}{%- unless _ot_m.sijainti.lat and _ot_m.sijainti.lat != 0 -%}{%- assign _osio_tyhja = true -%}{%- endunless -%}{%- endif -%}
+{%- endcase -%}

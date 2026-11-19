@@ -34,4 +34,7 @@ layout: sivu
 {%- comment -%} Sivun kuva (ja vanhan muodon sisältö) vain, kun niitä on: ei tyhjää väliä otsikon ja osioiden väliin {%- endcomment -%}
 {%- assign _omasivu = _omasivu | strip -%}
 {% if _omasivu != "" %}<div class="u-kehys u-sivu u-omasivu">{{ _omasivu }}</div>{% endif %}
-{% if page.osiot.size > 0 %}<div class="u-omasivu__osiot">{% include osat/osiot.html osiot=page.osiot moskeija=m %}</div>{% endif %}
+{%- comment -%} Osiot vain, kun jokin niistä näkyy (tyhjä osio ei näy: osat/osio-tyhja.html), ei tyhjää kehystä otsikon alle {%- endcomment -%}
+{%- capture _om_osiot -%}{% if page.osiot.size > 0 %}{% include osat/osiot.html osiot=page.osiot moskeija=m %}{% endif %}{%- endcapture -%}
+{%- assign _om_osiot = _om_osiot | strip -%}
+{% if _om_osiot != "" %}<div class="u-omasivu__osiot">{{ _om_osiot }}</div>{% endif %}

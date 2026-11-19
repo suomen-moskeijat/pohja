@@ -1636,6 +1636,40 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-19"
+    },
+    {
+      "id": "sivupohjat-kehotteet",
+      "otsikko": "Uuden sivun pohjat kehotteina, tyhjä osio ei näy, opetus Palveluihin",
+      "alue": "sivut",
+      "kuvaus": "Uuden oman sivun pohjissa (Kirjasto ja lähteet, Usein kysyttyä, Jäsenyys tai vapaaehtoiset, Kuvasivu) ei ole enää valmista tekstiä: esimerkit näkyvät kentissä harmaina kehotteina, eivätkä ne koskaan tallennu sivulle. Tyhjä osio ei näy kävijälle millään osiotyypillä, ei omalla sivulla eikä etusivulla. Paneelissa tyhjän osion rivillä lukee \"Ei näy – ei vielä sisältöä\", ja uuden sivun Julkaise-nappi varoittaa \"Osio X on vielä tyhjä\". Kurssi tai opetus -pohjan tilalla on ohje \"Opetus kuuluu Palveluihin\" ja nappi Uusi palvelu. Lisäksi etusivun Meistä-osio näyttää pitkän Meistä-tekstin alun, jos lyhyttä tekstiä ei ole, eikä jää pelkäksi otsikoksi ja Lue lisää -linkiksi. Vanhoja sivuja ei muuteta.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Valikko ja omat sivut → Uusi sivu.",
+      "kohdat": [
+        "Pohjien joukossa ei ole Kurssi tai opetus -pohjaa; sen tilalla on ohje \"Opetus kuuluu Palveluihin\" ja nappi Uusi palvelu, joka avaa uuden palvelun lomakkeen — Missä: Testipaneeli → Valikko ja omat sivut → Uusi sivu",
+        "Valitse Usein kysyttyä: johdanto, kysymys ja vastaus ovat tyhjiä, ja esimerkit (esim. \"Voiko moskeijaan tulla vierailulle?\") näkyvät harmaina; osion rivillä lukee \"Ei näy – ei vielä sisältöä\" — Missä: Testipaneeli → Uusi sivu → Usein kysyttyä",
+        "Kirjoita kysymykseen jotain: merkintä \"Ei näy – ei vielä sisältöä\" häviää heti; tyhjennä kenttä uudelleen — Missä: Testipaneeli → Uusi sivu → Usein kysyttyä → Sivun osiot",
+        "Paina Julkaise muuttamatta mitään: paneeli varoittaa \"Osio Usein kysyttyä on vielä tyhjä\"; valitse OK ja tallenna ilman käännöstä — Missä: Testipaneeli → Uusi sivu → Julkaise",
+        "Muutaman minuutin päästä sivulla on vain otsikko \"Usein kysyttyä\": ei esimerkkitekstiä eikä tyhjää aluetta otsikon alla — Missä: Testimoskeijan sivu → valikko → Usein kysyttyä",
+        "Toista Kirjasto ja lähteet-, Jäsenyys tai vapaaehtoiset- ja Kuvasivu-pohjilla: kentissä vain harmaat kehotteet, ja julkaistulla sivulla vain otsikko — Missä: Testipaneeli → Uusi sivu",
+        "Lisää etusivulle osio Oma teksti jättäen sen tyhjäksi ja tallenna: etusivulla ei näy tyhjää aluetta; esikatselussakaan osio ei näy ennen kuin siihen kirjoittaa — Missä: Testipaneeli → Etusivu → Etusivun osiot → Lisää osio",
+        "Sivuilla ei ole vaakavierintää puhelimella (myös 320 px), ja arabiaksi sivu toimii — Missä: Testimoskeijan uudet sivut, kieli AR",
+        "Poista testisivut ja etusivun tyhjä osio lopuksi — Missä: Testipaneeli → Valikko ja omat sivut → sivu → Poista"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Uusi sivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/omat/uusi"
+        },
+        {
+          "nimi": "Testipaneeli: Etusivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/etusivu"
+        },
+        {
+          "nimi": "Testimoskeijan etusivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
     }
   ]
 }
