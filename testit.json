@@ -1489,21 +1489,21 @@
       "id": "tyhjat-sivut-piiloon",
       "otsikko": "Tyhjät sivut ja niihin vievät napit piiloon",
       "alue": "sivut",
-      "kuvaus": "Valikon sivu, jolla ei ole vielä sisältöä (Palvelut, Tapahtumat, Artikkelit, Meistä, Tuki), ei näy kävijän valikossa, alapalkin pikalinkeissä eikä etusivun yläosan napeissa (Tutustu toimintaamme, Tuki, Ilmoita lapsesi). Sivu tulee näkyviin heti, kun sille lisätään ensimmäinen sisältö. Paneelin Valikko ja omat sivut -listassa ja valikon muokkauksessa tyhjällä sivulla on merkintä \"Ei näy – ei vielä sisältöä\". Suora osoite tyhjälle sivulle toimii: sivu näkyy tyhjänä (otsikko ja pohjan tyhjä tila), mutta ei hakukoneissa eikä sivukartassa.",
-      "aloitus": "Avaa testipaneeli → testimoskeija → Valikko ja omat sivut. Testimoskeijalla ei ole Tuki-sivun tietoja, joten Tuki on tyhjä sivu.",
+      "kuvaus": "Valikon sivu, jolla ei ole vielä sisältöä (Palvelut, Tapahtumat, Artikkelit, Meistä, Tuki), ei näy kävijän valikossa, alapalkin pikalinkeissä eikä etusivun yläosan napeissa (Tutustu toimintaamme, Tuki, Ilmoita lapsesi). Sivu tulee näkyviin heti, kun sille lisätään ensimmäinen sisältö. Paneelin Sivusto-listassa ja Järjestä-tilassa tyhjällä sivulla on merkintä \"Ei näy – ei vielä sisältöä\". Suora osoite tyhjälle sivulle toimii: sivu näkyy tyhjänä (otsikko ja pohjan tyhjä tila), mutta ei hakukoneissa eikä sivukartassa.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Sivusto. Testimoskeijalla ei ole Tuki-sivun tietoja, joten Tuki on tyhjä sivu.",
       "kohdat": [
-        "Tuki ja lahjoitukset -kortissa on merkintä \"Ei näy – ei vielä sisältöä\" ja syy (tuen tekstiä tai rahankeräysluvan tietoja ei ole) — Missä: Testipaneeli → Valikko ja omat sivut → Muut sivut",
-        "Palvelut, Tapahtumat, Artikkelit ja Meistä ovat Valikossa-listassa numeroituina ilman merkintää, koska niillä on sisältöä — Missä: Testipaneeli → Valikko ja omat sivut",
+        "Tuki ja jäsenyys -rivillä on merkintä \"Ei näy – ei vielä sisältöä\" (tuen tekstiä tai rahankeräysluvan tietoja ei ole) — Missä: Testipaneeli → Sivusto → Ei valikossa",
+        "Palvelut, Tapahtumat, Artikkelit ja Meistä ovat Sivusto-listassa ilman merkintää, koska niillä on sisältöä — Missä: Testipaneeli → Sivusto",
         "Alapalkin pikalinkeissä ei ole Tukea, mutta Palvelut, Tapahtumat, Artikkelit ja Meistä ovat — Missä: Testimoskeijan sivu → alapalkki → Pikalinkit",
         "Suora osoite /lahjoita/ avautuu (otsikko Tuki ja jäsenyys ja yhteystietolinkki), sivu ei ole rikki — Missä: Testimoskeijan sivu → /lahjoita/",
         "Valitse etusivun yläosan napeiksi Tutustu toimintaamme ja Tuki ja tallenna: Yleiskatsauksessa on huomautus \"Etusivun yläosa: nappi Lahjoita ei näy\", ja sivulla näkyy vain Tutustu toimintaamme — Missä: Testipaneeli → Etusivu → Yläosan napit, Yleiskatsaus → Huomautukset ja Testimoskeijan etusivu",
         "Kirjoita Tuki-sivun teksti ja tallenna: merkintä poistuu paneelista, ja muutaman minuutin päästä Tuki näkyy alapalkissa ja Tuki-nappi etusivun yläosassa — Missä: Testipaneeli → Tuki ja lahjoitukset ja Testimoskeijan sivu",
         "Tyhjennä Tuki-sivun teksti ja tallenna: Tuki ja nappi poistuvat taas sivulta ja paneeliin palaa merkintä — Missä: Testipaneeli → Tuki ja lahjoitukset ja Testimoskeijan sivu",
-        "Valikon muokkauksessa tyhjän sivun rivillä lukee \"Sivu · Ei näy – ei vielä sisältöä\" — Missä: Testipaneeli → Valikko ja omat sivut → Muokkaa valikkoa"
+        "Järjestä-tilassa tyhjän sivun rivillä lukee \"Ei näy – ei vielä sisältöä\" — Missä: Testipaneeli → Sivusto → Järjestä"
       ],
       "linkit": [
         {
-          "nimi": "Testipaneeli: valikko ja omat sivut",
+          "nimi": "Testipaneeli: Sivusto",
           "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut"
         },
         {
@@ -1609,20 +1609,20 @@
       "id": "omat-sivut-osioina",
       "otsikko": "Omat sivut vain osioilla: teksti ja linkit osioina",
       "alue": "sivut",
-      "kuvaus": "Oman sivun teksti ja linkit tehdään nyt vain osioilla: erillisiä Sisältö- ja Linkit kortteina -kenttiä ei enää ole. Sivun teksti kirjoitetaan Oma teksti -osioon ja linkit Linkkikortit-osioon. Oma teksti -osiolla on uusi tausta Kortti, joka näyttää samalta kuin vanha sivun teksti (valkoinen kortti, isompi teksti). Vanhojen omien sivujen teksti ja linkit siirtyvät osioiksi itsestään, kun pääkäyttäjä avaa Valikko ja omat sivut -näkymän, ja sivu näyttää kävijälle samalta kuin ennen. Testimoskeijalla ei ole vanhan muodon sivuja: siirto on testattu automaattisesti, ja tuotannon moskeijoille se ajetaan ensin kuivaharjoituksena.",
-      "aloitus": "Avaa testipaneeli → testimoskeija → Valikko ja omat sivut → Uusi sivu.",
+      "kuvaus": "Oman sivun teksti ja linkit tehdään nyt vain osioilla: erillisiä Sisältö- ja Linkit kortteina -kenttiä ei enää ole. Sivun teksti kirjoitetaan Oma teksti -osioon ja linkit Linkkikortit-osioon. Oma teksti -osiolla on uusi tausta Kortti, joka näyttää samalta kuin vanha sivun teksti (valkoinen kortti, isompi teksti). Vanhojen omien sivujen teksti ja linkit siirtyvät osioiksi itsestään, kun pääkäyttäjä avaa Sivusto -näkymän, ja sivu näyttää kävijälle samalta kuin ennen. Testimoskeijalla ei ole vanhan muodon sivuja: siirto on testattu automaattisesti, ja tuotannon moskeijoille se ajetaan ensin kuivaharjoituksena.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Sivusto → + Lisää sivu.",
       "kohdat": [
-        "Valitse pohja Tyhjä sivu: lomakkeessa ei ole Sisältö- eikä Linkit kortteina -kenttää, ja Sivun osioissa on valmiina Oma teksti — Missä: Testipaneeli → Valikko ja omat sivut → Uusi sivu → Tyhjä sivu",
+        "Valitse pohja Tyhjä sivu: lomakkeessa ei ole Sisältö- eikä Linkit kortteina -kenttää, ja Sivun osioissa on valmiina Oma teksti — Missä: Testipaneeli → Sivusto → + Lisää sivu → Tyhjä sivu",
         "Anna sivulle nimi, avaa Oma teksti ja kirjoita teksti; lisää osio Linkkikortit ja yksi linkki. Esikatselussa näkyvät nimi, teksti ja linkin nimi — Missä: Testipaneeli → Uusi sivu → Sivun osiot",
         "Julkaise: muutaman minuutin päästä sivulla on otsikon alla teksti valkoisessa kortissa ja sen alla linkkikortti, ilman ylimääräistä tyhjää väliä otsikon alla — Missä: Testimoskeijan sivu → valikko → uusi sivu",
-        "Avaa sivu uudelleen muokattavaksi ja vaihda Oma teksti -osion taustaksi Vaalea, tallenna: teksti näkyy vaalealla taustalla; palauta Kortti — Missä: Testipaneeli → Valikko ja omat sivut → sivu → Oma teksti → Tausta",
+        "Avaa sivu uudelleen muokattavaksi ja vaihda Oma teksti -osion taustaksi Vaalea, tallenna: teksti näkyy vaalealla taustalla; palauta Kortti — Missä: Testipaneeli → Sivusto → sivu → Oma teksti → Tausta",
         "Sivulla ei ole vaakavierintää puhelimella (myös kapealla 320 px), ja arabiaksi teksti ja kortit ovat oikealta vasemmalle — Missä: Testimoskeijan uusi sivu, kieli AR",
         "Etusivun Oma teksti -osio näyttää samalta kuin ennen (tausta Ei taustaa, Vaalea tai Moskeijan väri) — Missä: Testimoskeijan etusivu",
-        "Poista testisivu lopuksi — Missä: Testipaneeli → Valikko ja omat sivut → sivu → Poista"
+        "Poista testisivu lopuksi — Missä: Testipaneeli → Sivusto → sivu → Poista"
       ],
       "linkit": [
         {
-          "nimi": "Testipaneeli: Valikko ja omat sivut",
+          "nimi": "Testipaneeli: Sivusto",
           "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut"
         },
         {
@@ -1642,9 +1642,9 @@
       "otsikko": "Uuden sivun pohjat kehotteina, tyhjä osio ei näy, opetus Palveluihin",
       "alue": "sivut",
       "kuvaus": "Uuden oman sivun pohjissa (Kirjasto ja lähteet, Usein kysyttyä, Jäsenyys tai vapaaehtoiset, Kuvasivu) ei ole enää valmista tekstiä: esimerkit näkyvät kentissä harmaina kehotteina, eivätkä ne koskaan tallennu sivulle. Tyhjä osio ei näy kävijälle millään osiotyypillä, ei omalla sivulla eikä etusivulla. Paneelissa tyhjän osion rivillä lukee \"Ei näy – ei vielä sisältöä\", ja uuden sivun Julkaise-nappi varoittaa \"Osio X on vielä tyhjä\". Kurssi tai opetus -pohjan tilalla on ohje \"Opetus kuuluu Palveluihin\" ja nappi Uusi palvelu. Lisäksi etusivun Meistä-osio näyttää pitkän Meistä-tekstin alun, jos lyhyttä tekstiä ei ole, eikä jää pelkäksi otsikoksi ja Lue lisää -linkiksi. Vanhoja sivuja ei muuteta.",
-      "aloitus": "Avaa testipaneeli → testimoskeija → Valikko ja omat sivut → Uusi sivu.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Sivusto → + Lisää sivu.",
       "kohdat": [
-        "Pohjien joukossa ei ole Kurssi tai opetus -pohjaa; sen tilalla on ohje \"Opetus kuuluu Palveluihin\" ja nappi Uusi palvelu, joka avaa uuden palvelun lomakkeen — Missä: Testipaneeli → Valikko ja omat sivut → Uusi sivu",
+        "Pohjien joukossa ei ole Kurssi tai opetus -pohjaa; sen tilalla on ohje \"Opetus kuuluu Palveluihin\" ja nappi Uusi palvelu, joka avaa uuden palvelun lomakkeen — Missä: Testipaneeli → Sivusto → + Lisää sivu",
         "Valitse Usein kysyttyä: johdanto, kysymys ja vastaus ovat tyhjiä, ja esimerkit (esim. \"Voiko moskeijaan tulla vierailulle?\") näkyvät harmaina; osion rivillä lukee \"Ei näy – ei vielä sisältöä\" — Missä: Testipaneeli → Uusi sivu → Usein kysyttyä",
         "Kirjoita kysymykseen jotain: merkintä \"Ei näy – ei vielä sisältöä\" häviää heti; tyhjennä kenttä uudelleen — Missä: Testipaneeli → Uusi sivu → Usein kysyttyä → Sivun osiot",
         "Paina Julkaise muuttamatta mitään: paneeli varoittaa \"Osio Usein kysyttyä on vielä tyhjä\"; valitse OK ja tallenna ilman käännöstä — Missä: Testipaneeli → Uusi sivu → Julkaise",
@@ -1652,7 +1652,7 @@
         "Toista Kirjasto ja lähteet-, Jäsenyys tai vapaaehtoiset- ja Kuvasivu-pohjilla: kentissä vain harmaat kehotteet, ja julkaistulla sivulla vain otsikko — Missä: Testipaneeli → Uusi sivu",
         "Lisää etusivulle osio Oma teksti jättäen sen tyhjäksi ja tallenna: etusivulla ei näy tyhjää aluetta; esikatselussakaan osio ei näy ennen kuin siihen kirjoittaa — Missä: Testipaneeli → Etusivu → Etusivun osiot → Lisää osio",
         "Sivuilla ei ole vaakavierintää puhelimella (myös 320 px), ja arabiaksi sivu toimii — Missä: Testimoskeijan uudet sivut, kieli AR",
-        "Poista testisivut ja etusivun tyhjä osio lopuksi — Missä: Testipaneeli → Valikko ja omat sivut → sivu → Poista"
+        "Poista testisivut ja etusivun tyhjä osio lopuksi — Missä: Testipaneeli → Sivusto → sivu → Poista"
       ],
       "linkit": [
         {
@@ -1675,19 +1675,19 @@
       "id": "oma-sivu-esikatselu",
       "otsikko": "Uuden oman sivun esikatselu sivupohjalla, tyhjä oma sivu ei ole valikossa",
       "alue": "sivut",
-      "kuvaus": "Uutta omaa sivua tehdessä esikatselu näyttää sivun oikealla sivupohjalla, kuten uusi palvelu ja tapahtuma: otsikko, johdanto ja kaikki osiot (myös valmiit osiot, esim. Palvelut), ja kirjoitettu teksti näkyy heti. Paneelin oma yksinkertainen esikatselu on poistunut. Jos moskeijan sivulla on vielä vanha versio, esikatselun alla on huomautus ja sivu päivitetään. Lisäksi oma sivu, jolla on vain otsikko (kaikki osiot tyhjiä, ei johdantoa eikä kuvaa), ei näy kävijän valikossa, etusivun napeissa eikä hakukoneissa; paneelin Valikko ja omat sivut -listassa sen kohdalla lukee \"Ei näy – ei vielä sisältöä\". Sivu tulee valikkoon, kun osioon kirjoitetaan jotain.",
-      "aloitus": "Avaa testipaneeli → testimoskeija → Valikko ja omat sivut → Uusi sivu → Tyhjä sivu.",
+      "kuvaus": "Uutta omaa sivua tehdessä esikatselu näyttää sivun oikealla sivupohjalla, kuten uusi palvelu ja tapahtuma: otsikko, johdanto ja kaikki osiot (myös valmiit osiot, esim. Palvelut), ja kirjoitettu teksti näkyy heti. Paneelin oma yksinkertainen esikatselu on poistunut. Jos moskeijan sivulla on vielä vanha versio, esikatselun alla on huomautus ja sivu päivitetään. Lisäksi oma sivu, jolla on vain otsikko (kaikki osiot tyhjiä, ei johdantoa eikä kuvaa), ei näy kävijän valikossa, etusivun napeissa eikä hakukoneissa; paneelin Sivusto-listassa sen kohdalla lukee \"Ei näy – ei vielä sisältöä\". Sivu tulee valikkoon, kun osioon kirjoitetaan jotain.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Sivusto → + Lisää sivu → Tyhjä sivu.",
       "kohdat": [
         "Esikatselussa näkyy testimoskeijan oikea sivu (yläpalkki, otsikko-osa ja alapalkki), ei paneelin omaa harmaata korttia — Missä: Testipaneeli → Uusi sivu → Tyhjä sivu (puhelimella Näytä esikatselu)",
         "Kirjoita sivun nimi ja lyhyt johdanto: ne vaihtuvat esikatselun otsikkoon heti kirjoittaessa — Missä: Testipaneeli → Uusi sivu → Sivun nimi, Lyhyt johdanto",
         "Kirjoita Oma teksti -osioon teksti: se näkyy esikatselussa heti otsikon alla samannäköisenä kuin sivulla; tyhjä osio ei näy — Missä: Testipaneeli → Uusi sivu → Sivun osiot → Oma teksti",
         "Lisää osiot Palvelut ja Korostettu ilmoitus (kirjoita ilmoitukseen tekstiä): molemmat näkyvät esikatselussa samassa järjestyksessä kuin listassa, palvelut moskeijan omina kortteina — Missä: Testipaneeli → Uusi sivu → Sivun osiot → + Lisää osio",
         "Esikatselun alla ei ole huomautusta vanhasta versiosta (testimoskeija on päivitetty) — Missä: Testipaneeli → Uusi sivu, esikatselun alareuna",
-        "Julkaise Kirjasto ja lähteet -pohja muuttamatta mitään: Valikko ja omat sivut -listassa sivun kohdalla lukee \"Ei näy – ei vielä sisältöä\" ja \"Osioissa ei ole vielä sisältöä\", samoin Muokkaa valikkoa -näkymässä — Missä: Testipaneeli → Valikko ja omat sivut",
+        "Julkaise Kirjasto ja lähteet -pohja muuttamatta mitään: Sivusto-listassa sivun kohdalla lukee \"Ei näy – ei vielä sisältöä\" ja \"Osioissa ei ole vielä sisältöä\", samoin Järjestä-tilassa — Missä: Testipaneeli → Sivusto",
         "Muutaman minuutin päästä sivu ei ole kävijän valikossa (ylävalikko, puhelimen valikko, alapalkki), mutta suora osoite …/hyvat-lahteet/ aukeaa — Missä: Testimoskeijan sivu",
-        "Lisää sivulle yksi linkki Linkkikortit-osioon ja tallenna: merkintä häviää listasta, ja muutaman minuutin päästä sivu on kävijän valikossa — Missä: Testipaneeli → Valikko ja omat sivut → Hyvät lähteet",
+        "Lisää sivulle yksi linkki Linkkikortit-osioon ja tallenna: merkintä häviää listasta, ja muutaman minuutin päästä sivu on kävijän valikossa — Missä: Testipaneeli → Sivusto → Hyvät lähteet",
         "Esikatselu ja sivut toimivat puhelimella ilman vaakavierintää (myös 320 px) ja arabiaksi — Missä: Testipaneeli puhelimella, testimoskeijan sivu kieli AR",
-        "Poista testisivut lopuksi — Missä: Testipaneeli → Valikko ja omat sivut → sivu → Poista"
+        "Poista testisivut lopuksi — Missä: Testipaneeli → Sivusto → sivu → Poista"
       ],
       "linkit": [
         {
@@ -1695,7 +1695,7 @@
           "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/omat/uusi?pohja=tyhja"
         },
         {
-          "nimi": "Testipaneeli: Valikko ja omat sivut",
+          "nimi": "Testipaneeli: Sivusto",
           "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut"
         },
         {
@@ -1792,8 +1792,8 @@
         "Avaa puhelimella palvelu, tapahtuma ja etusivu: tallennuspalkki on yhdellä rivillä (roskakori, silmä, Tallenna), eikä sivu vieri sivuttain (myös 320 px) — Missä: Testipaneeli puhelimella → Palvelut → palvelu, Tapahtumat → tapahtuma, Sivut → Etusivu",
         "Muuta jotain puhelimella: palkin vasempaan reunaan tulee piste merkiksi tallentamattomista muutoksista; tietokoneella teksti Tallentamattomia muutoksia — Missä: Testipaneeli → Palvelut → palvelu",
         "Otsikot: Muokkaa: Koraanikoulu (tapahtuma), Muokkaa: <palvelun nimi>, Muokkaa: Etusivu, Muokkaa: Meistä; uudet Uusi tapahtuma, Uusi palvelu, Uusi tiedote ja Uusi sivu — Missä: Testipaneeli → Tapahtumat, Palvelut, Tiedotteet, Sivut",
-        "Etusivulla + Lisää osio -ikkunan otsikko on Lisää osio etusivulle; uudella omalla sivulla (kirjoita nimi) Lisää osio sivulle <nimi>, ja osion Poista kysyy poistetaanko osio sivulta <nimi> — Missä: Testipaneeli → Sivut → Etusivu ja Valikko ja omat sivut → Uusi sivu",
-        "Poista lopuksi testikuvat galleriasta ja testisivut — Missä: Testipaneeli → Kuvat ja tiedostot, Valikko ja omat sivut"
+        "Etusivulla + Lisää osio -ikkunan otsikko on Lisää osio etusivulle; uudella omalla sivulla (kirjoita nimi) Lisää osio sivulle <nimi>, ja osion Poista kysyy poistetaanko osio sivulta <nimi> — Missä: Testipaneeli → Sivut → Etusivu ja Sivusto → + Lisää sivu",
+        "Poista lopuksi testikuvat galleriasta ja testisivut — Missä: Testipaneeli → Kuvat ja tiedostot, Sivusto"
       ],
       "linkit": [
         {
