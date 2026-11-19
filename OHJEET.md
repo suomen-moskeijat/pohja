@@ -50,7 +50,7 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 | Haluan näyttää moskeijalle, millainen sivu heille tulisi | ylläpitäjä | Katso hakemistosta, onko heillä ehdotussivu. Jos ei, lisää heidät `moskeijat.csv`:hen ja aja **Luo ehdotussivut listasta** (Osa 2, kohta 3a). Lähetä linkki. |
 | Moskeija haluaa lähteä mukaan | ylläpitäjä | 1) Paneeli → avaa moskeija → **Moskeija lähtee mukaan** (sivu muuttuu luonnokseksi). 2) Jos heillä on vanha nettisivu: kysy lupa ja tuo tiedot (Osa 2, kohta 3b). 3) **Käyttäjät** → kutsu moskeijan pääkäyttäjä sähköpostilla. Pääkäyttäjä hyväksyy käyttöehdot paneelin etusivulla. |
 | Moskeija on tarkistanut sivun ja hyväksyy sen | pääkäyttäjä tai ylläpitäjä | Paneelin etusivu → **Julkaise sivu**. Sivu on julkinen noin 2 minuutissa. |
-| Moskeija ei halua sivua | ylläpitäjä | Paneeli → avaa moskeija → Asetukset → **Poista moskeija**. Se merkitään listaan, eikä sivua luoda uudelleen. |
+| Moskeija ei halua sivua | ylläpitäjä | Paneeli → avaa moskeija → Sivuston asetukset → **Poista moskeija**. Se merkitään listaan, eikä sivua luoda uudelleen. |
 | Uusi moskeija, joka ei ole listalla | ylläpitäjä | Paneeli → Ylläpito → **Uusi moskeija** (nimi, kaupunki, Mawaqit- tai Masjidbox-linkki, nettisivu luvalla). |
 | Moskeija haluaa muokata tekstejä tai lisätä tapahtuman | muokkaaja | Hallintapaneeli (Osa 1). |
 | Uusi henkilö haluaa muokkausoikeuden | pääkäyttäjä | Paneeli → **Käyttäjät** → kutsu sähköpostilla (muokkaaja tai pääkäyttäjä). |
@@ -88,18 +88,15 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 | Paneelin valikossa | Mitä siellä tehdään |
 |---|---|
 | **Yleiskatsaus** | sivun tila, mitä on vielä tekemättä, pikanapit |
-| **Luo julkaisu** | valmiit pohjat (esim. tarawih-vuorot, tapahtuma, tiedote, Eid): kuva someen ja WhatsAppiin sekä tiedote sivulle yhdellä kertaa |
-| **Tapahtumat** | tulevat tapahtumat (menneet katoavat sivulta itsestään) |
-| **Tiedotteet** | moskeijan omat kirjoitukset ja tiedotteet |
-| **Rukousajat ja Jumua** | lähde, iqamah, Jumua ja yksittäisten päivien muutokset (testimoskeijassa myös Ramadan) |
-| **Ilmoituspalkki** | lyhyt ilmoitus kaikkien sivujen ylälaitaan |
-| **Kuvat ja tiedostot** | kuvat ja PDF-tiedostot |
-| **Sivut** | etusivu, Meistä, Opetus ja palvelut, Tuki ja lahjoitukset, Yhteystiedot ja lomakkeet, valikko ja omat sivut |
-| **Ulkoasu** | värit, logo, taustakuviot, kulmat ja varjot |
-| **Käyttäjät · Asetukset · Historia** | kutsut ja oikeudet, kielet, oma verkkotunnus, sivun tila, käyttöehdot ja muutoshistoria |
+| **Sivusto** | sivut samassa järjestyksessä ja samoilla nimillä kuin kävijän valikossa: Etusivu, Rukousajat (lähde, iqamah, Jumua, päivien muutokset), Meistä, Palvelut, Tapahtumat, Artikkelit (omat tiedotteet ja valmiit artikkelit), omat sivut ja Yhteystiedot. Valikon ulkopuoliset sivut (esim. Tuki ja jäsenyys) ovat omana rivinään. **Järjestä** muuttaa valikon järjestystä samassa listassa, **+ Lisää sivu** lisää oman sivun. Sivu, jolla ei ole vielä sisältöä, on merkitty *Ei näy – ei vielä sisältöä*. |
+| **Muut** | Ilmoituspalkki (lyhyt ilmoitus kaikkien sivujen ylälaitaan), Kuvat (kuvat ja PDF-tiedostot), Jakokuva someen (valmiit pohjat, esim. tarawih-vuorot, tapahtuma, tiedote, Eid: kuva someen ja WhatsAppiin sekä tiedote sivulle yhdellä kertaa) |
+| **Asetukset** | Ulkoasu (värit, logo, taustakuviot, kulmat ja varjot), Käyttäjät (kutsut ja oikeudet), Historia, Sivuston asetukset (kielet, oma verkkotunnus, sivun tila, käyttöehdot) |
+
+Puhelimella alapalkissa ovat **Koti**, **Sivusto**, **+ Lisää** (tapahtuma, tiedote, palvelu, sivu tai kuva) ja **Kaikki** (koko navigaatio).
+Muokkaaja näkee omat toimintonsa: Tapahtumat, Tiedotteet ja artikkelit, Luo julkaisu, Ilmoituspalkki, Kuvat ja tiedostot sekä Historia.
 
 Muokkaa kenttiä ja paina lopuksi **Tallenna**. Muiden kielten tekstit kirjoitetaan valitsemalla ylhäältä
-Muokattava kieli. **Asetukset → Sivuston kielet** -kohdassa valitaan kerran, käännetäänkö puuttuvat tekstit
+Muokattava kieli. **Sivuston asetukset → Sivuston kielet** -kohdassa valitaan kerran, käännetäänkö puuttuvat tekstit
 tallennettaessa automaattisesti tekoälyllä vai onko sivu vain suomeksi; tallennus ei kysy sitä erikseen. Tekoälyn
 käännöksestä näkyy sivulla huomautus, kunnes kieltä osaava on tarkistanut tekstit.
 
@@ -115,7 +112,7 @@ käännöksestä näkyy sivulla huomautus, kunnes kieltä osaava on tarkistanut 
    Joka viikko toistuvat näkyvät Tapahtumat-sivun **viikko-ohjelmassa** ja tilattavassa kalenterissa.
 
 > **Palvelut** (nikah, hautajaiset, kouluvierailut, neuvonta) ovat eri asia: ne lisätään kohtaan
-> **Sivut → Opetus ja palvelut → Palvelut**, koska niillä ei ole kellonaikaa.
+> **Sivusto → Palvelut**, koska niillä ei ole kellonaikaa.
 
 ### 4. Tiedotteen tai artikkelin kirjoittaminen
 
@@ -126,14 +123,14 @@ käännöksestä näkyy sivulla huomautus, kunnes kieltä osaava on tarkistanut 
 4. **Tallenna.** Kolme uusinta näkyy etusivulla, ja kaikki löytyvät Artikkelit-sivulta haun ja aiheiden kautta.
 
 **Valmiit artikkelit:** sivulla on noin 110 suomenkielistä artikkelia islaminusko.fi:stä
-(lähde mainitaan jokaisessa). Ne saa pois tai takaisin kohdasta **Sivut → Artikkelit-sivu → Valmiit artikkelit**.
+(lähde mainitaan jokaisessa). Ne saa pois tai takaisin kohdasta **Sivusto → Artikkelit → Artikkelit-sivun asetukset → Valmiit artikkelit**.
 
 ### 5. Oma sivu (kirjasto, lähteet, viikko-ohjelma …)
 
-1. **Sivut → Omat sivut → Uusi sivu**
+1. **Sivusto → + Lisää sivu** ja valitse pohja
 2. **Sivun nimi.** Nimestä tulee osoite, esim. *Hyvät lähteet* → `/hyvat-lahteet/`.
-3. Kirjoita **sisältö** ja lisää halutessasi **linkit kortteina** (nimi, kuvaus, osoite tai PDF-tiedosto, kuvake).
-4. **Näytä valikossa** päälle, niin sivu tulee valikkoon. Järjestystä voi muuttaa kohdassa **Sivut → Valikko**.
+3. Kirjoita teksti **Oma teksti** -osioon ja lisää halutessasi linkit **Linkkikortit**-osioon (nimi, kuvaus, osoite tai PDF-tiedosto, kuvake).
+4. **Näytä valikossa** päälle, niin sivu tulee valikkoon heti, kun siinä on sisältöä. Järjestystä voi muuttaa kohdassa **Sivusto → Järjestä**.
 
 ### 6. Kokeile ulkoasua ennen valintaa: /esikatselu/
 
@@ -150,13 +147,13 @@ Valinta: **Ulkoasu → Värit**.
 **Taustakuviot alueittain** (hallintapaneeli → Ulkoasu): kuvio valitaan erikseen sivujen yläosaan,
 alapalkkiin ja nostoihin (lahjoitus, lasten opetus), tai "Ei kuviota". Kuvion väri tulee värimaailmasta.
 
-**Lomakkeiden lähetys ja WhatsApp-napit** (hallintapaneeli → Sivut → Yhteystiedot ja lomakkeet):
+**Lomakkeiden lähetys ja WhatsApp-napit** (hallintapaneeli → Sivusto → Yhteystiedot):
 lomakkeiden viestit sähköpostiin, WhatsAppiin tai kävijän valinnan mukaan, ja WhatsApp-napit
 näkyviin, ilman kulman pikanappia tai kokonaan piiloon.
 
 ### 6b. Etusivun yläosa: tausta ja napit
 
-**Sivut → Etusivu** (yläosan tausta ja napit)
+**Sivusto → Etusivu** (yläosan tausta ja napit)
 
 | Tausta | Miltä näyttää |
 |---|---|
@@ -180,12 +177,13 @@ näkyviin, ilman kulman pikanappia tai kokonaan piiloon.
 
 ### 7. Valikko
 
-**Sivut → Valikko**: järjestä, lisää omia linkkejä ja piilota sivut, joita moskeijallanne ei ole, esim. *tapahtumat*.
+**Sivusto → Järjestä**: siirrä sivuja nuolilla, lisää omia linkkejä ja piilota sivut, joita moskeijallanne ei ole, esim. *tapahtumat*.
+Paneelin Sivusto-lista on samassa järjestyksessä kuin kävijän valikko, joten muutos näkyy molemmissa.
 **Lahjoita / Tuki ja jäsenyys** on piilossa automaattisesti, kunnes tiedot on lisätty.
 
 ### 8. Tekstit eri kielillä
 
-Sivun kielet valitaan kohdassa **Asetukset → Sivuston kielet** (esim. suomi, englanti, arabia, somali, turkki …).
+Sivun kielet valitaan kohdassa **Sivuston asetukset → Sivuston kielet** (esim. suomi, englanti, arabia, somali, turkki …).
 Kävijä valitsee kielen yläpalkista. Kentissä on rivi jokaiselle kielelle; paneeli varoittaa puuttuvista
 käännöksistä ja voi kääntää ne tekoälyllä. Jos jokin kieli puuttuu, näytetään englanti tai suomi.
 Arabia näkyy automaattisesti oikealta vasemmalle.
@@ -194,7 +192,7 @@ Arabia näkyy automaattisesti oikealta vasemmalle.
 
 - **Logo:** Ulkoasu → Logo. Jos logossa on tummaa tekstiä, lisää myös **vaalea logo**
   alapalkkia varten (tumma tausta).
-- **Kuvagalleria:** Sivut → Meistä → Kuvagalleria (kuvat lisätään kohdassa Kuvat ja tiedostot). Käytä omia valokuvia. Kuvapankkien kuvia saa käyttää vain luvalla.
+- **Kuvagalleria:** Sivusto → Meistä → Kuvagalleria (kuvat lisätään kohdassa Muut → Kuvat). Käytä omia valokuvia. Kuvapankkien kuvia saa käyttää vain luvalla.
 - Lapsista ja ihmisistä otettuihin kuviin kysytään lupa.
 - Mawaqitissa olevat moskeijan kuvat tulevat sivulle automaattisesti.
 
@@ -235,11 +233,11 @@ näkymä päivittyy heti asetuksia muutettaessa. Lisäksi:
 
 - **Instagram, YouTube ja Telegram:** uusimmat julkaisut näkyvät sivulla automaattisesti ("Seuraa meitä").
 - **Facebook, TikTok, X, Snapchat, WhatsApp-kanava:** näkyvät kuvakkeina.
-- Lisää osoitteet kohtaan **Sivut → Yhteystiedot ja lomakkeet → Somekanavat**.
+- Lisää osoitteet kohtaan **Sivusto → Yhteystiedot → Somekanavat**.
 
 ### 12. Lahjoitukset ja lomakkeet
 
-- **Tuki ja lahjoitukset:** Sivut → Tuki ja lahjoitukset. Rahankeräyslain (863/2019) vuoksi
+- **Tuki ja lahjoitukset:** Sivusto → Tuki ja jäsenyys (rahankeräysluvalla Lahjoita). Rahankeräyslain (863/2019) vuoksi
   tilinumero, MobilePay, verkkolahjoituksen linkki ja "Lahjoita nyt" -napit näkyvät vain, kun moskeijalla on
   Poliisihallituksen **rahankeräyslupa** tai voimassa oleva **pienkeräysnumero** (pienkeräyksen päättymispäivän
   jälkeen maksutiedot piilotetaan itsestään). Silloin sivulla näkyvät myös lain vaatimat tiedot: keräyksen

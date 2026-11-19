@@ -1852,6 +1852,45 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-19"
+    },
+    {
+      "id": "navigaatio-sivusto-lista",
+      "otsikko": "Navigaatio: yksi Sivusto-lista kävijän valikon järjestyksessä",
+      "alue": "paneeli",
+      "kuvaus": "Pääkäyttäjän navigaatiossa on yksi Sivusto-lista: sivut samassa järjestyksessä ja samoilla nimillä kuin kävijän valikossa (Rukousajat, Artikkelit …), myös omat sivut, ja lopussa + Lisää sivu. Valikon ulkopuoliset sivut ovat omana rivinään (Ei valikossa). Järjestys muutetaan samassa listassa (Järjestä): nuolet, piilotus, omat linkit ja Palauta oletus. Erillistä Valikko ja omat sivut -näkymää ei enää ole. Tyhjällä sivulla lukee listassa Ei näy – ei vielä sisältöä. Ryhmät: Muut (Ilmoituspalkki, Kuvat, Jakokuva someen) ja Asetukset (Ulkoasu, Käyttäjät, Historia, Sivuston asetukset). Puhelimen alapalkki: Koti · Sivusto · + Lisää · Kaikki. Muokkaajan navigaatio on ennallaan.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa testimoskeija tietokoneella (leveä ikkuna).",
+      "kohdat": [
+        "Vasemmalla on Yleiskatsaus ja ryhmät Sivusto, Muut ja Asetukset; Sivusto-listassa Etusivu ja sitten sivut samassa järjestyksessä ja samoilla nimillä kuin testimoskeijan sivun valikossa — Missä: Testipaneeli → vasen navigaatio, ja Testimoskeijan sivu → yläreunan valikko",
+        "Listan lopussa on + Lisää sivu, ja Ei valikossa -kohdassa valikon ulkopuoliset sivut (esim. Tuki ja jäsenyys) — Missä: Testipaneeli → Sivusto",
+        "Lisää oma sivu (+ Lisää sivu, kirjoita Oma teksti -osioon jotain ja Julkaise): sivu näkyy listassa samassa kohdassa kuin sivun valikossa — Missä: Testipaneeli → Sivusto → + Lisää sivu",
+        "Paina Järjestä, siirrä oma sivu nuolella ylemmäs ja Tallenna: järjestys muuttuu listassa heti ja sivun valikossa parin minuutin päästä — Missä: Testipaneeli → Sivusto → Järjestä, ja Testimoskeijan sivu → valikko",
+        "Järjestä-tilassa sivun voi piilottaa valikosta (×) ja palauttaa (+), lisätä oman linkin (Lisää linkki) ja palauttaa oletusvalikon; Peruuta jättää kaiken ennalleen — Missä: Testipaneeli → Sivusto → Järjestä",
+        "Sivulla, jolla ei ole vielä sisältöä (esim. uusi oma sivu ilman tekstiä), lukee listassa Ei näy – ei vielä sisältöä, eikä sitä ole sivun valikossa — Missä: Testipaneeli → Sivusto",
+        "Muut-ryhmässä Ilmoituspalkki, Kuvat ja Jakokuva someen; Asetukset-ryhmässä Ulkoasu, Käyttäjät, Historia ja Sivuston asetukset — Missä: Testipaneeli → vasen navigaatio",
+        "Puhelimella alapalkissa Koti · Sivusto · + Lisää · Kaikki; + Lisää tarjoaa Tapahtuma, Tiedote, Palvelu, Sivu ja Kuva; Sivusto avaa saman listan; sivu ei vieri sivuttain (myös 320 px) — Missä: Testipaneeli puhelimella → alapalkki",
+        "Muokkaajana navigaatio on ennallaan: Yleiskatsaus, Tapahtumat, Tiedotteet ja artikkelit, Luo julkaisu, Ilmoituspalkki, Kuvat ja tiedostot, Historia — Missä: Testipaneeli muokkaajan tunnuksella",
+        "Poista lopuksi testisivu ja palauta järjestys (Järjestä → Palauta oletus → Tallenna) — Missä: Testipaneeli → Sivusto"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Sivusto",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut"
+        },
+        {
+          "nimi": "Testipaneeli: Järjestä valikko",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut?jarjesta=1"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi sivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/omat/uusi"
+        },
+        {
+          "nimi": "Sivu: Testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
     }
   ]
 }
