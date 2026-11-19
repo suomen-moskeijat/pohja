@@ -1742,6 +1742,40 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-19"
+    },
+    {
+      "id": "kutsu-ja-julkaisu",
+      "otsikko": "Selkeä kutsuviesti ja julkaisun jälkeinen näkymä",
+      "alue": "paneeli",
+      "kuvaus": "Pääkäyttäjän kutsuviesti kertoo, mikä palvelu on, linkittää moskeijan omaan sivuun (sama osoite kuin paneelissa, myös oma verkkotunnus) ja paneeliin ja listaa kolme ensimmäistä askelta. Muokkaajan kutsu kertoo vain muokkaajan tehtävät. Kun pääkäyttäjä julkaisee sivun, paneeli näyttää sivun osoitteen, napit Näytä sivulla ja Jaa WhatsAppissa sekä seuraavat askeleet.",
+      "aloitus": "Kirjaudu testipaneeliin ja avaa testimoskeija → Käyttäjät. Käytä kutsuissa toista omaa sähköpostiosoitettasi, jolla et vielä kirjaudu paneeliin.",
+      "kohdat": [
+        "Kutsu toinen sähköpostiosoitteesi pääkäyttäjäksi: viestissä kerrotaan, mikä palvelu on, linkit Moskeijan sivu ja Hallintapaneeli sekä Kolme ensimmäistä askelta — Missä: Testipaneeli → Käyttäjät → Kutsu uusi käyttäjä, sitten sähköposti",
+        "Viestin Moskeijan sivu -linkki avaa testimoskeijan sivun ja Avaa hallintapaneeli -nappi testipaneelin — Missä: kutsun sähköposti",
+        "Kutsu sama osoite muokkaajaksi: viesti kertoo vain muokkaajan tehtävät (tapahtumat, tiedotteet, kuvat, ilmoituspalkki), ei askeleita eikä julkaisua — Missä: Testipaneeli → Käyttäjät → Kutsu uusi käyttäjä (rooli Muokkaaja), sitten sähköposti",
+        "Jos sivu on julkaistu, palauta se ensin luonnokseksi — Missä: Testipaneeli → Asetukset → Palauta luonnokseksi",
+        "Paina Julkaise sivu ja vahvista: avautuu ikkuna Sivu on julkaistu, jossa on sivun osoite, Näytä sivulla, Jaa WhatsAppissa ja Seuraavat askeleet — Missä: Testipaneeli → Yleiskatsaus tai Asetukset → Julkaise sivu",
+        "Näytä sivulla avaa sivun uuteen välilehteen; Jaa WhatsAppissa avaa WhatsAppin valmiilla viestillä, jossa on sivun osoite — Missä: Sivu on julkaistu -ikkuna",
+        "Askeleiden Käyttäjät- ja Yleiskatsaus-linkit sulkevat ikkunan ja vievät oikeaan paikkaan — Missä: Sivu on julkaistu -ikkuna",
+        "Ikkuna mahtuu puhelimen ruutuun ilman vaakavierintää (myös 320 px) — Missä: Testipaneeli puhelimella → Yleiskatsaus → Julkaise sivu",
+        "Poista lopuksi kutsumasi osoite käyttäjistä — Missä: Testipaneeli → Käyttäjät → Poista"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Käyttäjät",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/kayttajat"
+        },
+        {
+          "nimi": "Testipaneeli: Asetukset",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/asetukset"
+        },
+        {
+          "nimi": "Sivu: Testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
     }
   ]
 }
