@@ -1424,6 +1424,29 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-18"
+    },
+    {
+      "id": "sivun-osoite-verkkotunnus",
+      "otsikko": "Avaa sivu ja esikatselu käyttävät uutta osoitetta heti, kun oma verkkotunnus vaihtuu",
+      "alue": "paneeli",
+      "kuvaus": "Kun moskeija otti oman verkkotunnuksen käyttöön tai poisti sen, paneelin Avaa sivu ja esikatselu osoittivat vielä tunnin ajan vanhaan osoitteeseen. Nyt osoite päivittyy heti. Verkkotunnuksen käyttöönotto on testattu automaattisesti (DNS-asetuksia ei tarvitse tehdä); testaajan riittää tarkistaa, että sivu aukeaa ennallaan.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Yleiskatsaus",
+      "kohdat": [
+        "Avaa sivu avaa testimoskeijan sivun oikeasta osoitteesta — Missä: Testipaneeli → Yleiskatsaus",
+        "Esikatselu näyttää testimoskeijan etusivun — Missä: Testipaneeli → Etusivu"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: testimoskeija",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija"
+        },
+        {
+          "nimi": "Testimoskeijan sivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
     }
   ]
 }
