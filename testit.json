@@ -1705,6 +1705,43 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-19"
+    },
+    {
+      "id": "kaannosasetus",
+      "otsikko": "Käännös asetukseksi: tallennus ei enää kysy",
+      "alue": "paneeli",
+      "kuvaus": "Moskeija valitsee kerran Asetuksissa (Sivuston kielet), käännetäänkö puuttuvat tekstit automaattisesti tekoälyllä vai onko sivu vain suomeksi. Tallennus ja Julkaise eivät enää kysy käännöksestä ikkunassa. Automaattisella asetuksella puuttuvat käännökset tehdään heti tallennettaessa yhdellä painalluksella, ja sivulla näkyy huomautus tekoälykäännöksestä, kunnes käännös on merkitty tarkistetuksi. Vain suomi ei käännä. Moskeija, joka ei ole vielä valinnut: automaattinen, jos se on itse valinnut muita kieliä tai jo kääntänyt omia tekstejään, muuten Vain suomi.",
+      "aloitus": "Kirjaudu testipaneeliin ja avaa testimoskeija → Asetukset → Sivuston kielet.",
+      "kohdat": [
+        "Kielten alla on kohta Käännökset muille kielille, jossa vaihtoehdot Käännä automaattisesti tekoälyllä ja Vain suomi selityksineen — Missä: Testipaneeli → Asetukset → Sivuston kielet",
+        "Jätä valituksi vain Suomi: käännösvalinta piiloutuu (koskee vain muita kieliä); valitse kielet takaisin äläkä tallenna — Missä: Testipaneeli → Asetukset → Sivuston kielet",
+        "Valitse Käännä automaattisesti tekoälyllä ja paina Tallenna kielet; avaa Asetukset uudelleen: valinta on tallessa — Missä: Testipaneeli → Asetukset → Sivuston kielet",
+        "Kirjoita uudelle tapahtumalle nimi: käännöspalkissa lukee \"Ne käännetään tekoälyllä, kun tallennat\" — Missä: Testipaneeli → Tapahtumat → Uusi tapahtuma",
+        "Paina Julkaise kerran: ikkunaa ei tule, Julkaise-napissa näkyy hetken Käännetään…, ja tapahtuma julkaistaan — Missä: Testipaneeli → Tapahtumat → Uusi tapahtuma → Julkaise",
+        "Avaa tapahtuma uudelleen: nimi on käännetty kaikille kielille, ja palkissa lukee Tekoälyn käännös, ei vielä tarkistettu — Missä: Testipaneeli → Tapahtumat → tapahtuma",
+        "Muutaman minuutin päästä tapahtuman sivulla englanniksi näkyy käännetty nimi ja alalaidassa huomautus tekoälykäännöksestä — Missä: Testimoskeijan sivu → Tapahtumat → tapahtuma, kieli EN",
+        "Muuta jonkin sivun tekstiä ja tallenna (esim. etusivun esittely): puuttuvat käännökset tehdään samalla, ei kysymystä — Missä: Testipaneeli → Sivut → Etusivu → Tallenna",
+        "Valitse Vain suomi ja Tallenna kielet; tee uusi tapahtuma ja paina Julkaise: ei ikkunaa eikä käännöstä, ja palkissa lukee, että muilla kielillä näkyy suomenkielinen teksti — Missä: Testipaneeli → Asetukset → Sivuston kielet, sitten Tapahtumat → Uusi tapahtuma",
+        "Vain suomi -asetuksellakin palkin Käännä tekoälyllä -nappi kääntää, kun sitä painaa itse — Missä: Testipaneeli → Tapahtumat → Uusi tapahtuma → Käännä tekoälyllä",
+        "Asetukset-sivu toimii puhelimella ilman vaakavierintää (myös 320 px) — Missä: Testipaneeli puhelimella → Asetukset",
+        "Poista lopuksi testitapahtumat — Missä: Testipaneeli → Tapahtumat → tapahtuma → Poista"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Asetukset",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/asetukset"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi tapahtuma",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat/uusi"
+        },
+        {
+          "nimi": "Sivu: Tapahtumat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/tapahtumat/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
     }
   ]
 }

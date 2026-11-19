@@ -98,8 +98,10 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 | **Ulkoasu** | värit, logo, taustakuviot, kulmat ja varjot |
 | **Käyttäjät · Asetukset · Historia** | kutsut ja oikeudet, kielet, oma verkkotunnus, sivun tila, käyttöehdot ja muutoshistoria |
 
-Muokkaa kenttiä ja paina lopuksi **Tallenna**. Tekstikentissä on rivi jokaiselle sivun kielelle, ja
-puuttuvat kielet voi kääntää tekoälyllä napista (tarkista käännös ennen tallennusta).
+Muokkaa kenttiä ja paina lopuksi **Tallenna**. Muiden kielten tekstit kirjoitetaan valitsemalla ylhäältä
+Muokattava kieli. **Asetukset → Sivuston kielet** -kohdassa valitaan kerran, käännetäänkö puuttuvat tekstit
+tallennettaessa automaattisesti tekoälyllä vai onko sivu vain suomeksi; tallennus ei kysy sitä erikseen. Tekoälyn
+käännöksestä näkyy sivulla huomautus, kunnes kieltä osaava on tarkistanut tekstit.
 
 ### 3. Tapahtumat ja viikoittainen toiminta
 
