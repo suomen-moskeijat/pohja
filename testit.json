@@ -1564,6 +1564,46 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-19"
+    },
+    {
+      "id": "jumua-ja-meista-varateksti",
+      "otsikko": "Jumua valmiuslistalla ja Meistä-sivun varateksti",
+      "alue": "sivut",
+      "kuvaus": "Yleiskatsauksen valmiuslistalla on uusi kohta \"Perjantairukous (Jumua)\", joka vie suoraan Rukousajat-sivun Jumua-välilehden aikakenttään. Kohta on tekemättä, kun Jumuan aikaa ei ole kirjoitettu, ja tehty, kun aika on annettu. Meistä-sivu ei näy enää tyhjänä: jos pitkää Meistä-tekstiä ei ole, sivulla näkyy lyhyt Meistä-teksti (sama kuin etusivulla), ja jos sitäkään ei ole, esittelyteksti. Näin etusivun Lue lisää ei vie tyhjälle sivulle. Tyhjää korttia ei näy, jos kortissa ei olisi mitään.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Yleiskatsaus.",
+      "kohdat": [
+        "Valmiuslistalla on kohta Perjantairukous (Jumua): tehty, jos Jumuan aika on kirjoitettu, muuten tekemättä — Missä: Testipaneeli → Yleiskatsaus → Sivun valmius",
+        "Tyhjennä Jumuan aika ja tallenna: kohta muuttuu tekemättömäksi; napauta kohtaa, jolloin Rukousajat-sivu avautuu Jumua-välilehdelle ja aikakenttä on korostettu — Missä: Testipaneeli → Yleiskatsaus ja Rukousajat → Jumua",
+        "Kirjoita aika (esim. 13.30) ja tallenna: kohta on taas tehty, ja muutaman minuutin päästä aika näkyy Rukousajat-sivun Jumua-kortissa — Missä: Testipaneeli → Rukousajat → Jumua ja Testimoskeijan Rukousajat-sivu",
+        "Kirjoita Meistä lyhyesti -teksti ja tyhjennä Meistä (koko teksti), tallenna: muutaman minuutin päästä etusivun Meistä-osion Lue lisää vie Meistä-sivulle, jolla lyhyt teksti näkyy kortissa — Missä: Testipaneeli → Meistä ja Testimoskeijan etusivu → Meistä → Lue lisää",
+        "Tyhjennä myös Meistä lyhyesti -teksti ja tallenna: Meistä-sivun kortissa näkyy esittelyteksti (ei kahteen kertaan otsikon alla) — Missä: Testipaneeli → Meistä ja Testimoskeijan Meistä-sivu",
+        "Meistä-sivulla ei ole vaakavierintää eikä tyhjää korttia puhelimella (myös kapealla 320 px) eikä arabiaksi — Missä: Testimoskeijan Meistä-sivu, kieli AR",
+        "Palauta Meistä-tekstit ennalleen ja tallenna — Missä: Testipaneeli → Meistä"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Yleiskatsaus",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija"
+        },
+        {
+          "nimi": "Testipaneeli: Jumua",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/rukousajat?k=juma"
+        },
+        {
+          "nimi": "Testipaneeli: Meistä",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/meista"
+        },
+        {
+          "nimi": "Testimoskeijan Meistä-sivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/meista/"
+        },
+        {
+          "nimi": "Testimoskeijan Rukousajat-sivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
     }
   ]
 }

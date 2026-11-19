@@ -4,12 +4,29 @@ title: Meistä
 permalink: /meista/
 ---
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
-{% include osat/sivuhero.html avain="meista_otsikko" johdanto=m.esittely %}
+{%- comment -%}
+  Teksti: pitkä Meistä-teksti, vanha teksti (tiedoston runko) tai varalla lyhyt Meistä-teksti (etusivulle) ja viimeisenä
+  esittely, jotta etusivun Lue lisää ei vie tyhjälle sivulle. Esittely näkyy muuten otsikon alla. Sama sääntö kuin
+  osat/tyhjat-sivut.html: kun sivulla on sisältöä, se näkyy; kortti tulee vain, kun siinä on tekstiä tai kielet.
+{%- endcomment -%}
+{%- capture _meista -%}{% if m.meista %}{% include kt.html arvo=m.meista md=true tagi="div" %}{% endif %}{%- endcapture -%}
+{%- assign _meista_teksti = _meista | strip_html | strip -%}
+{%- if _meista_teksti == "" -%}{%- assign _meista = m.content -%}{%- assign _meista_teksti = _meista | strip_html | strip -%}{%- endif -%}
+{%- if _meista_teksti == "" and m.meista_lyhyt -%}
+  {%- capture _meista -%}{% include kt.html arvo=m.meista_lyhyt md=true tagi="div" %}{%- endcapture -%}
+  {%- assign _meista_teksti = _meista | strip_html | strip -%}
+{%- endif -%}
+{%- assign _johdanto = m.esittely -%}
+{%- if _meista_teksti == "" and m.esittely -%}
+  {%- capture _meista -%}{% include kt.html arvo=m.esittely md=true tagi="div" %}{%- endcapture -%}
+  {%- assign _meista_teksti = _meista | strip_html | strip -%}
+  {%- if _meista_teksti != "" -%}{%- assign _johdanto = nil -%}{%- endif -%}
+{%- endif -%}
+{% include osat/sivuhero.html avain="meista_otsikko" johdanto=_johdanto %}
 <div class="u-kehys u-sivu">
+  {% if _meista_teksti != "" or m.kielet.size > 0 %}
   <article class="u-kortti u-artikkeli">
-    {%- capture _meista -%}{% if m.meista %}{% include kt.html arvo=m.meista md=true tagi="div" %}{% else %}{{ m.content }}{% endif %}{%- endcapture -%}
-    {%- assign _meista_tyhja = _meista | strip_html | strip -%}
-    {% if _meista_tyhja != "" %}<div class="u-proosa u-proosa--iso">{{ _meista }}</div>{% endif %}
+    {% if _meista_teksti != "" %}<div class="u-proosa u-proosa--iso">{{ _meista }}</div>{% endif %}
     {% if m.kielet.size > 0 %}
     <div class="u-artikkeli__kielet">
       <p class="u-eyebrow">{% include k.html a="toiminta_kielet" %}</p>
@@ -17,6 +34,7 @@ permalink: /meista/
     </div>
     {% endif %}
   </article>
+  {% endif %}
 
   {% if m.missio.size > 0 %}
   <section class="u-osio">
