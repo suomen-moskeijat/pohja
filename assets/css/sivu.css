@@ -780,6 +780,8 @@ html[data-kortit-somet="allekkain"] .u-somet__paneeli + .u-somet__paneeli { marg
 @media (hover: hover) { :is(.u-alku--kuva, .u-alku--vari) .u-alku__napit .u-nappi--reuna:hover { background: rgb(255 255 255 / .2); } }
 
 /* ---------- Omat sivut (_sivut/): teksti ja linkkikortit (kirjat, lähteet …) ---------- */
+/* Oman sivun sisältöalue: vain esikatselun paikka, ei omaa laatikkoa (lapset asettuvat kuten ennen) */
+.u-omasivu-alue { display: contents; }
 .u-omasivu { display: grid; gap: 20px; }
 .u-omasivu__kuva { width: 100%; max-height: 420px; object-fit: cover; border-radius: var(--r-m); }
 /* Oman sivun ensimmäinen osio heti otsikon alla samalla välillä kuin sivun sisältö (.u-sivu), sivun kuvan alla kuin kortit (.u-omasivu) */

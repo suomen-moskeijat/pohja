@@ -73,7 +73,7 @@ sitemap: false
 {%- if m.lahjoitus %}{% unless m.valikko_piilota contains "lahjoita" or _tyhjat contains ",lahjoita," %}
 - [Tuki ja jäsenyys]({{ juuri }}/lahjoita/): {{ m.lahjoitus.teksti.fi | default: m.lahjoitus.teksti | strip_html | normalize_whitespace | truncate: 160 }}
 {%- endunless %}{% endif %}
-{%- for s in site.sivut %}
+{%- for s in site.sivut %}{% capture _ty_k %},{{ s.url | remove: "/" }},{% endcapture %}{% if _tyhjat contains _ty_k %}{% continue %}{% endif %}
 - [{{ s.title }}]({{ juuri }}{{ s.url }}){% if s.johdanto %}: {{ s.johdanto.fi | default: s.johdanto | strip_html | normalize_whitespace | truncate: 160 }}{% endif %}
 {%- endfor %}
 

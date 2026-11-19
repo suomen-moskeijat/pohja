@@ -742,9 +742,9 @@
     // Hallintapaneeli (tuotanto ja testi: hallinta[-testi].suomenmoskeijat.fi tai workers.dev) ja paikallinen kehitys
     var SALLITUT = /^(https:\/\/hallinta(-[a-z0-9]+)?\.suomenmoskeijat\.fi|https:\/\/hallinta(-[a-z0-9]+)?(\.[a-z0-9-]+)*\.workers\.dev|http:\/\/(localhost|127\.0\.0\.1):\d+)$/;
     var VARI = /^#[0-9a-f]{6}$/i, KUVA = /^https:\/\/[A-Za-z0-9._~\/%-]+$/;
-    // Palvelun ja tapahtuman sisältö reaaliajassa: paneeli lähettää sisällön sivupohjan luokilla, sivu vaihtaa sen paikalleen.
-    // Vain sallitut tagit ja attribuutit; skriptit, tapahtumakäsittelijät ja javascript:-linkit poistetaan.
-    var ESIK_ALUE = { palvelu: '.u-palvelusivu', tapahtuma: '.u-tapsivu' };
+    // Palvelun, tapahtuman ja oman sivun sisältö reaaliajassa: paneeli lähettää sisällön sivupohjan luokilla, sivu vaihtaa sen
+    // paikalleen. Vain sallitut tagit ja attribuutit; skriptit, tapahtumakäsittelijät ja javascript:-linkit poistetaan.
+    var ESIK_ALUE = { palvelu: '.u-palvelusivu', tapahtuma: '.u-tapsivu', oma: '.u-omasivu-alue' };
     var SALLITUT_TAGIT = /^(SECTION|ARTICLE|ASIDE|DIV|SPAN|P|A|IMG|UL|OL|LI|H2|H3|H4|STRONG|EM|B|I|BR|SMALL|BLOCKQUOTE|FIGURE|FIGCAPTION|FORM|FIELDSET|LEGEND|LABEL|INPUT|TEXTAREA|BUTTON|DETAILS|SUMMARY)$/;
     var SALLITUT_ATTR = /^(class|href|src|alt|id|type|name|rows|role|target|rel|loading|data-ikoni|data-rivi|data-sailyta)$/;
     var esikAlkup = {};
@@ -844,8 +844,44 @@
         if (Array.isArray(x.osiot)) etuOsiot(x.osiot, lahde);
       });
     }
+    // Oman sivun johdanto otsikon alla: tyhjä = piiloon, puuttuva luodaan (kuten sivupohjassa, osat/sivuhero.html)
+    function esikJohdanto(t) {
+      if (typeof t !== 'string') return;
+      var h1 = document.querySelector('.u-sivuhero h1'), p = document.querySelector('.u-sivuhero__johdanto');
+      if (!p && t && h1) { p = document.createElement('p'); p.className = 'u-sivuhero__johdanto'; h1.parentNode.insertBefore(p, h1.nextSibling); }
+      if (!p) return;
+      p.hidden = !t; p.textContent = t;
+    }
+    // Oma sivu: sivun kuva (html) ja osiot kuten _layouts/oma.html. Valmiit osiot sivupohjan osista (esikatselu-osat.html),
+    // omat osiot paneelin rakentamana. Tyhjä osio ei näy, eikä tyhjää osiolistaa lisätä.
+    var omaKierros = 0;
+    function esikOma(x, alue) {
+      var k = ++omaKierros;
+      osat().then(function (lahde) {
+        if (k !== omaKierros) return;
+        var sisus = puhdas(x.html), lista = document.createElement('div');
+        lista.className = 'u-omasivu__osiot';
+        (Array.isArray(x.osiot) ? x.osiot : []).forEach(function (o) {
+          if (!o || typeof o.osio !== 'string') return;
+          var f = null, t;
+          if (VALMIIT.test(o.osio)) { t = lahde && lahde.querySelector('template[data-osio="' + o.osio + '"]'); if (t) f = document.importNode(t.content, true); }
+          else if (typeof o.html === 'string') f = puhdas(o.html);
+          if (f) lista.appendChild(f);
+        });
+        if (lista.children.length) sisus.appendChild(lista);
+        ikonit(sisus, lahde);
+        [].slice.call(sisus.querySelectorAll('form')).forEach(function (f) { f.addEventListener('submit', function (e) { e.preventDefault(); }); });
+        alue.textContent = ''; alue.appendChild(sisus);
+      });
+    }
     function esikSivu(x) {
       var alue = document.querySelector(ESIK_ALUE[x.laji] || '#ei-ole');
+      if (alue && x.laji === 'oma') {
+        var h1o = document.querySelector('.u-sivuhero h1');
+        if (h1o && typeof x.otsikko === 'string') h1o.textContent = x.otsikko;
+        esikJohdanto(x.johdanto); esikOma(x, alue);
+        return;
+      }
       if (!alue || typeof x.html !== 'string') return;
       // Alkuperäiset osat talteen ensimmäisellä kerralla (esim. moskeijan osoite Paikka-rivillä ja kuvakkeet)
       if (!esikAlkup.alue) {
@@ -934,6 +970,7 @@
       }
     });
     // Paneelille tieto, että sivu on valmis esikatseluun (paneeli lähettää muutokset tälle sivulle, myös omalla verkkotunnuksella)
-    try { window.parent.postMessage({ tyyppi: 'moskeija-esikatselu-valmis', versio: 4 }, '*'); } catch (e) { /* ei kehyksessä */ }
+    // Versio 5: oman sivun esikatselu (esikatselu-sivu.html)
+    try { window.parent.postMessage({ tyyppi: 'moskeija-esikatselu-valmis', versio: 5 }, '*'); } catch (e) { /* ei kehyksessä */ }
   }
 })();

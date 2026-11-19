@@ -17,7 +17,7 @@ permalink: /sitemap.xml
 {%- for p in site.tapahtumat %}
   <url><loc>{{ site.url }}{{ p.url | relative_url }}</loc><lastmod>{{ p.paiva | date: "%Y-%m-%d" }}</lastmod></url>
 {%- endfor %}
-{%- for p in site.sivut %}
+{%- for p in site.sivut %}{% capture _ty_k %},{{ p.url | remove: "/" }},{% endcapture %}{% if _tyhjat contains _ty_k %}{% continue %}{% endif %}
   <url><loc>{{ site.url }}{{ p.url | relative_url }}</loc></url>
 {%- endfor %}
 {%- for p in site.artikkelit %}{% if p.lahde_url %}{% continue %}{% endif %}

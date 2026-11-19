@@ -31,6 +31,11 @@ layout: sivu
   {% include osat/linkit-kortit.html linkit=page.linkit %}
   {% endif %}
 {%- endcapture -%}
+{%- comment -%}
+  Sisältöalue otsikon alla (u-omasivu-alue, ei omaa laatikkoa): paneelin esikatselu vaihtaa sen sisällön uudelle sivulle
+  (esikatselu-sivu.html, assets/js/sivu.js). data-esik-osat: valmiit osiot ja kuvakkeet esikatseluun (esikatselu-osat.html).
+{%- endcomment -%}
+<div class="u-omasivu-alue" data-esik-osat="{{ '/esikatselu-osat/' | relative_url }}">
 {%- comment -%} Sivun kuva (ja vanhan muodon sisältö) vain, kun niitä on: ei tyhjää väliä otsikon ja osioiden väliin {%- endcomment -%}
 {%- assign _omasivu = _omasivu | strip -%}
 {% if _omasivu != "" %}<div class="u-kehys u-sivu u-omasivu">{{ _omasivu }}</div>{% endif %}
@@ -38,3 +43,4 @@ layout: sivu
 {%- capture _om_osiot -%}{% if page.osiot.size > 0 %}{% include osat/osiot.html osiot=page.osiot moskeija=m %}{% endif %}{%- endcapture -%}
 {%- assign _om_osiot = _om_osiot | strip -%}
 {% if _om_osiot != "" %}<div class="u-omasivu__osiot">{{ _om_osiot }}</div>{% endif %}
+</div>

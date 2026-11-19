@@ -5,7 +5,7 @@
   Oletus: lapsi (jos lasten opetus on käytössä) ja toiminta. Ensimmäinen nappi korostetaan.
   Parametri napit (valinnainen): lista napeista moskeijan valinnan sijaan (paneelin esikatselu, esikatselu-osat.html).
   lapsi vie Lasten opetus -palveluun (/palvelut/lasten-opetus/), kun sellainen palvelu on (tai vanha lasten_opetus).
-  Nappi tyhjälle sivulle (Palvelut, Tuki, Lasten opetus ilman sisältöä) ei näy: sääntö osat/tyhjat-sivut.html.
+  Nappi tyhjälle sivulle (Palvelut, Tuki, Lasten opetus tai oma sivu ilman sisältöä) ei näy: sääntö osat/tyhjat-sivut.html.
 {%- endcomment -%}
 {%- assign m = include.moskeija -%}
 {%- include osat/tyhjat-sivut.html moskeija=m -%}
@@ -28,6 +28,7 @@
     <a class="u-nappi LUOKKA u-nappi--iso" href="{% if _ulk == 'http' %}{{ _on.linkki }}{% else %}{{ _on.linkki | relative_url }}{% endif %}"{% if _ulk == 'http' %} target="_blank" rel="noopener"{% endif %}>{% include kt.html arvo=_on.teksti %}</a>
     {%- endif -%}
   {%- else -%}{%- assign _pu = "/" | append: n | append: "/" -%}{%- assign _p = site.sivut | where: "url", _pu | first -%}
+    {%- capture _ty_k -%},{{ n }},{%- endcapture -%}{%- if _tyhjat contains _ty_k -%}{%- assign _p = nil -%}{%- endif -%}
     {%- if _p -%}<a class="u-nappi LUOKKA u-nappi--iso" href="{{ _p.url | relative_url }}">{% include sivunimi.html sivu=_p %}</a>{%- endif -%}
   {%- endcase -%}
   {%- endcapture -%}

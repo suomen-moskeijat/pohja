@@ -14,9 +14,16 @@
   Vanha Lasten opetus -sivu (/palvelut/lasten-opetus/, lasten_opetus.kaytossa): ilmoittautumislomake näkyy (viesteillä on
   vastaanottaja, ks. lomake-tapa.html) tai johdantoteksti. Lasten opetus -palvelu (_palvelut/lasten-opetus.md) on tavallinen palvelu.
 
+  Omat sivut (_sivut/, tunnus = osoite ilman kauttaviivoja, esim. hyvat-lahteet): sivulla on sisältöä, kun sillä on
+  johdanto, sivun kuva tai vanha Sisältö / Linkit kortteina (ennen siirtoa osioiksi), tai näkyvä osio: oma osio, joka ei ole
+  tyhjä (osat/osio-tyhja.html; lomake lisäksi vain vastaanottajan kanssa), tai valmis osio, jonka tieto on (palvelut,
+  tapahtumat, artikkelit, meista ja lahjoitus: sivu ei ole tyhjä; lapset; galleria: galleriaan valittu kuva; somet: somekanava;
+  vierailu: osoite tai sijainti). Pohjasta julkaistu sivu, jossa on vain otsikko, ei siis näy valikossa ennen ensimmäistä sisältöä.
+
   Asettaa:
   _tyhjat   tyhjät sivut pilkuin ympäröityinä, esim. ",palvelut,meista," (tarkistus: _tyhjat contains ",palvelut,")
   _lapset   true, kun Lasten opetus -sivulla on sisältöä (Ilmoita lapsesi -nappi, valikon linkki ja nosto näkyvät)
+  Omat sivut ovat _tyhjat-listassa tunnuksellaan (esim. ",hyvat-lahteet,").
   Huom.: käyttää lomake-tapa.html:ää ja lahjoitus-lupa.html:ää, joiden muuttujat (_vastaanottaja, _lupa …) asettuvat uudelleen.
 {%- endcomment -%}
 {%- assign _ty_m = include.moskeija -%}
@@ -61,3 +68,33 @@
 {%- capture _ty_tt -%}{%- assign _ty_j = _ty_lt | jsonify | slice: 0 -%}{%- if _ty_j == "{" -%}{%- for _ty_x in _ty_lt -%}{{ _ty_x[1] }}{%- endfor -%}{%- elsif _ty_lt -%}{{ _ty_lt }}{%- endif -%}{%- endcapture -%}
 {%- assign _ty_tt = _ty_tt | strip -%}
 {%- unless _lupa or _ty_tt != "" -%}{%- assign _tyhjat = _tyhjat | append: "lahjoita," -%}{%- endunless -%}
+{%- comment -%} Omat sivut. Osioiden muuttujat (osio-tyhja.html) palautetaan, jottei kutsuvan osion tila muutu. {%- endcomment -%}
+{%- assign _ty_s_ot = _osio_tyhja -%}{%- assign _ty_s_ou = _osio_ukk -%}{%- assign _ty_s_ol = _osio_linkit -%}
+{%- for _ty_s in site.sivut -%}
+  {%- assign _ty_on = false -%}
+  {%- capture _ty_st -%}
+    {%- assign _ty_j = _ty_s.johdanto | jsonify | slice: 0 -%}{%- if _ty_j == "{" -%}{%- for _ty_x in _ty_s.johdanto -%}{{ _ty_x[1] }}{%- endfor -%}{%- elsif _ty_s.johdanto -%}{{ _ty_s.johdanto }}{%- endif -%}
+    {{ _ty_s.kuva }}{{ _ty_s.content | strip_html }}
+    {%- for _ty_l in site.kielet -%}{%- assign _ty_k = "teksti_" | append: _ty_l -%}{{ _ty_s[_ty_k] }}{%- endfor -%}
+  {%- endcapture -%}
+  {%- assign _ty_st = _ty_st | strip -%}
+  {%- if _ty_st != "" or _ty_s.linkit.size > 0 -%}{%- assign _ty_on = true -%}{%- endif -%}
+  {%- for _ty_o in _ty_s.osiot -%}
+    {%- if _ty_on -%}{%- break -%}{%- endif -%}
+    {%- if _ty_o.osio -%}{%- assign _ty_ot = _ty_o.osio -%}{%- else -%}{%- assign _ty_ot = _ty_o -%}{%- endif -%}
+    {%- include osat/osio-tyhja.html o=_ty_o moskeija=_ty_m -%}
+    {%- if _osio_tyhja -%}{%- continue -%}{%- endif -%}
+    {%- case _ty_ot -%}
+    {%- when "palvelut", "tapahtumat", "artikkelit", "meista" -%}
+      {%- capture _ty_k -%},{{ _ty_ot }},{%- endcapture -%}{%- unless _tyhjat contains _ty_k -%}{%- assign _ty_on = true -%}{%- endunless -%}
+    {%- when "lahjoitus" -%}{%- unless _tyhjat contains ",lahjoita," -%}{%- assign _ty_on = true -%}{%- endunless -%}
+    {%- when "lapset" -%}{%- if _lapset -%}{%- assign _ty_on = true -%}{%- endif -%}
+    {%- when "galleria" -%}{%- assign _ty_g = _ty_m.galleria | join: "" | strip -%}{%- if _ty_g != "" -%}{%- assign _ty_on = true -%}{%- endif -%}
+    {%- when "somet" -%}{%- for _ty_x in _ty_m.some -%}{%- assign _ty_g = _ty_x[1] | strip -%}{%- if _ty_g != "" -%}{%- assign _ty_on = true -%}{%- endif -%}{%- endfor -%}
+    {%- when "lomake" -%}{%- include osat/lomake-tapa.html moskeija=_ty_m lomake=_ty_o -%}{%- if _vastaanottaja -%}{%- assign _ty_on = true -%}{%- endif -%}
+    {%- else -%}{%- assign _ty_on = true -%}
+    {%- endcase -%}
+  {%- endfor -%}
+  {%- unless _ty_on -%}{%- assign _ty_n = _ty_s.url | remove: "/" -%}{%- assign _tyhjat = _tyhjat | append: _ty_n | append: "," -%}{%- endunless -%}
+{%- endfor -%}
+{%- assign _osio_tyhja = _ty_s_ot -%}{%- assign _osio_ukk = _ty_s_ou -%}{%- assign _osio_linkit = _ty_s_ol -%}

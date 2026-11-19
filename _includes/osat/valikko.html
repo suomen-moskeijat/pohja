@@ -4,7 +4,8 @@
     valikko: [{sivu: rukousajat}, {oma: hyvat-lahteet}, {nimi: {fi: …}, linkki: https://…}]
   joka määrää järjestyksen ja sisällön. Ilman listaa: oletusjärjestys, valikko_piilota ja
   omat sivut (valikossa: true, jarjestys).
-  Tyhjä sivu (ei vielä sisältöä, ks. osat/tyhjat-sivut.html) ei näy valikossa eikä alapalkin pikalinkeissä.
+  Tyhjä sivu (ei vielä sisältöä, ks. osat/tyhjat-sivut.html) ei näy valikossa eikä alapalkin pikalinkeissä: myös oma sivu,
+  jolla on vain otsikko.
 {%- endcomment -%}
 {%- assign m = include.moskeija -%}
 {%- assign j = '/' | relative_url -%}
@@ -39,6 +40,7 @@
   {%- elsif o.oma -%}
     {%- assign p = site.sivut | where: "slug", o.oma | first -%}
     {%- unless p -%}{%- continue -%}{%- endunless -%}
+    {%- capture _ty_k -%},{{ p.url | remove: "/" }},{%- endcapture -%}{%- if _tyhjat contains _ty_k -%}{%- continue -%}{%- endif -%}
     {%- assign _href = p.url | relative_url -%}
     {%- capture _nimi -%}{% if o.nimi %}{% include kt.html arvo=o.nimi %}{% else %}{% include sivunimi.html sivu=p %}{% endif %}{%- endcapture -%}
     {%- if page.url == p.url -%}{%- assign _nyt = ' aria-current="page"' -%}{%- endif -%}
@@ -65,6 +67,7 @@
 {%- for _l in _linkit -%}
   {%- if _l == "OMAT" -%}
     {%- for p in _omat -%}
+      {%- capture _ty_k -%},{{ p.url | remove: "/" }},{%- endcapture -%}{%- if _tyhjat contains _ty_k -%}{%- continue -%}{%- endif -%}
       {%- capture _nimi -%}{% include sivunimi.html sivu=p %}{%- endcapture -%}
       {%- assign _url = p.url | relative_url -%}
       {%- capture _nyt -%}{% if page.url == p.url %} aria-current="page"{% endif %}{%- endcapture -%}
