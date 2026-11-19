@@ -9,10 +9,11 @@ seo_avain: ilmoita_lapsesi
   Kysyttävää-kortti: oletuksena pois (lomakkeessa voi kysyä Lisätiedot-kentässä, ei kahta nappia samaan näkymään).
   Moskeija voi ottaa sen käyttöön paneelissa (Palvelut → Lasten opetukseen ilmoittautuminen), samoin kuin palvelun yhteydenoton,
   ja millä tekstillä (samat kentät kuin palvelun ja tapahtuman toimintonapissa: yhteys, yhteys_teksti, yhteys_nappi). Nappi vie Yhteystiedot-sivun kysymyslomakkeeseen (aiheena lasten opetus). Yhteystietoja ei lisätä
-  korttiin automaattisesti. Kortti piilotetaan, jos Kysy moskeijalta -lomake on pois käytöstä.
+  korttiin automaattisesti. Kortti piilotetaan, jos Kysy moskeijalta -lomake ei näy (pois käytöstä tai ei vastaanottajaa).
 {%- endcomment -%}
+{%- include osat/lomake-tapa.html moskeija=m -%}
 {%- assign _kysy = false -%}
-{%- if m.lasten_opetus.yhteys == true and m.yhteydenotto.kysy.pois != true -%}{%- assign _kysy = true -%}{%- endif -%}
+{%- if m.lasten_opetus.yhteys == true and _kysylomake -%}{%- assign _kysy = true -%}{%- endif -%}
 {%- capture _kt -%}{% if m.lasten_opetus.yhteys_teksti %}{% include kt.html arvo=m.lasten_opetus.yhteys_teksti %}{% endif %}{%- endcapture -%}{%- assign _kt = _kt | strip -%}
 {%- capture _kn -%}{% if m.lasten_opetus.yhteys_nappi %}{% include kt.html arvo=m.lasten_opetus.yhteys_nappi %}{% endif %}{%- endcapture -%}{%- assign _kn = _kn | strip -%}
 {% include osat/sivuhero.html yla="lasten_opetus" avain="ilmoita_lapsesi" johdanto=m.lasten_opetus.teksti %}

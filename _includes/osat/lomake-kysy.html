@@ -2,15 +2,15 @@
   Kysy moskeijalta -lomake. Moskeija päättää paneelissa (Yhteystiedot → Kysy moskeijalta -lomake):
   yhteydenotto.kysy.pois (piilossa), otsikko, teksti ja kentat (osat/lomakekentat.html, samat kuin muissa lomakkeissa).
   Ilman omia kenttiä: nimi, sähköposti, aihe ja viesti. Kenttien nimet ja vastaukset menevät viestiin suomeksi.
+  Lomake näkyy vain, kun viesteillä on vastaanottaja (osat/lomake-tapa.html: _kysylomake).
 {%- endcomment -%}
 {%- assign m = include.moskeija -%}
 {%- assign _ky = m.yhteydenotto.kysy -%}
-{%- unless _ky.pois -%}
-{%- assign wa = m.yhteydenotto.whatsapp_numero | default: m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
 {%- include osat/lomake-tapa.html moskeija=m -%}
+{%- if _kysylomake -%}
 {%- assign _aihe = site.data.kaannokset.kysy_otsikko.fi -%}
 {%- if _ky.otsikko -%}{%- assign _ot_json = _ky.otsikko | jsonify | slice: 0 -%}{%- if _ot_json == "{" -%}{%- assign _aihe = _ky.otsikko.fi | default: _aihe -%}{%- else -%}{%- assign _aihe = _ky.otsikko -%}{%- endif -%}{%- endif -%}
-<form class="u-kortti u-lomake" data-lomake data-osoite="{{ m.lomake_osoite }}" data-wa="{{ wa }}" data-tapa="{{ _tapa }}"{{ _lomake_attr }} data-sahkoposti="{{ m.sahkoposti }}" data-aihe="{{ _aihe | escape }}" novalidate>
+<form class="u-kortti u-lomake" data-lomake data-osoite="{{ _los }}" data-wa="{{ _wa }}" data-tapa="{{ _tapa }}"{{ _lomake_attr }} data-sahkoposti="{{ _sp }}" data-aihe="{{ _aihe | escape }}" novalidate>
   {% unless _ky.otsikko == false %}<h2>{% if _ky.otsikko %}{% include kt.html arvo=_ky.otsikko %}{% else %}{% include k.html a="kysy_otsikko" %}{% endif %}</h2>{% endunless %}
   {% unless _ky.teksti == false %}<p class="u-hieno">{% if _ky.teksti %}{% include kt.html arvo=_ky.teksti %}{% else %}{% include k.html a="kysy_teksti" %}{% endif %}</p>{% endunless %}
   {%- if _ky.kentat and _ky.kentat.size > 0 %}
@@ -28,4 +28,4 @@
   {% include osat/lomakeviestit.html %}
   <button type="submit" class="u-nappi u-nappi--kulta">{% include k.html a="laheta_viesti" %}</button>
 </form>
-{%- endunless -%}
+{%- endif -%}

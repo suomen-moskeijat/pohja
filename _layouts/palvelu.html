@@ -8,6 +8,7 @@ layout: sivu
   ei = ei mitään, nappi = nappi (ilmoittautuminen = mihin vie; tyhjä = Yhteystiedot-sivun kysymyslomake aiheella),
   oma = lomake tällä sivulla (lomake). Tekstit: yhteys_teksti ja yhteys_nappi (false = ei tekstiä).
   Vanhat arvot: lomake ja linkki = nappi; ilman toimintoa lomake.kaytossa → oma, ilmoittautuminen tai yhteys: true → nappi.
+  Lomake ja Kysy tästä -nappi näkyvät vain, kun viesteillä on vastaanottaja (osat/lomake-tapa.html); muuten sivun lopussa ei ole mitään.
 {%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {%- assign _toim = page.toiminto | default: "" -%}
@@ -18,6 +19,9 @@ layout: sivu
   {%- elsif _pi != "" or page.yhteys == true -%}{%- assign _toim = "nappi" -%}{%- endif -%}
 {%- endif -%}
 {%- if _toim == "oma" -%}{%- unless page.lomake.kentat and page.lomake.kentat.size > 0 -%}{%- assign _toim = "" -%}{%- endunless -%}{%- endif -%}
+{%- include osat/lomake-tapa.html moskeija=m lomake=page.lomake -%}
+{%- if _toim == "oma" and _vastaanottaja == false -%}{%- assign _toim = "" -%}{%- endif -%}
+{%- if _toim == "nappi" and _pi == "" and _kysylomake == false -%}{%- assign _toim = "" -%}{%- endif -%}
 <section class="u-sivuhero">
   <div class="u-kuvio" aria-hidden="true"></div>
   <div class="u-kehys">

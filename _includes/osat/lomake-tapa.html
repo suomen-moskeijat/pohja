@@ -1,16 +1,38 @@
 {%- comment -%}
-  Lomakkeen lähetystapa (yhteydenotto.lomakkeet hallintapaneelissa):
-  sahkoposti = lomakepalveluun tai sähköpostiin, whatsapp = WhatsApp-viestinä,
-  molemmat = kävijä valitsee, tyhjä = WhatsApp jos numero on, muuten sähköposti.
-  Asettaa muuttujat _tapa (data-tapa) ja _tapavalinta (kävijän valinta, kun molemmat ovat käytössä).
+  Lomakkeen vastaanottaja ja lähetystapa: yksi sääntö kaikille lomakkeille ja niihin vieville napeille.
+  Sama sääntö paneelissa ja lomakkeen lähetyksessä: hallinta public/vastaanottaja.js.
+  Parametrit: moskeija, lomake (valinnainen: lomakkeen oma valinta lahetys / sahkoposti / whatsapp).
+
+  Vastaanottaja: yhteydenotto.sahkoposti tai moskeijan sähköposti, yhteydenotto.whatsapp_numero tai moskeijan WhatsApp,
+  lomakepalvelu (lomake_osoite). Lomakkeen oma osoite tai numero korvaa saman kanavan moskeijan vastaanottajan.
+  Lähetystapa (yhteydenotto.lomakkeet): sahkoposti, whatsapp, molemmat = kävijä valitsee,
+  tyhjä = WhatsApp jos numero on, muuten sähköposti. Lomakkeen oma valinta ohittaa moskeijan valinnan.
+
+  Asettaa muuttujat:
+  _vastaanottaja  true, kun lomakkeen viesteillä on vastaanottaja (lomake näkyy vain silloin)
+  _kysylomake     true, kun Kysy moskeijalta -lomake näkyy (moskeijan vastaanottaja eikä lomaketta ole piilotettu):
+                  Kysy tästä- ja Ilmoittaudu-napit, jotka vievät Yhteystiedot-sivun lomakkeeseen, näkyvät vain silloin
+  _sp, _wa, _los  sähköposti, WhatsApp-numero (vain numerot) ja lomakepalvelun osoite (data-sahkoposti, data-wa, data-osoite)
+  _tapa, _tapavalinta, _lomake_attr, _ansa  lähetystapa, kävijän valinta, suora lähetys ja roskapostisuoja
 {%- endcomment -%}
 {%- assign _m = include.moskeija -%}
+{%- assign _wa = _m.yhteydenotto.whatsapp_numero | default: _m.whatsapp | default: "" | strip | remove: " " | remove: "+" | remove: "-" -%}
+{%- assign _sp = _m.yhteydenotto.sahkoposti | default: _m.sahkoposti | default: "" | strip -%}
+{%- assign _los = _m.lomake_osoite | default: "" | strip -%}
+{%- assign _kysylomake = false -%}
+{%- if _wa != "" or _sp != "" or _los != "" -%}{%- unless _m.yhteydenotto.kysy.pois -%}{%- assign _kysylomake = true -%}{%- endunless -%}{%- endif -%}
 {%- assign _tapa = _m.yhteydenotto.lomakkeet | default: "" -%}
 {%- if _tapa == "" and _m.yhteydenotto.whatsapp == "piilossa" -%}{%- assign _tapa = "sahkoposti" -%}{%- endif -%}
-{%- comment -%} Viestien numero ja osoite: paneelin "johon viestit tulevat" -kentät, tyhjä = moskeijan yhteystiedot {%- endcomment -%}
-{%- assign _wa = _m.yhteydenotto.whatsapp_numero | default: _m.whatsapp | default: "" | remove: " " -%}
-{%- assign _sp = _m.lomake_osoite | default: _m.yhteydenotto.sahkoposti | default: _m.sahkoposti | default: "" -%}
-{%- if _tapa == "molemmat" -%}{%- if _wa == "" or _sp == "" -%}{%- assign _tapa = "" -%}{%- endif -%}{%- endif -%}
+{%- assign _lov = include.lomake -%}
+{%- if _lov.lahetys == "sahkoposti" or _lov.lahetys == "whatsapp" -%}{%- assign _tapa = _lov.lahetys -%}{%- endif -%}
+{%- if _lov.lahetys == "sahkoposti" -%}
+  {%- assign _oma = _lov.sahkoposti | default: "" | strip -%}{%- if _oma != "" -%}{%- assign _sp = _oma -%}{%- assign _los = "" -%}{%- endif -%}
+{%- elsif _lov.lahetys == "whatsapp" -%}
+  {%- assign _oma = _lov.whatsapp | default: "" | strip | remove: " " | remove: "+" | remove: "-" -%}{%- if _oma != "" -%}{%- assign _wa = _oma -%}{%- endif -%}
+{%- endif -%}
+{%- assign _vastaanottaja = false -%}
+{%- if _wa != "" or _sp != "" or _los != "" -%}{%- assign _vastaanottaja = true -%}{%- endif -%}
+{%- if _tapa == "molemmat" -%}{%- if _wa == "" or _sp == "" and _los == "" -%}{%- assign _tapa = "" -%}{%- endif -%}{%- endif -%}
 {%- comment -%} Suora lähetys palvelimen kautta: repo (julkaisu lisää site.repo; muuten baseurlista) {%- endcomment -%}
 {%- assign _repo = site.repo | default: site.baseurl | remove: "/" -%}
 {%- capture _lomake_attr -%}{% if site.lomake_api and _repo != "" %} data-api="{{ site.lomake_api }}" data-repo="{{ _repo }}"{% endif %}{%- endcapture -%}

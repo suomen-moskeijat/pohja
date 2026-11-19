@@ -7,5 +7,7 @@ permalink: /yhteystiedot/
 {% if m.yhteystiedot_johdanto == false %}{% include osat/sivuhero.html avain="yhteystiedot" %}{% elsif m.yhteystiedot_johdanto %}{% include osat/sivuhero.html avain="yhteystiedot" johdanto=m.yhteystiedot_johdanto %}{% else %}{% include osat/sivuhero.html avain="yhteystiedot" johdanto_avain="yhteystiedot_teksti" %}{% endif %}
 <div class="u-kehys u-sivu">
   {% include osat/vierailu.html moskeija=m otsikko=false %}
-  {% unless m.yhteydenotto.kysy.pois %}<div class="u-osio u-sivu--kapea" id="kysy">{% include osat/lomake-kysy.html moskeija=m %}</div>{% endunless %}
+  {%- comment -%} Kysy moskeijalta -lomake vain, kun viesteillä on vastaanottaja eikä lomaketta ole piilotettu (osat/lomake-tapa.html) {%- endcomment -%}
+  {%- include osat/lomake-tapa.html moskeija=m -%}
+  {% if _kysylomake %}<div class="u-osio u-sivu--kapea" id="kysy">{% include osat/lomake-kysy.html moskeija=m %}</div>{% endif %}
 </div>

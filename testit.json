@@ -1447,6 +1447,43 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-19"
+    },
+    {
+      "id": "lomake-vain-vastaanottajalla",
+      "otsikko": "Lomake näkyy vain, kun viesteillä on vastaanottaja",
+      "alue": "sivut",
+      "kuvaus": "Kysy moskeijalta -lomake, omien sivujen lomakeosiot, palvelun ja tapahtuman lomake sekä niihin vievät Kysy tästä- ja Ilmoittaudu-napit näkyvät vain, kun lomakkeen viesteille on sähköposti tai WhatsApp-numero (Yhteystiedot: Mihin lomakkeiden viestit tulevat, varalla moskeijan oma sähköposti ja WhatsApp). Lomakkeen oma vastaanottaja (lomake → Mihin vastaukset tulevat) riittää sille lomakkeelle. Paneelin Yleiskatsauksessa näkyy huomautus ja valmiuslistan kohta, kun vastaanottaja puuttuu.",
+      "aloitus": "Avaa testipaneeli → testimoskeija → Yhteystiedot ja kirjoita muistiin, mitä kohtaan Mihin lomakkeiden viestit tulevat on valittu",
+      "kohdat": [
+        "Poista sähköposti ja WhatsApp-numero (myös kohdasta Mihin lomakkeiden viestit tulevat) ja tallenna — Missä: Testipaneeli → Yhteystiedot",
+        "Huomautus \"Lomake ei näy: lisää mihin viestit tulevat\" näkyy ja vie Yhteystiedot-sivun oikeaan kohtaan — Missä: Testipaneeli → Yleiskatsaus → Huomautukset",
+        "Valmiuslistalla on kohta \"Mihin viestit tulevat\" tekemättömänä — Missä: Testipaneeli → Yleiskatsaus → Sivun valmius",
+        "Kysy moskeijalta -lomaketta ei ole — Missä: Testimoskeijan sivu → Yhteystiedot",
+        "Palvelun sivulla ei ole Kysy tästä -nappia eikä tapahtuman sivulla Ilmoittaudu-nappia, joka veisi lomakkeeseen — Missä: Testimoskeijan sivu → Palvelut → palvelu ja Tapahtumat → tapahtuma",
+        "Esikatselu näyttää saman: palvelun Kysy tästä -nappi ja oma lomake puuttuvat — Missä: Testipaneeli → Palvelut → palvelu",
+        "Lomake, jolle on valittu oma sähköposti (Mihin vastaukset tulevat → Sähköpostiin + osoite), näkyy silti — Missä: Testipaneeli → Palvelut → palvelu → Mitä palvelun sivun lopussa on? → Lomake",
+        "Lisää sähköposti tai WhatsApp-numero takaisin: lomake ja napit näkyvät taas, huomautus poistuu ja valmiuslistan kohta on tehty — Missä: Testipaneeli → Yhteystiedot → Yleiskatsaus ja Testimoskeijan sivu"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: yhteystiedot",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/yhteystiedot"
+        },
+        {
+          "nimi": "Testipaneeli: yleiskatsaus",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija"
+        },
+        {
+          "nimi": "Testimoskeijan yhteystiedot",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/yhteystiedot/"
+        },
+        {
+          "nimi": "Testimoskeijan palvelut",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/palvelut/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-19"
     }
   ]
 }
