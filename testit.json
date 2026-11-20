@@ -2297,6 +2297,43 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-20"
+    },
+    {
+      "id": "rukousajat-lahde-tarkistus",
+      "otsikko": "Rukousaikojen lähde toimii aina: tarkistus valittaessa, huomautus ja valvonta",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Kun rukousaikojen lähde ja tunnus valitaan, paneeli hakee ajat heti ja kertoo \"Löytyi: … – tänään Fajr …\" tai syyn, miksi aikoja ei löytynyt; väärää tunnusta ei tallenneta huomaamatta. Julkaisu tarkistaa ajat ennen julkaisua (kellonajat, järjestys Fajr < auringonnousu < Dhuhr < Asr < Maghrib < Isha, ei aukkoja): rikkinäistä ei julkaista, vaan vanhat ajat jäävät ja tila kertoo virheen. Yleiskatsaukseen tulee huomautus, kun haku epäonnistuu toistuvasti tai aikataulu loppuu alle 3 päivässä, ja Valvonta-sivulla ylläpitäjä näkee moskeijat ja lähteiden päivittäisen tarkistuksen. Masjidboxin julkisen sivun uusi muoto (11/2026) luetaan taas.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa Sivusto → Rukousajat (Lähde ja iqamah). Älä tallenna kokeiluja, ellei kohta sitä pyydä; palauta lopuksi lähde ennalleen.",
+      "kohdat": [
+        "Valitse Mawaqit ja kirjoita tunnukseksi vaara-tunnus: hetken päästä lukee \"Aikoja ei löytynyt: tällä tunnuksella ei löytynyt moskeijaa. Tarkista tunnus.\" punaisessa laatikossa — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Paina Tallenna väärällä tunnuksella: paneeli kysyy \"Lähteestä ei löytynyt rukousaikoja … Tallennetaanko silti?\"; Peruuta jättää tallentamatta — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Kirjoita tunnukseksi hyvinkaa-islam-keskus-hyvinkaa-05800-finland: lukee \"Löytyi: Hyvinkää Islam Keskus – tänään Fajr …, Dhuhr (perjantaina Jumua) …, Asr …, Maghrib …, Isha …\" ja alla, mihin päivään asti ajat ulottuvat — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Valitse rukousajat.fi: lukee \"Löytyi: rukousajat.fi – tänään Fajr …\"; valitse Masjidbox ja hae moskeija nimellä: valinnan jälkeen lukee \"Löytyi: <moskeija> – tänään …\" (tai syy, jos rajapinta-avainta ei ole) — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Puhelimella (390 ja 320 px) tarkistuksen laatikko mahtuu ruutuun eikä sivu vieri sivuttain — Missä: Testipaneeli puhelimella → Sivusto → Rukousajat",
+        "Ylläpitäjänä: Valvonta-sivulla on Rukousajat-osio; Tarkista lähteet nyt näyttää Masjidboxin julkisen sivun, Mawaqitin ja rukousajat.fi:n vihreällä (\"Toimii: … päivää\") — Missä: Testipaneeli → Ylläpito → Valvonta",
+        "Ylläpitäjänä: Tarkista nyt (julkaisuputki) päivittää myös rukousaikojen listan; jos jonkin moskeijan haku epäonnistuu toistuvasti tai aikataulu loppuu alle 3 päivässä, moskeija näkyy listassa ja sen Yleiskatsauksessa on huomautus — Missä: Testipaneeli → Ylläpito → Valvonta ja moskeijan Yleiskatsaus",
+        "Testimoskeijan sivun rukousajat ovat ennallaan ja sivulla /rukousajat/tila.json kertoo lähteen, viimeisimmän haun ja viimeisen päivän — Missä: Testimoskeijan sivu → Rukousajat"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Rukousajat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/rukousajat"
+        },
+        {
+          "nimi": "Testipaneeli: Valvonta",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/yllapito/valvonta"
+        },
+        {
+          "nimi": "Sivu: Rukousajat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/"
+        },
+        {
+          "nimi": "Sivu: rukousaikojen tila",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/tila.json"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-20"
     }
   ]
 }
