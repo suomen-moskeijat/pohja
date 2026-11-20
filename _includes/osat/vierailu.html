@@ -14,6 +14,11 @@
       {%- capture _j -%}{% include osat/jumua-aika.html moskeija=m %}{%- endcapture -%}{%- assign _j = _j | strip | split: "|" -%}
       {% if _j[0] and _j[0] != "" %}<li><span class="u-ikoni u-ikoni--pieni">{% include ikoni-ph.html nimi="moskeija" koko=20 %}</span><span><small>{% include k.html a="jumua" %}</small><strong dir="ltr" data-klo>{{ _j[0] }}</strong>{% if _j[2] and _j[2] != "" %} <small>({% include k.html a="seuraava_perjantai" %} <span dir="ltr">{{ _j[2] }}</span>)</small>{% endif %}</span></li>{% endif %}
     </ul>
+    {%- comment -%} Jumua Masjidboxista (päivä tiedossa = lähteen aika): Masjidboxin attribuutio ajan yhteyteen (ehto, #31) {%- endcomment -%}
+    {%- if _j[0] and _j[0] != "" and _j[2] and _j[2] != "" -%}{%- capture _vl -%}{% include osat/rk-lahde.html moskeija=m %}{%- endcapture -%}
+    {%- if _vl == "masjidbox" %}
+    {% include osat/rukouslahde.html moskeija=m luokka="u-vierailu__lahde" %}
+    {%- endif -%}{%- endif %}
     <div class="u-napit">
       <a class="u-nappi u-nappi--kulta" href="https://www.google.com/maps/dir/?api=1&amp;destination={% include osat/reitti.html moskeija=m %}" target="_blank" rel="noopener">{% include ikoni-ph.html nimi="sijainti" koko=18 %} {% include k.html a="reittiohjeet" %}</a>
       {% if wa != "" %}<a class="u-nappi u-nappi--reuna" href="https://wa.me/{{ wa }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" koko=18 %} WhatsApp</a>{% endif %}

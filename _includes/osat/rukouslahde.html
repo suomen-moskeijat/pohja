@@ -1,15 +1,21 @@
 {%- comment -%}
-  Rukousaikojen lähde näkyviin aikojen yhteyteen. Masjidboxin rajapinnan ehto: "Prayer times provided by Masjidbox"
-  ja "Ilmoita virheestä" -linkki jokaisella sivulla, jolla ajat näkyvät (kerran: etusivulla seuraavan rukouksen kortissa,
-  Rukousajat-sivulla kuukauden aikataulun alla). Mawaqit ja rukousajat.fi mainitaan avoimuuden vuoksi.
+  Rukousaikojen lähde näkyviin aikojen yhteyteen. Masjidboxin rajapinnan ehto (hub.masjidbox.com/docs/attribution): jokaisessa
+  kohdassa, jossa Masjidboxin ajat näkyvät, samalla rivillä "Prayer times provided by Masjidbox · Report an error · Claim this masjid".
+  Linkit ovat Masjidboxin antamat (links.report aikataulusta, links.claim moskeijan tiedoista; _data/haku/<slug>.json: raportti,
+  haltuunotto) sellaisinaan, eikä niitä haaroiteta moskeijan mukaan; teksti on Masjidboxin oma englanniksi kaikilla kielillä (#31).
+  Kohdat: etusivulla seuraavan rukouksen kortti, Rukousajat-sivulla kuukauden aikataulun alla, Ramadan, ja Jumuan vieressä
+  (osat/vierailu.html), kun Jumua tulee Masjidboxista. Julkiselta Masjidbox-sivulta luetuilla ajoilla (ei rajapintaa) linkkejä ei ole:
+  "Ilmoita virheestä" vie moskeijan yhteystietoihin. Mawaqit ja rukousajat.fi mainitaan avoimuuden vuoksi.
   Parametri: moskeija, luokka (valinnainen)
 {%- endcomment -%}
 {%- assign _rl_m = include.moskeija -%}
 {%- assign _rl_h = site.data.haku[_rl_m.slug] -%}
 {%- capture _rl_l -%}{% include osat/rk-lahde.html moskeija=_rl_m %}{%- endcapture -%}
-{%- comment -%} Ilmoita virheestä: Masjidboxin rajapinnan antama linkki (links.report), muuten moskeijan yhteystiedot – moskeija omistaa ajat. {%- endcomment -%}
-{%- capture _rl_virhe -%}{%- if _rl_l == "masjidbox" and _rl_h.raportti and _rl_h.raportti != "" -%}<a href="{{ _rl_h.raportti }}" target="_blank" rel="noopener">{% include k.html a="ilmoita_virheesta" %}</a>{%- else -%}<a href="{{ '/yhteystiedot/' | relative_url }}">{% include k.html a="ilmoita_virheesta" %}</a>{%- endif -%}{%- endcapture -%}
-{%- if _rl_l == "masjidbox" -%}
+{%- comment -%} Ilmoita virheestä ilman Masjidboxin linkkejä: moskeijan yhteystiedot – moskeija omistaa ajat. {%- endcomment -%}
+{%- capture _rl_virhe -%}<a href="{{ '/yhteystiedot/' | relative_url }}">{% include k.html a="ilmoita_virheesta" %}</a>{%- endcapture -%}
+{%- if _rl_l == "masjidbox" and _rl_h.raportti and _rl_h.raportti != "" -%}
+<p class="u-rukouslahde {{ include.luokka }}" lang="en">Prayer times provided by <a href="https://masjidbox.com" target="_blank" rel="noopener">Masjidbox</a> · <a href="{{ _rl_h.raportti }}" target="_blank" rel="noopener">Report an error</a>{% if _rl_h.haltuunotto and _rl_h.haltuunotto != "" %} · <a href="{{ _rl_h.haltuunotto }}" target="_blank" rel="noopener">Claim this masjid</a>{% endif %}</p>
+{%- elsif _rl_l == "masjidbox" -%}
 <p class="u-rukouslahde {{ include.luokka }}">Prayer times provided by <a href="https://masjidbox.com" target="_blank" rel="noopener">Masjidbox</a> · {{ _rl_virhe }}</p>
 {%- elsif _rl_l == "mawaqit" -%}
 <p class="u-rukouslahde {{ include.luokka }}">{% include k.html a="rukousajat_lahde" %}: <a href="https://mawaqit.net/fi/{{ _rl_m.rukousajat.tunnus }}" target="_blank" rel="noopener">Mawaqit</a> · {{ _rl_virhe }}</p>

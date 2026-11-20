@@ -115,7 +115,7 @@ function jumua() {
     const mu = (asetus.muutokset || []).filter((x) => String(x.paiva).slice(0, 10) === pvm(p))[0];
     [j1, asetus.juma2 ? hki(p, asetus.juma2) : null].forEach((a, j) => {
       if (!ok(a)) return;
-      t.push({ uid: `jumua-${pvm(p)}-${j + 1}`, alku: a, loppu: new Date(a.getTime() + 45 * MIN), nimi: asetus.juma2 ? `Jumua ${j + 1} (perjantairukous)` : 'Jumua (perjantairukous)', kuvaus: mu && mu.huom ? mu.huom : '', paikka });
+      t.push({ uid: `jumua-${pvm(p)}-${j + 1}`, alku: a, loppu: new Date(a.getTime() + 45 * MIN), nimi: asetus.juma2 ? `Jumua ${j + 1} (perjantairukous)` : 'Jumua (perjantairukous)', kuvaus: [mu && mu.huom ? mu.huom : '', a1 && a1.jumua && j === 0 ? MAININTA : ''].filter(Boolean).join('\n'), paikka }); // lähteen Jumua: lähteen maininta
     });
   }
   return t;

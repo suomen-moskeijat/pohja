@@ -215,7 +215,8 @@ def jasenna_masjidbox_api(d):
         raise Muoto("Masjidbox ei palauttanut aikoja")
     lahde = d.get("source") or {}
     tieto = {"tapa": "rajapinta", "tyyppi": lahde.get("type", ""), "tila": lahde.get("status", ""),
-             "raportti": (d.get("links") or {}).get("report", ""), "vanha": bool(d.get("vanha"))}
+             "raportti": (d.get("links") or {}).get("report", ""), "haltuunotto": (d.get("links") or {}).get("claim", ""),
+             "vanha": bool(d.get("vanha"))}
     return paivat, tieto
 
 
@@ -544,7 +545,7 @@ def tallenna_tila(slug, tila):
         except Exception:
             vanha = {}
     if not tila.get("ok"):  # epäonnistui: viimeisin onnistunut haku jää näkyviin, ja peräkkäiset epäonnistumiset lasketaan
-        tila = {**{k: vanha.get(k) for k in ("haettu", "tapa", "tyyppi", "tila", "raportti") if vanha.get(k)}, **tila,
+        tila = {**{k: vanha.get(k) for k in ("haettu", "tapa", "tyyppi", "tila", "raportti", "haltuunotto") if vanha.get(k)}, **tila,
                 "perakkain": (vanha.get("perakkain") or 0) + 1 if vanha.get("ok") is False else 1}
     else:
         tila = {**tila, "perakkain": 0}
