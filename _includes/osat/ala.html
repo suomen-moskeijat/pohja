@@ -1,7 +1,6 @@
 {%- comment -%} Alapalkki: logo, tunnuslause, linkit, yhteystiedot ja somet. {%- endcomment -%}
 {%- assign m = include.moskeija -%}
 {%- assign j = '/' | relative_url -%}
-{%- assign s = m.some -%}
 {%- assign wa = m.whatsapp | default: "" | remove: " " | remove: "+" | remove: "-" -%}
 {%- if m.yhteydenotto.whatsapp == "piilossa" -%}{%- assign wa = "" -%}{%- endif -%}
 <footer class="u-ala">
@@ -12,11 +11,8 @@
       {% if _logo and _logo != "" %}<img class="u-ala__logo" src="{{ _logo | relative_url }}" alt="{{ m.title }}" width="320" height="144" loading="lazy">{% else %}<p class="u-ala__nimi">{% include nimi.html moskeija=m %}</p>{% endif %}
       {% if m.tunnuslause %}<p class="u-ala__motto">{% include kt.html arvo=m.tunnuslause %}</p>{% endif %}
       <div class="u-ala__somet">
-        {%- comment -%} kenttä:kuvake:nimi – vain moskeijan lisäämät näytetään {%- endcomment -%}
-        {%- assign _palvelut = "instagram:ig:Instagram,facebook:fb:Facebook,youtube:yt:YouTube,tiktok:tt:TikTok,telegram:tg:Telegram,snapchat:sc:Snapchat,x:x:X,threads:th:Threads,whatsapp_kanava:wak:WhatsApp-kanava" | split: "," -%}
-        {%- for _p in _palvelut -%}{%- assign _o = _p | split: ":" -%}{%- assign _avain = _o[0] -%}{%- assign _kuvake = _o[1] -%}{%- assign _url = s[_avain] -%}
-        {% if _url and _url != "" %}<a href="{{ _url }}" target="_blank" rel="noopener" aria-label="{{ _o[2] }}">{% include osat/somekuvake.html nimi=_kuvake %}</a>{% endif %}
-        {%- endfor %}
+        {%- comment -%} Vain moskeijan lisäämät kanavat (osat/somelinkit.html) {%- endcomment -%}
+        {% include osat/somelinkit.html moskeija=m %}
         {% if wa != "" %}<a href="https://wa.me/{{ wa }}" target="_blank" rel="noopener" aria-label="WhatsApp">{% include osat/somekuvake.html nimi="wa" %}</a>{% endif %}
       </div>
     </div>

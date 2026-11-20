@@ -395,6 +395,18 @@ html.u-lukittu { overflow: hidden; }
   .u-vierailu { grid-template-columns: 1fr 1.2fr; }
   .u-vierailu__tiedot { padding: 36px; justify-content: center; }
 }
+.u-vierailu__somet { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding-top: 18px; border-top: 1px solid var(--raja); color: var(--hieno); font-size: 15px; }
+/* Yhteystiedot-sivu: yhteystiedot alkureunassa ja Kysy moskeijalta -lomake vieressä; puhelimella allekkain, yhteystiedot ensin.
+   Ilman lomaketta yhteystiedot koko leveydellä (osoite ja kartta vierekkäin kuten etusivulla). */
+.u-yhteystiedot { display: grid; gap: 24px; align-items: start; }
+/* Tietokoneella sarakkeet yhtä korkeat (ei tyhjää kaistaa lyhyemmän alle): kartta ja viestikenttä venyvät */
+@media (min-width: 1024px) {
+  .u-yhteystiedot--lomake { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 32px; align-items: stretch; }
+  .u-yhteystiedot--lomake .u-vierailu { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; height: 100%; }
+  .u-yhteystiedot--lomake .u-vierailu__tiedot { padding: 32px; }
+  .u-yhteystiedot--lomake .u-lomake { height: 100%; }
+  .u-yhteystiedot--lomake .u-lomake > .u-kentta:has(> textarea), .u-yhteystiedot--lomake .u-lomake > .u-kentta > textarea { flex: 1; }
+}
 
 /* ---------- 9. Alasivut ---------- */
 .u-sivuhero { position: relative; isolation: isolate; overflow: hidden; padding: 40px 0 48px; }
@@ -1279,8 +1291,6 @@ a.u-palvelu__linkki:hover, .u-tapahtuma a:hover, .u-rj__kortti:hover, a.u-rmh:ho
   .u-lahjoitus > :not(.u-kuvio):not(.u-nappi) { grid-column: 1; }
   .u-lahjoitus > .u-nappi { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
 }
-/* Yhteystiedot: kysymyslomake keskelle, ei tyhjää kaistaa oikealle */
-.u-sivu > #kysy.u-sivu--kapea { margin-inline: auto; }
 /* Tekstisisällön arabiankieliset kappaleet (Koraanin jae): lukufontti, oikealta vasemmalle, ei harvennusta */
 .u-proosa .u-arabia { font: 400 1.5em/1.9 "Amiri", "Noto Naskh Arabic", serif; letter-spacing: 0; text-align: start; color: var(--paa); }
 .u-proosa blockquote { margin-inline: 0; padding-inline-start: 20px; border-inline-start: 2px solid var(--raja); }
