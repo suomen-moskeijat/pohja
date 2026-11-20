@@ -204,11 +204,12 @@ Rukousajat tulevat automaattisesti, eikä niitä tarvitse muokata sivulla:
 |---|---|
 | **Masjidbox** | adhan, iqamah ja perjantaina Jumuah. Kun muutat aikoja Masjidboxissa, sivu seuraa perässä. |
 | **Mawaqit** | adhan, iqamah, Jumuah ja moskeijan kuvat |
-| **rukousajat.fi** | Helsinki, Espoo ja Vantaa, jos moskeijalla ei ole omaa palvelua |
-| **laskenta** | muualla sijainnista samalla tavalla kuin rukousajat.fi |
+| **rukousajat.fi** | Helsinki, Espoo ja Vantaa, jos moskeijalla ei ole omaa palvelua (oletus näissä kaupungeissa) |
+
+Ilman lähdettä ja aikoja sivulla lukee "Rukousajat lisätään pian". Sivusto ei laske aikoja itse.
 
 Ajat päivittyvät kerran tunnissa. Lisäksi lähteenä voi olla **oma aikataulu**, jonka moskeija kirjoittaa
-tai liittää Excelistä paneelissa kuukausi kerrallaan (tyhjät päivät lasketaan sijainnista).
+tai liittää Excelistä paneelissa kuukausi kerrallaan (tyhjä päivä näkyy sivulla tyhjänä).
 
 Paneelissa (Rukousajat ja Jumua) näkyvät **seuraavat 7 päivää** juuri niin kuin ne ovat sivulla, ja
 näkymä päivittyy heti asetuksia muutettaessa. Lisäksi:
@@ -218,7 +219,6 @@ näkymä päivittyy heti asetuksia muutettaessa. Lisäksi:
 - **Jumua** ja valinnainen **toinen Jumua**.
 - **Muutokset yksittäisiin päiviin** (esim. juhlapäivä, ramadanin Isha): vain muuttuvat ajat. Menneet
   päivät poistuvat itsestään. Toimii kaikkien lähteiden kanssa.
-- **Laskentatapa**, **Asr (Shafi/Hanafi)** ja **minuuttikorjaukset**, kun ajat lasketaan sijainnista.
 
 **Mistä ajat tulevat ja mitä puuttuu.** Paneelin Rukousajat-sivulla kohdassa "Miten ajat haetaan" näkyy valitun lähteen hakutapa, milloin ajat haettiin viimeksi, mihin päivään asti aikoja on ja mahdollinen virhe. Lähteestä haettuja aikoja ei koskaan lasketa itse: päivät, joita lähde ei ole vielä julkaissut, näkyvät viivana.
 - **Masjidbox:** valitse moskeija hakemalla nimellä. Ajat tulevat Masjidboxin virallisesta rajapinnasta (kuluva ja seuraava kuukausi). Ylläpitäjä lisää rajapinnan avaimen kerran kaikille (Ylläpito → Rukousaikapalvelut, ohjeet sivulla). Ilman avainta ajat luetaan väliaikaisesti julkiselta sivulta (vain 7 päivää). Sivulla näkyy Masjidboxin ehtojen mukaan "Prayer times provided by Masjidbox" ja "Ilmoita virheestä".
@@ -342,7 +342,7 @@ suomen-moskeijat/<moskeija>       ← yhden moskeijan tiedot + julkaisu.yml, jok
 2. **Actions → Luo ehdotussivut listasta → Run workflow.** Kenttä *vain* tyhjäksi = kaikki listan moskeijat,
    joilla ei vielä ole sivua. Voit myös kirjoittaa yhden repon nimen.
 3. Sivut syntyvät **ehdotuksina**, ja niissä on vain listan julkiset tiedot: nimi, osoite, yhteystiedot ja linkit.
-   Rukousajat tulevat rukousajat.fi:stä (Helsinki, Espoo ja Vantaa) tai lasketaan sijainnista.
+   Rukousajat tulevat rukousajat.fi:stä (Helsinki, Espoo ja Vantaa); muualla sivulla lukee "Rukousajat lisätään pian".
 4. Hakemisto https://suomen-moskeijat.github.io/pohja/ päivittyy. Lähetä moskeijalle linkki heidän sivuunsa.
 
 > Moskeijan omaa nettisivua (logo, kuvat, tekstit) **ei** tuoda ehdotukseen. Se tuodaan vasta, kun moskeija

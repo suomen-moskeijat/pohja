@@ -121,12 +121,12 @@ Moskeijan kannattaa tehdä itse (kerran, ilmaiseksi):
 | `.github/workflows/lisaa-moskeija.yml` | Lomake: Lisää moskeija |
 | `malli/` | Mallitiedostot uuden moskeijan repoon |
 
-Kuvakkeet: Phosphor Icons (MIT). Rukousaikojen laskenta: adhan.js (MIT).
+Kuvakkeet: Phosphor Icons (MIT).
 
 ## Rukousajat ja kuvat
 
-Sivusto toimii jokaiselle moskeijalle ilman ylimääräistä työtä. Jos moskeijalla on oma
-rukousaikapalvelu tai kuvia, ne saa käyttöön yhdellä asetuksella. Kaikki asetukset ovat
+Sivusto ei laske rukousaikoja itse: ajat tulevat moskeijan valitsemasta lähteestä tai sen omasta
+aikataulusta. Ilman lähdettä ja aikoja Rukousajat-sivulla ja etusivulla lukee "Rukousajat lisätään pian". Kaikki asetukset ovat
 moskeijan repon tiedostossa `_moskeijat/<moskeija>.md`, ja niitä muokataan hallintapaneelissa
 (moskeija → Rukousajat ja Jumua).
 
@@ -134,8 +134,9 @@ moskeijan repon tiedostossa `_moskeijat/<moskeija>.md`, ja niitä muokataan hall
 
 ```yaml
 rukousajat:
-  lahde: masjidbox        # masjidbox | mawaqit | rukousajat | taulukko | laskenta
-  tunnus: masjid-sunnah-helsinki
+  lahde: masjidbox        # masjidbox | mawaqit | rukousajat | taulukko
+  masjidbox_id: msj_…     # Masjidbox: moskeija valitaan paneelissa nimellä (virallinen rajapinta)
+  tunnus: ""              # Mawaqit: mawaqit.net/fi/TUNNUS (Masjidboxilla vain vanha varatapa)
   iqamah: { fajr: 10, dhuhr: 10, asr: 10, maghrib: 5, isha: 10 }   # valinnainen: moskeijan antamat minuutit adhanin jälkeen
 ```
 
@@ -145,23 +146,16 @@ rukousajat:
 | **Mawaqit** | `mawaqit` | osoitteen `mawaqit.net/fi/TUNNUS` loppuosa | Adhan, iqamah ja Jumuah haetaan **automaattisesti kerran tunnissa** (kuluva + 2 seuraavaa kuukautta). Myös moskeijan **kuvat** Mawaqitista lisätään galleriaan. |
 | **Ei omaa, pääkaupunkiseutu** | `rukousajat` (oletus, jos kaupunki on Helsinki, Espoo tai Vantaa) | – | Ajat haetaan **rukousajat.fi:n Helsingin aikataulusta** kerran tunnissa (kuluva + 2 kuukautta). Iqamah = rukousaika + `iqamah_oletus` minuuttia. |
 | **Oma aikataulu** (Excel, PDF tms.) | `taulukko` | – | Kuukauden ajat lisätään CSV-tiedostona: `_data/aikataulut/<moskeija>/VVVV-KK.csv` (malli alla). |
-| **Ei omaa, muu kaupunki** | `laskenta` (tai jätä tyhjäksi) | – | Ajat lasketaan **samalla tavalla kuin [rukousajat.fi](https://www.rukousajat.fi/) muissa kaupungeissa** moskeijan koordinaateista (`sijainti: lat, lon`). Iqamah = rukousaika + `iqamah_oletus` minuuttia. |
+| **Ei lähdettä, muu kaupunki** | tyhjä | – | Aikoja ei näytetä: Rukousajat-sivulla ja etusivulla lukee **"Rukousajat lisätään pian"**, kunnes moskeija valitsee lähteen tai lisää oman aikataulun. |
 
 **Miten rukousajat.fi toimii:** Helsingissä, Espoossa ja Vantaalla se näyttää valmiin
-vuosiaikataulun (sama kuin esim. Masjid Sunnahin Masjidbox-näytöllä); muualla se laskee ajat.
-Sivusto tekee samoin. Taulukko luetaan rukousajat.fi:n sovelluksesta joka ajossa, joten jos
-se päivittyy, sivu seuraa. Jos haku joskus epäonnistuu, käytetään viimeisimpiä haettuja aikoja
-ja niiden jälkeen laskentaa.
+vuosiaikataulun (Helsingin aikataulu); muualla se laskee ajat sijainnista. Siksi rukousajat.fi on
+oletuslähde vain näissä kolmessa kaupungissa (kaupunki on muokattavissa paneelin Rukousajat-sivulla,
+jossa oletuksen peruste näkyy). Taulukko luetaan rukousajat.fi:n sovelluksesta joka ajossa. Jos haku
+epäonnistuu, käytetään viimeisimpiä haettuja aikoja; niiden jälkeen päivät jäävät tyhjiksi.
 
-**Tarkistettu oikeaa rukousajat.fi:tä vasten (7.11.2026):** kaupunkia vaihtamalla
-Tampere, Turku, Oulu, Jyväskylä ja Kuopio täsmäsivät sivuston laskentaan minuutilleen;
-Espoo ja Vantaa näyttävät rukousajat.fi:ssä Helsingin taulukon, jonka sivusto hakee
-lähteellä `rukousajat`. Jokainen moskeija saa siis ajat oman sijaintinsa mukaan.
-
-Ilman lähdettä tarvitaan siis vain moskeijan sijainti. Laskennan oletusasetukset ovat samat kuin
-rukousajat.fi:ssä: `laskentatapa: MuslimWorldLeague`, `madhab: Shafi` ja
-`korkeat_leveysasteet: TwilightAngle` (kesän valoisat yöt). Niitä voi muuttaa, jos moskeija
-haluaa toisin. Sama laskenta täyttää myös päivät, joille virallista aikaa ei vielä ole.
+**Aikoja ei lasketa itse.** Päivä, jolle lähde tai oma aikataulu ei anna aikaa, näkyy tyhjänä
+(kuukausitaulukossa viivana). Mitään ei täytetä automaattisesti.
 
 **Perjantai:** Masjidbox ja Mawaqit antavat Jumuah-ajan. Muuten kenttä `juma: "13.30"`.
 

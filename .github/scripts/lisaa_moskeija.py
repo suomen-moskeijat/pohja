@@ -89,7 +89,7 @@ def koordinaatit(osoite, kaupunki):
     return 0, 0
 
 
-# Varalla, jos osoitehaku ei onnistu (rukousajat lasketaan kaupungin mukaan)
+# Varalla, jos osoitehaku ei onnistu (kartta ja reittiohjeet)
 KAUPUNKIEN_KESKUSTAT = {
     "helsinki": (60.1699, 24.9384), "espoo": (60.2055, 24.6559), "vantaa": (60.2934, 25.0378),
     "tampere": (61.4978, 23.761), "turku": (60.4518, 22.2666), "oulu": (65.0121, 25.4651),
@@ -184,7 +184,7 @@ def tiedostot(t, repo, org):
               f"kielet: [fi]   # sivuston kielivalikko (hallintapaneeli → Asetukset)\n")
     lahde_kommentti = {"mawaqit": "Mawaqitista automaattisesti (adhan, iqamah, Jumuah, kuvat)",
                        "masjidbox": "Masjidboxista automaattisesti (adhan, iqamah, Jumuah)",
-                       "": "rukousajat.fi (Helsinki/Espoo/Vantaa) tai laskenta sijainnista"}[t["lahde"]]
+                       "": "rukousajat.fi (Helsinki/Espoo/Vantaa); muualla lähde valitaan paneelissa"}[t["lahde"]]
     # Uusi moskeija alkaa tyhjästä (ADR-0001): ei oletusesittelyä, iqamah-minuutteja, toiminnan kieliä, yläosan nappeja eikä
     # valmiita artikkeleita. Vain tuotu tieto (vanhan sivun esittely ja Meistä-teksti, yhteystiedot, somet) tulee sivulle.
     esittely_rivi = f"esittely: {{ fi: {yaml_str(t['esittely'])} }}\n" if t.get("esittely") else ""
@@ -384,7 +384,7 @@ def main():
         raise SystemExit("Avain puuttuu: lisää pohja-repon asetuksiin salaisuus MOSKEIJA_AVAIN (ks. README).")
     osoite = julkaise(t, repo, org, avain, tiedot)
     yhteenveto = (f"## ✅ {t['nimi']} lisätty\n\n- **Sivu:** {osoite} (valmis noin 2 minuutin päästä)\n"
-                  f"- **Repo:** https://github.com/{org}/{repo}\n- **Rukousajat:** {t['lahde'] or 'rukousajat.fi / laskenta'}"
+                  f"- **Repo:** https://github.com/{org}/{repo}\n- **Rukousajat:** {t['lahde'] or 'rukousajat.fi (pääkaupunkiseutu) / ei vielä lähdettä'}"
                   f"{' (' + t['tunnus'] + ')' if t['tunnus'] else ''}\n- **Koordinaatit:** {t['lat']}, {t['lon']}\n"
                   f"- **Käyttäjät:** kutsu moskeijan pääkäyttäjä hallintapaneelissa (moskeija → Käyttäjät)\n\n"
                   f"**Sivu on luonnos.** Lähetä linkki moskeijalle tarkistettavaksi. Kun he hyväksyvät sivun, pääkäyttäjä painaa "

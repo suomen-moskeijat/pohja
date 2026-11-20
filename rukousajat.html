@@ -6,17 +6,23 @@ rukousajat: true
 ---
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {% include osat/rukousdata.html moskeija=m %}
-{% include osat/sivuhero.html avain="rukousajat" johdanto_avain="aikataulu_virallinen" %}
+{%- include osat/aikataulu-tanaan.html -%}
+{%- capture _rs_lahde -%}{% include osat/rk-lahde.html moskeija=m %}{%- endcapture -%}
+{%- comment -%} Johdanto lähteen mukaan (kerran, yläosassa): rukousajat.fi ei ole moskeijan oma aikataulu. Ilman aikoja ei johdantoa. {%- endcomment -%}
+{%- if _at_rivi -%}{%- if _rs_lahde == "rukousajat" -%}{%- assign _rs_johdanto = "aikataulu_rukousajat" -%}{%- else -%}{%- assign _rs_johdanto = "aikataulu_virallinen" -%}{%- endif -%}{%- else -%}{%- assign _rs_johdanto = nil -%}{%- endif -%}
+{% include osat/sivuhero.html avain="rukousajat" johdanto_avain=_rs_johdanto %}
 {%- comment -%}
   Tietokoneella kaksi itsenäistä palstaa (ei tyhjiä aukkoja): vasemmalla tänään, Jumua ja kalenterin tilaus (jos moskeija on ottanut sen käyttöön: kalenteri_tilaus),
   oikealla linkki Ramadan-sivulle (vain testimoskeija, osat/ramadan-tiedot.html) ja kuukauden aikataulu. Puhelimella palstat puretaan ja järjestys on: tänään, Ramadan, kuukausi, kalenteri.
+  Ilman tämän päivän aikoja (ei lähdettä tai lähde ei ole antanut aikoja) kortissa lukee "Rukousajat lisätään pian", päivän ja kuukauden
+  taulukot jäävät pois ja sivu on yksipalstainen (Jumua ja kalenteri näkyvät, jos moskeija on antanut ne). Sivu ei piiloudu.
 {%- endcomment -%}
-<div class="u-kehys u-sivu u-rukoussivu">
+<div class="u-kehys u-sivu u-rukoussivu{% unless _at_rivi %} u-rukoussivu--tulossa{% endunless %}">
   <div class="u-rukoussivu__sivu">
   <div class="u-rukoussivu__tanaan">
     <div class="u-rukouskortti">
-      {% include osat/seuraava.html ilman_linkkia=true %}
-      {% include osat/rukous.html %}
+      {% include osat/seuraava.html ilman_linkkia=true ilman_lahdetta=true %}
+      {% if _at_rivi %}{% include osat/rukous.html %}{% endif %}
     </div>
     {%- capture _j -%}{% include osat/jumua-aika.html moskeija=m %}{%- endcapture -%}{%- assign _j = _j | strip | split: "|" -%}
     {% if _j[0] and _j[0] != "" %}
@@ -28,6 +34,6 @@ rukousajat: true
   <div class="u-rukoussivu__paa">
   {%- include osat/ramadan-tiedot.html moskeija=m -%}
   {% if _rm_nakyy %}<a class="u-kortti u-juma u-rmlinkki" href="{{ '/ramadan/' | relative_url }}"><span class="u-ikoni">{% include ikoni-ph.html nimi="kuu" koko=22 %}</span><span><strong>{% include k.html a="ramadan" %} {{ _rm_vuosi }}</strong><small>{% include k.html a="rm_sivulle" %}</small></span><span class="u-flip" aria-hidden="true">→</span></a>{% endif %}
-  {% include osat/kuukausi.html moskeija=m %}
+  {% if _at_rivi %}{% include osat/kuukausi.html moskeija=m %}{% endif %}
   </div>
 </div>

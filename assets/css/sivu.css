@@ -244,7 +244,16 @@ html[lang="ar"] .rk__ar { display: none; }
 .kk__taulu tr.kk__pe th small { color: var(--kulta-teksti); font-weight: 700; }
 .kk__taulu tr.kk__tanaan { background: var(--kulta-vaalea) !important; box-shadow: inset 4px 0 0 var(--kulta); font-weight: 700; }
 html[dir="rtl"] .kk__taulu tr.kk__tanaan { box-shadow: inset -4px 0 0 var(--kulta); }
-@media (max-width: 370px) { .kk__taulu { font-size: 13px; } .kk__taulu th, .kk__taulu td { padding-inline: 2px; } }
+/* Puhelimella kaikki seitsemän saraketta (myös Isha) mahtuvat ilman vieritystä: tiiviimpi taulukko, viikonpäivä kirjaimella (sivu.js) */
+@media (max-width: 480px) {
+  .kk__taulu { font-size: 13px; }
+  .kk__taulu th, .kk__taulu td { padding: 8px 2px; }
+  .kk__taulu thead th { font-size: 11px; }
+  .kk__taulu tbody th { padding-inline-start: 10px; }
+  .kk__taulu tbody th small { min-width: 1.3em; }
+  .kk__taulu td:last-child { padding-inline-end: 10px; }
+}
+@media (max-width: 370px) { .kk__taulu { font-size: 12px; } .kk__taulu th, .kk__taulu td { padding-inline: 1px; } .kk__taulu thead th { font-size: 10.5px; } .kk__taulu tbody th { padding-inline-start: 6px; } .kk__taulu td:last-child { padding-inline-end: 6px; } }
 .kk__ala { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; padding: 12px 16px; border-top: 1px solid var(--raja); }
 
 /* ---------- 8. Osiot ---------- */
@@ -412,8 +421,12 @@ html.u-lukittu { overflow: hidden; }
 .u-rukoussivu > * > * { min-width: 0; }
 .u-rukoussivu :is(.u-ramadan, .u-kalenteri) { margin: 0; }
 /* Tietokoneella kaksi itsenäistä palstaa, jotka eivät jätä toisiinsa tyhjiä aukkoja */
+/* Ilman aikoja yksi palsta: ei tyhjää oikeaa palstaa */
+.u-rukoussivu__paa:not(:has(> *)) { display: none !important; }
 @media (min-width: 1024px) {
   .u-rukoussivu { grid-template-columns: minmax(340px, 400px) minmax(0, 1fr); gap: 32px; }
+  .u-rukoussivu--tulossa { grid-template-columns: minmax(0, 560px); gap: 12px; }
+  .u-rukoussivu--tulossa :is(.u-rukoussivu__sivu, .u-rukoussivu__paa) { gap: 12px; }
   .u-rukoussivu__sivu, .u-rukoussivu__paa { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
   .u-rukoussivu__sivu > *, .u-rukoussivu__paa > * { order: 0; margin: 0; }
 }
@@ -655,6 +668,9 @@ html[lang="ar"] .u-seur__otsikko { letter-spacing: 0; font-size: 14px; }
 .u-seur__palkki { height: 6px; margin-top: 14px; border-radius: var(--kulma, 999px); overflow: hidden; background: color-mix(in srgb, var(--kulta) 25%, var(--pinta)); }
 .u-seur__palkki span { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--kulta), color-mix(in srgb, var(--kulta) 55%, var(--paa))); transition: width .8s ease; }
 html[dir="rtl"] .u-seur__palkki span { background: linear-gradient(-90deg, var(--kulta), color-mix(in srgb, var(--kulta) 55%, var(--paa))); }
+/* Ei tämän päivän aikoja (ei lähdettä tai lähde ei ole antanut aikoja): "Rukousajat lisätään pian" samassa kortissa */
+.u-seur__tulossa { padding-block: 20px 22px; }
+.u-seur__viesti { font: 600 22px/1.3 var(--fo); color: var(--paa); text-wrap: balance; }
 .u-seur__linkki { display: flex; justify-content: center; align-items: center; gap: 6px; min-height: 52px; font-weight: 700; color: var(--paa); text-decoration: none; transition: background-color .15s; }
 .u-seur__linkki:hover { background: var(--kerma); }
 @media (max-width: 359px) { .u-seur__yla { padding-inline: 16px; } .u-seur__nimi, .u-seur__klo { font-size: 25px; } .u-seur__jaljella b { font-size: 16px; } }

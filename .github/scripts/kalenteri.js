@@ -10,8 +10,9 @@
  * kalenterin uudelleen muutaman tunnin välein, ja sivu rakennetaan kerran tunnissa, joten
  * uudet tapahtumat ja muuttuneet ajat päivittyvät kalenteriin itsestään.
  *
- * Rukousajat lasketaan täsmälleen kuten sivulla (assets/js/sivu.js: ajat()): virallinen
- * aikataulu (CSV) tai laskenta adhan.js:llä, iqamah, Jumua ja päiväkohtaiset muutokset.
+ * Rukousajat tulevat täsmälleen kuten sivulla (assets/js/sivu.js: ajat()): lähteen tai moskeijan oma
+ * aikataulu (CSV), iqamah, Jumua ja päiväkohtaiset muutokset. Aikoja ei lasketa itse: päivä, jolle aikaa
+ * ei ole, jää pois. Moskeijan itse kirjoittama Jumua näkyy silloinkin.
  * Ei ulkoisia riippuvuuksia.
  */
 'use strict';
@@ -28,13 +29,9 @@ const CSV = { fajr: 'fajr', sunrise: 'auringonnousu', dhuhr: 'dhuhr', asr: 'asr'
 const RUKOUS_PAIVIA = 60;   // rukousajat näin monelta päivältä eteenpäin (ikkuna liukuu joka julkaisussa)
 const JUMUA_VIIKKOJA = 26;
 const TZ = 'Europe/Helsinki';
-// Näistä lähteistä haetaan valmiit ajat: puuttuvia päiviä ei lasketa itse (sama sääntö kuin sivulla).
-const HAETUT = ['masjidbox', 'mawaqit', 'rukousajat'];
 
 const tiedot = JSON.parse(fs.readFileSync(path.join(KANSIO, 'tiedot.json'), 'utf8'));
 const asetus = tiedot.rukous || {};
-let adhan = null;
-try { adhan = require(path.resolve(SIVU, 'assets/vendor/adhan.umd.min.js')); } catch (e) { console.warn('adhan.js puuttuu – lasketut ajat jäävät pois', e.message); }
 
 // ---------------------------------------------------------------- ajat (kuten sivu.js)
 const muoto = new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hourCycle: 'h23' });
@@ -51,16 +48,6 @@ function helsinginPaiva(d, lisaa) { const o = osat(d); return new Date(o.year, o
 const kk = (p) => `${p.getFullYear()}-${String(p.getMonth() + 1).padStart(2, '0')}`;
 const pvm = (p) => `${kk(p)}-${String(p.getDate()).padStart(2, '0')}`;
 
-let laskin;
-function laskenta() {
-  if (!adhan || asetus.lat == null) return null;
-  const tapa = adhan.CalculationMethod[asetus.laskentatapa] || adhan.CalculationMethod.MuslimWorldLeague;
-  const p = tapa();
-  p.madhab = asetus.madhab === 'Hanafi' ? adhan.Madhab.Hanafi : adhan.Madhab.Shafi;
-  p.highLatitudeRule = adhan.HighLatitudeRule[asetus.leveysaste] || adhan.HighLatitudeRule.TwilightAngle;
-  Object.keys(asetus.saadot || {}).forEach((k) => { p.adjustments[k] = Number(asetus.saadot[k]) || 0; });
-  return { p, koord: new adhan.Coordinates(asetus.lat, asetus.lon) };
-}
 function ajat(paiva) {
   const tulos = { iqamah: {}, virallinen: false };
   const data = (asetus.aikataulu || {})[kk(paiva)];
@@ -69,13 +56,8 @@ function ajat(paiva) {
     tulos.virallinen = true;
     Object.keys(CSV).forEach((n) => { tulos[n] = hki(paiva, rivi[CSV[n]]); });
     RUKOUKSET.forEach((n) => { if (rivi['iqamah_' + n]) tulos.iqamah[n] = hki(paiva, rivi['iqamah_' + n]); });
-  } else if (HAETUT.includes(asetus.lahde)) {
-    return null; // haettu lähde ei ole vielä julkaissut tätä päivää: ei lasketa itse
   } else {
-    if (laskin === undefined) laskin = laskenta();
-    if (!laskin) return null;
-    const pt = new adhan.PrayerTimes(laskin.koord, paiva, laskin.p);
-    Object.keys(CSV).forEach((n) => { tulos[n] = pt[n]; });
+    return null; // lähde tai oma aikataulu ei kerro tätä päivää: ei lasketa itse
   }
   if (asetus.iqamah) {
     RUKOUKSET.forEach((n) => {
@@ -127,9 +109,11 @@ function jumua() {
     if (p.getDay() !== 5) continue;
     viikkoja++;
     const a1 = ajat(p);
-    if (!a1 || !a1.jumua) continue; // ei Jumua-aikaa (tai lähde ei ole vielä julkaissut päivää)
+    // Ilman päivän aikoja (ei lähdettä tai lähde ei ole vielä julkaissut päivää) moskeijan itse kirjoittama Jumua
+    const j1 = a1 && a1.jumua ? a1.dhuhr : !a1 && asetus.juma ? hki(p, asetus.juma) : null;
+    if (!ok(j1)) continue; // ei Jumua-aikaa
     const mu = (asetus.muutokset || []).filter((x) => String(x.paiva).slice(0, 10) === pvm(p))[0];
-    [a1.dhuhr, asetus.juma2 ? hki(p, asetus.juma2) : null].forEach((a, j) => {
+    [j1, asetus.juma2 ? hki(p, asetus.juma2) : null].forEach((a, j) => {
       if (!ok(a)) return;
       t.push({ uid: `jumua-${pvm(p)}-${j + 1}`, alku: a, loppu: new Date(a.getTime() + 45 * MIN), nimi: asetus.juma2 ? `Jumua ${j + 1} (perjantairukous)` : 'Jumua (perjantairukous)', kuvaus: mu && mu.huom ? mu.huom : '', paikka });
     });

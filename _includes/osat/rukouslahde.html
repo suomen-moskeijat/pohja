@@ -1,12 +1,12 @@
 {%- comment -%}
   Rukousaikojen lähde näkyviin aikojen yhteyteen. Masjidboxin rajapinnan ehto: "Prayer times provided by Masjidbox"
-  ja "Ilmoita virheestä" -linkki jokaisessa näkymässä, jossa ajat näkyvät. Mawaqit ja rukousajat.fi mainitaan avoimuuden vuoksi.
+  ja "Ilmoita virheestä" -linkki jokaisella sivulla, jolla ajat näkyvät (kerran: etusivulla seuraavan rukouksen kortissa,
+  Rukousajat-sivulla kuukauden aikataulun alla). Mawaqit ja rukousajat.fi mainitaan avoimuuden vuoksi.
   Parametri: moskeija, luokka (valinnainen)
 {%- endcomment -%}
 {%- assign _rl_m = include.moskeija -%}
 {%- assign _rl_h = site.data.haku[_rl_m.slug] -%}
-{%- assign _rl_l = _rl_m.rukousajat.lahde | default: "" -%}
-{%- if _rl_l == "" and _rl_h -%}{%- assign _rl_l = _rl_h.lahde -%}{%- endif -%}
+{%- capture _rl_l -%}{% include osat/rk-lahde.html moskeija=_rl_m %}{%- endcapture -%}
 {%- comment -%} Ilmoita virheestä: Masjidboxin rajapinnan antama linkki (links.report), muuten moskeijan yhteystiedot – moskeija omistaa ajat. {%- endcomment -%}
 {%- capture _rl_virhe -%}{%- if _rl_l == "masjidbox" and _rl_h.raportti and _rl_h.raportti != "" -%}<a href="{{ _rl_h.raportti }}" target="_blank" rel="noopener">{% include k.html a="ilmoita_virheesta" %}</a>{%- else -%}<a href="{{ '/yhteystiedot/' | relative_url }}">{% include k.html a="ilmoita_virheesta" %}</a>{%- endif -%}{%- endcapture -%}
 {%- if _rl_l == "masjidbox" -%}

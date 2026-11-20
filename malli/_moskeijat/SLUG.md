@@ -14,11 +14,11 @@ sahkoposti: ""
 juma: ""              # perjantairukous, esim. "13.30" (Masjidbox/Mawaqit antaa sen itse)
 
 # ===== Rukousajat =====
-# lahde: masjidbox | mawaqit | rukousajat | taulukko | laskenta
-#   tyhjä = Helsinki/Espoo/Vantaa: rukousajat.fi:n taulukko, muualla laskenta sijainnista
+# lahde: masjidbox | mawaqit | rukousajat | taulukko
+#   tyhjä = Helsinki/Espoo/Vantaa: rukousajat.fi:n taulukko, muualla "Rukousajat lisätään pian" (aikoja ei lasketa)
 rukousajat:
   lahde: ""
-  tunnus: ""          # Masjidbox: masjidbox.com/prayer-times/TUNNUS · Mawaqit: mawaqit.net/fi/TUNNUS
+  tunnus: ""          # Mawaqit: mawaqit.net/fi/TUNNUS (Masjidbox valitaan paneelissa nimellä: masjidbox_id)
   # iqamah: { fajr: 10, dhuhr: 10, asr: 10, maghrib: 5, isha: 10 }   # vain moskeijan antamat minuutit adhanin jälkeen
 
 # ===== Some (valinnainen) =====

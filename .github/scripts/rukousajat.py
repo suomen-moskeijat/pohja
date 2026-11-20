@@ -4,7 +4,7 @@
 Moskeijan tiedostossa _moskeijat/<slug>.md, kohdassa rukousajat:
 
     rukousajat:
-      lahde: masjidbox      # masjidbox | mawaqit | taulukko | laskenta
+      lahde: masjidbox      # masjidbox | mawaqit | rukousajat | taulukko
       tunnus: masjid-sunnah-helsinki
 
 - masjidbox: jos moskeija on valinnut paneelissa Masjidbox-moskeijansa (masjidbox_id: msj_…), ajat
@@ -17,8 +17,8 @@ Moskeijan tiedostossa _moskeijat/<slug>.md, kohdassa rukousajat:
 - rukousajat: rukousajat.fi:n Helsingin aikataulu (vuosi eteenpäin).
   Oletus, jos lähdettä ei ole ja kaupunki on Helsinki, Espoo tai Vantaa.
 - taulukko:  aikataulu lisätään itse CSV-tiedostoina, ei haeta mitään.
-- laskenta (tai ei mitään muualla): sivu laskee ajat koordinaateista samoin
-  kuin rukousajat.fi muissa kaupungeissa.
+- ei lähdettä muualla: aikoja ei ole, ja sivulla lukee "Rukousajat lisätään pian". Sivu ei laske
+  aikoja itse, eikä puuttuvia päiviä täytetä.
 
 Haun tila (tapa, aika, montako päivää, virhe) tallennetaan tiedostoon _data/haku/<slug>.json;
 paneeli näyttää sen moskeijalle. Ajat tallennetaan tiedostoihin _data/aikataulut/<slug>/VVVV-KK.csv. Tulevat päivät, joita
@@ -46,8 +46,8 @@ SARAKKEET = ["pv", "fajr", "auringonnousu", "dhuhr", "asr", "maghrib", "isha",
 VARSINAISET = ["fajr", "dhuhr", "asr", "maghrib", "isha"]
 SELAIN = {"User-Agent": "Mozilla/5.0 (compatible; MoskeijaSivusto/1.0)"}
 HALLINTA = os.environ.get("HALLINTA_API", "https://hallinta.suomenmoskeijat.fi/api")
-# rukousajat.fi käyttää valmista aikataulua näille kaupungeille, muualla se laskee ajat
-# (sama laskenta on sivuston varalaskenta: MuslimWorldLeague, Shafi, TwilightAngle).
+# rukousajat.fi käyttää valmista (Helsingin) aikataulua vain näille kaupungeille, muualla se laskee ajat
+# sijainnista. Siksi se on oletuslähde vain täällä (sama sääntö: _includes/osat/rk-lahde.html, paneeli kaavio.js OLETUSLAHDE).
 PAAKAUPUNKISEUTU = ("helsinki", "espoo", "vantaa")
 
 
@@ -94,7 +94,7 @@ def moskeijat():
             tulos.append((slug, lahde, tunnus, lisa))
         elif lahde == "mawaqit" and tunnus:
             tulos.append((slug, lahde, tunnus, lisa))
-        elif lahde == "rukousajat" or (not lahde and kaupunki.lower() in PAAKAUPUNKISEUTU):
+        elif lahde == "rukousajat" or (lahde in (None, "laskenta") and kaupunki.strip().lower() in PAAKAUPUNKISEUTU):
             # Ei omaa lähdettä: pääkaupunkiseudulla rukousajat.fi:n Helsingin aikataulu
             tulos.append((slug, "rukousajat", kaupunki or "Helsinki", lisa))
     return tulos

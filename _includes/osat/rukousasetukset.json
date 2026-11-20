@@ -1,20 +1,16 @@
-{%- comment -%} Rukousaikojen asetukset JSON-oliona (rukousdata.html ja kalenteri/tiedot.json). Parametri: moskeija {%- endcomment -%}
+{%- comment -%}
+  Rukousaikojen asetukset JSON-oliona (rukousdata.html ja kalenteri/tiedot.json). Ajat tulevat vain lähteestä tai omasta
+  aikataulusta (_data/aikataulut): sivu ei laske aikoja itse, ja päivä, jolle aikaa ei ole, jää tyhjäksi. Parametri: moskeija
+{%- endcomment -%}
 {%- assign m = include.moskeija -%}
 {%- assign r = m.rukousajat -%}
-{%- assign s = r.saadot -%}
 {%- assign aikataulu = nil -%}
 {%- assign kansio = r.aikataulu | default: m.slug -%}{%- comment -%} oletus: moskeijan slug {%- endcomment -%}
 {%- if kansio and kansio != "" -%}{%- assign aikataulu = site.data.aikataulut[kansio] -%}{%- endif -%}
-{%- assign _lahde = r.lahde | default: "" -%}
-{%- if _lahde == "" -%}{%- assign _kd = m.kaupunki | default: "" | downcase -%}{%- if _kd == "helsinki" or _kd == "espoo" or _kd == "vantaa" -%}{%- assign _lahde = "rukousajat" -%}{%- endif -%}{%- endif -%}
+{%- capture _lahde -%}{% include osat/rk-lahde.html moskeija=m %}{%- endcapture -%}
 {
   "lahde": {{ _lahde | jsonify }},
   "haku": {% if site.data.haku and site.data.haku[m.slug] %}{{ site.data.haku[m.slug] | jsonify }}{% else %}null{% endif %},
-  "lat": {{ m.sijainti.lat | default: "null" }}, "lon": {{ m.sijainti.lon | default: "null" }},
-  "laskentatapa": {{ r.laskentatapa | default: "MuslimWorldLeague" | jsonify }},
-  "madhab": {{ r.madhab | default: "Shafi" | jsonify }},
-  "leveysaste": {{ r.korkeat_leveysasteet | default: "TwilightAngle" | jsonify }},
-  "saadot": { "fajr": {{ s.fajr | default: 0 }}, "sunrise": {{ s.auringonnousu | default: 0 }}, "dhuhr": {{ s.dhuhr | default: 0 }}, "asr": {{ s.asr | default: 0 }}, "maghrib": {{ s.maghrib | default: 0 }}, "isha": {{ s.isha | default: 0 }} },
   "iqamah": {% if _lahde == "masjidbox" %}{% assign _iq = r.iqamah %}{% else %}{% assign _iq = r.iqamah | default: r.iqamah_oletus %}{% endif %}{% if _iq %}{{ _iq | jsonify }}{% else %}null{% endif %},
   "juma": {{ m.juma | default: "" | jsonify }},
   "juma2": {{ m.juma_2 | default: "" | jsonify }},

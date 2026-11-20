@@ -123,7 +123,7 @@
     fi: { fajr: 'Fajr', sunrise: 'Auringonnousu', dhuhr: 'Dhuhr', asr: 'Asr', maghrib: 'Maghrib', isha: 'Isha', jumua: "Jumu'a", huomenna: 'huomenna', klo: 'klo', pv: 'Päivä', nousu: 'Nousu' },
     en: { fajr: 'Fajr', sunrise: 'Sunrise', dhuhr: 'Dhuhr', asr: 'Asr', maghrib: 'Maghrib', isha: 'Isha', jumua: "Jumu'ah", huomenna: 'tomorrow', klo: 'at', pv: 'Day', nousu: 'Sunrise' },
     ar: { fajr: 'الفجر', sunrise: 'الشروق', dhuhr: 'الظهر', asr: 'العصر', maghrib: 'المغرب', isha: 'العشاء', jumua: 'الجمعة', huomenna: 'غداً', klo: 'الساعة', pv: 'اليوم', nousu: 'الشروق' },
-    so: { fajr: 'Subax', sunrise: 'Qorrax ka soo bax', dhuhr: 'Duhur', asr: 'Casar', maghrib: 'Maqrib', isha: 'Cishaa', jumua: 'Jimce', huomenna: 'berri', klo: 'saacadda', pv: 'Taariikh', nousu: 'Qorrax' }
+    so: { fajr: 'Subax', sunrise: 'Qorrax ka soo bax', dhuhr: 'Duhur', asr: 'Casar', maghrib: 'Maqrib', isha: 'Cishaa', jumua: 'Jimce', huomenna: 'berri', klo: 'saacadda', pv: 'Maalin', nousu: 'Qorrax' }
   };
   /** HTML-merkit turvallisiksi (innerHTML:llä koottavat taulukot) */
   function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -152,20 +152,8 @@
   var asetus = null;
   try { var dataEl = document.getElementById('rk-data'); if (dataEl) asetus = JSON.parse(dataEl.textContent); } catch (e) { asetus = null; }
 
-  function laskenta() {
-    if (typeof adhan === 'undefined' || asetus.lat == null) return null;
-    var tapa = adhan.CalculationMethod[asetus.laskentatapa] || adhan.CalculationMethod.MuslimWorldLeague;
-    var p = tapa();
-    p.madhab = asetus.madhab === 'Hanafi' ? adhan.Madhab.Hanafi : adhan.Madhab.Shafi;
-    p.highLatitudeRule = adhan.HighLatitudeRule[asetus.leveysaste] || adhan.HighLatitudeRule.TwilightAngle; // kuten rukousajat.fi
-    Object.keys(asetus.saadot || {}).forEach(function (k) { p.adjustments[k] = Number(asetus.saadot[k]) || 0; });
-    return { p: p, koord: new adhan.Coordinates(asetus.lat, asetus.lon) };
-  }
-  var laskin = null;
-
-  // Haetun lähteen (Masjidbox, Mawaqit, rukousajat.fi) moskeijalla näytetään vain lähteen ajat: puuttuvia päiviä ei lasketa itse.
-  var HAETUT = ['masjidbox', 'mawaqit', 'rukousajat'];
-  function haettu() { return asetus && HAETUT.indexOf(asetus.lahde) >= 0; }
+  // Ajat tulevat vain lähteestä tai moskeijan omasta aikataulusta (rk-data.aikataulu): sivu ei laske aikoja itse, ja päivä,
+  // jolle aikaa ei ole, jää tyhjäksi.
   // Yhden päivän ajat: { fajr: Date, ..., iqamah: {...}, virallinen, jumua, puuttuu }
   function ajat(paiva) {
     var tulos = { iqamah: {}, virallinen: false };
@@ -175,13 +163,8 @@
       tulos.virallinen = true;
       RUKOUKSET.forEach(function (n) { tulos[n] = hki(paiva, rivi[CSV[n]]); });
       VARSINAISET.forEach(function (n) { if (rivi['iqamah_' + n]) tulos.iqamah[n] = hki(paiva, rivi['iqamah_' + n]); });
-    } else if (haettu()) {
-      tulos.puuttuu = true; // lähde ei ole vielä julkaissut tätä päivää
     } else {
-      if (!laskin) laskin = laskenta();
-      if (!laskin) return null;
-      var pt = new adhan.PrayerTimes(laskin.koord, paiva, laskin.p);
-      RUKOUKSET.forEach(function (n) { tulos[n] = pt[n]; });
+      tulos.puuttuu = true; // lähde tai oma aikataulu ei kerro tätä päivää: tyhjä
     }
     if (asetus.iqamah) {
       VARSINAISET.forEach(function (n) {
@@ -298,26 +281,20 @@
       var eka = new Date(tanaan.getFullYear(), tanaan.getMonth() + kkSiirto, 1, 12);
       kkEl.querySelector('[data-kk-nimi]').textContent = muotoile(eka, { month: 'long', year: 'numeric' });
       var n = N(), taulu = kkEl.querySelector('[data-kk-taulu]');
+      var kapea = window.matchMedia && window.matchMedia('(max-width: 480px)').matches; // puhelimella viikonpäivä kirjaimella: kaikki sarakkeet mahtuvat
       var otsikot = ['pv', 'fajr', 'nousu', 'dhuhr', 'asr', 'maghrib', 'isha'];
       var h = '<thead><tr>' + otsikot.map(function (o) { return '<th scope="col">' + esc(n[o]) + '</th>'; }).join('') + '</tr></thead><tbody>';
-      var kaikkiVirallisia = true, puuttuvia = false;
       for (var d = new Date(eka); d.getMonth() === eka.getMonth(); d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1, 12)) {
         var a = ajat(d);
         if (!a) continue;
-        if (a.puuttuu) puuttuvia = true; else if (!a.virallinen) kaikkiVirallisia = false;
         var luokat = [];
         if (d.getTime() === tanaan.getTime()) luokat.push('kk__tanaan');
         if (d.getDay() === 5) luokat.push('kk__pe');
         h += '<tr' + (luokat.length ? ' class="' + luokat.join(' ') + '"' : '') + (d.getTime() === tanaan.getTime() ? ' aria-current="date"' : '') + '>' +
-          '<th scope="row"><small>' + esc(muotoile(d, { weekday: 'short' })) + '</small> ' + d.getDate() + '</th>' +
+          '<th scope="row"><small>' + esc(muotoile(d, { weekday: kapea ? 'narrow' : 'short' })) + '</small> ' + d.getDate() + '</th>' +
           '<td>' + esc(aika(a.fajr)) + '</td><td class="kk__nousu">' + esc(aika(a.sunrise)) + '</td><td>' + esc(aika(a.dhuhr)) + '</td><td>' + esc(aika(a.asr)) + '</td><td>' + esc(aika(a.maghrib)) + '</td><td>' + esc(aika(a.isha)) + '</td></tr>';
       }
       taulu.innerHTML = h + '</tbody>';
-      var v = kkEl.querySelector('[data-kk-lahde-virallinen]'), l = kkEl.querySelector('[data-kk-lahde-laskettu]');
-      var pu = kkEl.querySelector('[data-kk-lahde-puuttuu]');
-      if (v) v.hidden = !kaikkiVirallisia;
-      if (l) l.hidden = kaikkiVirallisia;
-      if (pu) pu.hidden = !puuttuvia;
     });
   }
   kaikki('[data-kk-siirto]').forEach(function (b) {
@@ -427,6 +404,7 @@
     setInterval(paivitaLaskuri, 1000);
     setInterval(piirraPaiva, 5 * 60000);
     document.addEventListener('kielivaihto', function () { piirraPaiva(); piirraKuukausi(); piirraRamadan(); });
+    if (window.matchMedia) { var kapeaMq = window.matchMedia('(max-width: 480px)'); if (kapeaMq.addEventListener) kapeaMq.addEventListener('change', piirraKuukausi); }
     setInterval(piirraRamadan, 30 * 60000);
     if (document.querySelector('[data-rm-banneri]')) setInterval(rmLaskuri, 1000);
   }

@@ -22,10 +22,15 @@
     </table>
   </div>
   <footer class="kk__ala">
-    <p class="u-hieno" data-kk-lahde-virallinen hidden>{% include k.html a="aikataulu_virallinen" %}</p>
-    <p class="u-hieno" data-kk-lahde-laskettu hidden>{% include k.html a="rukous_huom" %}</p>
-    <p class="u-hieno" data-kk-lahde-puuttuu hidden>{% include k.html a="aikataulu_puuttuu" %}</p>
     {% include osat/rukouslahde.html moskeija=include.moskeija %}
-    {% if r.virallinen_url and r.virallinen_url != "" %}<a class="u-linkki" href="{{ r.virallinen_url }}" target="_blank" rel="noopener">{% include k.html a="virallinen_aikataulu" %} <span class="u-flip" aria-hidden="true">↗</span></a>{% endif %}
+    {%- comment -%} Virallinen aikataulu: moskeijan itse kirjoittama linkki, muuten lähteestä johdettu (Masjidbox, Mawaqit, rukousajat.fi) {%- endcomment -%}
+    {%- capture _kk_lahde -%}{% include osat/rk-lahde.html moskeija=include.moskeija %}{%- endcapture -%}
+    {%- assign _kk_url = r.virallinen_url | default: "" | strip -%}
+    {%- if _kk_url == "" -%}
+      {%- if _kk_lahde == "masjidbox" and r.tunnus and r.tunnus != "" -%}{%- assign _kk_url = "https://masjidbox.com/prayer-times/" | append: r.tunnus -%}
+      {%- elsif _kk_lahde == "mawaqit" and r.tunnus and r.tunnus != "" -%}{%- assign _kk_url = "https://mawaqit.net/fi/" | append: r.tunnus -%}
+      {%- elsif _kk_lahde == "rukousajat" -%}{%- assign _kk_url = "https://www.rukousajat.fi/" -%}{%- endif -%}
+    {%- endif %}
+    {% if _kk_url != "" %}<a class="u-linkki" href="{{ _kk_url }}" target="_blank" rel="noopener">{% include k.html a="virallinen_aikataulu" %} <span class="u-flip" aria-hidden="true">↗</span></a>{% endif %}
   </footer>
 </section>

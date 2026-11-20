@@ -1,0 +1,12 @@
+{%- comment -%}
+  Rukousaikojen lähde, jota sivu käyttää. Tulostaa: masjidbox | mawaqit | rukousajat | taulukko | (tyhjä = ei lähdettä).
+  Ilman moskeijan valintaa oletus on rukousajat.fi, jos kaupunki on Helsinki, Espoo tai Vantaa: rukousajat.fi:n oma aikataulu
+  kattaa vain ne (muualla se laskee ajat, eikä sivu laske itse). Sama sääntö: .github/scripts/rukousajat.py (PAAKAUPUNKISEUTU)
+  ja paneeli (src/kaavio.js OLETUSLAHDE). Ilman lähdettä ja aikoja sivulla lukee "Rukousajat lisätään pian".
+  Käyttö: {% capture l %}{% include osat/rk-lahde.html moskeija=m %}{% endcapture %}
+{%- endcomment -%}
+{%- assign _rkl_m = include.moskeija -%}
+{%- assign _rkl = _rkl_m.rukousajat.lahde | default: "" | strip -%}
+{%- if _rkl == "laskenta" -%}{%- assign _rkl = "" -%}{%- endif -%}
+{%- if _rkl == "" -%}{%- assign _rkl_k = _rkl_m.kaupunki | default: "" | strip | downcase -%}{%- if _rkl_k == "helsinki" or _rkl_k == "espoo" or _rkl_k == "vantaa" -%}{%- assign _rkl = "rukousajat" -%}{%- endif -%}{%- endif -%}
+{{- _rkl -}}
