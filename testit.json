@@ -2262,6 +2262,41 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-20"
+    },
+    {
+      "id": "rukousajat-ilman-laskentaa",
+      "otsikko": "Rukousajat ilman omaa laskentaa: oletuslähteen peruste ja \"Rukousajat lisätään pian\"",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Sivu ei enää laske rukousaikoja sijainnista. Ajat tulevat vain lähteestä (Masjidbox, Mawaqit, rukousajat.fi) tai omasta aikataulusta, ja päivä ilman aikaa jää tyhjäksi. Ilman lähdettä ja aikoja Rukousajat-sivulla ja etusivulla lukee \"Rukousajat lisätään pian\" kaikilla kielillä. rukousajat.fi on oletus vain Helsingissä, Espoossa ja Vantaalla, ja paneelissa näkyy peruste (kaupunki), jota voi muuttaa samassa kohdassa. Paneelin Rukousajat-näkymästä ja Oma aikataulu -kohdasta poistettiin laskenta ja turhat osat, ja Rukousajat-sivulta toistuvat tekstit.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa Sivusto → Rukousajat (Lähde ja iqamah). Palauta lopuksi testimoskeijan kaupungiksi Helsinki ja lähde ennalleen.",
+      "kohdat": [
+        "Lähteissä ei ole \"Lasketaan sijainnista\", eikä Laskentatapa-, Asr-laskenta- tai Minuuttikorjaukset-kenttiä — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Ilman valittua lähdettä lukee \"Oletus: kaupunki Helsinki → rukousajat.fi\", ja kaupunki on muokattavissa samassa kohdassa; kun kaupungiksi kirjoittaa Tampere, teksti kertoo, ettei oletuslähdettä ole ja sivulla lukee \"Rukousajat lisätään pian\" — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Tallenna kaupungiksi Tampere ilman lähdettä: Rukousajat-sivulla ja etusivun rukousaikakohdassa lukee \"Rukousajat lisätään pian\" eikä yhtään laskettua aikaa; vaihda kieli englanniksi, arabiaksi ja somaliksi: teksti on käännetty — Missä: Testimoskeijan sivu → Rukousajat ja Etusivu",
+        "Valitse Masjidbox: moskeija valitaan hakemalla nimellä, tunnus-kenttää ei ole, ja iqamah kerrotaan lähteen tietona (\"Iqamah tulee Masjidboxista\"); Muuta avaa kiinteän ajan — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Valitse Mawaqit: Tunnus Mawaqitissa -kenttä näkyy; valitse Oma aikataulu: Linkki viralliseen aikatauluun ja iqamah-minuutit näkyvät — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Oma aikataulu: ei Täytä tyhjät laskennalla -nappia, ohje kertoo, että tyhjä päivä näkyy sivulla tyhjänä, iqamah-sarakkeet näkyvät vain valinnalla \"Päiväkohtaiset iqamah-ajat\", eikä oikealla ole toista 7 päivän taulukkoa — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah → Oma aikataulu",
+        "Jätä omaan aikatauluun yksi päivä tyhjäksi ja tallenna: sivun kuukausitaulukossa päivä on tyhjä (viiva), ei laskettu — Missä: Testimoskeijan sivu → Rukousajat",
+        "Rukousajat-sivulla johdanto on vain yläosassa ja kertoo lähteen (rukousajat.fi: pääkaupunkiseudun aikataulu), lähdemaininta ja \"Ilmoita virheestä\" ovat vain kerran taulukon alla, eikä selitystä viivoista tai laskennasta ole — Missä: Testimoskeijan sivu → Rukousajat",
+        "Puhelimella (390 ja 320 px) kuukausitaulukon kaikki sarakkeet, myös Isha, näkyvät ilman sivuttaisvieritystä, myös arabiaksi — Missä: Testimoskeijan sivu puhelimella → Rukousajat",
+        "Jumua-välilehti: kun lähde kertoo Jumuan, se näkyy luettavana (\"Jumua tulee Masjidboxista: …\") ja oma aika on varalla — Missä: Testipaneeli → Sivusto → Rukousajat → Jumua"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Rukousajat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/rukousajat"
+        },
+        {
+          "nimi": "Sivu: Rukousajat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/"
+        },
+        {
+          "nimi": "Sivu: Testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-20"
     }
   ]
 }
