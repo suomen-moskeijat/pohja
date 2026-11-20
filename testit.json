@@ -2235,6 +2235,33 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-20"
+    },
+    {
+      "id": "oman-sivun-muokkaus-esikatselu",
+      "otsikko": "Olemassa olevan oman sivun esikatselu päivittyy kirjoittaessa",
+      "alue": "paneeli",
+      "kuvaus": "Tallennettua omaa sivua muokattaessa esikatselu näyttää muutokset heti kirjoittaessa, ennen Tallenna-nappia, kuten uudella omalla sivulla, palveluilla ja tapahtumilla. Esikatseluna on sivun oma osoite. Jos sivulla on vielä vanha sivupohjan versio, esikatselun alla on sama huomautus kuin muualla ja sivu päivitetään.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa Sivusto. Testimoskeijalla pitää olla oma sivu (lisää tarvittaessa + Lisää sivu → Tyhjä sivu ja julkaise).",
+      "kohdat": [
+        "Avaa oma sivu: esikatselussa on sivu sellaisena kuin se on tallennettu, ja esikatselun alla lukee, että esikatselu päivittyy heti, kun kirjoitat — Missä: Testipaneeli → Sivusto → oma sivu",
+        "Muuta sivun nimeä ja johdantoa: muutos näkyy heti esikatselun otsikossa — Missä: Testipaneeli → Sivusto → oma sivu",
+        "Muuta Oma teksti -osion tekstiä: muutos näkyy heti esikatselussa — Missä: Testipaneeli → Sivusto → oma sivu → Osiot",
+        "Lisää osio (esim. Korostettu ilmoitus) ja kirjoita siihen, sitten poista se: osio tulee esikatseluun ja lähtee siitä heti — Missä: Testipaneeli → Sivusto → oma sivu → + Lisää osio",
+        "Poistu tallentamatta (Peruuta): sivulla ei näy muutoksia; muokkaa uudelleen ja tallenna: sivu näyttää samalta kuin esikatselu (päivittyy 1–2 minuutissa) — Missä: Testimoskeijan sivu → oma sivu",
+        "Puhelimella esikatselu avautuu Näytä esikatselu -napista ja päivittyy samoin — Missä: Testipaneeli puhelimella → Sivusto → oma sivu"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Sivusto",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut"
+        },
+        {
+          "nimi": "Sivu: Testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-20"
     }
   ]
 }
