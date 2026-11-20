@@ -2334,6 +2334,38 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-20"
+    },
+    {
+      "id": "masjidbox-attribuutio",
+      "otsikko": "Masjidbox: attribuutio (Report an error · Claim this masjid) ja kontribuutiolinkit paneelissa",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Masjidboxin rajapinnan ehto: jokaisessa kohdassa, jossa Masjidboxin ajat näkyvät, samalla rivillä \"Prayer times provided by Masjidbox · Report an error · Claim this masjid\". Sivulla linkit ovat Masjidboxin omat (links.report ja links.claim) sellaisinaan: etusivun seuraavan rukouksen kortissa, Rukousajat-sivulla kuukauden aikataulun alla, Ramadan-sivulla ja Jumuan vieressä (Yhteystiedot ja etusivun vierailuosio), kun Jumua tulee Masjidboxista. Paneelissa sama rivi näkyy tarkistuksessa ja 7 päivän esikatselussa, ja Report an error / Claim this masjid hakevat Masjidboxilta hyvitetyn linkin vasta klikattaessa (ei tallenneta). Lähde-välilehdellä on suositus \"Ylläpidä aikoja Masjidboxissa\": Ota moskeija hallintaan Masjidboxissa tai, jos moskeijaa ei löydy, Lisää moskeija Masjidboxiin. Masjidbox ilman rajapinnan valintaa (julkinen sivu) ohjaa valitsemaan moskeijan rajapinnasta. Masjidboxin avain on vain tuotantopaneelissa: testipaneelissa Masjidbox-kohdat kertovat, ettei avainta ole.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa Sivusto → Rukousajat (Lähde ja iqamah). Älä tallenna kokeiluja; palauta lopuksi lähde ennalleen. Kohdat, joissa lukee Tuotantopaneeli, tarkistaa ylläpitäjä tuotantoon viennin jälkeen (rajapinnan avain on vain siellä).",
+      "kohdat": [
+        "Valitse lähteeksi Oma aikataulu tai rukousajat.fi: testipaneelissa (ei Masjidboxin avainta) suositusta \"Ylläpidä aikoja Masjidboxissa\" ei näy, eikä sivulla ole virheitä tai vaakavieritystä 390 ja 320 px:n leveydellä — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Valitse Masjidbox ja kirjoita Masjidbox-tunnus ilman moskeijan valintaa (vanha tapa): Miten ajat haetaan -kohdassa lukee \"Valitse moskeija Masjidboxin rajapinnasta. Nyt ajat luetaan Masjidboxin julkiselta sivulta …\" — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Paneeli englanniksi (Oma tili → kieli English): samat tekstit englanniksi, esim. \"Choose the mosque through the Masjidbox API …\" — Missä: Testipaneeli → Account → Prayer times",
+        "Testimoskeijan sivulla (Mawaqit) lähdemaininta on ennallaan: \"Rukousajat: Mawaqit · Ilmoita virheestä\" — Missä: Testimoskeijan sivu → Rukousajat",
+        "Tuotantopaneeli: valitse Masjidbox-moskeija hakemalla nimellä: tarkistuksen laatikossa lukee \"Löytyi: …\" ja alla \"Prayer times provided by Masjidbox · Report an error · Claim this masjid\"; Report an error ja Claim this masjid avaavat Masjidboxin sivun uuteen välilehteen (osoitteessa ref=…) — Missä: Tuotantopaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Tuotantopaneeli: kun Lähde on Oma aikataulu, näkyy \"Ylläpidä aikoja Masjidboxissa · Suositus\"; hae moskeijaa: tuloksessa Ota hallintaan, ja ilman tulosta \"Moskeijaa ei löytynyt Masjidboxista\" ja Lisää moskeija Masjidboxiin (avaa Masjidboxin lisäyssivun) — Missä: Tuotantopaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Tuotanto, Masjid Sunnah sen jälkeen, kun ylläpitäjä on valinnut moskeijan rajapinnasta ja sivu on julkaistu: etusivun seuraavan rukouksen kortissa, Rukousajat-sivulla kuukauden aikataulun alla ja Yhteystiedoissa Jumuan alla lukee \"Prayer times provided by Masjidbox · Report an error · Claim this masjid\" ja linkit vievät Masjidboxiin; myös arabiaksi ja puhelimella ilman vaakavieritystä — Missä: Masjid Sunnahin sivu → Etusivu, Rukousajat ja Yhteystiedot"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Rukousajat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/rukousajat"
+        },
+        {
+          "nimi": "Sivu: Rukousajat",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/"
+        },
+        {
+          "nimi": "Masjidbox: attribuution ohje",
+          "url": "https://hub.masjidbox.com/docs/attribution"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-20"
     }
   ]
 }
