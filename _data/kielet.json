@@ -1,6 +1,6 @@
 [
-  { "koodi": "fi", "nimi": "Suomi", "nimi_fi": "suomi", "locale": "fi-FI", "og": "fi_FI", "rtl": false, "tila": "valmis" },
-  { "koodi": "en", "nimi": "English", "nimi_fi": "englanti", "locale": "en-GB", "og": "en_GB", "rtl": false, "tila": "valmis" },
-  { "koodi": "ar", "nimi": "العربية", "nimi_fi": "arabia", "locale": "ar-u-nu-latn", "og": "ar_AR", "rtl": true, "tila": "valmis" },
-  { "koodi": "so", "nimi": "Soomaali", "nimi_fi": "somali", "locale": "so-SO", "og": "so_SO", "rtl": false, "tila": "valmis" }
+  {"koodi":"fi","nimi":"Suomi","nimi_fi":"suomi","locale":"fi-FI","og":"fi_FI","rtl":false,"tila":"valmis"},
+  {"koodi":"en","nimi":"English","nimi_fi":"englanti","locale":"en-GB","og":"en_GB","rtl":false,"tila":"tarkistettu"},
+  {"koodi":"ar","nimi":"العربية","nimi_fi":"arabia","locale":"ar-u-nu-latn","og":"ar_AR","rtl":true,"tila":"valmis"},
+  {"koodi":"so","nimi":"Soomaali","nimi_fi":"somali","locale":"so-SO","og":"so_SO","rtl":false,"tila":"valmis"}
 ]
