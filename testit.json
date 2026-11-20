@@ -2142,6 +2142,38 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-20"
+    },
+    {
+      "id": "levea-sisalto",
+      "otsikko": "Leveä sisältö ei vieri sivuttain puhelimella",
+      "alue": "sivut",
+      "kuvaus": "Vanhoilta sivuilta tuodussa tekstissä on leveitä asioita (taulukot, isot kuvat, kiinteät leveydet, pitkät osoitteet ja sanat), jotka veivät tekstiä puhelimella ruudun reunan yli (esim. Tampereen ja Turun omat sivut). Nyt pitkä sana tai osoite rivittyy, kuvat ja upotukset mahtuvat tekstin levyisiksi, ja taulukko vierii omassa laatikossaan, ei koko sivu. Koskee Oma teksti -osiota, tiedotteita, palvelujen ja tapahtumien kuvauksia. Muuten sivun ulkoasu ei muutu. Tampereen ja Turun sivut korjautuvat, kun muutos viedään tuotantoon.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja tee testimoskeijalle oma sivu, jonka Oma teksti -osioon liität leveää sisältöä: taulukon (esim. Wordista tai verkkosivulta kopioituna), pitkän verkko-osoitteen ilman välilyöntejä ja pitkän viivan (esim. 80 alaviivaa ______). Katso sivua puhelimella tai selaimen kapeassa ikkunassa (320–390 px).",
+      "kohdat": [
+        "Sivu ei vieri sivuttain puhelimella, ja teksti pysyy kortin sisällä: oikeassa reunassa on yhtä paljon tyhjää kuin vasemmassa — Missä: Testimoskeijan sivu → uusi oma sivu (puhelimella)",
+        "Taulukko vierii omassa laatikossaan sormella, mutta sivu ei vieri — Missä: Testimoskeijan sivu → uusi oma sivu → taulukko (puhelimella)",
+        "Pitkä osoite ja pitkä viiva rivittyvät kortin levyisiksi — Missä: Testimoskeijan sivu → uusi oma sivu (puhelimella)",
+        "Tavallinen teksti rivittyy sanojen välistä kuten ennen (sanat eivät katkea kesken) — Missä: Testimoskeijan sivu → oma sivu, tiedote ja palvelu puhelimella ja tietokoneella",
+        "Tietokoneella taulukko näkyy kokonaan siistinä (viivat rivien välissä, otsikkorivi himmeämpi) ja muu sivu samalta kuin ennen — Missä: Testimoskeijan sivu tietokoneella",
+        "Sama tiedotteessa: liitä taulukko ja pitkä osoite tiedotteen tekstiin, sivu ei vieri sivuttain — Missä: Testipaneeli → Tiedotteet → uusi tiedote, ja Testimoskeijan sivu → Artikkelit → tiedote (puhelimella)",
+        "Arabiaksi (oikealta vasemmalle) taulukko ja teksti toimivat samoin, eikä sivu vieri sivuttain — Missä: Testimoskeijan sivu → kieli العربية (puhelimella)"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Lisää sivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/omat/uusi"
+        },
+        {
+          "nimi": "Testipaneeli: Tiedotteet",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/artikkelit"
+        },
+        {
+          "nimi": "Sivu: Testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-20"
     }
   ]
 }
