@@ -15,13 +15,8 @@
 {%- capture valilehdet -%}{% if ig_d.julkaisut.size > 0 %}ig,{% endif %}{% if yt_d.videot.size > 0 %}yt,{% endif %}{% if tg_d.julkaisut.size > 0 %}tg,{% endif %}{%- endcapture -%}
 {%- assign valilehdet = valilehdet | split: "," -%}
 {%- comment -%} Muut palvelut: kaikki lisätyt, joita ei näytetä välilehtenä {%- endcomment -%}
-{%- assign _palvelut = "instagram:ig:Instagram,facebook:fb:Facebook,youtube:yt:YouTube,tiktok:tt:TikTok,telegram:tg:Telegram,snapchat:sc:Snapchat,x:x:X,threads:th:Threads,whatsapp_kanava:wak:WhatsApp-kanava" | split: "," -%}
-{%- capture muut -%}
-  {%- for _p in _palvelut -%}{%- assign _o = _p | split: ":" -%}{%- assign _avain = _o[0] -%}{%- assign _kuvake = _o[1] -%}{%- assign _url = s[_avain] -%}
-  {%- if _url and _url != "" and valilehdet contains _kuvake -%}{%- continue -%}{%- endif -%}
-  {%- if _url and _url != "" -%}<a href="{{ _url }}" target="_blank" rel="noopener" aria-label="{{ _o[2] }}" title="{{ _o[2] }}">{% include osat/somekuvake.html nimi=_kuvake %}</a>{%- endif -%}
-  {%- endfor -%}
-{%- endcapture -%}
+{%- capture muut -%}{% include osat/somelinkit.html moskeija=m ohita=valilehdet %}{%- endcapture -%}
+{%- assign muut = muut | strip -%}
 {%- if valilehdet.size > 0 or muut != "" -%}
 <section class="u-osio u-kehys u-somet" data-somet>
   <div class="u-osio__yla"><h2>{% include k.html a="seuraa_meita" %}</h2></div>

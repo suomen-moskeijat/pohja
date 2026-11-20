@@ -1,0 +1,13 @@
+{%- comment -%}
+  Moskeijan somekanavat kuvakelinkkeinä (paneeli: Yhteystiedot → Somekanavat). Vain moskeijan lisäämät näytetään.
+  Yksi lista kaikille: Seuraa meitä -osio (osat/somet.html), alapalkki (osat/ala.html) ja Yhteystiedot-sivu (osat/vierailu.html).
+  Parametrit: moskeija, ohita (valinnainen: kuvakkeiden tunnukset, joita ei näytetä, esim. välilehtinä näkyvät ["ig", "yt"]).
+  Ei tulosta mitään, jos kanavia ei ole.
+{%- endcomment -%}
+{%- assign _sm = include.moskeija.some -%}
+{%- assign _ohita = include.ohita | default: "" -%}
+{%- comment -%} kenttä:kuvake:nimi {%- endcomment -%}
+{%- assign _palvelut = "instagram:ig:Instagram,facebook:fb:Facebook,youtube:yt:YouTube,tiktok:tt:TikTok,telegram:tg:Telegram,snapchat:sc:Snapchat,x:x:X,threads:th:Threads,whatsapp_kanava:wak:WhatsApp-kanava" | split: "," -%}
+{%- for _p in _palvelut -%}{%- assign _o = _p | split: ":" -%}{%- assign _avain = _o[0] -%}{%- assign _kuvake = _o[1] -%}{%- assign _url = _sm[_avain] -%}
+{%- if _url and _url != "" -%}{%- unless _ohita contains _kuvake -%}<a href="{{ _url }}" target="_blank" rel="noopener" aria-label="{{ _o[2] }}" title="{{ _o[2] }}">{% include osat/somekuvake.html nimi=_kuvake %}</a>{%- endunless -%}{%- endif -%}
+{%- endfor -%}

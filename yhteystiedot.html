@@ -6,9 +6,15 @@ permalink: /yhteystiedot/
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {%- comment -%} Johdanto vain moskeijan omasta tekstistä (ADR-0001: ei oletustekstiä; paneelissa kehote) {%- endcomment -%}
 {% include osat/sivuhero.html avain="yhteystiedot" johdanto=m.yhteystiedot_johdanto %}
+{%- comment -%}
+  Asettelu: tietokoneella yhteystiedot (osoite, puhelin, kartta, somet) alkureunassa ja Kysy moskeijalta -lomake vieressä,
+  puhelimella allekkain (yhteystiedot ensin). Lomake vain, kun viesteillä on vastaanottaja eikä lomaketta ole piilotettu
+  (osat/lomake-tapa.html); ilman lomaketta yhteystiedot koko leveydellä (osoite ja kartta vierekkäin).
+{%- endcomment -%}
+{%- include osat/lomake-tapa.html moskeija=m -%}
 <div class="u-kehys u-sivu">
-  {% include osat/vierailu.html moskeija=m otsikko=false %}
-  {%- comment -%} Kysy moskeijalta -lomake vain, kun viesteillä on vastaanottaja eikä lomaketta ole piilotettu (osat/lomake-tapa.html) {%- endcomment -%}
-  {%- include osat/lomake-tapa.html moskeija=m -%}
-  {% if _kysylomake %}<div class="u-osio u-sivu--kapea" id="kysy">{% include osat/lomake-kysy.html moskeija=m %}</div>{% endif %}
+  <div class="u-yhteystiedot{% if _kysylomake %} u-yhteystiedot--lomake{% endif %}">
+    <div class="u-yhteystiedot__tiedot">{% include osat/vierailu.html moskeija=m otsikko=false somet=true %}</div>
+    {% if _kysylomake %}<div class="u-yhteystiedot__lomake" id="kysy">{% include osat/lomake-kysy.html moskeija=m %}</div>{% endif %}
+  </div>
 </div>
