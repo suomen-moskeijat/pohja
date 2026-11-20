@@ -2051,6 +2051,65 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-19"
+    },
+    {
+      "id": "paneelin-kieli-nakymat",
+      "otsikko": "Paneelin kieli: kaikki näkymät englanniksi",
+      "alue": "paneeli",
+      "kuvaus": "Kun paneelin kieli on englanti, koko paneeli on englanniksi: Yleiskatsaus, valmiuslista ja huomautukset, listat (palvelut, tapahtumat, tiedotteet, Sivusto), Kuvat, Jakokuva someen, asetukset, Käyttäjät, Historia, Testaus ja julkaisu, ylläpidon näkymät, ilmoitukset (esim. Saved) ja vahvistusikkunat, aloituksen askeleet, rukousaikojen taulukot sekä palvelimen virheilmoitukset. Moskeijan oma sisältö (nimet, tekstit), julkaisujen tekstit ja esikatselun sivun omat tekstit pysyvät sivun kielellä. Käyttöehtojen sitova teksti on suomeksi, ja sen yllä on englanninkielinen huomautus. Lisäksi Yleiskatsauksen pikanappien teksti (esim. Ilmoituspalkki) ei enää mene napin reunaan asti.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja vaihda paneelin kieli englanniksi: Oma tili → Paneelin kieli → English.",
+      "kohdat": [
+        "Yleiskatsaus on englanniksi: tilapalkki, valmiuslista (Site readiness), huomautukset (Notices), tulevat tapahtumat ja viimeisimmät muutokset — Missä: Testipaneeli → Overview",
+        "Pikanapit (New event, New announcement, Notice bar …) mahtuvat nappiin, ja teksti pysyy napin sisällä myös suomeksi (Ilmoituspalkki) — Missä: Testipaneeli → Overview tietokoneella ja puhelimella",
+        "Listat ovat englanniksi: Upcoming / Every week / Past, Search…, Save order, Edit — Missä: Testipaneeli → Events, Services ja Articles",
+        "Kuvat, Jakokuva someen, Käyttäjät ja Sivuston asetukset ovat englanniksi — Missä: Testipaneeli → Images, Share image, Users ja Site settings",
+        "Rukousaikojen apuvälineet ovat englanniksi: lähteen kuvaus (What you get, Gaps), oman aikataulun taulukko, Masjidbox-haku, Ramadan-taulukko ja Next 7 days -taulukko (Today, Sunr.) — Missä: Testipaneeli → Site → Prayer times",
+        "Tallenna jokin muutos: ilmoitus on englanniksi (Saved …), ja Historiassa muutos näkyy englanniksi (Changed: Home) — Missä: Testipaneeli → Site → Home → Save ja Settings → History",
+        "Muuta kenttää ja siirry toiseen näkymään tallentamatta: vahvistusikkuna on englanniksi (You have unsaved changes …) — Missä: Testipaneeli → Site → Home",
+        "Kirjoita kirjautumisruudulla väärä koodi englanninkielisessä paneelissa: virheilmoitus on englanniksi (The code is wrong or has expired …) — Missä: Testipaneelin kirjautuminen (English oikealta ylhäältä)",
+        "Ohjatun aloituksen askelten tekstit ovat englanniksi (Step 1/7, Welcome, Basic details …) — Missä: Testipaneeli → testimoskeijan aloitus",
+        "Käyttöehdot: sivun yläosa on englanniksi, ehtojen teksti on suomeksi, ja sen yllä on englanninkielinen huomautus, että suomenkielinen teksti on sitova — Missä: Testipaneeli → Overview → Read the terms",
+        "Muokkaajana (jos sinulla on muokkaajan tunnus) Yleiskatsaus, tapahtumat, tiedotteet, kuvat, ilmoituspalkki, Luo julkaisu ja Historia ovat englanniksi — Missä: Testipaneeli muokkaajana",
+        "Julkaisut ja muu sisältö eivät muutu: Jakokuva someen -julkaisun teksti on yhä suomeksi, ja tallennettu sivu on suomeksi — Missä: Testipaneeli → Share image, ja Testimoskeijan sivu",
+        "Puhelimella (myös 320 px) näkymät eivät vieri sivuttain englanniksi — Missä: Testipaneeli puhelimella → Overview, Site, Events, Users",
+        "Vaihda lopuksi takaisin suomeksi: kaikki on taas suomeksi kuten ennen — Missä: Testipaneeli → My account → Panel language → Suomi"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Oma tili",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/profiili"
+        },
+        {
+          "nimi": "Testipaneeli: Yleiskatsaus",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija"
+        },
+        {
+          "nimi": "Testipaneeli: Tapahtumat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tapahtumat"
+        },
+        {
+          "nimi": "Testipaneeli: Rukousajat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/rukousajat"
+        },
+        {
+          "nimi": "Testipaneeli: Historia",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/historia"
+        },
+        {
+          "nimi": "Testipaneeli: Aloitus",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/aloitus"
+        },
+        {
+          "nimi": "Testipaneeli: Käyttöehdot",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/ehdot"
+        },
+        {
+          "nimi": "Sivu: Testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-20"
     }
   ]
 }
