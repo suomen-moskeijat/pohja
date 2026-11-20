@@ -15,10 +15,10 @@
   vastaanottaja, ks. lomake-tapa.html) tai johdantoteksti. Lasten opetus -palvelu (_palvelut/lasten-opetus.md) on tavallinen palvelu.
 
   Omat sivut (_sivut/, tunnus = osoite ilman kauttaviivoja, esim. hyvat-lahteet): sivulla on sisältöä, kun sillä on
-  johdanto, sivun kuva tai vanha Sisältö / Linkit kortteina (ennen siirtoa osioiksi), tai näkyvä osio: oma osio, joka ei ole
-  tyhjä (osat/osio-tyhja.html; lomake lisäksi vain vastaanottajan kanssa), tai valmis osio, jonka tieto on (palvelut,
-  tapahtumat, artikkelit, meista ja lahjoitus: sivu ei ole tyhjä; lapset; galleria: galleriaan valittu kuva; somet: somekanava;
-  vierailu: osoite tai sijainti). Pohjasta julkaistu sivu, jossa on vain otsikko, ei siis näy valikossa ennen ensimmäistä sisältöä.
+  johdanto tai sivun kuva, tai näkyvä osio: oma osio, joka ei ole tyhjä (osat/osio-tyhja.html; lomake lisäksi vain
+  vastaanottajan kanssa), tai valmis osio, jonka tieto on (palvelut, tapahtumat, artikkelit, meista ja lahjoitus: sivu ei ole
+  tyhjä; lapset; galleria: galleriaan valittu kuva; somet: somekanava; vierailu: osoite tai sijainti). Pohjasta julkaistu
+  sivu, jossa on vain otsikko, ei siis näy valikossa ennen ensimmäistä sisältöä.
 
   Asettaa:
   _tyhjat   tyhjät sivut pilkuin ympäröityinä, esim. ",palvelut,meista," (tarkistus: _tyhjat contains ",palvelut,")
@@ -74,11 +74,10 @@
   {%- assign _ty_on = false -%}
   {%- capture _ty_st -%}
     {%- assign _ty_j = _ty_s.johdanto | jsonify | slice: 0 -%}{%- if _ty_j == "{" -%}{%- for _ty_x in _ty_s.johdanto -%}{{ _ty_x[1] }}{%- endfor -%}{%- elsif _ty_s.johdanto -%}{{ _ty_s.johdanto }}{%- endif -%}
-    {{ _ty_s.kuva }}{{ _ty_s.content | strip_html }}
-    {%- for _ty_l in site.kielet -%}{%- assign _ty_k = "teksti_" | append: _ty_l -%}{{ _ty_s[_ty_k] }}{%- endfor -%}
+    {{ _ty_s.kuva }}
   {%- endcapture -%}
   {%- assign _ty_st = _ty_st | strip -%}
-  {%- if _ty_st != "" or _ty_s.linkit.size > 0 -%}{%- assign _ty_on = true -%}{%- endif -%}
+  {%- if _ty_st != "" -%}{%- assign _ty_on = true -%}{%- endif -%}
   {%- for _ty_o in _ty_s.osiot -%}
     {%- if _ty_on -%}{%- break -%}{%- endif -%}
     {%- if _ty_o.osio -%}{%- assign _ty_ot = _ty_o.osio -%}{%- else -%}{%- assign _ty_ot = _ty_o -%}{%- endif -%}

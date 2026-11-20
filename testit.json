@@ -2174,6 +2174,36 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-20"
+    },
+    {
+      "id": "omat-sivut-vanha-muoto-pois",
+      "otsikko": "Omat sivut: vanha Sisältö- ja Linkit-muoto pois",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Kaikkien moskeijoiden omien sivujen teksti ja linkit on siirretty osioiksi (Oma teksti, Linkkikortit), joten sivupohja ja paneeli eivät enää tunne vanhaa Sisältö / Linkit kortteina -muotoa: paneeli ei enää siirrä sivuja itsestään, kun Sivusto avataan. Kävijälle ja muokkaajalle mikään ei muutu: omat sivut näyttävät samalta ja muokataan osioina kuten ennenkin.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa Sivusto.",
+      "kohdat": [
+        "Avaa Sivusto: ilmoitusta Omien sivujen teksti ja linkit ovat nyt sivun osioina ei tule, eikä mikään muutu — Missä: Testipaneeli → Sivusto",
+        "Avaa oma sivu: lomakkeessa on sivun nimi, johdanto, kuva ja osiot, ei erillisiä Sisältö- eikä Linkit kortteina -kenttiä — Missä: Testipaneeli → Sivusto → oma sivu",
+        "Muuta oman sivun Oma teksti -osiota ja Linkkikortteja ja tallenna: muutos näkyy sivulla — Missä: Testipaneeli → Sivusto → oma sivu → Tallenna, ja Testimoskeijan sivu → oma sivu",
+        "Lisää uusi oma sivu Tyhjä sivu -pohjasta: Oma teksti -osio on valmiina, ja esikatselu näyttää kirjoitetun tekstin — Missä: Testipaneeli → Sivusto → + Lisää sivu",
+        "Oma sivu, jossa on vain otsikko, ei näy valikossa, ja paneelissa sen kohdalla lukee Ei näy – ei vielä sisältöä; kun Oma teksti -osioon kirjoittaa jotain ja tallentaa, sivu tulee valikkoon — Missä: Testipaneeli → Sivusto, ja Testimoskeijan sivun valikko"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Sivusto",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut"
+        },
+        {
+          "nimi": "Testipaneeli: Lisää sivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/omat/uusi?pohja=tyhja"
+        },
+        {
+          "nimi": "Sivu: Testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-20"
     }
   ]
 }

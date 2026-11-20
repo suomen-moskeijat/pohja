@@ -4,41 +4,20 @@ layout: sivu
 {%- comment -%}
   Moskeijan oma sivu (_sivut/<nimi>.md): esim. kirjat, hyvät lähteet, artikkelit.
   Kentät: title (suomeksi), otsikko_en/_ar/_so, johdanto, kuva, valikossa, jarjestys ja osiot (kuten etusivulla).
-  Sivun teksti ja linkit ovat osioissa (Oma teksti, Linkkikortit).
-  Vanha muoto: runko ja teksti_en/_ar/_so (Sisältö) sekä linkit (Linkit kortteina) näytetään alla, kunnes ne on siirretty
-  osioiksi (hallinta: src/omat-sivut.js, paneelin Sivut-näkymä ja tyokalut/omat-sivut-osioiksi.mjs). Siirto tekee niistä
-  sivun ensimmäiset osiot samassa järjestyksessä, joten sivu näyttää kävijälle samalta.
+  Sivun teksti ja linkit ovat osioissa (Oma teksti, Linkkikortit). Vanha muoto (runko, teksti_<kieli>, linkit) on siirretty
+  osioiksi kaikille moskeijoille, eikä sivupohja enää näytä sitä (hallinta#22; tarkistus ja siirto: hallinta
+  tyokalut/omat-sivut-osioiksi.mjs).
 {%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
 {%- capture _otsikko -%}{% include sivunimi.html sivu=page %}{%- endcapture -%}
 {% include osat/sivuhero.html otsikko=_otsikko johdanto=page.johdanto %}
-{%- capture _omasivu -%}
-  {% if page.kuva and page.kuva != "" %}<img class="u-omasivu__kuva" src="{{ page.kuva | relative_url }}" alt="" loading="lazy">{% endif %}
-  {%- comment -%} Vanha muoto (ennen siirtoa): Sisältö ja Linkit kortteina {%- endcomment -%}
-  {%- capture _teksti -%}
-    {%- assign _fi = content | strip -%}
-    {%- assign _kaannetty = false -%}{%- for _l in site.kielet -%}{%- assign _k = "teksti_" | append: _l -%}{%- if page[_k] and page[_k] != "" -%}{%- assign _kaannetty = true -%}{%- endif -%}{%- endfor -%}
-    {%- if _kaannetty -%}
-      {%- for _l in site.kielet -%}{%- assign _k = "teksti_" | append: _l -%}
-        {%- if page[_k] and page[_k] != "" -%}<div data-l="{{ _l }}" lang="{{ _l }}">{{ page[_k] | markdownify }}</div>
-        {%- else -%}<div data-l="{{ _l }}">{{ _fi }}</div>{%- endif -%}
-      {%- endfor -%}
-    {%- else -%}{{ _fi }}{%- endif -%}
-  {%- endcapture -%}
-  {%- assign _tyhja = _teksti | strip_html | strip -%}
-  {% if _tyhja != "" %}<article class="u-kortti u-artikkeli"><div class="u-proosa u-proosa--iso">{{ _teksti }}</div></article>{% endif %}
-  {% if page.linkit.size > 0 %}
-  {% include osat/linkit-kortit.html linkit=page.linkit %}
-  {% endif %}
-{%- endcapture -%}
 {%- comment -%}
   Sisältöalue otsikon alla (u-omasivu-alue, ei omaa laatikkoa): paneelin esikatselu vaihtaa sen sisällön uudelle sivulle
   (esikatselu-sivu.html, assets/js/sivu.js). data-esik-osat: valmiit osiot ja kuvakkeet esikatseluun (esikatselu-osat.html).
 {%- endcomment -%}
 <div class="u-omasivu-alue" data-esik-osat="{{ '/esikatselu-osat/' | relative_url }}">
-{%- comment -%} Sivun kuva (ja vanhan muodon sisältö) vain, kun niitä on: ei tyhjää väliä otsikon ja osioiden väliin {%- endcomment -%}
-{%- assign _omasivu = _omasivu | strip -%}
-{% if _omasivu != "" %}<div class="u-kehys u-sivu u-omasivu">{{ _omasivu }}</div>{% endif %}
+{%- comment -%} Sivun kuva vain, kun se on: ei tyhjää väliä otsikon ja osioiden väliin {%- endcomment -%}
+{% if page.kuva and page.kuva != "" %}<div class="u-kehys u-sivu u-omasivu"><img class="u-omasivu__kuva" src="{{ page.kuva | relative_url }}" alt="" loading="lazy"></div>{% endif %}
 {%- comment -%} Osiot vain, kun jokin niistä näkyy (tyhjä osio ei näy: osat/osio-tyhja.html), ei tyhjää kehystä otsikon alle {%- endcomment -%}
 {%- capture _om_osiot -%}{% if page.osiot.size > 0 %}{% include osat/osiot.html osiot=page.osiot moskeija=m %}{% endif %}{%- endcapture -%}
 {%- assign _om_osiot = _om_osiot | strip -%}
