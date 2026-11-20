@@ -2110,6 +2110,38 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-20"
+    },
+    {
+      "id": "pitkat-tekstit",
+      "otsikko": "Pitkät tekstit tallentuvat kokonaan",
+      "alue": "paneeli",
+      "kuvaus": "Paneeli katkaisi pitkän tekstin 60 000 merkkiin, joten esim. Tampereen kirjan kokoiset omat sivut (noin 500 000 merkkiä) olisivat katkenneet tallennuksessa. Nyt pitkä teksti tallentuu kokonaan (enintään 1 000 000 merkkiä tekstikenttää kohden). Jos teksti on liian pitkä, paneeli kertoo sen selvästi eikä tallenna mitään katkaistuna; teksti jää lomakkeelle. Lisäksi hyvin pitkä oma sivu näkyy Sivusto-listassa oikealla nimellään.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja tee testimoskeijalle uusi oma sivu. Ota valmiiksi talteen pitkä teksti (yli 60 000 merkkiä, esim. pitkä artikkeli kopioituna useaan kertaan peräkkäin), jonka loppuun kirjoitat tunnistettavan lauseen, esim. LOPPU.",
+      "kohdat": [
+        "Liitä pitkä teksti (yli 60 000 merkkiä, loppuun LOPPU) Oma teksti -osioon ja tallenna: tallennus onnistuu ilman virheilmoitusta — Missä: Testipaneeli → Sivusto → + Lisää sivu → Oma teksti → Tallenna",
+        "Avaa sivu uudelleen paneelissa: koko teksti on tallessa ja lopussa on LOPPU — Missä: Testipaneeli → Sivusto → sivun nimi → Oma teksti",
+        "Sivulla näkyy koko teksti viimeistä kappaletta (LOPPU) myöten — Missä: Testimoskeijan sivu → uusi oma sivu (Näytä sivulla)",
+        "Pitkä sivu näkyy Sivusto-listassa omalla nimellään ilman merkintää Ei näy – ei vielä sisältöä — Missä: Testipaneeli → Sivusto",
+        "Liitä Oma teksti -osioon yli 1 000 000 merkkiä ja tallenna: ilmoitus kertoo, että teksti on liian pitkä (merkkimäärä ja enintään 1 000 000), teksti jää lomakkeelle eikä sivulle tallennu katkaistua tekstiä — Missä: Testipaneeli → oma sivu → Oma teksti → Tallenna",
+        "Sama englanniksi: ilmoitus on englanniksi (too long … at most 1 000 000) — Missä: Testipaneeli, kun Oma tili → Paneelin kieli → English",
+        "Lyhyen tekstin tallennus toimii kuten ennen (esim. tapahtuman kuvaus) — Missä: Testipaneeli → Tapahtumat → tapahtuma → Tallenna"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Lisää sivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/omat/uusi"
+        },
+        {
+          "nimi": "Testipaneeli: Yleiskatsaus",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija"
+        },
+        {
+          "nimi": "Sivu: Testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-20"
     }
   ]
 }
