@@ -64,22 +64,31 @@
 {% endunless %}{% endif %}
 {%- when "meista" %}
 {%- comment -%}
-  Lyhyt Meistä-teksti; jos sitä ei ole, alku pitkästä Meistä-tekstistä (moskeijan oma teksti), jottei osiossa ole pelkkä
-  otsikko ja Lue lisää. Ilman kumpaakaan osio ei näy.
+  Lyhyt Meistä-teksti; jos sitä ei ole (tällä kielellä), alku pitkästä Meistä-tekstistä, jottei osiossa ole pelkkä otsikko
+  ja Lue lisää. Alku on kappaleiden teksti ilman väliotsikoita, kuvia ja listoja (luettava teksti, ei markdown-merkkejä),
+  enintään 40 sanaa. Kieli kerrallaan; puuttuva käännös englannista tai suomesta kuten kt.html (dir="auto"). Ilman kumpaakaan
+  tekstiä osio on tyhjä (osat/osio-tyhja.html) eikä näy.
 {%- endcomment -%}
-{%- capture _me_lyhyt -%}{%- assign _me_j = m.meista_lyhyt | jsonify | slice: 0 -%}{%- if _me_j == "{" -%}{%- for _me_x in m.meista_lyhyt -%}{{ _me_x[1] }}{%- endfor -%}{%- elsif m.meista_lyhyt -%}{{ m.meista_lyhyt }}{%- endif -%}{%- endcapture -%}
-{%- assign _me_lyhyt = _me_lyhyt | strip -%}
+{%- assign _me_l = m.meista_lyhyt -%}{%- assign _me_lj = _me_l | jsonify | slice: 0 -%}
+{%- assign _me_p = m.meista -%}{%- assign _me_pj = _me_p | jsonify | slice: 0 -%}
 {%- capture _me_teksti -%}
-  {%- if _me_lyhyt != "" -%}{% include kt.html arvo=m.meista_lyhyt md=true tagi="div" %}
-  {%- else -%}
-    {%- assign _me_p = m.meista -%}{%- assign _me_j = _me_p | jsonify | slice: 0 -%}
-    {%- if _me_j == "{" -%}
-      {%- for _l in site.kielet -%}{%- assign _me_v = _me_p[_l] | default: _me_p.en | default: _me_p.fi | markdownify | strip_html | strip -%}
-        {%- if _me_v != "" -%}<div data-l="{{ _l }}"{% if _me_p[_l] and _me_p[_l] != "" %} lang="{{ _l }}"{% else %} dir="auto"{% endif %}><p>{{ _me_v | truncatewords: 40, " …" }}</p></div>{%- endif -%}
-      {%- endfor -%}
-    {%- elsif _me_p -%}{%- assign _me_v = _me_p | markdownify | strip_html | strip -%}{%- if _me_v != "" -%}<p>{{ _me_v | truncatewords: 40, " …" }}</p>{%- endif -%}
+  {%- for _l in site.kielet -%}
+    {%- if _me_lj == "{" -%}{%- assign _me_v = _me_l[_l] | default: _me_l.en | default: _me_l.fi | default: "" -%}{%- assign _me_oma = _me_l[_l] | default: "" | strip -%}
+    {%- else -%}{%- assign _me_v = _me_l | default: "" -%}{%- if forloop.first -%}{%- assign _me_oma = _me_v | strip -%}{%- else -%}{%- assign _me_oma = "" -%}{%- endif -%}{%- endif -%}
+    {%- assign _me_v = _me_v | strip -%}
+    {%- if _me_v != "" -%}{%- assign _me_v = _me_v | markdownify -%}
+    {%- else -%}
+      {%- if _me_pj == "{" -%}{%- assign _me_v = _me_p[_l] | default: _me_p.en | default: _me_p.fi | default: "" -%}{%- assign _me_oma = _me_p[_l] | default: "" | strip -%}
+      {%- else -%}{%- assign _me_v = _me_p | default: "" -%}{%- if forloop.first -%}{%- assign _me_oma = _me_v | strip -%}{%- else -%}{%- assign _me_oma = "" -%}{%- endif -%}{%- endif -%}
+      {%- assign _me_h = _me_v | markdownify -%}
+      {%- assign _me_kpl = _me_h | split: "<p>" -%}
+      {%- capture _me_v -%}{%- for _me_k in _me_kpl offset: 1 -%}{{ _me_k | split: "</p>" | first | strip_html | strip }} {% endfor -%}{%- endcapture -%}
+      {%- assign _me_v = _me_v | strip -%}
+      {%- if _me_v == "" -%}{%- assign _me_v = _me_h | strip_html | strip -%}{%- endif -%}
+      {%- if _me_v != "" -%}{%- capture _me_v -%}<p>{{ _me_v | truncatewords: 40, " …" }}</p>{%- endcapture -%}{%- endif -%}
     {%- endif -%}
-  {%- endif -%}
+    {%- if _me_v != "" -%}<div data-l="{{ _l }}"{% if _me_oma != "" %} lang="{{ _l }}"{% else %} dir="auto"{% endif %}>{{ _me_v }}</div>{%- endif -%}
+  {%- endfor -%}
 {%- endcapture -%}
 {%- assign _me_teksti = _me_teksti | strip -%}
 {% if _me_teksti != "" %}

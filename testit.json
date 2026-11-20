@@ -2204,6 +2204,37 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-20"
+    },
+    {
+      "id": "meista-osio-pitka-teksti",
+      "otsikko": "Etusivun Meistä-osio pelkällä pitkällä Meistä-tekstillä",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Kun moskeijalla on vain pitkä Meistä-teksti (ei lyhyttä), etusivun Meistä-osiossa näkyy pitkän tekstin alku: ensimmäisten kappaleiden teksti ilman väliotsikoita, kuvia ja listoja, ja Lue lisää. Ilman kumpaakaan Meistä-tekstiä osio ei näy etusivulla eikä omalla sivulla (esittely ei riitä), ja paneeli kertoo saman: osion rivillä Ei näy ja Yleiskatsauksessa huomautus.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä. Testimoskeijan etusivulla on Meistä-osio.",
+      "kohdat": [
+        "Tyhjennä lyhyt Meistä-teksti ja kirjoita pitkään tekstiin väliotsikko (Otsikko-nappi), kappale ja lista, tallenna — Missä: Testipaneeli → Sivusto → Meistä",
+        "Etusivun Meistä-osiossa näkyy ensimmäisen kappaleen teksti (ei väliotsikkoa, #- tai *-merkkejä) ja Lue lisää vie Meistä-sivulle — Missä: Testimoskeijan sivu → etusivu (tietokone ja puhelin)",
+        "Paneelissa etusivun Meistä-osion rivillä ei lue Ei näy, eikä Yleiskatsauksessa ole huomautusta Meistä-osiosta — Missä: Testipaneeli → Sivusto → Etusivu → Osiot, ja Yleiskatsaus",
+        "Arabiaksi osiossa näkyy arabiankielisen tekstin alku oikealta vasemmalle (jos arabia on sivuston kielenä ja teksti käännetty) — Missä: Testimoskeijan sivu → kieli العربية (puhelimella)",
+        "Tyhjennä myös pitkä Meistä-teksti ja tallenna: etusivulla ei ole Meistä-osiota (ei pelkkää otsikkoa ja Lue lisää), paneelin osion rivillä lukee Ei näy ja Yleiskatsauksessa on huomautus — Missä: Testipaneeli → Sivusto → Meistä, Etusivu ja Yleiskatsaus, ja Testimoskeijan sivu",
+        "Palauta lopuksi Meistä-tekstit ennalleen — Missä: Testipaneeli → Sivusto → Meistä"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Meistä",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/meista"
+        },
+        {
+          "nimi": "Testipaneeli: Etusivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/etusivu"
+        },
+        {
+          "nimi": "Sivu: Testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-20"
     }
   ]
 }

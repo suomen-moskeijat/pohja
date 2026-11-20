@@ -14,6 +14,8 @@
   kuvat      kuva
   lomake     lomakkeen kenttä (lomake näkyy lisäksi vain, kun viesteillä on vastaanottaja: osat/lomake-tapa.html)
   vierailu   osoite tai sijainti (reittiohjeiden kohde)
+  meista     lyhyt tai pitkä Meistä-teksti (osio näyttää lyhyen tekstin tai pitkän alun; esittely, missio tai galleria
+             eivät riitä, vaikka Meistä-sivu ei silloin ole tyhjä)
   Muut valmiit osiot (palvelut, tapahtumat …) näyttävät muualla muokattua tietoa ja piiloutuvat itse, kun sitä ei ole
   (osat/tyhjat-sivut.html ja osioiden omat ehdot).
 
@@ -31,6 +33,7 @@
   {%- when "teksti" -%}{%- assign _ot_kentat = "" | split: "" | push: _ot_o.otsikko | push: _ot_o.teksti -%}
   {%- when "ilmoitus" -%}{%- assign _ot_kentat = "" | split: "" | push: _ot_o.otsikko | push: _ot_o.teksti -%}
   {%- when "nosto" -%}{%- assign _ot_kentat = "" | split: "" | push: _ot_o.yla | push: _ot_o.otsikko | push: _ot_o.teksti -%}
+  {%- when "meista" -%}{%- assign _ot_kentat = "" | split: "" | push: include.moskeija.meista_lyhyt | push: include.moskeija.meista -%}
   {%- else -%}{%- assign _ot_kentat = "" | split: "" -%}
   {%- endcase -%}
   {%- if _ot_o.nappi_linkki and _ot_o.nappi_linkki != "" -%}{%- assign _ot_kentat = _ot_kentat | push: _ot_o.nappi_teksti -%}{%- endif -%}
@@ -43,7 +46,7 @@
 {%- when "teksti" -%}
   {%- assign _ot_kuva = _ot_o.kuva | default: "" -%}
   {%- if _ot_teksti == "" and _ot_kuva == "" -%}{%- assign _osio_tyhja = true -%}{%- endif -%}
-{%- when "ilmoitus", "nosto" -%}
+{%- when "ilmoitus", "nosto", "meista" -%}
   {%- if _ot_teksti == "" -%}{%- assign _osio_tyhja = true -%}{%- endif -%}
 {%- when "video" -%}
   {%- assign _ot_u = _ot_o.osoite | default: "" -%}

@@ -16,8 +16,9 @@
 
   Omat sivut (_sivut/, tunnus = osoite ilman kauttaviivoja, esim. hyvat-lahteet): sivulla on sisältöä, kun sillä on
   johdanto tai sivun kuva, tai näkyvä osio: oma osio, joka ei ole tyhjä (osat/osio-tyhja.html; lomake lisäksi vain
-  vastaanottajan kanssa), tai valmis osio, jonka tieto on (palvelut, tapahtumat, artikkelit, meista ja lahjoitus: sivu ei ole
-  tyhjä; lapset; galleria: galleriaan valittu kuva; somet: somekanava; vierailu: osoite tai sijainti). Pohjasta julkaistu
+  vastaanottajan kanssa), tai valmis osio, jonka tieto on (palvelut, tapahtumat, artikkelit ja lahjoitus: sivu ei ole
+  tyhjä; meista: lyhyt tai pitkä Meistä-teksti, osio-tyhja.html; lapset; galleria: galleriaan valittu kuva; somet: somekanava;
+  vierailu: osoite tai sijainti). Pohjasta julkaistu
   sivu, jossa on vain otsikko, ei siis näy valikossa ennen ensimmäistä sisältöä.
 
   Asettaa:
@@ -84,7 +85,7 @@
     {%- include osat/osio-tyhja.html o=_ty_o moskeija=_ty_m -%}
     {%- if _osio_tyhja -%}{%- continue -%}{%- endif -%}
     {%- case _ty_ot -%}
-    {%- when "palvelut", "tapahtumat", "artikkelit", "meista" -%}
+    {%- when "palvelut", "tapahtumat", "artikkelit" -%}
       {%- capture _ty_k -%},{{ _ty_ot }},{%- endcapture -%}{%- unless _tyhjat contains _ty_k -%}{%- assign _ty_on = true -%}{%- endunless -%}
     {%- when "lahjoitus" -%}{%- unless _tyhjat contains ",lahjoita," -%}{%- assign _ty_on = true -%}{%- endunless -%}
     {%- when "lapset" -%}{%- if _lapset -%}{%- assign _ty_on = true -%}{%- endif -%}
