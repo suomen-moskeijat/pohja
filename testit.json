@@ -2409,6 +2409,34 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-20"
+    },
+    {
+      "id": "yhteystiedot-vierekkain",
+      "otsikko": "Yhteystiedot-sivu: yhteystiedot ja lomake vierekkäin",
+      "alue": "sivut",
+      "kuvaus": "Yhteystiedot-sivulla tietokoneella yhteystiedot (osoite, puhelin, sähköposti, reittiohjeet, somekanavat ja kartta) ovat vasemmalla ja Kysy moskeijalta -lomake oikealla, sarakkeet yhtä korkeina. Puhelimella yhteystiedot ensin ja lomake alla. Ilman lomaketta (viesteillä ei vastaanottajaa tai lomake piilotettu) yhteystiedot ovat koko leveydellä, osoite ja kartta vierekkäin. Somekanavat näkyvät nyt myös Yhteystiedot-sivulla samoina kuvakkeina kuin Seuraa meitä -osiossa. Arabiaksi asettelu peilautuu.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa Sivusto → Yhteystiedot ja lomakkeet. Varmista, että Minne viestit tulevat -kohdassa on vastaanottaja (esim. sähköposti), ja että somekanavia on lisätty. Avaa sitten testimoskeijan Yhteystiedot-sivu tietokoneella (leveä ikkuna) ja puhelimella.",
+      "kohdat": [
+        "Tietokoneella osoite, puhelin, sähköposti, Reittiohjeet, Seuraa meitä -kuvakkeet ja kartta ovat vasemmalla, Kysy moskeijalta -lomake oikealla; sarakkeet alkavat ja päättyvät samalle korkeudelle — Missä: Testimoskeijan sivu → Yhteystiedot",
+        "Puhelimella (390 ja 320 px) yhteystiedot ja kartta ensin, lomake alla, eikä sivu vieri sivuttain — Missä: Testimoskeijan sivu puhelimella → Yhteystiedot",
+        "Kysy tästä- tai Ilmoittaudu-nappi palvelun tai tapahtuman sivulla vie lomakkeeseen ja aihe on valmiina — Missä: Testimoskeijan sivu → Palvelut → jokin palvelu → Kysy tästä",
+        "Vaihda kieleksi arabia: yhteystiedot ovat oikealla ja lomake vasemmalla, tekstit oikealta vasemmalle, puhelinnumero luettavassa järjestyksessä — Missä: Testimoskeijan sivu → kielivalikko → العربية → Yhteystiedot",
+        "Paneelin esikatselu näyttää saman sivun (puhelimen leveydellä yhteystiedot ensin, lomake alla) — Missä: Testipaneeli → Sivusto → Yhteystiedot ja lomakkeet, esikatselu",
+        "Ilman lomaketta: piilota lomake (Kysy moskeijalta -lomake → Piilota lomake) ja tallenna; julkaisun jälkeen yhteystiedot ovat koko leveydellä, osoite ja kartta vierekkäin. Palauta lomake lopuksi näkyviin — Missä: Testipaneeli → Sivusto → Yhteystiedot ja lomakkeet, sitten Testimoskeijan sivu → Yhteystiedot",
+        "Etusivun Seuraa meitä -osio ja alapalkin somekuvakkeet näyttävät samoilta kuin ennen — Missä: Testimoskeijan etusivu"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Yhteystiedot ja lomakkeet",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/yhteystiedot"
+        },
+        {
+          "nimi": "Sivu: Yhteystiedot",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/yhteystiedot/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-20"
     }
   ]
 }
