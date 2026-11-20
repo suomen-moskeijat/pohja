@@ -3,7 +3,7 @@
  * Kalenteritilaukset (.ics): julkaisuajo kutsuu tätä Jekyllin jälkeen.
  *   TZ=Europe/Helsinki node .github/scripts/kalenteri.js _site
  *
- * Lukee _site/kalenteri/tiedot.json (moskeijan rukousasetukset, tapahtumat ja Ramadan) ja tekee
+ * Lukee _site/kalenteri/tiedot.json (moskeijan rukousasetukset, tapahtumat ja Ramadan, jos käytössä) ja tekee
  * kansioon _site/kalenteri/ tiedostot jokaiselle valintojen yhdistelmälle, esim.
  *   rukous.ics, rukous-jumua.ics, tapahtumat.ics, rukous-jumua-tapahtumat-ramadan.ics
  * Sivun "Lisää kalenteriin" -kortti valitsee tiedoston rastien mukaan. Puhelin hakee tilatun
@@ -21,7 +21,6 @@ const path = require('path');
 
 const SIVU = process.argv[2] || '_site';
 const KANSIO = path.join(SIVU, 'kalenteri');
-const LAJIT = ['rukous', 'jumua', 'tapahtumat', 'ramadan'];
 const NIMET = { rukous: 'Rukousajat', jumua: 'Jumua', tapahtumat: 'Tapahtumat', ramadan: 'Ramadan' };
 const RUKOUKSET = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
 const RUKOUSNIMI = { fajr: 'Fajr', dhuhr: 'Dhuhr', asr: 'Asr', maghrib: 'Maghrib', isha: 'Isha' };
@@ -31,6 +30,9 @@ const JUMUA_VIIKKOJA = 26;
 const TZ = 'Europe/Helsinki';
 
 const tiedot = JSON.parse(fs.readFileSync(path.join(KANSIO, 'tiedot.json'), 'utf8'));
+// Ramadan vain, kun se on käytössä (testimoskeija, ADR-0002): tiedot.json antaa ramadan: null muille (osat/ramadan-tiedot.html),
+// joten muille ei tehdä Ramadan-yhdistelmiä (ramadan.ics, rukous-ramadan.ics …)
+const LAJIT = ['rukous', 'jumua', 'tapahtumat', ...(tiedot.ramadan ? ['ramadan'] : [])];
 const asetus = tiedot.rukous || {};
 
 // ---------------------------------------------------------------- ajat (kuten sivu.js)

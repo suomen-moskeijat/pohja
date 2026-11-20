@@ -2368,6 +2368,49 @@
       "lisatty": "2026-11-20"
     },
     {
+      "id": "ramadan-pois-tuotannosta",
+      "otsikko": "Ramadan kokonaan pois muilta kuin testimoskeijalta",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Ramadania näkyi muilla moskeijoilla vielä muutamassa kohdassa (ADR-0002). Nyt muilla moskeijoilla ei ole Ramadan-sivua lainkaan (/ramadan/ ja kieliversiot /en/ramadan/, /ar/ramadan/ antavat 404), tilattavissa kalentereissa ei ole Ramadan-tiedostoja, paneelin julkaisustudiossa ei ole Tarawih-vuorot- ja Eid-rukous-pohjia, eikä paneelin haku löydä Ramadan-kenttiä. Kalenterin tilauksen ohje ja Masjidbox-lähteen puutteet eivät enää mainitse Ramadania. Vanhan tiedotteen Ramadan-merkintä säilyy, kun tiedotetta muokataan (tieto säilyy, se vain ei näy). Testimoskeijassa kaikki Ramadan-toiminnot toimivat kuten ennen. Muiden moskeijoiden näkymä tarkistetaan automaattisella testillä (ramadan-vain-testissa), koska testipaneelissa näkyy vain testimoskeija.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa testimoskeijan Jakokuva someen. Älä tallenna kokeiluja.",
+      "kohdat": [
+        "Pohjia on neljä (Tarawih-vuorot, Tapahtuma, Tiedote, Eid-rukous), ja Tarawih-vuorot avautuu 30 illan listalla kuten ennen; kortit ovat tietokoneella samalla rivillä ja puhelimella allekkain ilman vaakavieritystä — Missä: Testipaneeli → Muut → Jakokuva someen",
+        "Kirjoita hakuun ramadan: tuloksissa on Ramadan-kenttiä (esim. Ramadan: Eid al-Fitr -päivä), ja tulos vie Rukousajat-sivun Ramadan-välilehdelle — Missä: Testipaneeli → haku vasemmassa yläkulmassa",
+        "Kalenterin tilauksen ohjeessa lukee \"Kävijä voi tilata rukousajat, Jumuan ja tapahtumat puhelimen kalenteriin … Kortti näkyy Rukousajat- ja Tapahtumat-sivuilla\" — Missä: Testipaneeli → Asetukset → Perustiedot",
+        "Valitse lähteeksi Masjidbox (älä tallenna): puutteissa ei mainita Ramadania (\"Aikataulu ulottuu enintään seuraavan kuukauden loppuun.\") — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Ramadan-sivu, valikon Ramadan ja etusivun Ramadan-rivi toimivat kuten ennen, myös englanniksi ja arabiaksi — Missä: Testimoskeijan Ramadan-sivu ja etusivu",
+        "Lisää kalenteriin -kortissa on Ramadan-rasti, ja Ramadan rastittuna kalenterin tilaus avautuu (tiedosto, jonka nimessä on ramadan) — Missä: Testimoskeijan Rukousajat-sivu → Lisää kalenteriin"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Jakokuva someen",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/julkaisut"
+        },
+        {
+          "nimi": "Testipaneeli: Perustiedot",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/perus"
+        },
+        {
+          "nimi": "Testipaneeli: Rukousajat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/rukousajat"
+        },
+        {
+          "nimi": "Testimoskeijan Ramadan-sivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/ramadan/"
+        },
+        {
+          "nimi": "Testimoskeijan Ramadan-sivu englanniksi",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/en/ramadan/"
+        },
+        {
+          "nimi": "Testimoskeijan Rukousajat-sivu",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/rukousajat/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-20"
+    },
+    {
       "id": "yhteystiedot-vierekkain",
       "otsikko": "Yhteystiedot-sivu: yhteystiedot ja lomake vierekkäin",
       "alue": "sivut",

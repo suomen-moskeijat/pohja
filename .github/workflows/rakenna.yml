@@ -108,6 +108,10 @@ jobs:
           destination: ./_site
           future: true
 
+      # Sivut, joita moskeijalla ei ole (esim. Ramadan-sivu ilman Ramadania): pois ennen kieliversioita, osoite antaa 404
+      - name: Karsi sivut
+        run: sudo python3 sivu/.github/scripts/karsi_sivut.py _site
+
       # Kuvien mitat <img>-tageihin: sivu ei hypi kuvien latautuessa
       - name: Kuvien mitat
         run: sudo python3 sivu/.github/scripts/kuvakoot.py _site || echo "::warning::Kuvien mittoja ei voitu lisätä"
