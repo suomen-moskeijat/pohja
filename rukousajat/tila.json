@@ -1,0 +1,30 @@
+---
+layout: null
+permalink: /rukousajat/tila.json
+sitemap: false
+---
+{%- comment -%}
+  Rukousaikojen tila paneelille (hallinta src/rukouslahteet.js: Yleiskatsauksen huomautus ja valvonta): sivun käyttämä
+  lähde (osat/rk-lahde.html), viimeisin haku (_data/haku/<slug>.json, rukousajat.py) ja viimeinen päivä, jolle sivulla on
+  aikoja (sama aikataulu kuin osat/rukousasetukset.json). Pieni tiedosto, jotta valvonta ei lataa koko sivua.
+{%- endcomment -%}
+{%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- capture _lahde -%}{% include osat/rk-lahde.html moskeija=m %}{%- endcapture -%}
+{%- assign _kansio = m.rukousajat.aikataulu | default: m.slug -%}
+{%- assign _aikataulu = nil -%}
+{%- if _kansio and _kansio != "" -%}{%- assign _aikataulu = site.data.aikataulut[_kansio] -%}{%- endif -%}
+{%- assign _viimeinen = "" -%}
+{%- if _aikataulu -%}
+  {%- assign _kuukaudet = _aikataulu | sort -%}
+  {%- for _kk in _kuukaudet -%}
+    {%- assign _suurin = 0 -%}
+    {%- for _r in _kk[1] -%}{%- if _r.fajr and _r.fajr != "" -%}{%- assign _pv = _r.pv | plus: 0 -%}{%- if _pv > _suurin -%}{%- assign _suurin = _pv -%}{%- endif -%}{%- endif -%}{%- endfor -%}
+    {%- if _suurin > 0 -%}{%- assign _p2 = _suurin | prepend: "0" | slice: -2, 2 -%}{%- assign _viimeinen = _kk[0] | append: "-" | append: _p2 -%}{%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+{
+  "lahde": {{ _lahde | jsonify }},
+  "haku": {% if site.data.haku and site.data.haku[m.slug] %}{{ site.data.haku[m.slug] | jsonify }}{% else %}null{% endif %},
+  "viimeinen": {{ _viimeinen | jsonify }},
+  "rakennettu": {{ site.time | date_to_xmlschema | jsonify }}
+}
