@@ -7,8 +7,9 @@ rukousajat: true
 {%- comment -%}
   Ramadanin oma sivu: yläosassa Ramadan-banneri (laskuri / päivä N, suhur ja iftar), sitten koko Ramadan-osio
   (tarawih, Eid, fitra, julkaisut ja kuukauden aikataulu) ja kalenterin tilaus (jos käytössä: kalenteri_tilaus).
-  Ramadan vain testimoskeijassa (ADR-0002, osat/ramadan-tiedot.html: _rm_kaytossa). Muilla moskeijoilla suora osoite
-  näyttää vain linkin Rukousajat-sivulle: ei arvioitua alkupäivää eikä lupausta aikataulusta, ei hakukoneissa eikä
+  Ramadan vain testimoskeijassa (ADR-0002, osat/ramadan-tiedot.html: _rm_kaytossa). Muilla moskeijoilla sivua ei ole
+  lainkaan: merkintä data-ei-sivua, ja julkaisuajo poistaa sivun Jekyllin jälkeen (.github/scripts/karsi_sivut.py), joten
+  /ramadan/ antaa 404 eikä kieliversioita tule. Varmuuden vuoksi (jos sivu jäisi) se on tyhjä, ei hakukoneissa eikä
   sivukartassa (osat/hakunakyvyys.html, sitemap.xml).
 {%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
@@ -32,8 +33,8 @@ rukousajat: true
     </div>
   </div>
   {% else %}
-  {%- comment -%} Ramadan ei käytössä: tyhjä sivu kuten muutkin (Palvelut, Artikkelit), vain linkki rukousaikoihin {%- endcomment %}
-  <div class="u-tyhja"><span class="u-ikoni">{% include ikoni-ph.html nimi="kuu" koko=26 %}</span><a class="u-linkki" href="{{ '/rukousajat/' | relative_url }}">{% include k.html a="nav_rukousajat" %} <span class="u-flip" aria-hidden="true">→</span></a></div>
+  {%- comment -%} Ramadan ei käytössä: sivua ei ole (karsi_sivut.py); jos jäisi, tyhjä kuten muutkin, vain linkki rukousaikoihin {%- endcomment %}
+  <div class="u-tyhja" data-ei-sivua="ramadan"><span class="u-ikoni">{% include ikoni-ph.html nimi="kuu" koko=26 %}</span><a class="u-linkki" href="{{ '/rukousajat/' | relative_url }}">{% include k.html a="nav_rukousajat" %} <span class="u-flip" aria-hidden="true">→</span></a></div>
   {% endif %}
 </div>
 {% endif %}
