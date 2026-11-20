@@ -9,7 +9,8 @@ Moskeijan tiedostossa _moskeijat/<slug>.md, kohdassa rukousajat:
 
 - masjidbox: jos moskeija on valinnut paneelissa Masjidbox-moskeijansa (masjidbox_id: msj_…), ajat
   haetaan Masjidboxin virallisesta rajapinnasta hallintapaneelin kautta (avain pysyy paneelissa):
-  kuluva ja seuraava kuukausi (adhan, iqamah, Jumuah). Muuten (väliaikaisesti) julkiselta sivulta
+  kuluva ja seuraava kuukausi (adhan, iqamah, Jumuah). Masjidboxin itse laskemia aikoja (source.type = calculated,
+  kukaan moskeijasta ei ylläpidä sivua) ei julkaista: tulevat päivät poistuvat ja sivulla lukee "Rukousajat lisätään pian". Muuten (väliaikaisesti) julkiselta sivulta
   masjidbox.com/prayer-times/<tunnus>, joka näyttää vain 7 päivää.
 - mawaqit:   tunnus osoitteesta mawaqit.net/fi/<tunnus>.
   Haetaan vuoden aikataulu (adhan, iqamah, Jumuah) sekä
@@ -142,6 +143,12 @@ class Muoto(ValueError):
     koodi = "muoto"
 
 
+class Laskettu(ValueError):
+    """Masjidbox laskee moskeijan ajat itse (source.type = calculated): kukaan moskeijasta ei ylläpidä sivua, eikä iqamahia ole.
+    Laskettuja aikoja ei julkaista (ADR-0003); sama sääntö paneelissa (hallinta src/rukouslahteet.js)."""
+    koodi = "laskettu"
+
+
 def _minuutit(a):
     return int(a[:2]) * 60 + int(a[3:5])
 
@@ -214,6 +221,8 @@ def jasenna_masjidbox_api(d):
     if not paivat:
         raise Muoto("Masjidbox ei palauttanut aikoja")
     lahde = d.get("source") or {}
+    if lahde.get("type") == "calculated":
+        raise Laskettu("Masjidbox laskee tämän moskeijan ajat (kukaan moskeijasta ei ylläpidä sivua): laskettuja aikoja ei julkaista")
     tieto = {"tapa": "rajapinta", "tyyppi": lahde.get("type", ""), "tila": lahde.get("status", ""),
              "raportti": (d.get("links") or {}).get("report", ""), "haltuunotto": (d.get("links") or {}).get("claim", ""),
              "vanha": bool(d.get("vanha"))}
@@ -623,10 +632,14 @@ def main():
             print(f"{slug}: {yhteensa} päivää lähteestä {lahde} ({tieto.get('tapa')}: {lisa.get('masjidbox_id') or tunnus}), {muutettu} muuttui"
                   + (f", {k} kuvaa" if k else "") + (f" – {varoitus}" if varoitus else ""))
         except Exception as e:  # haku epäonnistui tai aikataulu oli rikki: vanhat ajat jäävät voimaan
+            lisatieto = {}
+            if isinstance(e, Laskettu):  # Masjidboxin laskemat ajat: aiemmin julkaistut tulevat päivät pois ("Rukousajat lisätään pian")
+                tallenna_ajat(slug, {})
+                lisatieto = {"tapa": "rajapinta", "tyyppi": "calculated"}
             n, viimeinen = tulevat(slug)
             viesti = (f"Rikkinäinen aikataulu, ei julkaistu: {e}" if isinstance(e, Kelvoton) else str(e))[:300]
             tallenna_tila(slug, {"ok": False, "lahde": lahde, "yritetty": nyt, "virhe": viesti, "koodi": getattr(e, "koodi", "") or "haku",
-                                 "paivia": n, "viimeinen": viimeinen})
+                                 "paivia": n, "viimeinen": viimeinen, **lisatieto})
             print(f"{slug}: haku lähteestä {lahde} epäonnistui ({tunnus}): {viesti}", file=sys.stderr)
     return 0
 

@@ -2337,17 +2337,20 @@
     },
     {
       "id": "masjidbox-attribuutio",
-      "otsikko": "Masjidbox: attribuutio (Report an error · Claim this masjid) ja kontribuutiolinkit paneelissa",
+      "otsikko": "Masjidbox: attribuutio (Report an error · Claim this masjid) ja Masjidbox paneelissa selkeäksi",
       "alue": "sivu ja paneeli",
-      "kuvaus": "Masjidboxin rajapinnan ehto: jokaisessa kohdassa, jossa Masjidboxin ajat näkyvät, samalla rivillä \"Prayer times provided by Masjidbox · Report an error · Claim this masjid\". Sivulla linkit ovat Masjidboxin omat (links.report ja links.claim) sellaisinaan: etusivun seuraavan rukouksen kortissa, Rukousajat-sivulla kuukauden aikataulun alla, Ramadan-sivulla ja Jumuan vieressä (Yhteystiedot ja etusivun vierailuosio), kun Jumua tulee Masjidboxista. Paneelissa sama rivi näkyy tarkistuksessa ja 7 päivän esikatselussa, ja Report an error / Claim this masjid hakevat Masjidboxilta hyvitetyn linkin vasta klikattaessa (ei tallenneta). Lähde-välilehdellä on suositus \"Ylläpidä aikoja Masjidboxissa\": Ota moskeija hallintaan Masjidboxissa tai, jos moskeijaa ei löydy, Lisää moskeija Masjidboxiin. Masjidbox ilman rajapinnan valintaa (julkinen sivu) ohjaa valitsemaan moskeijan rajapinnasta. Masjidboxin avain on vain tuotantopaneelissa: testipaneelissa Masjidbox-kohdat kertovat, ettei avainta ole.",
+      "kuvaus": "Masjidboxin rajapinnan ehto: jokaisessa kohdassa, jossa Masjidboxin ajat näkyvät, samalla rivillä \"Prayer times provided by Masjidbox · Report an error · Claim this masjid\". Sivulla linkit ovat Masjidboxin omat (links.report ja links.claim) sellaisinaan: etusivun seuraavan rukouksen kortissa, Rukousajat-sivulla kuukauden aikataulun alla, Ramadan-sivulla ja Jumuan vieressä (Yhteystiedot ja etusivun vierailuosio), kun Jumua tulee Masjidboxista. Paneelissa sama rivi näkyy tarkistuksessa ja 7 päivän esikatselussa. Versio 2 (#33): paneeli näyttää sen, mitä Masjidboxille luvattiin. Lähteet ovat järjestyksessä \"Masjidbox · Suositus\", Mawaqit, rukousajat.fi ja \"Oma aikataulu (varalla)\". Kaikki Masjidbox-asiat ovat Masjidbox-valinnan alla: \"Moskeijanne Masjidboxissa: [Hae nimellä] [Hae]\", ja haun tuloksessa on kolme tapausta. Jos moskeija ylläpitää aikojaan Masjidboxissa, tuloksessa on Valitse. Jos Masjidboxissa on valmiiksi tehty sivu, jota kukaan ei ylläpidä (ajat laskettuja, ei iqamahia), tuloksessa on vain Claim this masjid ja selitys: laskettua moskeijaa ei voi valita (ADR-0003). Jos moskeijaa ei löydy, tuloksessa on Add a mosque to Masjidbox. Napit ovat Masjidboxin termeillä myös suomenkielisessä paneelissa, ja ne avaavat hyvitetyn linkin. Muiden lähteiden alla on erillisen laatikon sijaan yksi rivi \"Suositus: Masjidbox – moskeija ylläpitää ajat ja iqamahin yhdessä paikassa. [Valitse Masjidbox]\". Jos moskeijalla on jo valittuna laskettu Masjidbox-moskeija, julkaisuajo ei julkaise sen aikoja (sivulla \"Rukousajat lisätään pian\"), ja paneeli näyttää huomautuksen ja Claim this masjid -napin. Masjidboxin avain on vain tuotantopaneelissa: testipaneelissa Masjidbox-haku kertoo, ettei rajapinta ole käytössä, eikä suositusriviä näytetä.",
       "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa Sivusto → Rukousajat (Lähde ja iqamah). Älä tallenna kokeiluja; palauta lopuksi lähde ennalleen. Kohdat, joissa lukee Tuotantopaneeli, tarkistaa ylläpitäjä tuotantoon viennin jälkeen (rajapinnan avain on vain siellä).",
       "kohdat": [
-        "Valitse lähteeksi Oma aikataulu tai rukousajat.fi: testipaneelissa (ei Masjidboxin avainta) suositusta \"Ylläpidä aikoja Masjidboxissa\" ei näy, eikä sivulla ole virheitä tai vaakavieritystä 390 ja 320 px:n leveydellä — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
-        "Valitse Masjidbox ja kirjoita Masjidbox-tunnus ilman moskeijan valintaa (vanha tapa): Miten ajat haetaan -kohdassa lukee \"Valitse moskeija Masjidboxin rajapinnasta. Nyt ajat luetaan Masjidboxin julkiselta sivulta …\" — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
-        "Paneeli englanniksi (Oma tili → kieli English): samat tekstit englanniksi, esim. \"Choose the mosque through the Masjidbox API …\" — Missä: Testipaneeli → Account → Prayer times",
+        "Lähteet ovat järjestyksessä Masjidbox · Suositus, Mawaqit, rukousajat.fi, Oma aikataulu (varalla), eikä vaakavieritystä ole 390 ja 320 px:n leveydellä — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Valitse Masjidbox: kohdassa \"Moskeijanne Masjidboxissa\" on vain hakukenttä (Hae nimellä) ja Hae-nappi; testipaneelissa haku kertoo, ettei Masjidboxin rajapinta ole vielä käytössä — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Valitse Oma aikataulu tai rukousajat.fi: testipaneelissa (ei Masjidboxin avainta) suositusriviä ei näy, eikä erillistä \"Ylläpidä aikoja Masjidboxissa\" -laatikkoa ole — Missä: Testipaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Paneeli englanniksi (Oma tili → kieli English): lähteet Masjidbox · Recommended ja Own timetable (backup), Masjidbox-valinnassa \"Your mosque in Masjidbox\" ja Search — Missä: Testipaneeli → Account → Prayer times",
         "Testimoskeijan sivulla (Mawaqit) lähdemaininta on ennallaan: \"Rukousajat: Mawaqit · Ilmoita virheestä\" — Missä: Testimoskeijan sivu → Rukousajat",
-        "Tuotantopaneeli: valitse Masjidbox-moskeija hakemalla nimellä: tarkistuksen laatikossa lukee \"Löytyi: …\" ja alla \"Prayer times provided by Masjidbox · Report an error · Claim this masjid\"; Report an error ja Claim this masjid avaavat Masjidboxin sivun uuteen välilehteen (osoitteessa ref=…) — Missä: Tuotantopaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
-        "Tuotantopaneeli: kun Lähde on Oma aikataulu, näkyy \"Ylläpidä aikoja Masjidboxissa · Suositus\"; hae moskeijaa: tuloksessa Ota hallintaan, ja ilman tulosta \"Moskeijaa ei löytynyt Masjidboxista\" ja Lisää moskeija Masjidboxiin (avaa Masjidboxin lisäyssivun) — Missä: Tuotantopaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Tuotantopaneeli: Masjidbox → hae moskeija, joka ylläpitää aikojaan (esim. Masjid Sunnah) → Valitse: tarkistuksen laatikossa lukee \"Löytyi: … tänään Fajr …\" ja alla \"Prayer times provided by Masjidbox · Report an error · Claim this masjid\"; Report an error ja Claim this masjid avaavat Masjidboxin sivun uuteen välilehteen (osoitteessa ref=…) — Missä: Tuotantopaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Tuotantopaneeli: hae moskeija, jonka sivua kukaan ei ylläpidä Masjidboxissa: tuloksessa on vain Claim this masjid (ei Valitse) ja selitys \"Masjidboxissa on valmiiksi tehty sivu moskeijallenne, mutta kukaan moskeijasta ei ylläpidä sitä …\" — Missä: Tuotantopaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Tuotantopaneeli: hae nimellä, jota Masjidboxissa ei ole: \"Moskeijaa ei löytynyt Masjidboxista. Lisää moskeija Masjidboxiin ja julkaise ajat siellä.\" ja Add a mosque to Masjidbox (avaa Masjidboxin lisäyssivun) — Missä: Tuotantopaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
+        "Tuotantopaneeli: valitse Oma aikataulu (älä tallenna): alla on yksi rivi \"Suositus: Masjidbox – moskeija ylläpitää ajat ja iqamahin yhdessä paikassa.\" ja Valitse Masjidbox vaihtaa lähteeksi Masjidboxin; Mawaqitilla riviä ei ole — Missä: Tuotantopaneeli → Sivusto → Rukousajat → Lähde ja iqamah",
         "Tuotanto, Masjid Sunnah sen jälkeen, kun ylläpitäjä on valinnut moskeijan rajapinnasta ja sivu on julkaistu: etusivun seuraavan rukouksen kortissa, Rukousajat-sivulla kuukauden aikataulun alla ja Yhteystiedoissa Jumuan alla lukee \"Prayer times provided by Masjidbox · Report an error · Claim this masjid\" ja linkit vievät Masjidboxiin; myös arabiaksi ja puhelimella ilman vaakavieritystä — Missä: Masjid Sunnahin sivu → Etusivu, Rukousajat ja Yhteystiedot"
       ],
       "linkit": [
@@ -2362,9 +2365,13 @@
         {
           "nimi": "Masjidbox: attribuution ohje",
           "url": "https://hub.masjidbox.com/docs/attribution"
+        },
+        {
+          "nimi": "Masjidbox: kontribuutiot (Claim, Add a mosque)",
+          "url": "https://hub.masjidbox.com/docs/contributions"
         }
       ],
-      "versio": 1,
+      "versio": 2,
       "lisatty": "2026-11-20"
     },
     {
