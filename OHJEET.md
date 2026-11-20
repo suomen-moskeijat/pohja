@@ -233,7 +233,7 @@ näkymä päivittyy heti asetuksia muutettaessa. Lisäksi:
 
 - **Instagram, YouTube ja Telegram:** uusimmat julkaisut näkyvät sivulla automaattisesti ("Seuraa meitä").
 - **Facebook, TikTok, X, Snapchat, WhatsApp-kanava:** näkyvät kuvakkeina.
-- Lisää osoitteet kohtaan **Sivusto → Yhteystiedot → Somekanavat**.
+- Lisää osoitteet paneelin kohtaan **Muut → Some** (Yhteystiedoissa on linkki sinne).
 
 ### 12. Lahjoitukset ja lomakkeet
 

@@ -2334,6 +2334,40 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-20"
+    },
+    {
+      "id": "some-kohta",
+      "otsikko": "Some omana kohtana paneelin Muut-ryhmässä",
+      "alue": "paneeli",
+      "kuvaus": "Somekanavat (Instagram, Facebook, YouTube, Telegram, TikTok …) eivät ole enää Yhteystiedot-näkymän sisällä, vaan omana kohtanaan Muut → Some (Ilmoituspalkin ja Kuvien vieressä). Kentät ja tallennettu tieto ovat samat kuin ennen; Yhteystiedoissa on vain linkki Some-kohtaan. Haku löytää somet, puhelimella Some on Kaikki-valikossa. Muokkaaja ei näe Some-kohtaa (kuten ennenkään somekanavia).",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa testimoskeija. Palauta lopuksi muutettu somelinkki ennalleen.",
+      "kohdat": [
+        "Muut-ryhmässä on järjestyksessä Ilmoituspalkki, Kuvat, Some, Jakokuva someen; Some avaa somekanavien kentät (Instagram, Facebook, YouTube, TikTok, Telegram …) — Missä: Testipaneeli → Muut → Some",
+        "Somekanavissa näkyvät samat osoitteet kuin ennen Yhteystiedoissa (tieto ei muuttunut) — Missä: Testipaneeli → Muut → Some",
+        "Muuta Instagram-osoitetta ja tallenna: päivityksen jälkeen sivun alalaidan Instagram-kuvake vie uuteen osoitteeseen — Missä: Testipaneeli → Muut → Some ja testimoskeijan sivun alalaita",
+        "Yhteystiedoissa ei ole somekenttiä; Sijainti kartalla -kohdan alla on Somekanavat ja nappi \"Muokkaa kohdassa Some\", joka vie Some-kohtaan — Missä: Testipaneeli → Sivusto → Yhteystiedot",
+        "Kirjoita hakuun instagram tai some: osuma vie Some-kohtaan — Missä: Testipaneeli → haku sivupalkin yläosassa",
+        "Puhelimella (390 ja 320 px): alapalkin Kaikki-valikossa on Some, ja Some-kohta mahtuu ruutuun ilman sivuttaisvieritystä — Missä: Testipaneeli puhelimella → Kaikki → Some",
+        "Yleiskatsauksen valmiuslistan Somekanavat-kohta ja etusivun Somejulkaisut-osion Muokkaa sisältöä vievät Some-kohtaan — Missä: Testipaneeli → Yleiskatsaus ja Sivusto → Etusivu → osiot",
+        "Paneelin kieli englanniksi (Oma tili): kohdan nimi on Social media ja Yhteystiedoissa nappi \"Edit in Social media\" — Missä: Testipaneeli → Other → Social media",
+        "Muokkaajana Muut-ryhmässä ei ole Some-kohtaa — Missä: Testipaneeli muokkaajana → navigaatio"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Some",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/some"
+        },
+        {
+          "nimi": "Testipaneeli: Yhteystiedot",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/yhteystiedot"
+        },
+        {
+          "nimi": "Sivu: testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-20"
     }
   ]
 }
