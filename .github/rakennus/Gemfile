@@ -1,0 +1,6 @@
+# Rakennusajon ja testien Jekyll (ks. .github/scripts/rakenna_sivu.py). Versio on lukittu Gemfile.lock-tiedostoon,
+# joten testit (hallinta npm run testi) ja rakennusajo rakentavat sivun samalla versiolla.
+# Vanha julkaisuajo (rakenna.yml, jekyll-build-pages) ei käytä tätä tiedostoa.
+source "https://rubygems.org"
+
+gem "jekyll", "4.4.1"
