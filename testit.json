@@ -2478,6 +2478,41 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-20"
+    },
+    {
+      "id": "osioiden-raahaus",
+      "otsikko": "Osioiden järjestys raahaamalla",
+      "alue": "paneeli",
+      "kuvaus": "Jokaisen osiolistan rivissä (etusivu, omat sivut ja tiedotteet/artikkelit, kun ne saavat osiot) on vasemmalla raahauskahva (kuusi pistettä). Osion voi siirtää raahaamalla kahvasta hiirellä tai sormella; uusi paikka näkyy raahatessa kultaisena katkoviivana. Nuolet ↑ ↓ säilyvät rivin oikeassa reunassa, myös suljetussa omassa osiossa. Näppäimistöllä: siirry kahvaan sarkaimella ja paina nuoli ylös tai alas (Home ensimmäiseksi, End viimeiseksi). Järjestys tallentuu Tallenna-napista samalla tavalla kuin nuolilla.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa Sivusto → Etusivu. Vieritä kohtaan Etusivun osiot.",
+      "kohdat": [
+        "Jokaisessa osiossa on kahva vasemmalla ja nuolet oikealla; ylimmässä kiinteässä Yläosa-rivissä ei ole kahvaa — Missä: Testipaneeli → Sivusto → Etusivu → Etusivun osiot",
+        "Raahaa osio kahvasta hiirellä toiseen paikkaan: raahatessa kultainen katkoviiva näyttää uuden paikan ja raahattava osio himmenee; päästä irti, ja osio on uudessa paikassa — Missä: Testipaneeli → Sivusto → Etusivu → Etusivun osiot",
+        "Esc kesken raahauksen peruu siirron, eikä pelkkä kahvan napautus siirrä mitään — Missä: Testipaneeli → Sivusto → Etusivu → Etusivun osiot",
+        "Pitkässä listassa sivu vierii itsestään, kun raahaat ikkunan ylä- tai alareunaan — Missä: Testipaneeli → Sivusto → Etusivu → Etusivun osiot",
+        "Nuolet ↑ ↓ toimivat edelleen — Missä: Testipaneeli → Sivusto → Etusivu → Etusivun osiot",
+        "Näppäimistöllä: sarkaimella kahvaan, nuoli ylös/alas siirtää osiota, Home ensimmäiseksi ja End viimeiseksi; kohdistus pysyy siirretyssä osiossa — Missä: Testipaneeli → Sivusto → Etusivu → Etusivun osiot",
+        "Tallenna ja avaa testimoskeijan etusivu (päivittyy julkaisun jälkeen): osiot ovat uudessa järjestyksessä — Missä: Testimoskeijan sivu → etusivu",
+        "Puhelimella (390 ja 320 px) oman sivun osio siirtyy raahaamalla kahvasta sormella, nuolet ovat päällekkäin otsikon vieressä, eikä sivu vieri sivuttain — Missä: Testipaneeli puhelimella → Sivusto → oma sivu → Sivun osiot",
+        "Avattu oma osio pysyy auki, kun sitä tai toista osiota raahataan — Missä: Testipaneeli → Sivusto → oma sivu → Sivun osiot",
+        "Paneelin kieli englanniksi (Oma tili): kahvan vihje hiiren alla on \"Drag to a new place, or move with the arrow keys\" — Missä: Testipaneeli → Site → Home → Home page sections"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Etusivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/etusivu"
+        },
+        {
+          "nimi": "Testipaneeli: Sivusto",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut"
+        },
+        {
+          "nimi": "Sivu: testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-21"
     }
   ]
 }
