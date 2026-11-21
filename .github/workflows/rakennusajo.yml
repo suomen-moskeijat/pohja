@@ -28,7 +28,8 @@ concurrency:
 
 jobs:
   rakenna:
-    runs-on: ubuntu-latest
+    # Kiinteä kuva: Ruby 3.3.6 (Gemfile.lock, paikalliset testit) on valmiina ubuntu-24.04:lle, ei ubuntu-26.04:lle (ubuntu-latest)
+    runs-on: ubuntu-24.04
     environment: julkaisu
     timeout-minutes: 30
     env:
