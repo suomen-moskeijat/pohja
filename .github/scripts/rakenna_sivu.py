@@ -118,8 +118,10 @@ def main():
         # 1. Kokoaminen: sivupohja, haetut tiedot ja moskeijan oma sisältö (voittaa pohjan)
         t0 = time.time()
         os.makedirs(sivu)
-        kopioi(POHJA, sivu, EI_POHJASTA)
-        shutil.rmtree(os.path.join(sivu, ".github", "workflows"), ignore_errors=True)
+        kopioi(POHJA, sivu, EI_POHJASTA | {".github"})
+        # Skriptit ja fontit mukaan; ei työnkulkuja eikä rakennuksen riippuvuuksia (rakennus/vendor: asennetut gemit)
+        gh = os.path.join(POHJA, ".github")
+        shutil.copytree(gh, os.path.join(sivu, ".github"), ignore=lambda d, n: ["workflows", "rakennus"] if os.path.samefile(d, gh) else ["__pycache__"])
         if a.haetut and os.path.isdir(a.haetut):
             kopioi_haetut(os.path.abspath(a.haetut), sivu)
         kopioi(sisalto, sivu, {".git", ".github", "_config.yml"})
