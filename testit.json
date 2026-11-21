@@ -2621,6 +2621,30 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-21"
+    },
+    {
+      "id": "uusi-julkaisu-testimoskeija",
+      "otsikko": "Uusi julkaisu: testimoskeija sisältörepon kautta Cloudflareen",
+      "alue": "sivut",
+      "kuvaus": "Testimoskeija rakennetaan nyt myös uudella tavalla: sisältö on yksityisessä sisältörepossa, ja yksi rakennusajo rakentaa sivun ja julkaisee sen Cloudflareen. Vanha testimoskeija toimii rinnalla. Uusi sivu on toistaiseksi salaisen linkin takana (testisivujen kirjautuminen tulee myöhemmin), eikä se näy hakukoneille. Sisältö on sama kuin vanhassa: vertaa sivuja rinnakkain.",
+      "aloitus": "Pyydä ylläpitäjältä uuden testimoskeijan väliaikainen linkki (se ei ole tässä tiedostossa, koska repo on julkinen). Avaa uusi ja vanha testimoskeija rinnakkain tietokoneella ja puhelimella.",
+      "kohdat": [
+        "Etusivulla ovat samat tekstit, rukousajat, tapahtumat ja kuvat kuin vanhassa testimoskeijassa — Missä: uusi ja vanha testimoskeija, etusivu",
+        "Alasivut (Tapahtumat, Palvelut, Artikkelit, Rukousajat, Yhteystiedot) avautuvat ja näyttävät samalta kuin vanhassa — Missä: uusi testimoskeija, valikko",
+        "Kuvat näkyvät ja galleria avaa ison kuvan; sivu ei hypi kuvien latautuessa — Missä: uusi testimoskeija, etusivu ja tapahtuma",
+        "Lisää kalenteriin -kortin tilauslinkki toimii (kalenteri avautuu tai latautuu) — Missä: uusi testimoskeija → Rukousajat",
+        "Ramadan-sivu on mukana kuten vanhassa testimoskeijassa — Missä: uusi testimoskeija → Ramadan",
+        "Osoite ilman salaista osaa näyttää vain tekstin, ettei osoitteella ole julkista sivua, eikä siinä ole linkkiä moskeijan sivulle — Missä: uuden testimoskeijan osoite ilman loppuosaa",
+        "Puhelimella (390 ja 320 px) sivu mahtuu ruutuun ilman sivuttaisvieritystä — Missä: uusi testimoskeija puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Vanha testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-21"
     }
   ]
 }
