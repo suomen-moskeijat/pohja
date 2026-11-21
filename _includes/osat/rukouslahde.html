@@ -1,8 +1,10 @@
 {%- comment -%}
   Rukousaikojen lähde näkyviin aikojen yhteyteen. Masjidboxin rajapinnan ehto (hub.masjidbox.com/docs/attribution): jokaisessa
-  kohdassa, jossa Masjidboxin ajat näkyvät, samalla rivillä "Prayer times provided by Masjidbox · Report an error · Claim this masjid".
-  Linkit ovat Masjidboxin antamat (links.report aikataulusta, links.claim moskeijan tiedoista; _data/haku/<slug>.json: raportti,
-  haltuunotto) sellaisinaan, eikä niitä haaroiteta moskeijan mukaan; teksti on Masjidboxin oma englanniksi kaikilla kielillä (#31).
+  kohdassa, jossa Masjidboxin ajat näkyvät, samalla rivillä "Prayer times provided by Masjidbox · Report an error". Report-linkki on
+  Masjidboxin antama (links.report aikataulusta; _data/haku/<slug>.json: raportti) sellaisinaan, eikä sitä haaroiteta moskeijan mukaan;
+  teksti on Masjidboxin oma englanniksi kaikilla kielillä (#31). Claim this masjid ei näy sivulla: lähteeksi voi valita vain moskeijan,
+  joka ylläpitää sivuaan itse (ADR-0003), joten moskeijan omalla sivulla se olisi turha; Report an error ohjaa itse hallintaan ottoon,
+  jos sivua ei ylläpidetä. Claim this masjid on paneelissa.
   Kohdat: etusivulla seuraavan rukouksen kortti, Rukousajat-sivulla kuukauden aikataulun alla, Ramadan, ja Jumuan vieressä
   (osat/vierailu.html), kun Jumua tulee Masjidboxista. Julkiselta Masjidbox-sivulta luetuilla ajoilla (ei rajapintaa) linkkejä ei ole:
   "Ilmoita virheestä" vie moskeijan yhteystietoihin. Mawaqit ja rukousajat.fi mainitaan avoimuuden vuoksi.
@@ -14,7 +16,7 @@
 {%- comment -%} Ilmoita virheestä ilman Masjidboxin linkkejä: moskeijan yhteystiedot – moskeija omistaa ajat. {%- endcomment -%}
 {%- capture _rl_virhe -%}<a href="{{ '/yhteystiedot/' | relative_url }}">{% include k.html a="ilmoita_virheesta" %}</a>{%- endcapture -%}
 {%- if _rl_l == "masjidbox" and _rl_h.raportti and _rl_h.raportti != "" -%}
-<p class="u-rukouslahde {{ include.luokka }}" lang="en">Prayer times provided by <a href="https://masjidbox.com" target="_blank" rel="noopener">Masjidbox</a> · <a href="{{ _rl_h.raportti }}" target="_blank" rel="noopener">Report an error</a>{% if _rl_h.haltuunotto and _rl_h.haltuunotto != "" %} · <a href="{{ _rl_h.haltuunotto }}" target="_blank" rel="noopener">Claim this masjid</a>{% endif %}</p>
+<p class="u-rukouslahde {{ include.luokka }}" lang="en">Prayer times provided by <a href="https://masjidbox.com" target="_blank" rel="noopener">Masjidbox</a> · <a href="{{ _rl_h.raportti }}" target="_blank" rel="noopener">Report an error</a></p>
 {%- elsif _rl_l == "masjidbox" -%}
 <p class="u-rukouslahde {{ include.luokka }}">Prayer times provided by <a href="https://masjidbox.com" target="_blank" rel="noopener">Masjidbox</a> · {{ _rl_virhe }}</p>
 {%- elsif _rl_l == "mawaqit" -%}
