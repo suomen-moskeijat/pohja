@@ -1,6 +1,17 @@
 {%- comment -%}
-  Artikkelin teksti tavallisena tekstinä (syöte, llms-full.txt): vanhan artikkelin teksti (runko) ja Oma teksti -osioiden
-  otsikot ja tekstit järjestyksessä (artikkelit osioina, hallinta#35). Parametri: a (artikkeli). Asettaa _artikkeliteksti.
+  Artikkelin teksti tavallisena tekstinä (syöte, llms-full.txt, artikkelisivun lukuaika): vanhan artikkelin teksti (runko) ja
+  osioiden tekstit järjestyksessä (artikkelit osioina, hallinta#35): Oma teksti (otsikko ja teksti), Väliotsikko, Koraanin jakeen
+  käännös, Hadith (kertoja, arabia, teksti) ja Lainaus (kenen sanoja, arabia, teksti, lähde) (hallinta#38).
+  Parametrit: a (artikkeli), html (valinnainen: rungon valmis HTML, artikkelisivulla content). Asettaa _artikkeliteksti.
 {%- endcomment -%}
-{%- capture _artikkeliteksti -%}{{ include.a.content }}{%- for _ao in include.a.osiot -%}{%- if _ao.osio == "teksti" -%}{{ " " }}{{ _ao.otsikko.fi | default: _ao.otsikko }} {{ _ao.teksti.fi | default: _ao.teksti | markdownify }}{%- endif -%}{%- endfor -%}{%- endcapture -%}
+{%- capture _artikkeliteksti -%}{{ include.html | default: include.a.content }}
+{%- for _ao in include.a.osiot -%}{{ " " }}
+  {%- case _ao.osio -%}
+  {%- when "teksti" -%}{{ _ao.otsikko.fi | default: _ao.otsikko }} {{ _ao.teksti.fi | default: _ao.teksti | markdownify }}
+  {%- when "valiotsikko" -%}{{ _ao.otsikko.fi | default: _ao.otsikko }}
+  {%- when "koraani" -%}{{ _ao.kaannos.fi | default: _ao.kaannos }}
+  {%- when "hadith" -%}{{ _ao.kertoja.fi | default: _ao.kertoja }} {{ _ao.arabia }} {{ _ao.teksti.fi | default: _ao.teksti | markdownify }}
+  {%- when "lainaus" -%}{{ _ao.kuka.fi | default: _ao.kuka }} {{ _ao.arabia }} {{ _ao.teksti.fi | default: _ao.teksti | markdownify }} {{ _ao.lahde.fi | default: _ao.lahde }}
+  {%- endcase -%}
+{%- endfor -%}{%- endcapture -%}
 {%- assign _artikkeliteksti = _artikkeliteksti | strip_html | normalize_whitespace -%}

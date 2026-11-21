@@ -1,7 +1,7 @@
 {%- comment -%}
   Kuvakkeet: Phosphor Icons 2.1.1, MIT-lisenssi, https://phosphoricons.com (lisenssi: assets/vendor/phosphor/LICENSE)
   Käyttö: {% include ikoni-ph.html nimi="kello" koko=22 luokka="u-flip" %}
-  Nimet: kello, kirja, ryhma, kalenteri, moskeija, hattu, tahti, kuu, sydan, puhelin, sijainti, posti, maailma, nuoli, lapsi, sulje, valikko, vasen, oikea, toista, albumi. Tuntematon nimi tulostetaan sellaisenaan.
+  Nimet: kello, kirja, ryhma, kalenteri, moskeija, hattu, tahti, kuu, sydan, puhelin, sijainti, posti, maailma, nuoli, lapsi, sulje, valikko, vasen, oikea, toista, haku, albumi, linkki. Tuntematon nimi tulostetaan sellaisenaan.
 {%- endcomment -%}
 {%- assign _n = include.nimi -%}
 {%- capture _p -%}
@@ -26,6 +26,7 @@
 {%- when "vasen" -%}<path d="M168.49,199.51a12,12,0,0,1-17,17l-80-80a12,12,0,0,1,0-17l80-80a12,12,0,0,1,17,17L97,128Z"/>
 {%- when "oikea" -%}<path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"/>
 {%- when "toista" -%}<path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/>
+{%- when "linkki" -%}<path d="M165.66,90.34a8,8,0,0,1,0,11.32l-64,64a8,8,0,0,1-11.32-11.32l64-64A8,8,0,0,1,165.66,90.34ZM215.6,40.4a56,56,0,0,0-79.2,0L106.34,70.45a8,8,0,0,0,11.32,11.32l30.06-30a40,40,0,0,1,56.57,56.56l-30.07,30.06a8,8,0,0,0,11.31,11.32L215.6,119.6a56,56,0,0,0,0-79.2ZM138.34,174.22l-30.06,30.06a40,40,0,1,1-56.56-56.57l30.05-30.05a8,8,0,0,0-11.32-11.32L40.4,136.4a56,56,0,0,0,79.2,79.2l30.06-30.07a8,8,0,0,0-11.32-11.31Z"/>
 {%- when "haku" -%}<path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/>
 {%- when "albumi" -%}<path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32Zm-8,128H176V88a8,8,0,0,0-8-8H96V48H208Z"/>
 {%- else -%}

@@ -2585,6 +2585,42 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-21"
+    },
+    {
+      "id": "artikkelisivu",
+      "otsikko": "Hienompi artikkelisivu: sisällys, lukuaika, jakaminen ja muut artikkelit",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Artikkelisivulla on yläosassa lukuaika (lasketaan tekstistä) ja halutessa arabiankielinen otsikko, teksti on luettavan levyinen, pitkässä artikkelissa on sisällysluettelo väliotsikoista ja lopussa Jaa artikkeli (WhatsApp, Kopioi linkki) ja Muut artikkelit (samasta aiheesta ensin). Vanhoissa artikkeleissa lainausmerkkien kappaleet ja sulkeissa olevat viitteet erottuvat hillitysti, teksti on ennallaan. Arabiankielisellä sivulla artikkelin suomenkielinen teksti on vasemmalta oikealle.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa testimoskeija. Poista lopuksi testissä tekemäsi tiedote.",
+      "kohdat": [
+        "Uudessa tiedotteessa on kenttä Arabiankielinen otsikko (valinnainen), johon kirjoitetaan oikealta vasemmalle — Missä: Testipaneeli → Artikkelit → Uusi tiedote",
+        "Oma teksti -osion harmaat esimerkit sopivat artikkeliin (esim. Taustaa), eivät ole etusivun esimerkkejä kuten Liity jäseneksi — Missä: Testipaneeli → Artikkelit → Uusi tiedote → Oma teksti",
+        "Tiedotteen lomakkeen yläreunassa ei ole käännöspalkkia (Muokattava kieli), koska tiedotteessa ei ole käännettävää; palvelun lomakkeessa palkki on edelleen — Missä: Testipaneeli → Artikkelit → Uusi tiedote ja Palvelut → Uusi palvelu",
+        "Kirjoita pitkä tiedote, jossa on vähintään kolme väliotsikkoa (Väliotsikko-osio tai ## tekstissä), ja julkaise: sivulla tietokoneella tekstin vieressä on Sisällys, joka pysyy näkyvissä vierittäessä, ja kohdasta pääsee väliotsikkoon — Missä: testimoskeijan sivu → Artikkelit → tiedote",
+        "Yläosassa näkyy arabiankielinen otsikko otsikon yläpuolella sekä päivä ja Lukuaika noin N min — Missä: testimoskeijan sivu → Artikkelit → tiedote",
+        "Lyhyessä tiedotteessa (esim. Yhteinen iftar) ei ole sisällysluetteloa — Missä: testimoskeijan sivu → Artikkelit → Yhteinen iftar",
+        "Lopussa Jaa artikkeli: WhatsApp avaa viestin artikkelin nimellä ja osoitteella, Kopioi linkki kopioi artikkelin osoitteen — Missä: testimoskeijan sivu → Artikkelit → tiedote",
+        "Muut artikkelit: 3 korttia, samasta aiheesta ensin, ei artikkelia itseään — Missä: testimoskeijan sivu → Artikkelit → tiedote",
+        "Vanha artikkeli: arabia isolla Amiri-fontilla oikealta vasemmalle, lainausmerkeillä alkavat kappaleet ohuella reunaviivalla ja sulkeissa olevat viitteet (esim. (4:94)) pienempinä; teksti on sama kuin ennen — Missä: testimoskeijan sivu → Artikkelit → 10 asiaa, jotka mitätöivät henkilön islamin",
+        "Arabiaksi artikkelin suomenkielinen teksti on vasemmassa reunassa ja piste lauseen lopussa oikealla puolella; sisällysluettelo on oikealla — Missä: testimoskeijan sivu → kieli AR → artikkeli",
+        "Puhelimella (390 ja 320 px) sisällysluettelo on piilossa ja sivu mahtuu ruutuun ilman sivuttaisvieritystä; moskeijan värit, fontit ja korttityyli säilyvät — Missä: testimoskeijan sivu puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Uusi tiedote",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/artikkelit/uusi"
+        },
+        {
+          "nimi": "Sivu: vanha artikkeli",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/artikkelit/10-asiaa-jotka-mitatoivat-henkilon-islamin/"
+        },
+        {
+          "nimi": "Sivu: Artikkelit",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/artikkelit/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-21"
     }
   ]
 }

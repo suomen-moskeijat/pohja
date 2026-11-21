@@ -651,12 +651,30 @@
   });
 
   /* ---------- 7. Kopioi-painike ---------- */
+  // Ilman leikepöytää (esim. vanha selain tai suojaamaton yhteys) teksti näytetään kopioitavaksi
   kaikki('[data-kopioi]').forEach(function (b) {
     b.addEventListener('click', function () {
-      if (!navigator.clipboard) return;
-      navigator.clipboard.writeText(b.dataset.kopioi).then(function () { b.classList.add('on-kopioitu'); setTimeout(function () { b.classList.remove('on-kopioitu'); }, 2000); });
+      var t = b.dataset.kopioi;
+      if (!navigator.clipboard || !navigator.clipboard.writeText) { window.prompt('', t); return; }
+      navigator.clipboard.writeText(t).then(function () { b.classList.add('on-kopioitu'); setTimeout(function () { b.classList.remove('on-kopioitu'); }, 2000); }, function () { window.prompt('', t); });
     });
   });
+
+  /* ---------- 7b. Artikkelin sisällysluettelo: kohta, jota luetaan, korostettuna (hallinta#38) ---------- */
+  var sisallys = document.querySelector('.u-sisallys');
+  if (sisallys) {
+    var sLinkit = kaikki('a[href^="#"]', sisallys);
+    var sOtsikot = sLinkit.map(function (a) { return document.getElementById(decodeURIComponent(a.hash.slice(1))); });
+    var sAjastin = null;
+    var sPaivita = function () {
+      sAjastin = null;
+      var raja = window.innerHeight * 0.3, nyt = -1;
+      sOtsikot.forEach(function (h, i) { if (h && h.getBoundingClientRect().top <= raja) nyt = i; });
+      sLinkit.forEach(function (a, i) { if (i === Math.max(nyt, 0)) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+    };
+    window.addEventListener('scroll', function () { if (!sAjastin) sAjastin = requestAnimationFrame(sPaivita); }, { passive: true });
+    sPaivita();
+  }
 
   /* ---------- 8. Sisällön kuvat ja linkit (/tiedostot/...) toimimaan alihakemistossa ---------- */
   var base = document.documentElement.getAttribute('data-baseurl') || '';

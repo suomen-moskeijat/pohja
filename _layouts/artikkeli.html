@@ -1,47 +1,80 @@
 ---
 layout: sivu
 ---
-{%- comment -%} Yksittäinen artikkeli (_artikkelit/). Yhteisistä lähteistä tuoduissa lähdemerkintä ja linkki alkuperäiseen. {%- endcomment -%}
+{%- comment -%}
+  Yksittäinen artikkeli (_artikkelit/). Yhteisistä lähteistä tuoduissa lähdemerkintä ja linkki alkuperäiseen.
+  Artikkelisivu (hallinta#38, speksi #34 Q6–Q7): yläosassa arabiankielinen otsikko (oma kenttä, valinnainen) ja lukuaika,
+  luettava tekstin leveys, sisällysluettelo väliotsikoista (tietokoneella sivulla, kiinnittyvä; puhelimella piilossa), lopussa
+  Jaa artikkeli ja Muut artikkelit. Sisällysluettelo, lukuaika ja muut artikkelit tulevat vain artikkelien omista tiedoista.
+{%- endcomment -%}
 {%- assign m = site.moskeijat | where: 'slug', site.moskeija | first -%}
+{%- comment -%}
+  Vanhan artikkelin teksti on tiedoston rungossa (content), ja se näkyy sellaisenaan ensimmäisenä. Uuden ja paneelissa
+  tallennetun artikkelin sisältö on osioissa (Oma teksti, Väliotsikko, Koraanin jae, Hadith, Lainaus, Kuvat, YouTube-video,
+  Linkkikortit), samoin kuin omalla sivulla: osat/osiot.html artikkeli=true (hallinta ADR-0005). Tekstin esitys (otsikkotasot,
+  lainausten ja viitteiden tyyli): osat/artikkelin-proosa.html.
+{%- endcomment -%}
+{%- include osat/artikkelin-proosa.html html=content -%}{%- assign _sis_on = _artikkelin_proosa | strip -%}
+{%- capture _runko -%}{% if _sis_on != "" %}<div class="u-proosa u-proosa--iso">{{ _artikkelin_proosa }}</div>{% endif %}{% if page.osiot.size > 0 %}{% include osat/osiot.html osiot=page.osiot moskeija=m artikkeli=true %}{% endif %}{%- endcapture -%}
+{%- include osat/sisallys.html html=_runko -%}
+{%- comment -%}
+  Lukuaika artikkelin tekstistä (osat/artikkeliteksti.html): 160 sanaa minuutissa (suomen lukunopeus, Trauzettel-Klosinski & Dietz 2012),
+  ylöspäin pyöristettynä. Sisällysluettelo vain pitkässä artikkelissa: vähintään kolme väliotsikkoa ja lukuaika vähintään 2 min.
+{%- endcomment -%}
+{%- include osat/artikkeliteksti.html a=page html=content -%}
+{%- assign _lukuaika = _artikkeliteksti | number_of_words | divided_by: 160.0 | ceil -%}{%- if _lukuaika < 1 -%}{%- assign _lukuaika = 1 -%}{%- endif -%}
+{%- assign _on_sisallys = false -%}{%- if _sisallys_n >= 3 and _lukuaika >= 2 -%}{%- assign _on_sisallys = true -%}{%- endif -%}
+{%- assign _ar_otsikko = page.arabiankielinen_otsikko | default: "" | strip -%}
 <section class="u-sivuhero u-artikkelihero">
   <div class="u-kuvio" aria-hidden="true"></div>
   <div class="u-kehys">
     <p class="u-eyebrow u-eyebrow--vaalea"><a href="{{ '/artikkelit/' | relative_url }}">{% include k.html a="nav_artikkelit" %}</a>{% if page.aihe and page.aihe != "" and page.aihe != "Muut" %} · <span lang="fi">{{ page.aihe }}</span>{% endif %}</p>
+    {% if _ar_otsikko != "" %}<p class="u-artikkelihero__ar" lang="ar" dir="rtl">{{ _ar_otsikko | escape }}</p>{% endif %}
     <h1 lang="fi" dir="auto">{{ page.title }}</h1>
-    <p class="u-sivuhero__johdanto"><time datetime="{{ page.paiva | date: '%Y-%m-%d' }}" dir="ltr">{{ page.paiva | date: '%-d.%-m.%Y' }}</time>{% if page.lahde_nimi %} · {{ page.lahde_nimi }}{% elsif page.kirjoittaja and page.kirjoittaja != "" %} · {{ page.kirjoittaja }}{% endif %}</p>
+    <p class="u-sivuhero__johdanto"><time datetime="{{ page.paiva | date: '%Y-%m-%d' }}" dir="ltr">{{ page.paiva | date: '%-d.%-m.%Y' }}</time>{% if page.lahde_nimi %} · {{ page.lahde_nimi }}{% elsif page.kirjoittaja and page.kirjoittaja != "" %} · {{ page.kirjoittaja }}{% endif %} · <span class="u-artikkelihero__lukuaika">{% include k.html a="lukuaika" n=_lukuaika %}</span></p>
   </div>
 </section>
-<div class="u-kehys u-sivu u-sivu--kapea">
-  <p class="u-artikkeli__kieli">{% include k.html a="artikkeli_kieli" %}</p>
-  <article class="u-kortti u-artikkeli u-artikkeli--pitka" lang="fi">
-    {% if page.kuva and page.kuva != "" %}<img class="u-artikkeli__kuva" src="{{ page.kuva | relative_url }}" alt="" loading="lazy">{% endif %}
-    {%- comment -%}
-      Vanhan artikkelin teksti on tiedoston rungossa (content), ja se näkyy sellaisenaan ensimmäisenä. Uuden ja paneelissa
-      tallennetun artikkelin sisältö on osioissa (Oma teksti, Kuvat, YouTube-video, Linkkikortit), samoin kuin omalla
-      sivulla: osat/osiot.html artikkeli=true (hallinta ADR-0005). Otsikkotasot: osat/otsikkotasot.html.
-    {%- endcomment -%}
-    {%- include osat/otsikkotasot.html html=content -%}{%- assign _sis = _otsikkotasot %}
-    {% assign _sis_on = _sis | strip %}{% if _sis_on != "" %}<div class="u-proosa u-proosa--iso">{{ _sis }}</div>{% endif %}{% if page.osiot.size > 0 %}{% include osat/osiot.html osiot=page.osiot moskeija=m artikkeli=true %}{% endif %}
-  </article>
-  {% if page.lahde_url %}
-  <aside class="u-kortti u-lahdemerkinta">
-    <span class="u-ikoni">{% include ikoni-ph.html nimi="kirja" koko=22 %}</span>
-    <div>
-      <p>{% include k.html a="artikkeli_lahde" %} <strong>{{ page.lahde_nimi }}</strong>.</p>
-      <p class="u-lahdemerkinta__pieni">{{ page.oikeudet }} {% include k.html a="kaannos_huom" %}</p>
-      <a class="u-linkki" href="{{ page.lahde_url }}" target="_blank" rel="noopener">{% include k.html a="lue_alkuperainen" %} <span class="u-flip" aria-hidden="true">→</span></a>
+<div class="u-kehys u-sivu u-artikkelisivu{% if _on_sisallys %} u-artikkelisivu--sisallys{% endif %}">
+  {% if _on_sisallys %}<nav class="u-sisallys" aria-labelledby="sisallys-otsikko">
+    <p class="u-sisallys__otsikko" id="sisallys-otsikko">{% include k.html a="sisallys" %}</p>
+    <ol lang="fi">{{ _sisallys }}</ol>
+  </nav>{% endif %}
+  <div class="u-artikkelisivu__teksti">
+    <p class="u-artikkeli__kieli">{% include k.html a="artikkeli_kieli" %}</p>
+    {%- comment -%} Artikkeli on suomeksi (artikkeli_kieli): suunta vasemmalta oikealle myös arabiankielisellä sivulla; arabiankieliset kappaleet ovat lang="ar" dir="rtl" {%- endcomment %}
+    <article class="u-artikkeli u-artikkeli--pitka" lang="fi" dir="ltr">
+      {% if page.kuva and page.kuva != "" %}<img class="u-artikkeli__kuva" src="{{ page.kuva | relative_url }}" alt="" loading="lazy">{% endif %}
+      {{ _sisallys_html }}
+    </article>
+    {% if page.lahde_url %}
+    <aside class="u-kortti u-lahdemerkinta">
+      <span class="u-ikoni">{% include ikoni-ph.html nimi="kirja" koko=22 %}</span>
+      <div>
+        <p>{% include k.html a="artikkeli_lahde" %} <strong>{{ page.lahde_nimi }}</strong>.</p>
+        <p class="u-lahdemerkinta__pieni">{{ page.oikeudet }} {% include k.html a="kaannos_huom" %}</p>
+        <a class="u-linkki" href="{{ page.lahde_url }}" target="_blank" rel="noopener">{% include k.html a="lue_alkuperainen" %} <span class="u-flip" aria-hidden="true">→</span></a>
+      </div>
+    </aside>
+    {% endif %}
+    {%- assign _osoite = page.url | absolute_url -%}
+    {%- capture _wa -%}{{ page.title }} {{ _osoite }}{%- endcapture %}
+    <div class="u-jaa">
+      <p class="u-jaa__otsikko">{% include k.html a="jaa_artikkeli" %}</p>
+      <a class="u-nappi u-nappi--reuna u-nappi--pieni" href="https://wa.me/?text={{ _wa | url_encode | replace: '+', '%20' }}" target="_blank" rel="noopener">{% include osat/somekuvake.html nimi="wa" koko=18 %} WhatsApp</a>
+      <button type="button" class="u-nappi u-nappi--reuna u-nappi--pieni" data-kopioi="{{ _osoite }}">{% include ikoni-ph.html nimi="linkki" koko=18 %} {% include k.html a="kopioi_linkki" %}</button>
     </div>
-  </aside>
-  {% endif %}
-  {%- if page.aihe and page.aihe != "" -%}
-  {%- assign samat = site.artikkelit | where: 'aihe', page.aihe | sort: 'paiva' | reverse -%}
-  {%- if samat.size > 1 %}
-  <section class="u-osio u-osio--tiivis">
-    <div class="u-osio__yla"><h2>{% include k.html a="lisaa_aiheesta" %}</h2><a class="u-linkki" href="{{ '/artikkelit/' | relative_url }}">{% include k.html a="kaikki_artikkelit" %} <span class="u-flip" aria-hidden="true">→</span></a></div>
-    <ul class="u-artikkelilista u-artikkelilista--pieni">
-      {%- assign n = 0 -%}{%- for a in samat -%}{%- if a.url == page.url -%}{%- continue -%}{%- endif -%}{%- if n >= 3 -%}{%- break -%}{%- endif -%}{%- assign n = n | plus: 1 -%}{% include osat/artikkelikortti.html a=a %}{%- endfor -%}
-    </ul>
-  </section>
-  {%- endif -%}
-  {%- endif %}
+  </div>
 </div>
+{%- comment -%} Muut artikkelit: enintään 3, ensin samasta aiheesta (uusin ensin), sitten muut uusimmat {%- endcomment -%}
+{%- assign _ma_kaikki = site.artikkelit | sort: 'paiva' | reverse -%}
+{%- assign _ma_aihe = page.aihe | default: "" -%}{%- assign _ma_n = 0 -%}
+{%- capture _ma_kortit -%}
+  {%- if _ma_aihe != "" -%}{%- for a in _ma_kaikki -%}{%- if _ma_n >= 3 -%}{%- break -%}{%- endif -%}{%- if a.url == page.url or a.aihe != _ma_aihe -%}{%- continue -%}{%- endif -%}{%- assign _ma_n = _ma_n | plus: 1 -%}{% include osat/artikkelikortti.html a=a %}{%- endfor -%}{%- endif -%}
+  {%- for a in _ma_kaikki -%}{%- if _ma_n >= 3 -%}{%- break -%}{%- endif -%}{%- if a.url == page.url -%}{%- continue -%}{%- endif -%}{%- if _ma_aihe != "" and a.aihe == _ma_aihe -%}{%- continue -%}{%- endif -%}{%- assign _ma_n = _ma_n | plus: 1 -%}{% include osat/artikkelikortti.html a=a %}{%- endfor -%}
+{%- endcapture -%}
+{%- if _ma_n > 0 %}
+<section class="u-osio u-osio--tiivis u-kehys">
+  <div class="u-osio__yla"><h2>{% include k.html a="muut_artikkelit" %}</h2><a class="u-linkki" href="{{ '/artikkelit/' | relative_url }}">{% include k.html a="kaikki_artikkelit" %} <span class="u-flip" aria-hidden="true">→</span></a></div>
+  <ul class="u-artikkelilista u-artikkelilista--pieni">{{ _ma_kortit }}</ul>
+</section>
+{%- endif %}

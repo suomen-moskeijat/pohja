@@ -1,0 +1,38 @@
+{%- comment -%}
+  Artikkelin teksti sivulle (hallinta#38, speksi #34 Q6): vanhan artikkelin teksti (runko) ja artikkelin Oma teksti -osiot
+  (_layouts/artikkeli.html, osat/osio-teksti.html). Tekstiin ei kosketa, vain esitykseen:
+  1. otsikkotasot alkavat h2:sta (osat/otsikkotasot.html)
+  2. kappale, joka alkaa lainausmerkillä, saa luokan u-proosa__lainaus, ja kappale, joka on kokonaan sulkeissa (viite, esim.
+     "(4:94)" tai "(Sahih Muslim 2703)."), luokan u-proosa__viite: ne erottuvat hillitysti pelkällä tyylillä (assets/css/sivu.css).
+     Kappaleet tunnistetaan tavallisista kappaleista (<p> ja tuotujen artikkelien <p dir="auto">, lainausmerkki myös lihavoinnin tai
+     kursiivin sisällä); arabiankielisiä kappaleita
+     (lang="ar") ei merkitä, niillä on oma tyylinsä (Amiri, oikealta vasemmalle). Numeroitu kohta "(1) …" ei ole viite.
+  Parametri: html. Asettaa _artikkelin_proosa (ei tulosta mitään).
+{%- endcomment -%}
+{%- include osat/otsikkotasot.html html=include.html -%}
+{%- assign _artikkelin_proosa = _otsikkotasot -%}
+{%- assign _ap_alut = '<p>|<p dir="auto">' | split: "|" -%}
+{%- assign _ap_merkit = '“|”|"|„|«|»|&ldquo;|&rdquo;|&bdquo;|&laquo;|&raquo;|&quot;|&#8220;|&#8221;' | split: "|" -%}
+{%- assign _ap_kaaret = '|<em>|<strong>|<em><strong>|<strong><em>|<i>|<b>' | split: "|" -%}
+{%- for _ap_p in _ap_alut -%}
+  {%- assign _ap_l = _ap_p | replace: ">", ' class="u-proosa__lainaus">' -%}
+  {%- for _ap_k in _ap_kaaret -%}
+    {%- assign _ap_pk = _ap_p | append: _ap_k -%}
+    {%- unless _artikkelin_proosa contains _ap_pk -%}{%- continue -%}{%- endunless -%}
+    {%- for _ap_m in _ap_merkit -%}
+      {%- assign _ap_a = _ap_pk | append: _ap_m -%}{%- assign _ap_b = _ap_l | append: _ap_k | append: _ap_m -%}
+      {%- assign _artikkelin_proosa = _artikkelin_proosa | replace: _ap_a, _ap_b -%}
+    {%- endfor -%}
+  {%- endfor -%}
+  {%- assign _ap_a = _ap_p | append: "(" -%}
+  {%- if _artikkelin_proosa contains _ap_a -%}
+    {%- assign _ap_v = _ap_p | replace: ">", ' class="u-proosa__viite">' | append: "(" -%}
+    {%- assign _ap_osat = _artikkelin_proosa | split: _ap_a -%}
+    {%- capture _artikkelin_proosa -%}{{ _ap_osat[0] }}{%- for _ap in _ap_osat offset: 1 -%}
+      {%- assign _ap_t = _ap | split: "</p>" | first | strip_html | strip -%}{%- assign _ap_1 = _ap_t | slice: -1 -%}{%- assign _ap_2 = _ap_t | slice: -2, 2 -%}
+      {%- assign _ap_nro = false -%}{%- assign _ap_s1 = _ap_t | slice: 1 -%}{%- assign _ap_s2 = _ap_t | slice: 2 -%}
+      {%- if _ap_t.size > 4 -%}{%- if _ap_s1 == ")" or _ap_s2 == ")" -%}{%- assign _ap_nro = true -%}{%- endif -%}{%- endif -%}
+      {%- if _ap_nro == false and _ap_1 == ")" or _ap_nro == false and _ap_2 == ")." -%}{{ _ap_v }}{%- else -%}{{ _ap_a }}{%- endif -%}{{ _ap }}
+    {%- endfor -%}{%- endcapture -%}
+  {%- endif -%}
+{%- endfor -%}

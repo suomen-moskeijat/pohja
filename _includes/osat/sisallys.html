@@ -1,0 +1,35 @@
+{%- comment -%}
+  Artikkelin sisällysluettelo (hallinta#38, speksi #34 Q7) artikkelin väliotsikoista: Väliotsikko-osiot, Oma teksti -osioiden
+  otsikot ja tekstin väliotsikot (## …) sekä vanhan artikkelin tekstin otsikot (h2 otsikkotasojen jälkeen, osat/otsikkotasot.html).
+  Otsikoiden tekstiin ei kosketa: otsikko, jolla ei ole tunnistetta (id), saa sen tekstistään (slugify, sama kuin Väliotsikko-osiossa),
+  ja sama tunniste toisen kerran saa järjestysnumeron. Mitään ei keksitä: kohdat ovat artikkelin omat otsikot.
+  Parametri: html (artikkelin sisältö). Asettaa (ei tulosta mitään):
+    _sisallys_html  sama sisältö, väliotsikoissa tunnisteet
+    _sisallys       luettelon kohdat (<li><a href="#tunniste">otsikko</a></li>)
+    _sisallys_n     väliotsikoiden määrä
+{%- endcomment -%}
+{%- assign _sl_osat = include.html | split: "<h2" -%}
+{%- assign _sl_kaytetyt = "|" -%}{%- assign _sisallys_n = 0 -%}{%- assign _sisallys = "" -%}
+{%- capture _sisallys_html -%}{{ _sl_osat[0] }}{%- for _sl in _sl_osat offset: 1 -%}
+  {%- assign _sl_eka = _sl | slice: 0 -%}
+  {%- if _sl_eka != ">" and _sl_eka != " " -%}<h2{{ _sl }}{%- continue -%}{%- endif -%}
+  {%- assign _sl_attr = _sl | split: ">" | first -%}
+  {%- assign _sl_loput = _sl | remove_first: _sl_attr | remove_first: ">" -%}
+  {%- assign _sl_teksti = _sl_loput | split: "</h2>" | first | strip_html | strip_newlines | strip -%}
+  {%- if _sl_attr contains ' id="' -%}
+    {%- assign _sl_id = _sl_attr | split: ' id="' | last | split: '"' | first -%}
+    {%- capture _sl_vanha -%} id="{{ _sl_id }}"{%- endcapture -%}{%- assign _sl_ilman = _sl_attr | remove_first: _sl_vanha -%}
+  {%- else -%}
+    {%- assign _sl_id = _sl_teksti | slugify -%}{%- assign _sl_ilman = _sl_attr -%}
+  {%- endif -%}
+  {%- if _sl_id == "" -%}{%- assign _sl_id = "osa" -%}{%- endif -%}
+  {%- capture _sl_haku -%}|{{ _sl_id }}|{%- endcapture -%}
+  {%- if _sl_kaytetyt contains _sl_haku -%}{%- assign _sl_id = _sl_id | append: "-" | append: forloop.index -%}{%- endif -%}
+  {%- capture _sl_uusi -%}{{ _sl_ilman }} id="{{ _sl_id }}"{%- endcapture -%}
+  {%- assign _sl_kaytetyt = _sl_kaytetyt | append: _sl_id | append: "|" -%}
+  {%- if _sl_teksti != "" -%}
+    {%- assign _sisallys_n = _sisallys_n | plus: 1 -%}
+    {%- capture _sisallys -%}{{ _sisallys }}<li><a href="#{{ _sl_id }}"><bdi>{{ _sl_teksti }}</bdi></a></li>{%- endcapture -%}
+  {%- endif -%}
+  <h2{{ _sl_uusi }}>{{ _sl_loput }}
+{%- endfor -%}{%- endcapture -%}

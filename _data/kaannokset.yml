@@ -295,7 +295,11 @@ lue_alkuperainen:   { fi: "Lue alkuperäinen", en: "Read the original", ar: "ا�
 kaannos_huom:       { fi: "Käännökset ovat suuntaa antavia. Jos huomaat virheen, ilmoita siitä alkuperäiselle sivustolle.", en: "Translations are indicative. If you notice an error, please report it to the original website.", ar: "الترجمات تقريبية. إن وجدت خطأً فأبلغ الموقع الأصلي.", so: "Turjumaaduhu waa qiyaas. Haddii aad aragto qalad, u sheeg bogga asalka ah." }
 kirjoittaja:        { fi: "Kirjoittaja", en: "Author", ar: "الكاتب", so: "Qoraaga" }
 artikkeli_kieli:    { fi: "", en: "The article is in Finnish.", ar: "المقال باللغة الفنلندية.", so: "Maqaalku waa af-Finnish." }
-lisaa_aiheesta:     { fi: "Lisää samasta aiheesta", en: "More on this topic", ar: "المزيد حول هذا الموضوع", so: "Wax dheeraad ah oo mawduucan ku saabsan" }
+muut_artikkelit:    { fi: "Muut artikkelit", en: "More articles", ar: "مقالات أخرى", so: "Maqaallo kale" }
+sisallys:           { fi: "Sisällys", en: "Contents", ar: "المحتويات", so: "Tusmada" }
+lukuaika:           { fi: "Lukuaika noin %n min", en: "About %n min read", ar: "مدة القراءة: %n دقيقة تقريبًا", so: "Waqtiga akhriska: qiyaastii %n daqiiqo" }
+jaa_artikkeli:      { fi: "Jaa artikkeli", en: "Share this article", ar: "شارك المقال", so: "La wadaag maqaalka" }
+kopioi_linkki:      { fi: "Kopioi linkki", en: "Copy link", ar: "نسخ الرابط", so: "Koobiyee xiriirka" }
 luonnos_palkki:     { fi: "Luonnos – sivua ei ole vielä julkaistu. Kerro korjaukset ylläpitäjälle.", en: "Draft – this site has not been published yet.", ar: "مسودة – لم يُنشر هذا الموقع بعد.", so: "Qabyo – boggan weli lama daabicin." }
 seuraava_perjantai: { fi: "Seuraava perjantai", en: "Next Friday", ar: "الجمعة القادمة", so: "Jimcaha soo socda" }
 ehdotus_palkki:     { fi: "Ehdotus – tämä ei ole moskeijan virallinen sivu. Sivu on tehty esimerkiksi moskeijalle.", en: "Proposal – this is not the mosque's official website. It was made as an example for the mosque.", ar: "اقتراح – هذا ليس الموقع الرسمي للمسجد، بل نموذج مقترح له.", so: "Soo jeedin – kani maaha bogga rasmiga ah ee masjidka. Waxaa loo sameeyay tusaale ahaan." }

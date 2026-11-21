@@ -910,6 +910,33 @@ html[data-kortit-somet="allekkain"] .u-somet__paneeli + .u-somet__paneeli { marg
 /* Arabiankieliset kappaleet artikkeleissa (Koraanin jakeet): Amiri tukee Koraanin merkkejä */
 .u-artikkeli--pitka .u-proosa [lang="ar"] { font-family: "Amiri", "IBM Plex Sans Arabic", serif; font-size: 1.3em; line-height: 2.1; text-align: right; color: var(--paa); }
 .u-artikkeli__kieli [data-l="fi"] { display: none; }
+
+/* ---------- Artikkelisivu (hallinta#38, speksi #34 Q7) ----------
+   Teksti sivun pohjalla ilman ympäröivää korttia (jakeet, hadithit ja kuvat ovat moskeijan korttityylillä), luettava leveys
+   680 px (noin 70 merkkiä riville). Tietokoneella sisällysluettelo tekstin vieressä ja kiinnittyvä, puhelimella piilossa. */
+.u-artikkelihero__ar { width: fit-content; max-width: 100%; margin: 0 0 4px; font: 400 clamp(22px, 3vw, 28px)/1.6 "Amiri", "IBM Plex Sans Arabic", serif; letter-spacing: 0; color: var(--kulta-teksti); }
+.u-artikkelihero__lukuaika { white-space: nowrap; }
+/* Suomenkielinen otsikko arabiankielisellä sivulla: teksti vasemmalta oikealle, mutta sivun reunassa (rtl.md) */
+html[dir="rtl"] .u-artikkelihero h1[dir="auto"] { text-align: right; }
+.u-artikkelisivu__teksti { min-width: 0; max-width: 680px; margin-inline: auto; }
+.u-artikkelisivu .u-artikkeli { padding: 0; }
+.u-artikkeli .u-proosa :is(p, li, h2, h3, h4) { unicode-bidi: plaintext; }
+.u-sisallys { display: none; }
+@media (min-width: 1024px) {
+  .u-artikkelisivu--sisallys { display: grid; grid-template-columns: 200px minmax(0, 680px); gap: 56px; justify-content: center; align-items: start; }
+  .u-artikkelisivu--sisallys .u-artikkelisivu__teksti { margin: 0; }
+  .u-sisallys { display: block; position: sticky; top: calc(var(--yla) + 24px); max-height: calc(100vh - var(--yla) - 48px); overflow-y: auto; font-size: 14px; line-height: 1.4; }
+}
+.u-sisallys__otsikko { margin: 0 0 8px; font-weight: 600; color: var(--paa); }
+.u-sisallys ol { list-style: none; margin: 0; padding: 0; border-inline-start: 1px solid var(--raja); }
+.u-sisallys a { display: block; margin-inline-start: -1px; padding: 6px 0; padding-inline-start: 12px; border-inline-start: 2px solid transparent; color: var(--hieno); text-decoration: none; transition: color .15s, border-color .15s; }
+.u-sisallys a:hover { color: var(--paa); }
+.u-sisallys a[aria-current="true"] { color: var(--paa); border-inline-start-color: var(--kulta); }
+.u-artikkelisivu .u-lahdemerkinta { margin-top: 40px; }
+.u-jaa { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 24px; }
+.u-artikkeli + .u-jaa { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--raja); }
+.u-jaa__otsikko { margin: 0; margin-inline-end: 8px; font-size: 15px; color: var(--hieno); }
+@media (max-width: 599px) { .u-jaa__otsikko { flex-basis: 100%; margin-inline-end: 0; } }
 /* Työpöydän valikko: ei rivitystä; kapeammalla näytöllä tiiviimmin */
 .u-nav a { white-space: nowrap; }
 @media (min-width: 1024px) and (max-width: 1279px) {
@@ -1302,13 +1329,17 @@ a.u-palvelu__linkki:hover, .u-tapahtuma a:hover, .u-rj__kortti:hover, a.u-rmh:ho
 }
 /* Tekstisisällön arabiankieliset kappaleet (Koraanin jae): lukufontti, oikealta vasemmalle, ei harvennusta */
 .u-proosa .u-arabia { font: 400 1.5em/1.9 "Amiri", "Noto Naskh Arabic", serif; letter-spacing: 0; text-align: start; color: var(--paa); }
-.u-proosa blockquote { margin-inline: 0; padding-inline-start: 20px; border-inline-start: 2px solid var(--raja); }
+/* Lainausmerkkien kappale artikkelin tekstissä (osat/artikkelin-proosa.html) näyttää samalta kuin lainaus tekstissä */
+.u-proosa blockquote, .u-proosa .u-proosa__lainaus { margin-inline: 0; padding-inline-start: 20px; border-inline-start: 2px solid var(--raja); }
 /* Kuvat tekstin seassa (paneelin Kuva-nappi): koko leveys, kuvateksti alla */
 .u-proosa img { border-radius: calc(var(--r-m) * .67); }
 .u-proosa p > img:only-child, .u-proosa__kuva img { width: 100%; max-height: 640px; object-fit: contain; background: var(--tausta); }
 .u-proosa__kuva { margin: 1.5em 0; }
 /* Sama kuvateksti myös Kuvat-osiossa (.u-kuvat, hallinta#36) */
 .u-proosa__kuva figcaption, .u-kuvat > figcaption { margin-top: 8px; font-size: 14px; line-height: 1.5; color: var(--hieno); }
+/* Sulkeissa oleva viite artikkelin tekstissä (esim. "(4:94)", osat/artikkelin-proosa.html): hillitysti kuin kuvateksti, lähellä edellistä kappaletta */
+.u-proosa .u-proosa__viite { font-size: 14px; line-height: 1.5; color: var(--hieno); }
+.u-proosa :is(p, ul, ol, blockquote) + .u-proosa__viite { margin-top: .4em; }
 /* Nosto (esim. Ilmoita lapsesi opetukseen): ei koristeikonia, teksti ja nappi */
 .u-nosto__ikoni { display: none; }
 @media (min-width: 820px) { .u-nosto { grid-template-columns: minmax(0, 1fr) auto; } }
@@ -1413,7 +1444,6 @@ html[lang="ar"] .u-viikko__laatta b { font-size: 13px; }
 .u-sitaatti--koraani { border-inline-start: 4px solid var(--kulta); }
 .u-sitaatti--hadith { border-inline-start: 4px solid var(--paa); }
 .u-sitaatti--lainaus { padding: 2px 0; padding-inline-start: 22px; border-inline-start: 2px solid var(--raja); }
-.u-artikkeli .u-sitaatti:not(.u-sitaatti--lainaus) { box-shadow: none; }
 .u-sitaatti__merkki { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; margin-bottom: 12px; font-size: 14px; line-height: 1.4; color: var(--hieno); }
 .u-sitaatti__laji { font-weight: 600; color: var(--kulta-teksti); }
 .u-sitaatti--hadith .u-sitaatti__laji { color: var(--paa); }
