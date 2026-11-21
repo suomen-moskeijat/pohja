@@ -1,0 +1,9 @@
+{%- comment -%}
+  Väliotsikko (hallinta#36): otsikko osioiden väliin. Artikkelissa se jakaa tekstin osiin (sisällysluettelo väliotsikoista:
+  hallinta#34 A4), omalla sivulla se aloittaa seuraavat osiot. Ankkuri (id) suomenkielisestä otsikosta.
+  Parametrit: o (osio: otsikko), artikkeli (true = artikkelin osio artikkelin tekstin sisällä)
+{%- endcomment -%}
+{%- assign o = include.o -%}
+{%- assign _vo_id = o.otsikko.fi | default: o.otsikko | slugify -%}
+{% if include.artikkeli %}<div class="u-artikkeli__osio"><h2 class="u-valiotsikko" id="{{ _vo_id }}">{% include kt.html arvo=o.otsikko %}</h2></div>
+{% else %}<section class="u-osio u-kehys u-valiotsikko-osio"><h2 class="u-valiotsikko" id="{{ _vo_id }}">{% include kt.html arvo=o.otsikko %}</h2></section>{% endif %}

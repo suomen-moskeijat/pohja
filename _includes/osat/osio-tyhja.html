@@ -12,6 +12,10 @@
   ukk        kysymys, jolla on kysymysteksti
   linkit     linkki, jolla on nimi tai osoite
   kuvat      kuva
+  valiotsikko otsikko
+  koraani    kelvollinen viite (osat/koraani-viite.html: suura ja jakeet, jotka suurassa on)
+  hadith     teksti (suomennos tai käännös) tai arabiankielinen teksti
+  lainaus    teksti tai arabiankielinen teksti
   lomake     lomakkeen kenttä (lomake näkyy lisäksi vain, kun viesteillä on vastaanottaja: osat/lomake-tapa.html)
   vierailu   osoite tai sijainti (reittiohjeiden kohde)
   meista     lyhyt tai pitkä Meistä-teksti (osio näyttää lyhyen tekstin tai pitkän alun; esittely, missio tai galleria
@@ -34,6 +38,8 @@
   {%- when "ilmoitus" -%}{%- assign _ot_kentat = "" | split: "" | push: _ot_o.otsikko | push: _ot_o.teksti -%}
   {%- when "nosto" -%}{%- assign _ot_kentat = "" | split: "" | push: _ot_o.yla | push: _ot_o.otsikko | push: _ot_o.teksti -%}
   {%- when "meista" -%}{%- assign _ot_kentat = "" | split: "" | push: include.moskeija.meista_lyhyt | push: include.moskeija.meista -%}
+  {%- when "valiotsikko" -%}{%- assign _ot_kentat = "" | split: "" | push: _ot_o.otsikko -%}
+  {%- when "hadith", "lainaus" -%}{%- assign _ot_kentat = "" | split: "" | push: _ot_o.teksti | push: _ot_o.arabia -%}
   {%- else -%}{%- assign _ot_kentat = "" | split: "" -%}
   {%- endcase -%}
   {%- if _ot_o.nappi_linkki and _ot_o.nappi_linkki != "" -%}{%- assign _ot_kentat = _ot_kentat | push: _ot_o.nappi_teksti -%}{%- endif -%}
@@ -46,8 +52,11 @@
 {%- when "teksti" -%}
   {%- assign _ot_kuva = _ot_o.kuva | default: "" -%}
   {%- if _ot_teksti == "" and _ot_kuva == "" -%}{%- assign _osio_tyhja = true -%}{%- endif -%}
-{%- when "ilmoitus", "nosto", "meista" -%}
+{%- when "ilmoitus", "nosto", "meista", "valiotsikko", "hadith", "lainaus" -%}
   {%- if _ot_teksti == "" -%}{%- assign _osio_tyhja = true -%}{%- endif -%}
+{%- when "koraani" -%}
+  {%- include osat/koraani-viite.html viite=_ot_o.viite -%}
+  {%- unless _kv_ok -%}{%- assign _osio_tyhja = true -%}{%- endunless -%}
 {%- when "video" -%}
   {%- assign _ot_u = _ot_o.osoite | default: "" -%}
   {%- unless _ot_u contains "youtu.be/" or _ot_u contains "/shorts/" or _ot_u contains "/live/" or _ot_u contains "/embed/" or _ot_u contains "v=" -%}{%- assign _osio_tyhja = true -%}{%- endunless -%}

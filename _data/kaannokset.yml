@@ -154,6 +154,21 @@ nayta_kartta:       { fi: "Näytä kartta", en: "Show map", ar: "عرض الخر
 kartta_lahde:       { fi: "Kartta ladataan Google Mapsista", en: "The map is loaded from Google Maps", ar: "يتم تحميل الخريطة من خرائط Google", so: "Khariidadda waxaa laga soo raraa Google Maps" }
 katso_video:        { fi: "Katso video", en: "Watch the video", ar: "شاهد الفيديو", so: "Daawo fiidiyowga" }
 video_lahde:        { fi: "Video ladataan YouTubesta", en: "The video is loaded from YouTube", ar: "يتم تحميل الفيديو من YouTube", so: "Fiidiyowga waxaa laga soo raraa YouTube" }
+# Koraanin jae, hadith ja lainaus (osiot, hallinta#36). Koraanin teksti ja valitut käännökset: Tanzil (_tanzil/LISENSSI.md)
+koraani:            { fi: "Koraani", en: "Quran", ar: "القرآن الكريم", so: "Quraanka" }
+koraani_teksti:     { fi: "Koraanin teksti:", en: "Quran text:", ar: "نص القرآن:", so: "Qoraalka Quraanka:" }
+koraani_kaannos:    { fi: "Käännös:", en: "Translation:", ar: "الترجمة:", so: "Turjumaadda:" }
+hadith:             { fi: "Hadith", en: "Hadith", ar: "حديث", so: "Xadiis" }
+hadith_lahde:       { fi: "Lähde", en: "Source", ar: "المصدر", so: "Isha" }
+hadith_bukhari:     { fi: "Sahih al-Bukhari", en: "Sahih al-Bukhari", ar: "صحيح البخاري", so: "Sahih al-Bukhari" }
+hadith_muslim:      { fi: "Sahih Muslim", en: "Sahih Muslim", ar: "صحيح مسلم", so: "Sahih Muslim" }
+hadith_abudawud:    { fi: "Sunan Abi Dawud", en: "Sunan Abi Dawud", ar: "سنن أبي داود", so: "Sunan Abi Dawud" }
+hadith_tirmidhi:    { fi: "Jami at-Tirmidhi", en: "Jami at-Tirmidhi", ar: "جامع الترمذي", so: "Jami at-Tirmidhi" }
+hadith_nasai:       { fi: "Sunan an-Nasa'i", en: "Sunan an-Nasa'i", ar: "سنن النسائي", so: "Sunan an-Nasa'i" }
+hadith_ibnmajah:    { fi: "Sunan Ibn Majah", en: "Sunan Ibn Majah", ar: "سنن ابن ماجه", so: "Sunan Ibn Majah" }
+hadith_malik:       { fi: "Muwatta Malik", en: "Muwatta Malik", ar: "موطأ مالك", so: "Muwatta Malik" }
+hadith_ahmad:       { fi: "Musnad Ahmad", en: "Musnad Ahmad", ar: "مسند أحمد", so: "Musnad Ahmad" }
+hadith_riyadussalihin: { fi: "Riyad as-Salihin", en: "Riyad as-Salihin", ar: "رياض الصالحين", so: "Riyad as-Salihin" }
 nav_tuki:           { fi: "Tuki ja jäsenyys", en: "Support & membership", ar: "الدعم والعضوية", so: "Taageero iyo xubinnimo" }
 tuki_otsikko:       { fi: "Tuki ja jäsenyys", en: "Support and membership", ar: "الدعم والعضوية", so: "Taageero iyo xubinnimo" }
 tuki_kysy:          { fi: "Kysy lisää jäsenyydestä ja toiminnan tukemisesta – vastaamme mielellämme.", en: "Ask us about membership and supporting our activities – we are happy to help.", ar: "للاستفسار عن العضوية ودعم أنشطتنا تواصلوا معنا، يسعدنا مساعدتكم.", so: "Nala soo xiriir wixii ku saabsan xubinnimada iyo taageerada hawlahayaga – waan ku faraxsanahay inaan ku caawinno." }

@@ -1,0 +1,13 @@
+{%- comment -%}
+  Lainaus (hallinta#36): kenen sanoja, arabiankielinen alkuteksti (valinnainen), suomennos tai teksti ja lähde.
+  Kevyt reunaviiva ilman korttia. Parametrit: o (osio), artikkeli (true = artikkelin osio artikkelin tekstin sisällä)
+{%- endcomment -%}
+{%- assign o = include.o -%}
+{% if include.artikkeli %}<div class="u-artikkeli__osio">{% else %}<section class="u-osio u-kehys"><div class="u-sitaattiosio">{% endif %}
+<figure class="u-sitaatti u-sitaatti--lainaus">
+  {% if o.kuka %}<p class="u-sitaatti__kertoja">{% include kt.html arvo=o.kuka %}</p>{% endif %}
+  {% assign _ln_ar = o.arabia | default: "" | strip %}{% if _ln_ar != "" %}<p class="u-sitaatti__ar" lang="ar" dir="rtl">{{ _ln_ar | escape | newline_to_br }}</p>{% endif %}
+  {% if o.teksti %}<blockquote class="u-sitaatti__kaannos">{% include kt.html arvo=o.teksti md=true tagi="div" %}</blockquote>{% endif %}
+  {% if o.lahde %}<figcaption class="u-sitaatti__lahde">{% include kt.html arvo=o.lahde %}</figcaption>{% endif %}
+</figure>
+{% if include.artikkeli %}</div>{% else %}</div></section>{% endif %}

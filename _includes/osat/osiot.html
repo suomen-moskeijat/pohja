@@ -1,6 +1,6 @@
 {%- comment -%}
   Osiot listasta (etusivu, omat sivut ja artikkelit): valmiit osiot (palvelut, tapahtumat, galleria …) ja
-  omat osiot (teksti, ilmoitus, video, ukk, linkit, kuvat). Parametrit: osiot, moskeija,
+  omat osiot (teksti, ilmoitus, video, ukk, linkit, kuvat, väliotsikko, Koraanin jae, hadith, lainaus). Parametrit: osiot, moskeija,
   artikkeli (true = artikkelin osiot artikkelin tekstin sisällä: vain artikkelin osiotyypit, ilman osion omaa kehystä;
   sama lista kuin paneelissa, hallinta src/kaavio.js ARTIKKELIN_OSIOT),
   merkit (true = jokaisen osion ympärille HTML-kommentit <!--osio:N:tyyppi--> … <!--/osio-->: paneelin esikatselu
@@ -12,7 +12,7 @@
 {%- assign _on_palvelut = false -%}
 {%- for o in include.osiot -%}{%- if o.osio -%}{%- assign _t = o.osio -%}{%- else -%}{%- assign _t = o -%}{%- endif -%}{%- if _t == "palvelut" -%}{%- assign _on_palvelut = true -%}{%- endif -%}{%- endfor -%}
 {%- assign _palvelut_naytetty = false -%}
-{%- assign _artikkelin_osiot = "teksti,kuvat,video,linkit" | split: "," -%}
+{%- assign _artikkelin_osiot = "teksti,valiotsikko,koraani,hadith,lainaus,kuvat,video,linkit" | split: "," -%}
 {%- for o in include.osiot -%}
 {%- if o.osio -%}{%- assign _t = o.osio -%}{%- else -%}{%- assign _t = o -%}{%- endif -%}
 {%- if include.artikkeli -%}{%- unless _artikkelin_osiot contains _t -%}{%- continue -%}{%- endunless -%}{%- endif -%}
@@ -150,6 +150,14 @@
 {% include osat/osio-linkit.html o=o artikkeli=include.artikkeli %}
 {%- when "kuvat" %}
 {% include osat/osio-kuvat.html o=o artikkeli=include.artikkeli %}
+{%- when "valiotsikko" %}
+{% include osat/osio-valiotsikko.html o=o artikkeli=include.artikkeli %}
+{%- when "koraani" %}
+{% include osat/osio-koraani.html o=o artikkeli=include.artikkeli %}
+{%- when "hadith" %}
+{% include osat/osio-hadith.html o=o artikkeli=include.artikkeli %}
+{%- when "lainaus" %}
+{% include osat/osio-lainaus.html o=o artikkeli=include.artikkeli %}
 {%- endcase -%}
 {%- endunless -%}
 {%- if include.merkit %}<!--/osio-->{% endif -%}

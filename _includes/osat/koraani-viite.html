@@ -1,0 +1,20 @@
+{%- comment -%}
+  Koraanin jakeen viite (Koraanin jae -osio, hallinta#36): "4:94" tai "4:94-95" (paneeli tallentaa tässä muodossa ja
+  tarkistaa, että suurassa on niin monta jaetta: hallinta src/koraani.js). Parametri: viite
+  Asettaa: _kv_ok (true, kun viite on kelvollinen), _kv_s (suura), _kv_alku ja _kv_loppu (jakeet), _kv_suura (suuran
+  tiedot _data/koraani/suurat.json: nimi, ar, jakeita), _kv_sk (suura tekstinä: datatiedoston nimi _data/koraani/<teksti>/<suura>.json)
+{%- endcomment -%}
+{%- assign _kv = include.viite | default: "" | append: "" | strip | replace: "–", "-" | remove: " " -%}
+{%- assign _kv_ok = false -%}{%- assign _kv_suura = nil -%}
+{%- assign _kv_o = _kv | split: ":" -%}
+{%- if _kv_o.size == 2 -%}
+  {%- assign _kv_s = _kv_o[0] | plus: 0 -%}
+  {%- assign _kv_a = _kv_o[1] | split: "-" -%}
+  {%- assign _kv_alku = _kv_a[0] | plus: 0 -%}
+  {%- assign _kv_loppu = _kv_a[1] | default: _kv_a[0] | plus: 0 -%}
+  {%- if _kv_a.size <= 2 and _kv_s >= 1 and _kv_s <= 114 and _kv_alku >= 1 and _kv_loppu >= _kv_alku -%}
+    {%- assign _kv_i = _kv_s | minus: 1 -%}
+    {%- assign _kv_suura = site.data.koraani.suurat.suurat[_kv_i] -%}
+    {%- if _kv_loppu <= _kv_suura.jakeita -%}{%- assign _kv_ok = true -%}{%- assign _kv_sk = _kv_s | append: "" -%}{%- endif -%}
+  {%- endif -%}
+{%- endif -%}

@@ -2546,6 +2546,45 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-21"
+    },
+    {
+      "id": "koraani-hadith-osiot",
+      "otsikko": "Koraanin jae, Hadith, Lainaus ja Väliotsikko",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Uudet osiot artikkeleihin ja omille sivuille. Koraanin jae: kirjoitetaan viite (esim. 4:94), arabia tulee Koraanista (Tanzil) sellaisenaan eikä sitä voi muokata. Koraanin käännös valitaan kerran kielittäin (englannin oletus Saheeh International), ja moskeijan oma käännös voittaa valitun. Hadith: kokoelma ja numero, kertoja, arabia, suomennos, luotettavuusaste ja lähdelinkki, kaikki itse kirjoitettuina. Tekoäly ei käännä Koraania eikä hadithia. Kuvat-osioon voi lisätä kuvatekstin.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa testimoskeija. Poista lopuksi testissä tekemäsi sivu ja tiedote.",
+      "kohdat": [
+        "Sivuston kielet: Koraanin jakeiden käännös -kohdassa englannille Saheeh International (oletus), Pickthall, Yusuf Ali tai Kirjoitan itse ja somalille Abduh tai Kirjoitan itse; tallenna — Missä: Testipaneeli → Asetukset → Sivuston kielet",
+        "+ Lisää osio tarjoaa Väliotsikko, Koraanin jae, Hadith ja Lainaus sekä omalla sivulla että tiedotteessa — Missä: Testipaneeli → Sivusto → + Lisää sivu ja Artikkelit → Uusi tiedote",
+        "Koraanin jae: kirjoita 4:177, jolloin heti näkyy \"Suurassa 4 on 176 jaetta.\"; kirjoita 4:94, jolloin arabia näkyy vain luku -muodossa ja rivillä lukee 4:94 · An-Nisaa — Missä: Testipaneeli → oma sivu tai tiedote → Koraanin jae",
+        "Valitse ylhäältä Muokattava kieli: Englanti: Koraanin jae näyttää Saheeh Internationalin käännöksen vain luku -muodossa, ja käännöspalkki kertoo, että Koraanin jakeet ja hadithit käännetään itse; Käännä tekoälyllä ei käännä niitä — Missä: Testipaneeli → oma sivu",
+        "Hadith: valitse kokoelma (esim. Sahih Muslim), kirjoita numero, kertoja, suomennos, aste ja lähdelinkki; rivillä näkyy kokoelma ja numero — Missä: Testipaneeli → oma sivu tai tiedote → Hadith",
+        "Sivulla Koraanin jae on kortti kultaisella reunalla (arabia isona, suomennos, viite ja linkki Tanziliin), hadith kortti moskeijan värillä ja lainaus kevyellä reunaviivalla; moskeijan värit ja korttityyli säilyvät — Missä: testimoskeijan sivu → oma sivu ja Artikkelit → tiedote",
+        "Englanniksi Koraanin jakeen alla on Saheeh Internationalin käännös ja kääntäjän nimi linkkinä Tanziliin; jos jakeelle on kirjoitettu oma englanninkielinen käännös, se näkyy sen sijaan. Hadith ilman käännöstä näkyy suomeksi — Missä: testimoskeijan sivu → kieli EN",
+        "Arabiaksi sivu toimii oikealta vasemmalle: kortin reunaviiva on oikealla ja suomenkielinen teksti vasemmassa reunassa — Missä: testimoskeijan sivu → kieli AR",
+        "Kuvat-osion kuvateksti näkyy kuvien alla — Missä: Testipaneeli → tiedote → Kuvat → Kuvateksti ja sivu",
+        "Puhelimella (390 ja 320 px) sivu ja paneelin osiot mahtuvat ruutuun ilman sivuttaisvieritystä — Missä: testimoskeijan sivu ja Testipaneeli puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Sivuston kielet",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/asetukset"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi tiedote",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/artikkelit/uusi"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi sivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/omat/uusi?pohja=tyhja"
+        },
+        {
+          "nimi": "Sivu: Artikkelit",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/artikkelit/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-21"
     }
   ]
 }

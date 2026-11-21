@@ -1,0 +1,47 @@
+{%- comment -%}
+  Koraanin jae (hallinta#36): kortti, jossa arabiankielinen teksti, käännös ja viite "Koraani 4:94 · An-Nisaa".
+  Parametrit: o (osio: viite, kaannos), artikkeli (true = artikkelin osio artikkelin tekstin sisällä)
+
+  Koraanin tekstiin ei kosketa: arabia ja valittu käännös tulevat sellaisinaan Tanzilin tiedostoista (_tanzil/, haettavina
+  _data/koraani/, ks. _tanzil/LISENSSI.md). Lähde (Tanzil Project) ja linkki jakeeseen Tanzilissa näkyvät aina, valitun
+  käännöksen kohdalla kääntäjä ja linkki samaan jakeeseen käännöksessä (Tanzilin ehdot).
+
+  Käännös kielittäin (sivuston kielet, kuten kt.html):
+  1. moskeijan oma käännös tällä kielellä (o.kaannos; artikkelin yksikielinen teksti koskee kaikkia kieliä) voittaa
+  2. kielelle valittu Tanzilin käännös (_config.yml koraani_kaannokset, paneeli: Asetukset → Sivuston kielet; englannin
+     oletus Saheeh International, "oma" = kirjoitan itse)
+  3. muuten suomenkielinen käännös (dir="auto"), jos sellainen on: sivulla arabia ja suomenkielinen teksti
+{%- endcomment -%}
+{%- assign o = include.o -%}
+{%- include osat/koraani-viite.html viite=o.viite -%}
+{%- if _kv_ok -%}
+{%- assign _kj_ar = site.data.koraani["quran-uthmani"][_kv_sk].jakeet -%}
+{%- assign _kj_useita = false -%}{%- if _kv_loppu > _kv_alku -%}{%- assign _kj_useita = true -%}{%- endif -%}
+{%- capture _kj_viite -%}{{ _kv_s }}:{{ _kv_alku }}{% if _kj_useita %}–{{ _kv_loppu }}{% endif %}{%- endcapture -%}
+{%- capture _kj_tanzil -%}{{ _kv_s }}:{{ _kv_alku }}{%- endcapture -%}
+{%- assign _kj_omat = o.kaannos -%}{%- assign _kj_j = _kj_omat | jsonify | slice: 0 -%}
+{%- if _kj_j == "{" -%}{%- assign _kj_fi = _kj_omat.fi | default: "" | strip -%}{%- else -%}{%- assign _kj_fi = _kj_omat | default: "" | append: "" | strip -%}{%- endif -%}
+{% if include.artikkeli %}<div class="u-artikkeli__osio">{% else %}<section class="u-osio u-kehys"><div class="u-sitaattiosio">{% endif %}
+<figure class="u-kortti u-sitaatti u-sitaatti--koraani">
+  <figcaption class="u-sitaatti__merkki"><span class="u-sitaatti__laji">{% include k.html a="koraani" %}</span><span class="u-sitaatti__viite" dir="ltr">{{ _kj_viite }} · {{ _kv_suura.nimi }}</span></figcaption>
+  <p class="u-sitaatti__ar" lang="ar" dir="rtl">{% for _kj_n in (_kv_alku.._kv_loppu) %}{% assign _kj_i = _kj_n | minus: 1 %}<span class="u-sitaatti__jae" data-jae="{{ _kj_n }}">{{ _kj_ar[_kj_i] }}</span>{% if _kj_useita %} <span class="u-sitaatti__nro">&#xFD3F;{{ _kj_n | append: "" | replace: "0", "٠" | replace: "1", "١" | replace: "2", "٢" | replace: "3", "٣" | replace: "4", "٤" | replace: "5", "٥" | replace: "6", "٦" | replace: "7", "٧" | replace: "8", "٨" | replace: "9", "٩" }}&#xFD3E;</span>{% unless forloop.last %}{{ " " }}{% endunless %}{% endif %}{% endfor %}</p>
+  {%- for _kj_l in site.kielet -%}
+    {%- if _kj_j == "{" -%}{%- assign _kj_oma = _kj_omat[_kj_l] | default: "" | strip -%}{%- else -%}{%- assign _kj_oma = _kj_fi -%}{%- endif -%}
+    {%- assign _kj_valittu = site.koraani_kaannokset[_kj_l] | default: "" | append: "" -%}
+    {%- if _kj_valittu == "" and _kj_l == "en" -%}{%- assign _kj_valittu = "en.sahih" -%}{%- endif -%}
+    {%- assign _kj_va = _kj_valittu | replace: ".", "-" -%}
+    {%- assign _kj_tk = site.data.koraani.kaannokset.kaannokset[_kj_va] -%}
+    {%- if _kj_oma != "" %}
+  <div class="u-sitaatti__kieli" data-l="{{ _kj_l }}"><blockquote class="u-sitaatti__kaannos"{% if _kj_j == "{" %} lang="{{ _kj_l }}"{% endif %}><p>{{ _kj_oma | escape | newline_to_br }}</p></blockquote></div>
+    {%- elsif _kj_tk and _kj_tk.kieli == _kj_l -%}
+    {%- assign _kj_tj = site.data.koraani[_kj_va][_kv_sk].jakeet %}
+  <div class="u-sitaatti__kieli" data-l="{{ _kj_l }}"><blockquote class="u-sitaatti__kaannos" lang="{{ _kj_l }}" data-kaannos="{{ _kj_tk.id }}"><p>{% for _kj_n in (_kv_alku.._kv_loppu) %}{% assign _kj_i = _kj_n | minus: 1 %}{% if _kj_useita %}<span class="u-sitaatti__nro">({{ _kj_n }})</span> {% endif %}<span class="u-sitaatti__jae" data-jae="{{ _kj_n }}">{{ _kj_tj[_kj_i] | escape }}</span>{% unless forloop.last %}{{ " " }}{% endunless %}{% endfor %}</p></blockquote>
+  <p class="u-sitaatti__lahde">{{ site.data.kaannokset.koraani_kaannos[_kj_l] | default: site.data.kaannokset.koraani_kaannos.en }} <a href="https://tanzil.net/#trans/{{ _kj_tk.id }}/{{ _kj_tanzil }}" target="_blank" rel="noopener">{{ _kj_tk.kaantaja }}</a></p></div>
+    {%- elsif _kj_fi != "" %}
+  <div class="u-sitaatti__kieli" data-l="{{ _kj_l }}"><blockquote class="u-sitaatti__kaannos" lang="fi" dir="auto"><p>{{ _kj_fi | escape | newline_to_br }}</p></blockquote></div>
+    {%- endif -%}
+  {%- endfor %}
+  <p class="u-sitaatti__lahde">{% include k.html a="koraani_teksti" %} <a href="https://tanzil.net/#{{ _kj_tanzil }}" target="_blank" rel="noopener">Tanzil Project</a></p>
+</figure>
+{% if include.artikkeli %}</div>{% else %}</div></section>{% endif %}
+{%- endif -%}

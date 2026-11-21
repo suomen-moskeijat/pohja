@@ -1,13 +1,14 @@
 {%- comment -%}
   Monikielinen sisältökenttä. Kenttä voi olla tavallinen teksti tai {fi, en, ar, so, …} (kaikki sivuston kielet).
-  Puuttuva käännös korvataan englannilla tai suomella. Parametrit: arvo, md (true = markdown), tagi (oletus span)
+  Puuttuva käännös korvataan englannilla tai suomella. Parametrit: arvo, md (true = markdown), tagi (oletus span),
+  suomi (true = puuttuva käännös korvataan vain suomella, ei englannilla: hadith, jota tekoäly ei käännä, hallinta#36)
 {%- endcomment -%}
 {%- assign _a = include.arvo -%}
 {%- assign _t = include.tagi | default: "span" -%}
 {%- assign _kt_json = _a | jsonify | slice: 0 -%}
 {%- if _kt_json == "{" -%}
   {%- for _l in site.kielet -%}
-    {%- assign _v = _a[_l] | default: _a.en | default: _a.fi -%}
+    {%- if include.suomi -%}{%- assign _v = _a[_l] | default: _a.fi -%}{%- else -%}{%- assign _v = _a[_l] | default: _a.en | default: _a.fi -%}{%- endif -%}
     {%- comment -%} Puuttuva käännös (esim. suomenkielinen teksti arabian sivulla): dir="auto" pitää välimerkit oikealla puolella {%- endcomment -%}
     {%- assign _oma = _a[_l] | default: "" | strip -%}{%- if _oma == "" -%}{%- assign _kv = ' dir="auto"' -%}{%- else -%}{%- assign _kv = "" -%}{%- endif -%}
     {%- if include.md -%}<{{ _t }} data-l="{{ _l }}" lang="{{ _l }}"{{ _kv }}>{{ _v | markdownify }}</{{ _t }}>{%- else -%}<{{ _t }} data-l="{{ _l }}"{{ _kv }}>{{ _v }}</{{ _t }}>{%- endif -%}

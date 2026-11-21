@@ -724,7 +724,7 @@
     // paikalleen. Vain sallitut tagit ja attribuutit; skriptit, tapahtumakäsittelijät ja javascript:-linkit poistetaan.
     var ESIK_ALUE = { palvelu: '.u-palvelusivu', tapahtuma: '.u-tapsivu', oma: '.u-omasivu-alue' };
     var SALLITUT_TAGIT = /^(SECTION|ARTICLE|ASIDE|DIV|SPAN|P|A|IMG|UL|OL|LI|H2|H3|H4|STRONG|EM|B|I|BR|SMALL|BLOCKQUOTE|FIGURE|FIGCAPTION|FORM|FIELDSET|LEGEND|LABEL|INPUT|TEXTAREA|BUTTON|DETAILS|SUMMARY)$/;
-    var SALLITUT_ATTR = /^(class|href|src|alt|id|type|name|rows|role|target|rel|loading|data-ikoni|data-rivi|data-sailyta)$/;
+    var SALLITUT_ATTR = /^(class|href|src|alt|id|type|name|rows|role|target|rel|loading|lang|dir|data-ikoni|data-rivi|data-sailyta)$/;
     var esikAlkup = {};
     function puhdas(html) {
       var t = document.createElement('template'); t.innerHTML = String(html || '');

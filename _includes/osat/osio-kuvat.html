@@ -1,8 +1,11 @@
-{%- comment -%} Valitut kuvat ruudukkona (esim. tapahtuman kuvat, tilat). Parametrit: o, artikkeli (true = artikkelin osio artikkelin tekstin sisällä, ilman osion kehystä) {%- endcomment -%}
+{%- comment -%}
+  Valitut kuvat ruudukkona (esim. tapahtuman kuvat, tilat). Parametrit: o, artikkeli (true = artikkelin osio artikkelin tekstin
+  sisällä, ilman osion kehystä). Kuvateksti (valinnainen, hallinta#36) kuvien alla samalla tyylillä kuin tekstin kuvan kuvateksti.
+{%- endcomment -%}
 {%- assign o = include.o -%}
 {%- if o.kuvat.size > 0 -%}
 {% if include.artikkeli %}<div class="u-artikkeli__osio">{% else %}<section class="u-osio u-kehys">{% endif %}
   {% if o.otsikko %}{% if include.artikkeli %}<h2>{% include kt.html arvo=o.otsikko %}</h2>{% else %}<div class="u-osio__yla"><h2>{% include kt.html arvo=o.otsikko %}</h2></div>{% endif %}{% endif %}
-  <div class="u-galleria">{% for kuva in o.kuvat %}<a href="{{ kuva | relative_url }}" target="_blank" rel="noopener"><img src="{% include pieni.html kuva=kuva %}" alt="" loading="lazy"></a>{% endfor %}</div>
+  {% if o.kuvateksti %}<figure class="u-kuvat">{% endif %}<div class="u-galleria">{% for kuva in o.kuvat %}<a href="{{ kuva | relative_url }}" target="_blank" rel="noopener"><img src="{% include pieni.html kuva=kuva %}" alt="" loading="lazy"></a>{% endfor %}</div>{% if o.kuvateksti %}<figcaption>{% include kt.html arvo=o.kuvateksti %}</figcaption></figure>{% endif %}
 {% if include.artikkeli %}</div>{% else %}</section>{% endif %}
 {%- endif -%}

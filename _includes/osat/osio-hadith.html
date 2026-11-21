@@ -1,0 +1,26 @@
+{%- comment -%}
+  Hadith (hallinta#36): kortti moskeijan pääväri reunassa. Kaikki tekstit moskeija kirjoittaa itse paneelissa.
+  Parametrit: o (osio), artikkeli (true = artikkelin osio artikkelin tekstin sisällä)
+  Kentät: kokoelma (sunnah.comin tunnus, esim. muslim; muu = kokoelma_muu) ja numero erikseen, kertoja, arabia (valinnainen),
+  teksti (suomennos ja käännökset), aste (luotettavuusaste, valinnainen) ja lahde (osoite, valinnainen).
+  Käännös puuttuu → suomenkielinen teksti (ei englantia välissä, kuten Koraanin jakeessa); tekoäly ei käännä hadithia.
+{%- endcomment -%}
+{%- assign o = include.o -%}
+{%- assign _hd_n = o.numero | default: "" | append: "" | strip | escape -%}
+{%- comment -%} Kokoelma ja numero samassa kielikohtaisessa tekstissä (kokoelman nimi _data/kaannokset.yml hadith_<kokoelma>) {%- endcomment -%}
+{%- assign _hd_a = "hadith_" | append: o.kokoelma -%}{%- assign _hd_kk = site.data.kaannokset[_hd_a] -%}
+{%- capture _hd_v -%}
+  {%- if o.kokoelma == "muu" or _hd_kk == nil -%}{%- assign _hd_m = "" -%}{%- if o.kokoelma == "muu" -%}{%- assign _hd_m = o.kokoelma_muu | default: "" | strip | escape -%}{%- endif -%}{{ _hd_m }}{% if _hd_m != "" and _hd_n != "" %}{{ " " }}{% endif %}{{ _hd_n }}
+  {%- else -%}{%- for _l in site.kielet -%}<span data-l="{{ _l }}">{{ _hd_kk[_l] | default: _hd_kk.en | default: _hd_kk.fi }}{% if _hd_n != "" %} {{ _hd_n }}{% endif %}</span>{%- endfor -%}{%- endif -%}
+{%- endcapture -%}
+{%- assign _hd_l = o.lahde | default: "" | strip -%}{%- assign _hd_lu = _hd_l | slice: 0, 4 -%}
+{% if include.artikkeli %}<div class="u-artikkeli__osio">{% else %}<section class="u-osio u-kehys"><div class="u-sitaattiosio">{% endif %}
+<figure class="u-kortti u-sitaatti u-sitaatti--hadith">
+  <figcaption class="u-sitaatti__merkki"><span class="u-sitaatti__laji">{% include k.html a="hadith" %}</span>{% if _hd_v != "" %}<span class="u-sitaatti__viite">{{ _hd_v }}</span>{% endif %}</figcaption>
+  {% if o.kertoja %}<p class="u-sitaatti__kertoja">{% include kt.html arvo=o.kertoja suomi=true %}</p>{% endif %}
+  {% assign _hd_ar = o.arabia | default: "" | strip %}{% if _hd_ar != "" %}<p class="u-sitaatti__ar" lang="ar" dir="rtl">{{ _hd_ar | escape | newline_to_br }}</p>{% endif %}
+  {% if o.teksti %}<blockquote class="u-sitaatti__kaannos">{% include kt.html arvo=o.teksti suomi=true md=true tagi="div" %}</blockquote>{% endif %}
+  {%- capture _hd_ala -%}{% if o.aste %}<span class="u-sitaatti__aste">{% include kt.html arvo=o.aste suomi=true %}</span>{% endif %}{% if _hd_l != "" and _hd_lu == "http" %}{% if o.aste %} · {% endif %}<a href="{{ _hd_l | escape }}" target="_blank" rel="noopener">{% include k.html a="hadith_lahde" %}</a>{% endif %}{%- endcapture -%}
+  {% if _hd_ala != "" %}<p class="u-sitaatti__lahde">{{ _hd_ala }}</p>{% endif %}
+</figure>
+{% if include.artikkeli %}</div>{% else %}</div></section>{% endif %}

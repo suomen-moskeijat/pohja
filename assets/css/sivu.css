@@ -898,7 +898,7 @@ html[data-kortit-somet="allekkain"] .u-somet__paneeli + .u-somet__paneeli { marg
 .u-artikkeli > :is(.u-proosa, .u-artikkeli__osio) + .u-artikkeli__osio { margin-top: 28px; }
 .u-artikkeli__osio > h2 { margin: 0 0 .5em; font-size: clamp(20px, 2.6vw, 24px); }
 .u-artikkeli__osio > h2 + .u-proosa h2:first-child { margin-top: 1.5em; }
-.u-artikkeli__osio > * + :is(.u-galleria, .u-linkit, .u-kannet, .u-video, .u-napit, .u-artikkeli__osiokuva) { margin-top: 16px; }
+.u-artikkeli__osio > * + :is(.u-galleria, .u-kuvat, .u-linkit, .u-kannet, .u-video, .u-napit, .u-artikkeli__osiokuva) { margin-top: 16px; }
 .u-artikkeli__osiokuva { width: 100%; border-radius: var(--r-m); }
 .u-artikkeli .u-linkit { grid-template-columns: minmax(0, 1fr); }
 /* Artikkelin kortissa video on kapeampi kuin sivun levyinen: puhelimella pienempi toistonappi, jotta teksti mahtuu */
@@ -1307,7 +1307,8 @@ a.u-palvelu__linkki:hover, .u-tapahtuma a:hover, .u-rj__kortti:hover, a.u-rmh:ho
 .u-proosa img { border-radius: calc(var(--r-m) * .67); }
 .u-proosa p > img:only-child, .u-proosa__kuva img { width: 100%; max-height: 640px; object-fit: contain; background: var(--tausta); }
 .u-proosa__kuva { margin: 1.5em 0; }
-.u-proosa__kuva figcaption { margin-top: 8px; font-size: 14px; line-height: 1.5; color: var(--hieno); }
+/* Sama kuvateksti myös Kuvat-osiossa (.u-kuvat, hallinta#36) */
+.u-proosa__kuva figcaption, .u-kuvat > figcaption { margin-top: 8px; font-size: 14px; line-height: 1.5; color: var(--hieno); }
 /* Nosto (esim. Ilmoita lapsesi opetukseen): ei koristeikonia, teksti ja nappi */
 .u-nosto__ikoni { display: none; }
 @media (min-width: 820px) { .u-nosto { grid-template-columns: minmax(0, 1fr) auto; } }
@@ -1400,3 +1401,44 @@ html[lang="ar"] .u-viikko__laatta b { font-size: 13px; }
 .u-aihe small { font-size: 12px; opacity: .75; }
 .kk__taulu th small { font-size: 12px; }
 
+
+/* ---------- Koraanin jae, hadith ja lainaus (osiot, hallinta#36) ----------
+   Koraani ja hadith ovat moskeijan korttityylillä (u-kortti) ja erottuvat reunaviivalla: Koraani korostusvärillä,
+   hadith pääväreillä. Lainaus on kevyt reunaviiva ilman korttia. Arabia Amirilla isona oikealta vasemmalle.
+   Omalla sivulla luettava leveys (u-sitaattiosio), artikkelissa artikkelin tekstin levyinen. */
+.u-sitaattiosio { max-width: 760px; }
+/* Peräkkäiset jakeet, hadithit ja lainaukset kuuluvat yhteen: tiiviimpi väli kuin osioiden välillä */
+.u-osio:has(> .u-sitaattiosio) + .u-osio:has(> .u-sitaattiosio) { padding-top: 24px; }
+.u-sitaatti { padding: 22px 26px; }
+.u-sitaatti--koraani { border-inline-start: 4px solid var(--kulta); }
+.u-sitaatti--hadith { border-inline-start: 4px solid var(--paa); }
+.u-sitaatti--lainaus { padding: 2px 0; padding-inline-start: 22px; border-inline-start: 2px solid var(--raja); }
+.u-artikkeli .u-sitaatti:not(.u-sitaatti--lainaus) { box-shadow: none; }
+.u-sitaatti__merkki { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; margin-bottom: 12px; font-size: 14px; line-height: 1.4; color: var(--hieno); }
+.u-sitaatti__laji { font-weight: 600; color: var(--kulta-teksti); }
+.u-sitaatti--hadith .u-sitaatti__laji { color: var(--paa); }
+.u-sitaatti__viite { font-variant-numeric: tabular-nums; }
+.u-sitaatti__ar { margin: 0 0 12px; font: 400 26px/2.1 "Amiri", "IBM Plex Sans Arabic", serif; letter-spacing: 0; color: var(--paa); direction: rtl; text-align: right; overflow-wrap: anywhere; }
+.u-sitaatti__nro { font-size: .8em; color: var(--kulta-teksti); white-space: nowrap; }
+.u-sitaatti__kaannos .u-sitaatti__nro { font-size: .75em; font-variant-numeric: tabular-nums; }
+.u-sitaatti__kertoja { margin: 0 0 8px; font-size: 15px; color: var(--hieno); }
+.u-sitaatti__kaannos { margin: 0; font-size: 17px; line-height: 1.7; color: var(--teksti); }
+.u-sitaatti__kaannos p + p { margin-top: .8em; }
+.u-sitaatti__kieli + .u-sitaatti__kieli { margin-top: 0; }
+.u-sitaatti__lahde { margin-top: 12px; font-size: 13px; line-height: 1.5; color: var(--hieno); }
+.u-sitaatti__lahde a { color: inherit; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.u-sitaatti__lahde + .u-sitaatti__lahde { margin-top: 4px; }
+/* Kertoja, käännös ja lähde ovat sivun kielellä tai suomeksi (puuttuva käännös): kappaleen suunta ja tasaus sen omasta tekstistä,
+   joten suomenkielinen teksti on arabiankielisellä sivulla vasemmassa reunassa ja arabia oikeassa */
+.u-sitaatti :is(.u-sitaatti__kertoja, .u-sitaatti__kaannos, .u-sitaatti__kaannos p, .u-sitaatti__lahde) { unicode-bidi: plaintext; text-align: start; }
+html[lang="ar"] .u-sitaatti__merkki, html[lang="ar"] .u-sitaatti__lahde { font-size: 15px; }
+@media (max-width: 599px) {
+  .u-sitaatti:not(.u-sitaatti--lainaus) { padding: 18px 18px; }
+  .u-sitaatti--lainaus { padding-inline-start: 16px; }
+  .u-sitaatti__ar { font-size: 22px; line-height: 2; }
+  .u-sitaatti__kaannos { font-size: 16px; }
+}
+/* Väliotsikko: artikkelissa tekstin väliotsikon kokoinen, omalla sivulla seuraavien osioiden otsikko */
+.u-artikkeli__osio > .u-valiotsikko { margin: 8px 0 0; }
+.u-valiotsikko-osio { padding-bottom: 0; }
+.u-valiotsikko-osio + .u-osio { padding-top: 20px; }
