@@ -1,0 +1,6 @@
+{%- comment -%}
+  Artikkelin teksti tavallisena tekstinä (syöte, llms-full.txt): vanhan artikkelin teksti (runko) ja Oma teksti -osioiden
+  otsikot ja tekstit järjestyksessä (artikkelit osioina, hallinta#35). Parametri: a (artikkeli). Asettaa _artikkeliteksti.
+{%- endcomment -%}
+{%- capture _artikkeliteksti -%}{{ include.a.content }}{%- for _ao in include.a.osiot -%}{%- if _ao.osio == "teksti" -%}{{ " " }}{{ _ao.otsikko.fi | default: _ao.otsikko }} {{ _ao.teksti.fi | default: _ao.teksti | markdownify }}{%- endif -%}{%- endfor -%}{%- endcapture -%}
+{%- assign _artikkeliteksti = _artikkeliteksti | strip_html | normalize_whitespace -%}

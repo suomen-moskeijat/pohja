@@ -1,10 +1,20 @@
 {%- comment -%}
   Oma tekstiosio (etusivu ja omat sivut): otsikko, teksti, valinnainen kuva ja nappi. Parametri: o
   Tausta: tavallinen (ei taustaa), vaalea, vari tai kortti (sama kortti ja tekstikoko kuin artikkelilla: pitkä luettava teksti).
+  artikkeli: true = artikkelin osio artikkelin tekstin sisällä (artikkelin tekstikoko ja otsikkotasot, kuva tekstin alla;
+  ei taustaa eikä kuvan paikkaa, paneelissa niitä ei ole artikkelin osiossa).
 {%- endcomment -%}
 {%- assign o = include.o -%}
 {%- assign _kuva = o.kuva | default: "" -%}
 {%- assign _ulk = o.nappi_linkki | default: "" | slice: 0, 4 -%}
+{%- if include.artikkeli -%}
+<div class="u-artikkeli__osio">
+  {% if o.otsikko %}<h2>{% include kt.html arvo=o.otsikko %}</h2>{% endif %}
+  {% if o.teksti %}{%- capture _ot_html -%}{% include kt.html arvo=o.teksti md=true tagi="div" %}{%- endcapture -%}{%- include osat/otsikkotasot.html html=_ot_html -%}<div class="u-proosa u-proosa--iso">{{ _otsikkotasot }}</div>{% endif %}
+  {% if _kuva != "" %}<img class="u-artikkeli__osiokuva" src="{{ _kuva | relative_url }}" alt="" loading="lazy">{% endif %}
+  {% if o.nappi_teksti and o.nappi_linkki %}<div class="u-napit"><a class="u-nappi u-nappi--kulta" href="{% include osat/linkki-href.html l=o.nappi_linkki %}"{% if _ulk == "http" %} target="_blank" rel="noopener"{% endif %}>{% include kt.html arvo=o.nappi_teksti %}</a></div>{% endif %}
+</div>
+{%- else -%}
 <section class="u-osio u-kehys">
   <div class="u-tekstiosio{% if _kuva != "" %} u-tekstiosio--kuva{% if o.kuvan_paikka == "vasen" %} u-tekstiosio--vasen{% endif %}{% endif %}{% if o.tausta == "vari" %} u-tekstiosio--vari{% elsif o.tausta == "vaalea" %} u-tekstiosio--vaalea{% elsif o.tausta == "kortti" %} u-kortti u-artikkeli{% endif %}">
     <div class="u-tekstiosio__teksti">
@@ -15,3 +25,4 @@
     {% if _kuva != "" %}<img class="u-tekstiosio__kuva" src="{{ _kuva | relative_url }}" alt="" loading="lazy">{% endif %}
   </div>
 </section>
+{%- endif -%}

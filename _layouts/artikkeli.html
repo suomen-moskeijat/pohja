@@ -15,16 +15,13 @@ layout: sivu
   <p class="u-artikkeli__kieli">{% include k.html a="artikkeli_kieli" %}</p>
   <article class="u-kortti u-artikkeli u-artikkeli--pitka" lang="fi">
     {% if page.kuva and page.kuva != "" %}<img class="u-artikkeli__kuva" src="{{ page.kuva | relative_url }}" alt="" loading="lazy">{% endif %}
-    {%- comment -%} Otsikkotasot alkavat h2:sta (sivun otsikko on h1): tuoduissa artikkeleissa ensimmäinen taso voi olla h3 tai h4 {%- endcomment -%}
-    {%- assign _sis = content -%}
-    {%- unless _sis contains "<h2" -%}
-      {%- if _sis contains "<h3" -%}
-        {%- assign _sis = _sis | replace: "<h3", "<h2" | replace: "</h3>", "</h2>" | replace: "<h4", "<h3" | replace: "</h4>", "</h3>" | replace: "<h5", "<h4" | replace: "</h5>", "</h4>" -%}
-      {%- elsif _sis contains "<h4" -%}
-        {%- assign _sis = _sis | replace: "<h4", "<h2" | replace: "</h4>", "</h2>" | replace: "<h5", "<h3" | replace: "</h5>", "</h3>" -%}
-      {%- endif -%}
-    {%- endunless %}
-    <div class="u-proosa u-proosa--iso">{{ _sis }}</div>
+    {%- comment -%}
+      Vanhan artikkelin teksti on tiedoston rungossa (content), ja se näkyy sellaisenaan ensimmäisenä. Uuden ja paneelissa
+      tallennetun artikkelin sisältö on osioissa (Oma teksti, Kuvat, YouTube-video, Linkkikortit), samoin kuin omalla
+      sivulla: osat/osiot.html artikkeli=true (hallinta ADR-0005). Otsikkotasot: osat/otsikkotasot.html.
+    {%- endcomment -%}
+    {%- include osat/otsikkotasot.html html=content -%}{%- assign _sis = _otsikkotasot %}
+    {% assign _sis_on = _sis | strip %}{% if _sis_on != "" %}<div class="u-proosa u-proosa--iso">{{ _sis }}</div>{% endif %}{% if page.osiot.size > 0 %}{% include osat/osiot.html osiot=page.osiot moskeija=m artikkeli=true %}{% endif %}
   </article>
   {% if page.lahde_url %}
   <aside class="u-kortti u-lahdemerkinta">

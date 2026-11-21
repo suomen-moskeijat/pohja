@@ -23,7 +23,7 @@ sitemap: false
     <link href="{{ juuri }}{{ e.url }}"/>
     <id>{{ juuri }}{{ e.url }}</id>
     <updated>{{ e.paiva | default: site.time | date_to_xmlschema }}</updated>
-    <summary>{{ e.content | strip_html | normalize_whitespace | truncatewords: 60 | xml_escape }}</summary>
+    {% if e.collection == "artikkelit" %}{% include osat/artikkeliteksti.html a=e %}{% else %}{% assign _artikkeliteksti = e.content | strip_html | normalize_whitespace %}{% endif %}<summary>{{ _artikkeliteksti | truncatewords: 60 | xml_escape }}</summary>
   </entry>
 {%- endfor %}
 </feed>

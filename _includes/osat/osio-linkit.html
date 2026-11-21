@@ -1,10 +1,10 @@
-{%- comment -%} Linkkikortit (kirjat, lähteet, tiedostot, lomakkeet). Parametri: o
+{%- comment -%} Linkkikortit (kirjat, lähteet, tiedostot, lomakkeet). Parametrit: o, artikkeli (true = artikkelin osio artikkelin tekstin sisällä, ilman osion kehystä)
   Vain linkit, joilla on nimi tai osoite (osat/osio-tyhja.html); ilman niitä osio ei näy. {%- endcomment -%}
 {%- assign o = include.o -%}
 {%- include osat/osio-tyhja.html o=o -%}
 {%- unless _osio_tyhja -%}
-<section class="u-osio u-kehys">
-  {% if o.otsikko %}<div class="u-osio__yla"><h2>{% include kt.html arvo=o.otsikko %}</h2></div>{% endif %}
+{% if include.artikkeli %}<div class="u-artikkeli__osio">{% else %}<section class="u-osio u-kehys">{% endif %}
+  {% if o.otsikko %}{% if include.artikkeli %}<h2>{% include kt.html arvo=o.otsikko %}</h2>{% else %}<div class="u-osio__yla"><h2>{% include kt.html arvo=o.otsikko %}</h2></div>{% endif %}{% endif %}
   {% include osat/linkit-kortit.html linkit=_osio_linkit %}
-</section>
+{% if include.artikkeli %}</div>{% else %}</section>{% endif %}
 {%- endunless -%}

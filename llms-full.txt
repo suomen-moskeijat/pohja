@@ -122,6 +122,6 @@ Päivittäiset rukousajat: {{ juuri }}/rukousajat/ (lasketaan moskeijan sijainni
 
 ## Tiedotteet
 {% for a in _omat limit: 15 %}
-- **{{ a.title }}** ({{ a.paiva | date: "%-d.%-m.%Y" }}): {{ a.content | strip_html | normalize_whitespace | truncatewords: 50 }} {{ juuri }}{{ a.url }}
+{% include osat/artikkeliteksti.html a=a %}- **{{ a.title }}** ({{ a.paiva | date: "%-d.%-m.%Y" }}): {{ _artikkeliteksti | truncatewords: 50 }} {{ juuri }}{{ a.url }}
 {%- endfor %}
 {%- endif %}

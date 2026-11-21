@@ -2478,6 +2478,39 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-20"
+    },
+    {
+      "id": "artikkelit-osioina",
+      "otsikko": "Tiedotteet ja artikkelit osioina",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Tiedote koostuu nyt samoista osioista kuin oma sivu: Oma teksti, Kuvat, YouTube-video ja Linkkikortit. Uusi tiedote alkaa yhdellä Oma teksti -osiolla. Vanhan tiedotteen teksti näkyy sivulla täsmälleen kuten ennen ja avautuu paneelissa ensimmäisenä Oma teksti -osiona; tallennettaessa siitä tulee tavallinen osio. Artikkelin osiot ovat yhdellä kielellä kuten artikkeli. Valmiit artikkelit (islaminusko.fi) eivät muutu.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä tai muokkaajana ja avaa testimoskeija. Poista lopuksi testissä tekemäsi tiedote.",
+      "kohdat": [
+        "Uusi tiedote: lomakkeessa ei ole erillistä Teksti-kenttää, vaan Artikkelin osiot, jossa on valmiina yksi Oma teksti -osio — Missä: Testipaneeli → Artikkelit → Uusi tiedote",
+        "+ Lisää osio tarjoaa vain Oma teksti, Kuvat, YouTube-video ja Linkkikortit (ei valmiita osioita, lomaketta eikä kieliversioita) — Missä: Testipaneeli → Artikkelit → Uusi tiedote → + Lisää osio",
+        "Kirjoita teksti, lisää Kuvat-osio (valitse kuva) ja Linkkikortit-osio (nimi ja osoite), järjestä nuolilla ja julkaise: sivulla osiot näkyvät artikkelissa samassa järjestyksessä — Missä: Testipaneeli → Artikkelit ja testimoskeijan sivu → Artikkelit → tiedote",
+        "Tyhjä osio (esim. Kuvat ilman kuvia): paneelissa merkintä \"Ei näy – ei vielä sisältöä\", Julkaise varoittaa, eikä osio näy sivulla — Missä: Testipaneeli → Artikkelit → tiedote",
+        "Vanha tiedote (esim. Yhteinen iftar) avautuu yhtenä Oma teksti -osiona, jossa on koko teksti; sivulla se näyttää samalta kuin ennen, myös tallennuksen jälkeen — Missä: Testipaneeli → Artikkelit → Yhteinen iftar ja sivu → Artikkelit → Yhteinen iftar",
+        "Valmis artikkeli (esim. 10 asiaa, jotka mitätöivät henkilön islamin) näyttää samalta kuin ennen — Missä: testimoskeijan sivu → Artikkelit",
+        "Jakokuva someen → Julkaise nettisivulle tekee tiedotteen, jonka teksti on Oma teksti -osiossa — Missä: Testipaneeli → Muut → Jakokuva someen",
+        "Puhelimella (390 ja 320 px) artikkelisivu ja paneelin osiot mahtuvat ruutuun ilman sivuttaisvieritystä — Missä: testimoskeijan sivu ja Testipaneeli puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Uusi tiedote",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/artikkelit/uusi"
+        },
+        {
+          "nimi": "Testipaneeli: Yhteinen iftar",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/artikkelit/2026-11-15-yhteinen-iftar"
+        },
+        {
+          "nimi": "Sivu: Artikkelit",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/artikkelit/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-21"
     }
   ]
 }

@@ -1,0 +1,13 @@
+{%- comment -%}
+  Artikkelin tekstin otsikkotasot alkavat h2:sta (sivun otsikko on h1): tuoduissa artikkeleissa ensimmäinen taso voi olla h3
+  tai h4. Sama sääntö vanhan artikkelin tekstille (runko) ja artikkelin Oma teksti -osioille (_layouts/artikkeli.html,
+  osat/osio-teksti.html). Parametri: html. Asettaa _otsikkotasot (ei tulosta mitään).
+{%- endcomment -%}
+{%- assign _otsikkotasot = include.html -%}
+{%- unless _otsikkotasot contains "<h2" -%}
+  {%- if _otsikkotasot contains "<h3" -%}
+    {%- assign _otsikkotasot = _otsikkotasot | replace: "<h3", "<h2" | replace: "</h3>", "</h2>" | replace: "<h4", "<h3" | replace: "</h4>", "</h3>" | replace: "<h5", "<h4" | replace: "</h5>", "</h4>" -%}
+  {%- elsif _otsikkotasot contains "<h4" -%}
+    {%- assign _otsikkotasot = _otsikkotasot | replace: "<h4", "<h2" | replace: "</h4>", "</h2>" | replace: "<h5", "<h3" | replace: "</h5>", "</h3>" -%}
+  {%- endif -%}
+{%- endunless -%}

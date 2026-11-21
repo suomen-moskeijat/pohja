@@ -894,6 +894,15 @@ html[data-kortit-somet="allekkain"] .u-somet__paneeli + .u-somet__paneeli { marg
 .u-artikkeli--pitka .u-proosa { font-size: 17px; line-height: 1.75; }
 .u-artikkeli--pitka .u-proosa p[dir="auto"]:lang(fi) { text-align: start; }
 .u-artikkeli--pitka .u-proosa a { color: var(--kulta-teksti); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+/* Artikkelin osiot (hallinta#35): samat osiot kuin omalla sivulla, artikkelin tekstin sisällä ilman omaa kehystä */
+.u-artikkeli > :is(.u-proosa, .u-artikkeli__osio) + .u-artikkeli__osio { margin-top: 28px; }
+.u-artikkeli__osio > h2 { margin: 0 0 .5em; font-size: clamp(20px, 2.6vw, 24px); }
+.u-artikkeli__osio > h2 + .u-proosa h2:first-child { margin-top: 1.5em; }
+.u-artikkeli__osio > * + :is(.u-galleria, .u-linkit, .u-kannet, .u-video, .u-napit, .u-artikkeli__osiokuva) { margin-top: 16px; }
+.u-artikkeli__osiokuva { width: 100%; border-radius: var(--r-m); }
+.u-artikkeli .u-linkit { grid-template-columns: minmax(0, 1fr); }
+/* Artikkelin kortissa video on kapeampi kuin sivun levyinen: puhelimella pienempi toistonappi, jotta teksti mahtuu */
+@media (max-width: 479px) { .u-artikkeli .u-video .u-upotus { gap: 2px; padding: 10px; } .u-artikkeli .u-video .u-upotus__ikoni { width: 44px; height: 44px; } }
 .u-lahdemerkinta { display: flex; gap: 14px; align-items: flex-start; margin-top: 16px; padding: 18px 20px; background: var(--kulta-vaalea); }
 .u-lahdemerkinta p { margin: 0 0 6px; }
 .u-lahdemerkinta__pieni { font-size: 13px; color: var(--hieno); }

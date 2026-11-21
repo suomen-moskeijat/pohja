@@ -1,6 +1,8 @@
 {%- comment -%}
-  Osiot listasta (etusivu ja omat sivut): valmiit osiot (palvelut, tapahtumat, galleria …) ja
+  Osiot listasta (etusivu, omat sivut ja artikkelit): valmiit osiot (palvelut, tapahtumat, galleria …) ja
   omat osiot (teksti, ilmoitus, video, ukk, linkit, kuvat). Parametrit: osiot, moskeija,
+  artikkeli (true = artikkelin osiot artikkelin tekstin sisällä: vain artikkelin osiotyypit, ilman osion omaa kehystä;
+  sama lista kuin paneelissa, hallinta src/kaavio.js ARTIKKELIN_OSIOT),
   merkit (true = jokaisen osion ympärille HTML-kommentit <!--osio:N:tyyppi--> … <!--/osio-->: paneelin esikatselu
   järjestää, poistaa ja lisää osioita niiden avulla; kommentit eivät vaikuta ulkoasuun).
   Tyhjä osio (osat/osio-tyhja.html) ei näy.
@@ -10,8 +12,10 @@
 {%- assign _on_palvelut = false -%}
 {%- for o in include.osiot -%}{%- if o.osio -%}{%- assign _t = o.osio -%}{%- else -%}{%- assign _t = o -%}{%- endif -%}{%- if _t == "palvelut" -%}{%- assign _on_palvelut = true -%}{%- endif -%}{%- endfor -%}
 {%- assign _palvelut_naytetty = false -%}
+{%- assign _artikkelin_osiot = "teksti,kuvat,video,linkit" | split: "," -%}
 {%- for o in include.osiot -%}
 {%- if o.osio -%}{%- assign _t = o.osio -%}{%- else -%}{%- assign _t = o -%}{%- endif -%}
+{%- if include.artikkeli -%}{%- unless _artikkelin_osiot contains _t -%}{%- continue -%}{%- endunless -%}{%- endif -%}
 {%- if _t == "toiminta" -%}{%- if _on_palvelut -%}{%- continue -%}{%- endif -%}{%- assign _t = "palvelut" -%}{%- endif -%}
 {%- if _t == "palvelut" -%}{%- if _palvelut_naytetty -%}{%- continue -%}{%- endif -%}{%- assign _palvelut_naytetty = true -%}{%- endif -%}
 {%- if include.merkit %}<!--osio:{{ forloop.index0 }}:{{ _t }}-->{% endif -%}
@@ -135,17 +139,17 @@
   {% if o.nappi_teksti and o.nappi_linkki and o.nappi_linkki != "" %}{%- assign _nl = o.nappi_linkki | slice: 0, 4 -%}<a class="u-nappi u-nappi--kulta" href="{% if _nl == 'http' %}{{ o.nappi_linkki }}{% else %}{{ o.nappi_linkki | relative_url }}{% endif %}"{% if _nl == 'http' %} target="_blank" rel="noopener"{% endif %}>{% include kt.html arvo=o.nappi_teksti %}</a>{% endif %}
 </section></div>
 {%- when "teksti" %}
-{% include osat/osio-teksti.html o=o %}
+{% include osat/osio-teksti.html o=o artikkeli=include.artikkeli %}
 {%- when "ilmoitus" %}
 {% include osat/osio-ilmoitus.html o=o %}
 {%- when "video" %}
-{% include osat/osio-video.html o=o %}
+{% include osat/osio-video.html o=o artikkeli=include.artikkeli %}
 {%- when "ukk" %}
 {% include osat/osio-ukk.html o=o %}
 {%- when "linkit" %}
-{% include osat/osio-linkit.html o=o %}
+{% include osat/osio-linkit.html o=o artikkeli=include.artikkeli %}
 {%- when "kuvat" %}
-{% include osat/osio-kuvat.html o=o %}
+{% include osat/osio-kuvat.html o=o artikkeli=include.artikkeli %}
 {%- endcase -%}
 {%- endunless -%}
 {%- if include.merkit %}<!--/osio-->{% endif -%}
