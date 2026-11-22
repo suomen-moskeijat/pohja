@@ -107,11 +107,9 @@ jobs:
           cache: pip
           cache-dependency-path: pohja/.github/rakennus/requirements.txt
 
-      - name: Asenna Python-riippuvuudet ja wrangler
-        run: |
-          python -m pip install --quiet -r pohja/.github/rakennus/requirements.txt
-          npm install --global --silent wrangler@4.158.0 > /dev/null
-          echo "wrangler $(wrangler --version 2>/dev/null | tail -1)"
+      # Wrangler asennetaan vasta, kun jotain julkaistaan (julkaisukohde.py): ajo ilman muutoksia ei tarvitse sitä
+      - name: Asenna Python-riippuvuudet
+        run: python -m pip install --quiet -r pohja/.github/rakennus/requirements.txt
 
       # Haetut tiedot (rukousajat, somet) julkisista lähteistä: jos haku epäonnistuu, edelliset jäävät (ADR-0004)
       - name: Palauta edelliset haetut tiedot
