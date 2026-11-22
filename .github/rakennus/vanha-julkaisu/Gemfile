@@ -1,0 +1,9 @@
+# Vanhan julkaisuajon Jekyll (rakenna.yml: actions/jekyll-build-pages@v1 = v1.0.13, github-pages 232, Jekyll 3.10, Ruby 3.3)
+# vain vertailuun: hallinta testi/jekyll3-yhteensopivuus.mjs rakentaa saman testiaineiston rakennuskomennolla
+# (rakenna_sivu.py --vanha-julkaisu) tällä ja lukitulla Jekyll 4.4:llä (../Gemfile) ja vertaa näkyvän sisällön.
+# Hyvinkää käyttää vanhaa julkaisua siirtoonsa asti (ADR-0006). Gemit samat kuin jekyll-build-pages v1.0.13:n Gemfile.
+source "https://rubygems.org"
+
+gem "github-pages", "= 232"
+gem "jekyll-include-cache", "= 0.2.1"
+gem "jekyll-octicons", "~> 14.2"
