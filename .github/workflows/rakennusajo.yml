@@ -42,6 +42,24 @@ jobs:
           path: pohja
           persist-credentials: false
 
+      # Selkeä virhe, jos lukuavain puuttuu tai ei näe sisältörepoa (ei tulosta avainta, vain tyypin ja HTTP-koodin)
+      - name: Tarkista sisältörepon lukuavain
+        env:
+          AVAIN: ${{ secrets.SISALTO_LUKU }}
+          REPO: ${{ github.repository_owner }}/sisalto
+        run: |
+          if [ -z "$AVAIN" ]; then
+            echo "::error::SISALTO_LUKU puuttuu ympäristöstä julkaisu (tai on tallennettu muualle kuin tähän ympäristöön)"; exit 1
+          fi
+          case "$AVAIN" in github_pat_*) tyyppi="hienojakoinen avain";; ghp_*) tyyppi="klassinen avain";; *) tyyppi="tuntematon muoto";; esac
+          koodi=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $AVAIN" "https://api.github.com/repos/$REPO")
+          echo "Lukuavain: $tyyppi, sisältörepo: HTTP $koodi"
+          case "$koodi" in
+            200) ;;
+            401) echo "::error::Avain ei kelpaa (vanhentunut, poistettu tai väärin kopioitu)"; exit 1;;
+            *) echo "::error::Avain ei näe sisältörepoa: tarkista Resource owner = organisaatio, repo valittuna, Contents: Read ja organisaation hyväksyntä"; exit 1;;
+          esac
+
       - name: Hae sisältö (yksityinen sisältörepo)
         uses: actions/checkout@v4
         with:
