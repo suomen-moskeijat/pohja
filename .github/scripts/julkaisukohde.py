@@ -4,6 +4,7 @@
 Yksi rajapinta, kaksi sovitinta:
   osoite(sivu)                  sivun osoite kohteessa, kun sivustoluettelossa ei ole osoitetta
   julkaise(sivu, kansio, loki)  julkaisee valmiin sivun kansion; palauttaa lyhyen kuvauksen julkiseen lokiin
+  projekteja()                  projektien määrä kohteessa (Cloudflaren raja 100, valvonta hallinta#47) tai None
 
 - CloudflarePages ("cloudflare"): oma Pages-projekti jokaiselle sivulle, suora lataus (wrangler pages deploy).
   Avain ja tilin tunnus ympäristömuuttujista CLOUDFLARE_API_TOKEN ja CLOUDFLARE_ACCOUNT_ID. Wrangler (lukittu versio)
@@ -42,6 +43,12 @@ class Kansio:
         finally:
             shutil.rmtree(uusi, ignore_errors=True)
         return "paikallinen kansio"
+
+    def projekteja(self):
+        try:
+            return sum(1 for n in os.listdir(self.polku) if "." not in n and os.path.isdir(os.path.join(self.polku, n)))
+        except OSError:
+            return None
 
 
 class CloudflarePages:
@@ -90,6 +97,17 @@ class CloudflarePages:
         with self.lukko:
             self.osoitteet[projekti] = osoite
         return osoite
+
+    def projekteja(self):
+        """Tilin Pages-projektien määrä (paras yritys: None, jos rajapinta ei vastaa)."""
+        try:
+            koodi, v = self._api("?per_page=10")
+        except Julkaisuvirhe:
+            return None
+        if koodi != 200 or not isinstance(v.get("result"), list):
+            return None
+        maara = (v.get("result_info") or {}).get("total_count")
+        return maara if isinstance(maara, int) else len(v["result"])
 
     def _wrangler(self):
         """Wranglerin komento. Asennetaan kerran (npm, lukittu versio), jos sitä ei ole valmiina."""

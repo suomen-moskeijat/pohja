@@ -7,7 +7,8 @@ Työnkulku .github/workflows/rakennusajo.yml ajaa tämän; testit ajavat saman k
 Käyttö:
   python3 .github/scripts/rakennusajo.py --sisalto <sisältörepon kansio> --versio main|testi \\
       --luettelo tiivisteet/tiivisteet.json --kohde cloudflare|kansio:<polku> \\
-      [--haetut haetut] [--hae] [--aika "2026-03-01 12:00:00 +0200"] [--lokit <kansio>] [--rinnakkain 4]
+      [--haetut haetut] [--hae] [--aika "2026-03-01 12:00:00 +0200"] [--lokit <kansio>] [--rinnakkain 4] \\
+      [--raportti <paneelin osoite>]   (avain ympäristömuuttujassa RAKENNUSRAPORTTI_AVAIN)
 
 Mitä ajo tekee:
 1. Lukee sivustoluettelon (sivustot.yml) ja valitsee sivut, joiden sivupohjan versio (pohja: main/testi) on tämän ajon
@@ -20,6 +21,12 @@ Mitä ajo tekee:
    ja päivittää luettelon onnistuneille sivuille. Jos luettelo puuttuu, kaikki rakennetaan. Rakennuspäivä tiivisteessä
    rakentaa jokaisen sivun kerran vuorokaudessa.
 
+5. --raportti: lähettää rakennusraportin paneeliin (POST <paneeli>/api/rakennusraportti, oma avain RAKENNUSRAPORTTI_AVAIN):
+   jokaisesta ajon sivusta sisältöversio (sisältökansion git-puun tunniste sisältörepossa), tulos (rakennettu, ennallaan,
+   virhe), aika ja osoite, sekä koko ajon tulos, määrät, kesto ja julkaisukohteen projektien määrä (hallinta#47).
+   Paras yritys: julkaisu ei kaadu, jos paneeli ei vastaa (ADR-0004: ajo ei riipu paneelista). Raportissa ei ole sisältöä
+   eikä salaista osaa (osoite on sivun osoite ilman luonnoslinkin osaa), ja se kulkee vain paneeliin, ei lokiin.
+
 Virheet: yhden sivun epäonnistunut haku, rakennus tai julkaisu ei estä muita. Epäonnistuneen sivun tiiviste ei päivity, joten
 seuraava ajo yrittää uudelleen, ja ajo päättyy virheeseen (poistumiskoodi 1).
 
@@ -28,6 +35,7 @@ määrät. Sivustoluettelon salaiset osat peitetään (add-mask) ennen muuta tul
 tiedostoihin --lokit (ei julkiseen lokiin). Tiivisteluettelossa on vain tiivisteitä (SHA-256) ja rakennuspäivä, ei sisältöä.
 """
 import argparse, concurrent.futures, datetime, hashlib, json, os, re, shutil, subprocess, sys, tempfile, threading, time
+import urllib.error, urllib.request
 from zoneinfo import ZoneInfo
 
 import yaml
@@ -211,7 +219,7 @@ class Ajo:
         }
 
     def rakenna_ja_julkaise(self, s, kohde):
-        """Rakentaa sivun ja julkaisee sen. Palauttaa kuvauksen julkiseen lokiin."""
+        """Rakentaa sivun ja julkaisee sen. Palauttaa { kuvaus (julkiseen lokiin), osoite, tiedostoja }."""
         tyo = tempfile.mkdtemp(prefix="rakennusajo-")
         try:
             t0 = time.time()
@@ -229,15 +237,53 @@ class Ajo:
             tuloste = self.komento(s, "rakennus", argumentit)
             for varoitus in re.findall(r"^::warning::(Vaihe [a-zåäö ]+ epäonnistui \(koodi -?\d+\), sivu julkaistaan ilman sitä)$", tuloste, re.M):
                 sano(f"::warning::{s['nimi']}: {varoitus}")
-            valmis = re.search(r"^Valmis: (\d+ tiedostoa, [\d.]+ MiB)", tuloste, re.M)
+            valmis = re.search(r"^Valmis: ((\d+) tiedostoa, [\d.]+ MiB)", tuloste, re.M)
             t1 = time.time()
             try:
                 julkaisu = kohde.julkaise(s, ulos, self.loki(s))
             except julkaisukohde.Julkaisuvirhe as e:
                 raise Sivuvirhe("julkaisu", str(e))
-            return f"rakennus {t1 - t0:.1f} s ({valmis.group(1) if valmis else 'valmis'}), julkaisu {time.time() - t1:.1f} s ({julkaisu})"
+            return {"kuvaus": f"rakennus {t1 - t0:.1f} s ({valmis.group(1) if valmis else 'valmis'}), julkaisu {time.time() - t1:.1f} s ({julkaisu})",
+                    "osoite": osoite, "tiedostoja": int(valmis.group(2)) if valmis else None}
         finally:
             shutil.rmtree(tyo, ignore_errors=True)
+
+
+def sisaltoversio(sisalto, nimi):
+    """Sivun sisältöversio: sisältökansion git-puun tunniste sisältörepossa (sama kuin paneelin tallennuksen jälkeen
+    GitHubista lukema). None, jos sisältö ei ole git-repo."""
+    try:
+        t = subprocess.run(["git", "-C", sisalto, "rev-parse", "--verify", "--quiet", f"HEAD:moskeijat/{nimi}"],
+                           capture_output=True, text=True, timeout=30)
+        v = t.stdout.strip()
+        return v if t.returncode == 0 and re.fullmatch(r"[0-9a-f]{40,64}", v) else None
+    except Exception:
+        return None
+
+
+def raportoi(paneeli, avain, raportti):
+    """Rakennusraportti paneeliin. Paras yritys: virhe ei kaada ajoa. Lokiin vain tulos (ei raporttia, ei avainta)."""
+    if not paneeli or not avain:
+        sano("Rakennusraportti: ei lähetetty (paneelin osoite tai avain RAKENNUSRAPORTTI_AVAIN puuttuu)")
+        return False
+    data = json.dumps(raportti, ensure_ascii=False).encode()
+    virhe = ""
+    for yritys in range(3):
+        pyynto = urllib.request.Request(paneeli.rstrip("/") + "/api/rakennusraportti", data=data, method="POST", headers={
+            **julkaisukohde.SELAIN, "Content-Type": "application/json", "Authorization": f"Bearer {avain}"})
+        try:
+            with urllib.request.urlopen(pyynto, timeout=20):
+                sano(f"Rakennusraportti: lähetetty paneeliin ({len(raportti['sivut'])} sivua)")
+                return True
+        except urllib.error.HTTPError as e:
+            virhe = f"HTTP {e.code}"
+            if 400 <= e.code < 500 and e.code != 429:  # avain tai raportti ei kelpaa: uusi yritys ei auta
+                break
+        except Exception as e:
+            virhe = type(e).__name__
+        time.sleep(2 * (yritys + 1))
+    sano(f"::warning::Rakennusraportti: paneeli ei vastaanottanut raporttia ({virhe}). Julkaisu ei riipu siitä.")
+    return False
 
 
 def rinnakkain(n, tehtava, kohteet):
@@ -253,6 +299,32 @@ def rinnakkain(n, tehtava, kohteet):
         return dict(tyot.map(yksi, kohteet))
 
 
+def iso_aika():
+    return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def ajon_tiedot():
+    """GitHubin ajon tunniste ja lokin osoite (julkinen), paikallisesti None."""
+    tunnus, repo = os.environ.get("GITHUB_RUN_ID", ""), os.environ.get("GITHUB_REPOSITORY", "")
+    if not tunnus.isdigit() or not repo:
+        return None
+    return {"id": int(tunnus), "osoite": f"{os.environ.get('GITHUB_SERVER_URL', 'https://github.com')}/{repo}/actions/runs/{tunnus}"}
+
+
+def sivun_raportti(ajo, s, valmis, virhe):
+    """Yhden sivun rivi rakennusraporttiin: ei sisältöä eikä salaista osaa (osoite ilman luonnoslinkin osaa)."""
+    rivi = {"nimi": s["nimi"], "sisaltoversio": sisaltoversio(ajo.sisalto, s["nimi"]), "aika": iso_aika(),
+            "osoite": str(s.get("osoite") or "") or None, "luonnoslinkki": bool(s.get("salainen_osa")), "tiedostoja": None}
+    if virhe:
+        rivi.update(tulos="virhe", virhe=virhe)
+    elif valmis:
+        tulos, aika = valmis
+        rivi.update(tulos="rakennettu", aika=aika, osoite=tulos["osoite"], tiedostoja=tulos["tiedostoja"])
+    else:
+        rivi["tulos"] = "ennallaan"
+    return rivi
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     p.add_argument("--sisalto", required=True, help="sisältörepon kansio (sivustot.yml ja moskeijat/<nimi>/)")
@@ -264,6 +336,7 @@ def main():
     p.add_argument("--aika", help='rakennushetki, esim. "2026-03-01 12:00:00 +0200" (oletus: nyt)')
     p.add_argument("--lokit", help="kansio vaiheiden tulosteille (ei julkiseen lokiin)")
     p.add_argument("--rinnakkain", type=int, default=1, help="montako sivua kerralla")
+    p.add_argument("--raportti", help="paneelin osoite: rakennusraportti (avain ympäristömuuttujassa RAKENNUSRAPORTTI_AVAIN)")
     a = p.parse_args()
     if a.hae and not a.haetut:
         raise SystemExit("--hae: anna haettujen tietojen kansio (--haetut)")
@@ -318,18 +391,19 @@ def main():
     # 3. Rakennus ja julkaisu. Tiivisteluettelo päivittyy vain onnistuneille sivuille (heti, jotta keskeytynyt ajo ei hukkaa niitä).
     lukko = threading.Lock()
     def rakenna(s):
-        kuvaus = ajo.rakenna_ja_julkaise(s, kohde)
+        tulos = ajo.rakenna_ja_julkaise(s, kohde)
         with lukko:
             luettelo[s["nimi"]] = uudet[s["nimi"]]
             tallenna_tiivisteluettelo(a.luettelo, luettelo)
-        sano(f"{s['nimi']}: rakennettu ja julkaistu (syy: {syyt[s['nimi']]}) – {kuvaus}")
-        return kuvaus
-    rakennetut = 0
+        sano(f"{s['nimi']}: rakennettu ja julkaistu (syy: {syyt[s['nimi']]}) – {tulos['kuvaus']}")
+        return tulos
+    rakennetut, valmiit = 0, {}
     for nimi, tulos in rinnakkain(a.rinnakkain, rakenna, muuttuneet).items():
         if isinstance(tulos, Sivuvirhe):
             epaonnistuneet[nimi] = str(tulos)
         else:
             rakennetut += 1
+            valmiit[nimi] = (tulos, iso_aika())
 
     # Poistuneet sivut pois luettelosta (muiden versioiden sivut jäävät, jos luettelo on yhteinen)
     for nimi in [n for n in luettelo if n not in {s["nimi"] for s in kaikki}]:
@@ -349,6 +423,14 @@ def main():
         with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
             f.write(f"luettelo_muuttui={str(luettelo_muuttui).lower()}\nhaetut_muuttui={str(haetut_muuttui).lower()}\n"
                     f"rakennettu={rakennetut}\nennallaan={ennallaan}\nepaonnistui={len(epaonnistuneet)}\n")
+    if a.raportti is not None:
+        raportoi(a.raportti, os.environ.get("RAKENNUSRAPORTTI_AVAIN", "").strip(), {
+            "muoto": 1, "versio": a.versio, "aika": iso_aika(), "kesto": round(time.time() - t_alku, 1),
+            "tulos": "virhe" if epaonnistuneet else "ok", "rakennettu": rakennetut, "ennallaan": ennallaan,
+            "epaonnistui": len([x for x in sivut if x["nimi"] in epaonnistuneet]), "luettelonVirheet": len(virheelliset), "ajo": ajon_tiedot(),
+            "projekteja": kohde.projekteja(),
+            "sivut": [sivun_raportti(ajo, s, valmiit.get(s["nimi"]), epaonnistuneet.get(s["nimi"])) for s in sivut],
+        })
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as f:
             f.write(f"### Rakennusajo ({a.versio}, {paiva})\n\n{yhteenveto}\n\n")

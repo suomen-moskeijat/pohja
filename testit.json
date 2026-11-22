@@ -2697,6 +2697,34 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-22"
+    },
+    {
+      "id": "julkaisun-tila-rakennusajosta",
+      "otsikko": "Näkyy sivulla rakennusajosta ja Valvonta-sivun rakennusajo",
+      "alue": "paneeli",
+      "kuvaus": "Testimoskeijan sivun rakentaa nyt yhteinen rakennusajo, ja se kertoo paneelille, minkä version kunkin sivun sisällöstä se rakensi. Tallennuksen jälkeen paneeli näyttää \"Muutos näkyy nyt sivulla\" vasta, kun juuri tämä tallennus on rakennettu sivulle, ja linkin sivulle. Jos sivu ei rakennu, paneeli kertoo, että sivun päivitys epäonnistui. Valvonta-sivulla (ylläpitäjät) on uusi Rakennusajo-osio: viimeksi onnistunut ajo, viimeisin raportti ja tämän kuun GitHub-minuutit. Ilmaisten palveluiden käytössä näkyvät Cloudflare Pages -projektit, suurimman sivun tiedostot ja yksityisten repojen minuutit. Vaatii, että ylläpitäjä on lisännyt rakennusraportin avaimen; ennen sitä seuranta toimii kuten ennen.",
+      "aloitus": "Kirjaudu testipaneeliin ja avaa Testimoskeija → Sivut → Etusivu.",
+      "kohdat": [
+        "Muuta esittelyä ja tallenna: alareunaan tulee \"Tallennettu – Näkyy sivulla 1–2 minuutissa\" — Missä: Testipaneeli → Testimoskeija → Sivut → Etusivu",
+        "Noin parin minuutin kuluttua ilmoitus vaihtuu: \"Muutos näkyy nyt sivulla\" ja Avaa sivu -linkki — Missä: Testipaneeli → Testimoskeija → Sivut → Etusivu (alareunan ilmoitus)",
+        "Avaa sivu -linkki avaa testimoskeijan sivun, ja tallennettu muutos näkyy siellä — Missä: alareunan ilmoituksen Avaa sivu -linkki",
+        "Kaksi tallennusta peräkkäin: \"Muutos näkyy nyt sivulla\" tulee vasta, kun jälkimmäinen muutos on sivulla — Missä: Testipaneeli → Testimoskeija → Sivut → Etusivu",
+        "Ylläpitäjä: Rakennusajo-osiossa näkyy sivupohjan versio testi, viimeksi onnistunut ajo, viimeisin raportti, GitHub-minuutit tässä kuussa ja Loki-linkki — Missä: Testipaneeli → Ylläpito → Valvonta → Rakennusajo",
+        "Ylläpitäjä: Ilmaisten palveluiden käytössä näkyvät mittarit Cloudflare Pages -projektit ja Suurin sivu (Cloudflare Pages); yksityisten repojen minuutit tai ohje puuttuvasta oikeudesta — Missä: Testipaneeli → Ylläpito → Valvonta → Ilmaisten palveluiden käyttö",
+        "Ylläpitäjä: sama sivu englanniksi (Oma tili → kieli English) ja puhelimella ilman sivuttaisvieritystä — Missä: Testipaneeli → Ylläpito → Valvonta"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Testimoskeijan etusivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/etusivu"
+        },
+        {
+          "nimi": "Testipaneeli: Valvonta",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/yllapito/valvonta"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-22"
     }
   ]
 }

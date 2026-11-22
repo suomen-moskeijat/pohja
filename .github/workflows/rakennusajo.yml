@@ -13,7 +13,8 @@
 # - ei koskaan pull requestista
 #
 # Pohja on julkinen repo, joten:
-# - avaimet ovat ympäristössä `julkaisu`, jonka saavat vain main- ja testi-haara
+# - avaimet (sisältörepon lukuavain, Cloudflare-avain, rakennusraportin avain) ovat ympäristössä `julkaisu`, jonka saavat vain
+#   main- ja testi-haara
 # - lokissa ei ole sisältöä eikä salaista osaa: rakennusajo peittää salaiset osat (add-mask) ja tulostaa vain sivujen nimet,
 #   tulokset, syyt, kestot ja määrät; vaiheiden ja wranglerin tuloste menee tiedostoihin, joita ei tulosteta
 # - ei artefakteja; välimuistissa vain julkista tietoa: gemit, pip, julkisista lähteistä haetut tiedot ja tiivisteluettelo
@@ -129,15 +130,20 @@ jobs:
 
       # Haku, syötteiden tiivisteet, rakennus (rakennuskomento) ja julkaisu (julkaisukohde: Cloudflare Pages, suora lataus).
       # Yhden sivun virhe ei estä muita; ajo päättyy virheeseen, ja epäonnistunut sivu yritetään uudelleen seuraavalla ajolla.
+      # Rakennusraportti (hallinta#47): ajon lopuksi sivujen sisältöversiot ja tulokset paneeliin omalla avaimella
+      # (RAKENNUSRAPORTTI_AVAIN, sama arvo paneelin salaisuuksissa). Main-haaran ajo raportoi paneeliin, testi-haaran ajo
+      # testipaneeliin (sama tietokanta). Paras yritys: jos avain puuttuu tai paneeli ei vastaa, julkaisu onnistuu silti.
       - name: Rakenna ja julkaise muuttuneet sivut
         id: ajo
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
+          RAKENNUSRAPORTTI_AVAIN: ${{ secrets.RAKENNUSRAPORTTI_AVAIN }}
+          PANEELI: ${{ github.ref_name == 'main' && 'https://hallinta.suomenmoskeijat.fi' || 'https://hallinta-testi.suomenmoskeijat.fi' }}
         run: |
           python pohja/.github/scripts/rakennusajo.py --sisalto sisalto --versio "$VERSIO" \
             --haetut haetut --hae --luettelo tiivisteet/tiivisteet.json --kohde cloudflare \
-            --lokit "$RUNNER_TEMP/lokit" --rinnakkain 4
+            --lokit "$RUNNER_TEMP/lokit" --rinnakkain 4 --raportti "$PANEELI"
 
       # Välimuistiin vain, kun tieto muuttui (myös epäonnistuneen ajon jälkeen: onnistuneet sivut jäävät luetteloon)
       - name: Tallenna haetut tiedot seuraavaa ajoa varten
