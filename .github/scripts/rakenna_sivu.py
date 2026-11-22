@@ -8,7 +8,7 @@ kuvien mitat, kieliversiot ja kalenterit. Jekyll on lukittu tiedostoon .github/r
 Käyttö:
   python3 .github/scripts/rakenna_sivu.py --sisalto moskeijat/testimoskeija --ulos valmis \\
       --url https://esimerkki.pages.dev [--baseurl /<salainen osa>] [--nimi testimoskeija] [--testisivu] \\
-      [--haetut haetut/testimoskeija] [--hae] [--aika "2026-03-01 12:00:00 +0200"] [--loki rakennus.log]
+      [--haetut haetut/testimoskeija] [--hae] [--aika "2026-03-01 12:00:00 +0200"] [--loki rakennus.log] [--vanha-julkaisu]
 
 Sivun asetukset:
   --url, --baseurl  sivun osoite (sisältökansiossa ei ole osoitetta, ADR-0006). Kun baseurl on annettu, sivu
@@ -16,6 +16,9 @@ Sivun asetukset:
   --testisivu       sivu piiloon hakukoneilta (noindex ja X-Robots-Tag).
   --haetut          haettujen tietojen kansio (rukousajat, somet …): kopioidaan sivulle, ja --hae päivittää sen.
   --hae             hakee rukousajat ja somet nyt (verkko).
+  --vanha-julkaisu  Jekyll-vaihe kuten vanha julkaisuajo (rakenna.yml: jekyll-build-pages v1, github-pages 232, Jekyll 3.10;
+                    .github/rakennus/vanha-julkaisu/Gemfile.lock). Vain vertailuun: hallinta testi/jekyll3-yhteensopivuus.mjs tarkistaa, että
+                    sivupohja rakentuu Hyvinkään vanhalla julkaisulla samaksi näkyväksi sisällöksi (ADR-0006). Muut vaiheet ovat samat.
 
 Julkinen loki: komento tulostaa vain vaiheiden kestot ja lukumäärät, ei sisältöä, polkuja eikä tiedostonimiä. Vaiheiden
 oma tuloste menee tiedostoon --loki (ei julkiseen lokiin); ilman sitä virheilmoitusvirtaan (paikallinen käyttö).
@@ -24,6 +27,7 @@ import argparse, glob, os, re, shutil, subprocess, sys, tempfile, time
 
 POHJA = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 GEMFILE = os.path.join(POHJA, ".github", "rakennus", "Gemfile")
+GEMFILE_VANHA = os.path.join(POHJA, ".github", "rakennus", "vanha-julkaisu", "Gemfile")
 # Sivupohjasta ei sivulle (kuten rakenna.yml; lisäksi pohjan omat ohjeet ja päätökset)
 EI_POHJASTA = {".git", ".claude", "docs", "malli", "testi", "testit.json", "esittely", "_site"}
 # Haetut tiedot (kuten rakenna.yml:n välimuisti)
@@ -102,6 +106,7 @@ def main():
     p.add_argument("--hae", action="store_true")
     p.add_argument("--aika")
     p.add_argument("--loki")
+    p.add_argument("--vanha-julkaisu", action="store_true")
     a = p.parse_args()
 
     baseurl = a.baseurl.strip("/")
@@ -160,11 +165,17 @@ def main():
         # 4. Jekyll (lukittu versio) sivun osoitteen polkuun
         shutil.rmtree(ulos, ignore_errors=True)
         site = os.path.join(ulos, baseurl) if baseurl else ulos
+        gemfile = GEMFILE_VANHA if a.vanha_julkaisu else GEMFILE
         versio = subprocess.run(["bundle", "exec", "jekyll", "-v"], cwd=sivu, capture_output=True, text=True,
-                                env={**os.environ, "BUNDLE_GEMFILE": GEMFILE}).stdout.strip()
+                                env={**os.environ, "BUNDLE_GEMFILE": gemfile}).stdout.strip()
         print(f"Jekyll: {versio.replace('jekyll ', '') or 'ei löytynyt'}", flush=True)
-        r.aja("jekyll", ["bundle", "exec", "jekyll", "build", "--future", "-s", sivu, "-d", site], sivu,
-              env={"BUNDLE_GEMFILE": GEMFILE, "JEKYLL_ENV": "production"})
+        if a.vanha_julkaisu:
+            # Kuten jekyll-build-pages (entrypoint.sh): github-pages build sallituilla laajennuksilla ja asetuksilla
+            r.aja("jekyll", ["bundle", "exec", "github-pages", "build", "--future", "--source", sivu, "--destination", site], sivu,
+                  env={"BUNDLE_GEMFILE": gemfile, "JEKYLL_ENV": "production", "PAGES_REPO_NWO": f"suomen-moskeijat/{a.nimi or 'sivu'}"})
+        else:
+            r.aja("jekyll", ["bundle", "exec", "jekyll", "build", "--future", "-s", sivu, "-d", site], sivu,
+                  env={"BUNDLE_GEMFILE": gemfile, "JEKYLL_ENV": "production"})
 
         # 5. Jekyllin jälkeen: karsinta (ADR-0002), kuvien mitat, kieliversiot ja kalenterit
         r.aja("karsinta", py("karsi_sivut.py", site), sivu)
