@@ -121,6 +121,8 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
           PROJEKTI: ${{ steps.sivu.outputs.projekti }}
         run: |
+          # Tunnuksen tai avaimen lopussa voi olla rivinvaihto, jos se liitettiin sellaisenaan
+          export CLOUDFLARE_ACCOUNT_ID="$(printf %s "$CLOUDFLARE_ACCOUNT_ID" | tr -d '[:space:]')" CLOUDFLARE_API_TOKEN="$(printf %s "$CLOUDFLARE_API_TOKEN" | tr -d '[:space:]')"
           if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
             echo "::error::CLOUDFLARE_API_TOKEN (salaisuus) tai CLOUDFLARE_ACCOUNT_ID (muuttuja) puuttuu ympäristöstä julkaisu"; exit 1
           fi
@@ -174,6 +176,8 @@ jobs:
           PROJEKTI: ${{ steps.sivu.outputs.projekti }}
           JULKAISUJA: ${{ inputs.julkaisuja }}
         run: |
+          # Tunnuksen tai avaimen lopussa voi olla rivinvaihto, jos se liitettiin sellaisenaan
+          export CLOUDFLARE_ACCOUNT_ID="$(printf %s "$CLOUDFLARE_ACCOUNT_ID" | tr -d '[:space:]')" CLOUDFLARE_API_TOKEN="$(printf %s "$CLOUDFLARE_API_TOKEN" | tr -d '[:space:]')"
           n="${JULKAISUJA:-1}"
           case "$n" in ''|*[!0-9]*) echo "::error::julkaisuja: anna luku 1–30"; exit 1;; esac
           [ "$n" -ge 1 ] && [ "$n" -le 30 ] || { echo "::error::julkaisuja: anna luku 1–30"; exit 1; }
@@ -224,6 +228,8 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
           PROJEKTI: ${{ steps.sivu.outputs.projekti }}
         run: |
+          # Tunnuksen tai avaimen lopussa voi olla rivinvaihto, jos se liitettiin sellaisenaan
+          export CLOUDFLARE_ACCOUNT_ID="$(printf %s "$CLOUDFLARE_ACCOUNT_ID" | tr -d '[:space:]')" CLOUDFLARE_API_TOKEN="$(printf %s "$CLOUDFLARE_API_TOKEN" | tr -d '[:space:]')"
           api="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects"
           curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "$api/$PROJEKTI/deployments?per_page=25" > "$RUNNER_TEMP/j.json"
           jq -r '"Julkaisuja projektissa: \(.result_info.total_count // (.result | length))",
