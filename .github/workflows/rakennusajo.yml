@@ -14,8 +14,8 @@
 # - ei koskaan pull requestista
 #
 # Pohja on julkinen repo, joten:
-# - avaimet (sisältörepon lukuavain, Cloudflare-avain, rakennusraportin avain) ovat ympäristössä `julkaisu`, jonka saavat vain
-#   main- ja testi-haara
+# - avaimet (sisältörepon lukuavain, Cloudflare-avain, rakennusraportin avain, testisivujen välikerroksen avain) ovat
+#   ympäristössä `julkaisu`, jonka saavat vain main- ja testi-haara
 # - lokissa ei ole sisältöä eikä salaista osaa: rakennusajo peittää salaiset osat (add-mask) ja tulostaa vain sivujen nimet,
 #   tulokset, syyt, kestot ja määrät; vaiheiden ja wranglerin tuloste menee tiedostoihin, joita ei tulosteta
 # - ei artefakteja; välimuistissa vain julkista tietoa: gemit, pip, julkisista lähteistä haetut tiedot ja tiivisteluettelo
@@ -141,19 +141,24 @@ jobs:
       # Rakennusraportti (hallinta#47): ajon lopuksi sivujen sisältöversiot ja tulokset paneeliin omalla avaimella
       # (RAKENNUSRAPORTTI_AVAIN, sama arvo paneelin salaisuuksissa). Main-haaran ajo raportoi paneeliin, testi-haaran ajo
       # testipaneeliin (sama tietokanta). Paras yritys: jos avain puuttuu tai paneeli ei vastaa, julkaisu onnistuu silti.
+      # Testisivut (hallinta#48, J8): juureen välikerroksen (_worker.js) kanssa, jonka näkee vain paneeliin kirjautunut testaaja
+      # tai ylläpitäjä. Välikerros ohjaa paneelin sivulupa-reittiin ($PANEELI). Julkaisukohde asettaa välikerroksen avaimen
+      # SIVULUPA_AVAIN (sama arvo paneelin salaisuuksissa) Pages-projektin salaisuudeksi ennen julkaisua (Cloudflare-avaimen
+      # Pages-muokkausoikeus riittää). Ilman avainta testisivua ei julkaista, ja vanha julkaisu jää.
       - name: Rakenna ja julkaise muuttuneet sivut
         id: ajo
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
           RAKENNUSRAPORTTI_AVAIN: ${{ secrets.RAKENNUSRAPORTTI_AVAIN }}
+          SIVULUPA_AVAIN: ${{ secrets.SIVULUPA_AVAIN }}
           PANEELI: ${{ github.ref_name == 'main' && 'https://hallinta.suomenmoskeijat.fi' || 'https://hallinta-testi.suomenmoskeijat.fi' }}
           # Käynnistyksen somepyyntö ympäristömuuttujana (ei suoraan komentoon); rakennusajo hyväksyy vain sivujen nimet
           SOMET_NYT: ${{ inputs.somet }}
         run: |
           python pohja/.github/scripts/rakennusajo.py --sisalto sisalto --versio "$VERSIO" \
             --haetut haetut --hae --somet-nyt "$SOMET_NYT" --luettelo tiivisteet/tiivisteet.json --kohde cloudflare \
-            --lokit "$RUNNER_TEMP/lokit" --rinnakkain 4 --raportti "$PANEELI"
+            --lokit "$RUNNER_TEMP/lokit" --rinnakkain 4 --raportti "$PANEELI" --paneeli "$PANEELI"
 
       # Välimuistiin vain, kun tieto muuttui (myös epäonnistuneen ajon jälkeen: onnistuneet sivut jäävät luetteloon)
       - name: Tallenna haetut tiedot seuraavaa ajoa varten

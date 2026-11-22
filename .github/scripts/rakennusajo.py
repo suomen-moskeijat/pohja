@@ -9,6 +9,7 @@ Käyttö:
       --luettelo tiivisteet/tiivisteet.json --kohde cloudflare|kansio:<polku> \\
       [--haetut haetut] [--hae] [--somet-nyt <nimi>[,<nimi>…]] [--aika "2026-03-01 12:00:00 +0200"] [--lokit <kansio>] [--rinnakkain 4] \\
       [--raportti <paneelin osoite>]   (avain ympäristömuuttujassa RAKENNUSRAPORTTI_AVAIN)
+      [--paneeli <paneelin osoite>]    (testisivujen välikerros; oletus: versiosta, main → hallinta, testi → hallinta-testi)
 
 Mitä ajo tekee:
 1. Lukee sivustoluettelon (sivustot.yml) ja valitsee sivut, joiden sivupohjan versio (pohja: main/testi) on tämän ajon
@@ -22,10 +23,15 @@ Mitä ajo tekee:
 4. Rakentaa (rakenna_sivu.py) ja julkaisee (julkaisukohde.py) sivut, joiden tiiviste eroaa tiivisteluettelon tiivisteestä,
    ja päivittää luettelon onnistuneille sivuille. Jos luettelo puuttuu, kaikki rakennetaan. Rakennuspäivä tiivisteessä
    rakentaa jokaisen sivun kerran vuorokaudessa.
-   Luonnoslinkki (ADR-0008, hallinta#49): luonnos ja ehdotus (moskeijan _moskeijat-tiedoston luonnos/ehdotus) ja testisivu,
-   jolla on salainen osa, rakennetaan kokonaan polun /<salainen osa>/ alle (--baseurl, --luonnoslinkki). Luonnosta tai
-   ehdotusta ilman salaista osaa ei julkaista (sivun virhe), jotta se ei koskaan päädy juureen. Julkaistu sivu rakennetaan
-   juureen. Julkaisun jälkeen projektin vanhat julkaisut, joiden polku on eri (vaihdettu luonnoslinkki, julkaisu tai
+   Luonnoslinkki (ADR-0008, hallinta#49): luonnos ja ehdotus (moskeijan _moskeijat-tiedoston luonnos/ehdotus) rakennetaan
+   kokonaan polun /<salainen osa>/ alle (--baseurl, --luonnoslinkki). Luonnosta tai ehdotusta ilman salaista osaa ei julkaista
+   (sivun virhe), jotta se ei koskaan päädy juureen. Julkaistu sivu rakennetaan juureen.
+   Testisivu, jolla on osoite (hallinta#48, J8), rakennetaan juureen välikerroksen kanssa (--testisivu --sivulupa <paneeli>): sen
+   näkee vain paneeliin kirjautunut testaaja tai ylläpitäjä, joten salaista osaa ei käytetä, ja testit.json voi linkittää sivun
+   polkuihin. Testisivu ilman osoitetta on kuten ennen luonnoslinkin takana.
+   Julkaisukohde asettaa välikerroksen avaimen (ympäristömuuttuja SIVULUPA_AVAIN) Pages-projektin salaisuudeksi; ilman avainta
+   testisivua ei julkaista. Avaimen tunniste (HMAC, ei avainta) ja paneelin osoite ovat testisivun asetuksissa: avaimen
+   vaihto julkaisee testisivun uudelleen. Julkaisun jälkeen projektin vanhat julkaisut, joiden polku on eri (vaihdettu luonnoslinkki, julkaisu tai
    luonnokseksi palautus), poistetaan (julkaisukohde.poista_vanhat): vanha linkki ei näytä sivua julkaisukohtaisissakaan
    osoitteissa.
 
@@ -42,7 +48,7 @@ Julkinen loki ja välimuisti (pohja on julkinen repo): komento tulostaa vain siv
 määrät. Sivustoluettelon salaiset osat peitetään (add-mask) ennen muuta tulostetta. Vaiheiden oma tuloste menee
 tiedostoihin --lokit (ei julkiseen lokiin). Tiivisteluettelossa on vain tiivisteitä (SHA-256) ja rakennuspäivä, ei sisältöä.
 """
-import argparse, concurrent.futures, datetime, glob, hashlib, json, os, re, shutil, subprocess, sys, tempfile, threading, time
+import argparse, concurrent.futures, datetime, glob, hashlib, hmac, json, os, re, shutil, subprocess, sys, tempfile, threading, time
 import urllib.error, urllib.request
 from zoneinfo import ZoneInfo
 
@@ -57,6 +63,8 @@ import yhteinen_haku
 POHJA = rakenna_sivu.POHJA
 RAKENNA = os.path.join(POHJA, ".github", "scripts", "rakenna_sivu.py")
 VERSIOT = ("main", "testi")
+# Paneeli, jonka sivulupa-reittiin testisivujen välikerros ohjaa (hallinta#48): testi-haaran sivut testipaneeliin (sama tietokanta)
+PANEELIT = {"main": "https://hallinta.suomenmoskeijat.fi", "testi": "https://hallinta-testi.suomenmoskeijat.fi"}
 MUOTO = 1  # tiivisteluettelon muoto: muutos rakentaa kaikki sivut
 # Ei sivupohjan versioon: ei sivulle menevät kansiot (kuten rakennuskomento), työnkulut ja asennetut riippuvuudet
 _RAKENNUS = os.path.join(".github", "rakennus")
@@ -192,7 +200,8 @@ class Ajo:
         self.lokit = os.path.abspath(a.lokit) if a.lokit else tempfile.mkdtemp(prefix="rakennusajo-lokit-")
         os.makedirs(self.lokit, exist_ok=True)
         # Rakennuskomento ei tarvitse julkaisun avaimia
-        self.env = {k: v for k, v in os.environ.items() if not k.startswith("CLOUDFLARE_")}
+        self.env = {k: v for k, v in os.environ.items() if not k.startswith("CLOUDFLARE_") and k != "SIVULUPA_AVAIN"}
+        self.paneeli = (a.paneeli or PANEELIT[a.versio]).rstrip("/")
 
     def kansio(self, s):
         return os.path.join(self.sisalto, "moskeijat", s["nimi"])
@@ -216,19 +225,31 @@ class Ajo:
         return t.stdout or ""
 
     def polku(self, s):
-        """Polku, jonka alle sivu rakennetaan: luonnoslinkin salainen osa (luonnos, ehdotus tai testisivu, jolla on salainen
-        osa) tai "" (juuri). Luonnos tai ehdotus ilman salaista osaa on virhe: sitä ei julkaista juureen."""
+        """Polku, jonka alle sivu rakennetaan: luonnoslinkin salainen osa (luonnos, ehdotus tai testisivu ilman välikerrosta, jolla
+        on salainen osa) tai "" (juuri: julkaistu sivu ja välikerroksen takana oleva testisivu, hallinta#48). Luonnos tai ehdotus
+        ilman salaista osaa on virhe: sitä ei julkaista juureen."""
+        if valikerroksen_takana(s):
+            return ""
         salainen = str(s.get("salainen_osa") or "")
         tila = sivun_tila(self.kansio(s))
         if tila != "julkaistu" and not salainen:
             raise Sivuvirhe("luonnoslinkki", f"sivu on {tila}, mutta sivustoluettelosta puuttuu salainen_osa (luonnoslinkki): sivua ei julkaista")
         return salainen if tila != "julkaistu" or s.get("testisivu") else ""
 
+    def asetukset(self, s):
+        """Sivun asetukset tiivisteeseen: sivustoluettelon kohta, testisivulla myös välikerroksen paneeli ja avaimen tunniste
+        (HMAC vakiotekstistä, ei avainta: avaimen vaihto julkaisee testisivun uudelleen, jotta uusi avain tulee voimaan)."""
+        if not valikerroksen_takana(s):
+            return s
+        avain = (os.environ.get("SIVULUPA_AVAIN") or "").strip()
+        tunniste = hmac.new(avain.encode(), b"sivulupa-avaimen-tunniste", hashlib.sha256).hexdigest()[:16] if avain else ""
+        return {**s, "_sivulupa": {"paneeli": self.paneeli, "avain": tunniste}}
+
     def osat(self, s, pohja, paiva):
         haetut = self.haettujen_kansio(s)
         return {
             "sisalto": kansion_tiiviste(self.kansio(s), ohita={".github"}),
-            "asetukset": hashlib.sha256(json.dumps(s, sort_keys=True, default=str).encode()).hexdigest(),
+            "asetukset": hashlib.sha256(json.dumps(self.asetukset(s), sort_keys=True, default=str).encode()).hexdigest(),
             "pohja": pohja,
             "haetut": kansion_tiiviste(haetut, hakuajat=True) if haetut and os.path.isdir(haetut) else hashlib.sha256(b"").hexdigest(),
             "paiva": paiva,
@@ -247,7 +268,7 @@ class Ajo:
             ulos = os.path.join(tyo, "valmis")
             argumentit = ["--ulos", ulos, "--url", osoite, "--nimi", s["nimi"]]
             if polku: argumentit += ["--baseurl", "/" + polku, "--luonnoslinkki"]
-            if s.get("testisivu"): argumentit += ["--testisivu"]
+            if s.get("testisivu"): argumentit += ["--testisivu"] + (["--sivulupa", self.paneeli] if valikerroksen_takana(s) else [])
             haetut = self.haettujen_kansio(s)
             if haetut and os.path.isdir(haetut): argumentit += ["--haetut", haetut]
             if self.a.aika: argumentit += ["--aika", self.a.aika]
@@ -257,8 +278,9 @@ class Ajo:
             valmis = re.search(r"^Valmis: ((\d+) tiedostoa, [\d.]+ MiB)", tuloste, re.M)
             t1 = time.time()
             try:
-                julkaisu = kohde.julkaise(s, ulos, self.loki(s), polku=polku)
-                poistettu = kohde.poista_vanhat(s, polku, self.loki(s))
+                sivulupa = valikerroksen_takana(s)
+                julkaisu = kohde.julkaise(s, ulos, self.loki(s), polku=polku, sivulupa=sivulupa)
+                poistettu = kohde.poista_vanhat(s, polku, self.loki(s), sivulupa=sivulupa)
             except julkaisukohde.Julkaisuvirhe as e:
                 raise Sivuvirhe("julkaisu", str(e))
             if poistettu: julkaisu += f"; poistettu {poistettu} vanha{'a' if poistettu > 1 else ''} julkaisu{'a' if poistettu > 1 else ''}"
@@ -266,6 +288,14 @@ class Ajo:
                     "osoite": osoite, "tiedostoja": int(valmis.group(2)) if valmis else None, "luonnoslinkki": bool(polku)}
         finally:
             shutil.rmtree(tyo, ignore_errors=True)
+
+
+def valikerroksen_takana(s):
+    """Testisivu, jolla on sivustoluettelossa osoite, on välikerroksen takana (hallinta#48, ADR-0008). Osoite (esim.
+    testimoskeija.suomenmoskeijat.fi) on samaa sivustoa kuin paneeli, joten esikatselukehys saa välikerroksen evästeen, ja
+    sen lisääminen luetteloon vaihtaa testisivun välikerroksen taakse yhdellä kertaa paneelissa ja rakennusajossa (paneeli
+    src/sivustoluettelo.js tekee saman päätelmän). Ilman osoitetta testisivu on kuten ennen luonnoslinkin takana."""
+    return bool(s.get("testisivu") and re.fullmatch(r"https://[A-Za-z0-9.-]+/?", str(s.get("osoite") or "").strip()))
 
 
 def sivun_tila(kansio):
@@ -381,6 +411,7 @@ def main():
     p.add_argument("--aika", help='rakennushetki, esim. "2026-03-01 12:00:00 +0200" (oletus: nyt)')
     p.add_argument("--lokit", help="kansio vaiheiden tulosteille (ei julkiseen lokiin)")
     p.add_argument("--rinnakkain", type=int, default=1, help="montako sivua kerralla")
+    p.add_argument("--paneeli", help="paneelin osoite testisivujen välikerrokselle (oletus: versiosta)")
     p.add_argument("--raportti", help="paneelin osoite: rakennusraportti (avain ympäristömuuttujassa RAKENNUSRAPORTTI_AVAIN)")
     a = p.parse_args()
     if a.hae and not a.haetut:

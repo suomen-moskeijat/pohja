@@ -3,10 +3,12 @@
 
 Yksi rajapinta, kaksi sovitinta:
   osoite(sivu)                  sivun osoite kohteessa, kun sivustoluettelossa ei ole osoitetta
-  julkaise(sivu, kansio, loki, polku)
+  julkaise(sivu, kansio, loki, polku, sivulupa)
                                 julkaisee valmiin sivun kansion; palauttaa lyhyen kuvauksen julkiseen lokiin. polku: luonnoslinkin
-                                salainen osa, jonka alla sivu on, tai "" (juuri); sen tunniste (polun_tunniste) kirjataan julkaisuun
-  poista_vanhat(sivu, polku, loki)
+                                salainen osa, jonka alla sivu on, tai "" (juuri); sen tunniste (polun_tunniste) kirjataan julkaisuun.
+                                sivulupa: testisivu välikerroksen takana (hallinta#48): Cloudflare-sovitin asettaa ensin välikerroksen
+                                avaimen (SIVULUPA_AVAIN) projektin salaisuudeksi ja tarkistaa julkaisun jälkeen, että sivu on suojattu
+  poista_vanhat(sivu, polku, loki, sivulupa)
                                 poistaa projektin vanhat julkaisut, joiden polku on eri (hallinta#49, ADR-0008): luonnoslinkin
                                 vaihdon tai julkaisun jälkeen vanha linkki ei näytä sivua julkaisukohtaisissakaan osoitteissa
                                 (Cloudflare Pages säilyttää jokaisen julkaisun omassa osoitteessaan). Palauttaa poistettujen määrän.
@@ -14,7 +16,8 @@ Yksi rajapinta, kaksi sovitinta:
   poista(sivu)                  poistaa sivun projektin kaikkine julkaisuineen (moskeijan poisto, hallinta#51); palauttaa kuvauksen
 
 - CloudflarePages ("cloudflare"): oma Pages-projekti jokaiselle sivulle, suora lataus (wrangler pages deploy).
-  Avain ja tilin tunnus ympäristömuuttujista CLOUDFLARE_API_TOKEN ja CLOUDFLARE_ACCOUNT_ID. Wrangler (lukittu versio)
+  Avain ja tilin tunnus ympäristömuuttujista CLOUDFLARE_API_TOKEN ja CLOUDFLARE_ACCOUNT_ID; testisivujen välikerroksen avain
+  ympäristömuuttujasta SIVULUPA_AVAIN (sama arvo paneelin salaisuuksissa), joka asetetaan projektin salaisuudeksi julkaisun yhteydessä. Wrangler (lukittu versio)
   asennetaan vasta ensimmäiseen julkaisuun: ajo, jossa mikään sivu ei muuttunut, ei tarvitse sitä.
 - Kansio ("kansio:<polku>"): paikallinen kansio testeille (hallinta testi/rakennusajo.mjs), sivu kansioon <polku>/<projekti>/.
   Julkaisuhistoria kuten Cloudflaren julkaisukohtaiset osoitteet: <polku>/<projekti>.julkaisut/<numero>-<tunniste>/.
@@ -24,13 +27,16 @@ lokia varten: ei sisältöä, osoitteita eikä salaista osaa. Wranglerin tuloste
 """
 import hashlib, json, os, re, shutil, subprocess, tempfile, threading, time, urllib.error, urllib.request
 
+SIVULUPA_AVAIN_VAHINTAAN = 32  # merkkiä (vain ASCII-kirjaimia ja numeroita), sama raja kuin välikerroksessa ja paneelissa
 SELAIN = {"User-Agent": "SuomenMoskeijat-rakennusajo/1.0 (+https://github.com/suomen-moskeijat/pohja)"}
 
 
-def polun_tunniste(polku):
+def polun_tunniste(polku, sivulupa=False):
     """Sivun polun (luonnoslinkin salainen osa tai "" = juuri) lyhyt tunniste julkaisuun. Tiiviste, ei polkua: salainen osa ei
-    päädy julkaisun tietoihin. Salainen osa on vähintään 128 bittiä satunnaista, joten tiivisteestä ei voi päätellä sitä."""
-    return hashlib.sha256(("polku:" + (polku or "")).encode()).hexdigest()[:16]
+    päädy julkaisun tietoihin. Salainen osa on vähintään 128 bittiä satunnaista, joten tiivisteestä ei voi päätellä sitä.
+    Välikerroksen takana olevan testisivun (sivulupa) tunniste on eri kuin saman polun ilman välikerrosta: kun sivusta tulee
+    testisivu, sen vanhat suojaamattomat julkaisut poistetaan (poista_vanhat), eivätkä ne näy julkaisukohtaisissa osoitteissa."""
+    return hashlib.sha256(("polku:" + (polku or "") + ("|sivulupa" if sivulupa else "")).encode()).hexdigest()[:16]
 
 
 class Julkaisuvirhe(Exception):
@@ -49,7 +55,7 @@ class Kansio:
     def historia(self, sivu):
         return os.path.join(self.polku, sivu["projekti"] + ".julkaisut")
 
-    def julkaise(self, sivu, kansio, loki=None, polku=""):
+    def julkaise(self, sivu, kansio, loki=None, polku="", sivulupa=False):
         os.makedirs(self.polku, exist_ok=True)
         kohde = os.path.join(self.polku, sivu["projekti"])
         uusi = tempfile.mkdtemp(prefix=sivu["projekti"] + ".", dir=self.polku)
@@ -63,11 +69,11 @@ class Kansio:
         historia = self.historia(sivu)
         os.makedirs(historia, exist_ok=True)
         nro = max([int(n.split("-")[0]) for n in os.listdir(historia) if n.split("-")[0].isdigit()] or [0]) + 1
-        shutil.copytree(kohde, os.path.join(historia, f"{nro:04d}-{polun_tunniste(polku)}"), copy_function=os.link)
+        shutil.copytree(kohde, os.path.join(historia, f"{nro:04d}-{polun_tunniste(polku, sivulupa)}"), copy_function=os.link)
         return "paikallinen kansio"
 
-    def poista_vanhat(self, sivu, polku, loki=None):
-        tunniste, historia = polun_tunniste(polku), self.historia(sivu)
+    def poista_vanhat(self, sivu, polku, loki=None, sivulupa=False):
+        tunniste, historia = polun_tunniste(polku, sivulupa), self.historia(sivu)
         julkaisut = sorted(n for n in os.listdir(historia) if n.split("-")[0].isdigit()) if os.path.isdir(historia) else []
         poistettavat = [n for n in julkaisut[:-1] if n.split("-", 1)[1] != tunniste]  # uusin on nykyinen julkaisu
         for n in poistettavat:
@@ -185,8 +191,24 @@ class CloudflarePages:
                 self.wrangler = shutil.which("wrangler")
             return self.wrangler
 
-    def julkaise(self, sivu, kansio, loki=None, polku=""):
+    def aseta_sivulupa(self, sivu):
+        """Testisivun välikerroksen avain (SIVULUPA_AVAIN) projektin tuotantoympäristön salaisuudeksi ennen julkaisua: julkaisu
+        saa salaisuudet luontihetkellä, joten avaimen vaihto tulee voimaan seuraavassa julkaisussa. Ilman kelvollista avainta
+        testisivua ei julkaista (välikerros ei päästäisi ketään, eikä vanhaa julkaisua korvata). Avainta ei tulosteta."""
+        avain = (os.environ.get("SIVULUPA_AVAIN") or "").strip()
+        if len(avain) < SIVULUPA_AVAIN_VAHINTAAN or not re.fullmatch(r"[A-Za-z0-9]+", avain):
+            raise Julkaisuvirhe(f"SIVULUPA_AVAIN puuttuu ympäristöstä julkaisu tai ei kelpaa (vähintään {SIVULUPA_AVAIN_VAHINTAAN} merkkiä A-Z, a-z, 0-9): "
+                                "testisivua ei julkaista ilman välikerroksen avainta")
+        koodi, v = self._api("/" + sivu["projekti"], {"deployment_configs": {"production": {"env_vars": {
+            "SIVULUPA_AVAIN": {"type": "secret_text", "value": avain}}}}}, metodi="PATCH")
+        if koodi != 200:
+            virheet = ", ".join(str(e.get("code")) for e in v.get("errors") or [] if isinstance(e, dict))
+            raise Julkaisuvirhe(f"välikerroksen avainta ei voitu asettaa Pages-projektiin (HTTP {koodi}{', koodit ' + virheet if virheet else ''})")
+
+    def julkaise(self, sivu, kansio, loki=None, polku="", sivulupa=False):
         osoite = self.osoite(sivu)
+        if sivulupa:
+            self.aseta_sivulupa(sivu)
         wrangler = self._wrangler()
         tyo = tempfile.mkdtemp(prefix="julkaisu-")
         tuloste = os.path.join(tyo, "wrangler.log")
@@ -195,7 +217,7 @@ class CloudflarePages:
                 try:
                     koodi = subprocess.call(
                         [wrangler, "pages", "deploy", os.path.abspath(kansio), "--project-name", sivu["projekti"], "--branch", "main",
-                         "--commit-dirty=true", "--commit-message", f"Rakennusajo {self.ajo} polku:{polun_tunniste(polku)}"],
+                         "--commit-dirty=true", "--commit-message", f"Rakennusajo {self.ajo} polku:{polun_tunniste(polku, sivulupa)}"],
                         cwd=tyo, stdout=f, stderr=f, timeout=600,
                         env={**os.environ, "CLOUDFLARE_API_TOKEN": self.avain, "CLOUDFLARE_ACCOUNT_ID": self.tili, "WRANGLER_SEND_METRICS": "false"})
                 except subprocess.TimeoutExpired:
@@ -211,8 +233,27 @@ class CloudflarePages:
             ladattu = re.findall(r"Uploaded (\d+) files(?: \((\d+) already uploaded\))?", teksti)
         finally:
             shutil.rmtree(tyo, ignore_errors=True)
-        self._tarkista(sivu, osoite, polku)
+        self._tarkista(sivu, osoite, polku, sivulupa=sivulupa)
         return f"ladattu {ladattu[-1][0]} tiedostoa, ennestään {ladattu[-1][1] or 0}" if ladattu else "ei ladattavaa"
+
+    def _ohjaus(self, osoite):
+        """(tila, otsakkeet) seuraamatta uudelleenohjausta (testisivun välikerros ohjaa paneeliin)."""
+        class Ei(urllib.request.HTTPRedirectHandler):
+            def redirect_request(self, *a, **k):
+                return None
+        virhe = ""
+        for _ in range(12):
+            try:
+                with urllib.request.build_opener(Ei).open(urllib.request.Request(osoite, headers=SELAIN), timeout=20) as v:
+                    return v.status, v.headers
+            except urllib.error.HTTPError as e:
+                if e.code in (301, 302, 303, 307, 308):
+                    return e.code, e.headers
+                virhe = f"HTTP {e.code}"
+            except Exception as e:
+                virhe = type(e).__name__
+            time.sleep(5)
+        raise Julkaisuvirhe(f"julkaistu sivu ei vastaa projektin osoitteessa ({virhe})")
 
     def _hae(self, osoite):
         """(otsakkeet, teksti) tai Julkaisuvirhe. Uusi julkaisu voi näkyä tuotanto-osoitteessa vasta hetken päästä."""
@@ -228,10 +269,21 @@ class CloudflarePages:
             time.sleep(5)
         raise Julkaisuvirhe(f"julkaistu sivu ei vastaa projektin osoitteessa ({virhe})")
 
-    def _tarkista(self, sivu, osoite, salainen):
-        """Julkaistu sivu vastaa projektin osoitteessa. Piilossa olevalla sivulla hakukoneet kieltävä otsake; luonnoslinkin sivulla
+    def _tarkista(self, sivu, osoite, salainen, sivulupa=False):
+        """Julkaistu sivu vastaa projektin osoitteessa. Välikerroksen takana olevalla testisivulla (sivulupa) juuri ohjaa paneelin
+        sivulupa-reittiin (ei näytä sivua) ja robots.txt kieltää kaiken, molemmissa X-Robots-Tag: noindex (hallinta#48).
+        Muulla piilossa olevalla sivulla hakukoneet kieltävä otsake; luonnoslinkin sivulla
         (salainen: polku, jonka alla sivu on) myös noai ja no-referrer otsakkeissa ja sivun omissa meta-tiedoissa sekä neutraali
         juuri ja robots.txt (ADR-0008, hallinta#49). Virheiden tekstissä vain tarkistuksen nimi: ei osoitetta eikä salaista osaa."""
+        if sivulupa:
+            tila, otsakkeet = self._ohjaus(osoite + "/")
+            if tila != 302 or "/api/sivulupa?paluu=" not in (otsakkeet.get("Location") or ""):
+                raise Julkaisuvirhe(f"testisivu ei ole välikerroksen takana: juuri vastasi HTTP {tila} ilman ohjausta paneeliin")
+            r_otsakkeet, robots_txt = self._hae(osoite + "/robots.txt")
+            if "noindex" not in ", ".join(otsakkeet.get_all("X-Robots-Tag") or []).lower() or "noindex" not in ", ".join(r_otsakkeet.get_all("X-Robots-Tag") or []).lower() \
+                    or not re.search(r"^User-agent: \*\s*\nDisallow: /\s*$", robots_txt, re.M):
+                raise Julkaisuvirhe("testisivun välikerroksen vastauksista puuttuu X-Robots-Tag: noindex tai robots.txt-kielto")
+            return
         piilossa = bool(salainen or sivu.get("testisivu"))
         otsakkeet, teksti = self._hae(osoite + (f"/{salainen}/" if salainen else "/"))
         # Otsake voi tulla monta kertaa (Pagesin oletus ja _headers): kaikki arvot. Arvot eivät ole salaisia, joten ne saa näyttää.
@@ -251,11 +303,11 @@ class CloudflarePages:
         if salainen in juuri or not re.search(r"^User-agent: \*\s*\nDisallow: /\s*$", robots_txt, re.M):
             raise Julkaisuvirhe("luonnoslinkin osoitteen juuri ei ole neutraali (juuren sivu tai robots.txt)")
 
-    def poista_vanhat(self, sivu, polku, loki=None):
+    def poista_vanhat(self, sivu, polku, loki=None, sivulupa=False):
         """Poistaa projektin julkaisut, joiden polun tunniste (julkaisun viestissä) on eri kuin nyt, paitsi nykyisen
         tuotantojulkaisun. Myös ennen tunnisteita tehdyt julkaisut poistetaan. Epäonnistunut poisto on julkaisuvirhe: sivun
         tiiviste ei päivity, joten seuraava ajo julkaisee ja yrittää poistoa uudelleen."""
-        projekti, tunniste = sivu["projekti"], polun_tunniste(polku)
+        projekti, tunniste = sivu["projekti"], polun_tunniste(polku, sivulupa)
         koodi, v = self._api("/" + projekti)
         nykyinen = ((v.get("result") or {}).get("canonical_deployment") or {}).get("id") if koodi == 200 else None
         if not nykyinen:

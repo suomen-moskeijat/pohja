@@ -8,6 +8,7 @@ kuvien mitat, kieliversiot ja kalenterit. Jekyll on lukittu tiedostoon .github/r
 Käyttö:
   python3 .github/scripts/rakenna_sivu.py --sisalto moskeijat/testimoskeija --ulos valmis \\
       --url https://esimerkki.pages.dev [--baseurl /<salainen osa> --luonnoslinkki] [--nimi testimoskeija] [--testisivu] \\
+      [--sivulupa https://hallinta-testi.suomenmoskeijat.fi] \\
       [--haetut haetut/testimoskeija] [--hae] [--aika "2026-03-01 12:00:00 +0200"] [--loki rakennus.log] [--vanha-julkaisu]
   python3 .github/scripts/rakenna_sivu.py --sisalto moskeijat/testimoskeija --url https://esimerkki.pages.dev \\
       --vain-haku --haetut haetut/testimoskeija [--loki haku.log]
@@ -19,6 +20,9 @@ Sivun asetukset:
   --luonnoslinkki   baseurl on luonnoslinkin salainen osa (rakennusajo, hallinta#49): sivu on piilossa kuten luonnos
                     (site.luonnoslinkki: sivun omat meta-tiedot noindex, noai ja referrer no-referrer, robots.txt ilman llms.txt:tä).
   --testisivu       sivu piiloon hakukoneilta (noindex ja X-Robots-Tag).
+  --sivulupa        paneelin osoite: testisivun välikerros (hallinta#48, ADR-0008). Juureen tulee _worker.js
+                    (.github/sivulupa/_worker.js paneelin osoitteella), jonka Cloudflare Pages ajaa jokaisessa pyynnössä: sivun
+                    näkee vain paneeliin kirjautunut testaaja tai ylläpitäjä. robots.txt kieltää kaiken (myös tekoälybotit nimeltä).
   --haetut          haettujen tietojen kansio (rukousajat, somet …): kopioidaan sivulle, ja --hae päivittää sen.
   --hae             hakee rukousajat ja somet nyt (verkko).
   --vain-haku       hakee rukousajat ja somet kansioon --haetut eikä rakenna sivua. Rakennusajo (rakennusajo.py) hakee ensin ja
@@ -34,11 +38,12 @@ aikaan sidotut tiedostot muuttuvat (feed.xml, rukousajat/tila.json, llms-full.tx
 Julkinen loki: komento tulostaa vain vaiheiden kestot ja lukumäärät, ei sisältöä, polkuja eikä tiedostonimiä. Vaiheiden
 oma tuloste menee tiedostoon --loki (ei julkiseen lokiin); ilman sitä virheilmoitusvirtaan (paikallinen käyttö).
 """
-import argparse, glob, hashlib, os, re, shutil, subprocess, sys, tempfile, time
+import argparse, glob, hashlib, json, os, re, shutil, subprocess, sys, tempfile, time
 
 POHJA = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 GEMFILE = os.path.join(POHJA, ".github", "rakennus", "Gemfile")
 GEMFILE_VANHA = os.path.join(POHJA, ".github", "rakennus", "vanha-julkaisu", "Gemfile")
+VALIKERROS = os.path.join(POHJA, ".github", "sivulupa", "_worker.js")
 # Sivupohjasta ei sivulle (kuten rakenna.yml; lisäksi pohjan omat ohjeet ja päätökset)
 EI_POHJASTA = {".git", ".claude", "docs", "malli", "testi", "testit.json", "esittely", "_site"}
 # Haetut tiedot (kuten rakenna.yml:n välimuisti)
@@ -133,6 +138,7 @@ def main():
     p.add_argument("--nimi", default="")
     p.add_argument("--luonnoslinkki", action="store_true")
     p.add_argument("--testisivu", action="store_true")
+    p.add_argument("--sivulupa", default="")
     p.add_argument("--haetut")
     p.add_argument("--hae", action="store_true")
     p.add_argument("--vain-haku", action="store_true")
@@ -146,6 +152,8 @@ def main():
         raise SystemExit("--baseurl: vain kirjaimia, numeroita, - ja _ (yksi polun osa)")
     if a.luonnoslinkki and not baseurl:
         raise SystemExit("--luonnoslinkki: anna salainen osa (--baseurl)")
+    if a.sivulupa and not re.fullmatch(r"https?://[A-Za-z0-9.-]+(:\d+)?", a.sivulupa.rstrip("/")):
+        raise SystemExit("--sivulupa: paneelin osoite, esim. https://hallinta-testi.suomenmoskeijat.fi")
     if a.vain_haku and not a.haetut:
         raise SystemExit("--vain-haku: anna haettujen tietojen kansio (--haetut)")
     if not a.vain_haku and not a.ulos:
@@ -179,7 +187,7 @@ def main():
         asetukset += f"url: {yaml_arvo(a.url.rstrip('/'))}\nbaseurl: {yaml_arvo('/' + baseurl if baseurl else '')}\n"
         if a.nimi: asetukset += f"repo: {yaml_arvo(a.nimi)}\n"  # lomakkeet (osat/lomake-tapa.html), ei baseurlista
         if a.luonnoslinkki: asetukset += "luonnoslinkki: true\n"  # sivu salaisen polun alla: piiloon kuten luonnos (osat/hakunakyvyys.html)
-        if a.testisivu: asetukset += "noindex: true\n"
+        if a.testisivu or a.sivulupa: asetukset += "noindex: true\n"
         if a.aika: asetukset += f"time: {yaml_arvo(a.aika)}\n"
         # Välimuistiversio (?v=) sivun tyyleille ja skripteille: koottujen assets-tiedostojen tiiviste, ei rakennushetki. Näin
         # muuttumaton sivu rakentuu tavu tavulta samaksi, ja julkaisu lataa vain muuttuneet tiedostot (hallinta#45).
@@ -234,8 +242,17 @@ def main():
         if baseurl:
             for nimi, teksti in (("index.html", JUURI_SIVU), ("404.html", JUURI_SIVU), ("robots.txt", JUURI_ROBOTS)):
                 with open(os.path.join(ulos, nimi), "w", encoding="utf-8") as f: f.write(teksti)
-        if baseurl or a.testisivu:
+        if baseurl or a.testisivu or a.sivulupa:
             with open(os.path.join(ulos, "_headers"), "w", encoding="utf-8") as f: f.write(OTSAKKEET)
+        # Testisivun välikerros (hallinta#48): vain paneelin testaajat ja ylläpitäjät. Pages ei lisää _headers-otsakkeita
+        # välikerroksen vastauksiin, joten välikerros lisää ne itse; robots.txt on kaikille (kielto).
+        if a.sivulupa:
+            with open(VALIKERROS, encoding="utf-8") as f: koodi = f.read()
+            if koodi.count('"__SIVULUPA_PANEELI__"') != 1:
+                raise SystemExit("Välikerroksen paneelin osoitteen paikka puuttuu (.github/sivulupa/_worker.js)")
+            with open(os.path.join(ulos, "_worker.js"), "w", encoding="utf-8") as f:
+                f.write(koodi.replace('"__SIVULUPA_PANEELI__"', json.dumps(a.sivulupa.rstrip("/"))))
+            with open(os.path.join(ulos, "robots.txt"), "w", encoding="utf-8") as f: f.write(JUURI_ROBOTS)
 
         # 7. Cloudflare Pagesin rajat: tiedostojen määrä ja koko (ei tiedostonimiä julkiseen lokiin)
         koot = [os.path.getsize(os.path.join(k, n)) for k, _, ts in os.walk(ulos) for n in ts]
