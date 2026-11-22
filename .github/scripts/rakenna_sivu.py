@@ -7,14 +7,17 @@ kuvien mitat, kieliversiot ja kalenterit. Jekyll on lukittu tiedostoon .github/r
 
 Käyttö:
   python3 .github/scripts/rakenna_sivu.py --sisalto moskeijat/testimoskeija --ulos valmis \\
-      --url https://esimerkki.pages.dev [--baseurl /<salainen osa>] [--nimi testimoskeija] [--testisivu] \\
+      --url https://esimerkki.pages.dev [--baseurl /<salainen osa> --luonnoslinkki] [--nimi testimoskeija] [--testisivu] \\
       [--haetut haetut/testimoskeija] [--hae] [--aika "2026-03-01 12:00:00 +0200"] [--loki rakennus.log] [--vanha-julkaisu]
   python3 .github/scripts/rakenna_sivu.py --sisalto moskeijat/testimoskeija --url https://esimerkki.pages.dev \\
       --vain-haku --haetut haetut/testimoskeija [--loki haku.log]
 
 Sivun asetukset:
   --url, --baseurl  sivun osoite (sisältökansiossa ei ole osoitetta, ADR-0006). Kun baseurl on annettu, sivu
-                    rakennetaan kokonaan sen alle, ja juureen tulee vain neutraali noindex-sivu ja robots.txt (ADR-0008).
+                    rakennetaan kokonaan sen alle, ja juureen tulee vain neutraali noindex-sivu, robots.txt (kielto kaikille,
+                    myös tekoälyboteille nimeltä) ja _headers (X-Robots-Tag, Referrer-Policy) (ADR-0008).
+  --luonnoslinkki   baseurl on luonnoslinkin salainen osa (rakennusajo, hallinta#49): sivu on piilossa kuten luonnos
+                    (site.luonnoslinkki: sivun omat meta-tiedot noindex, noai ja referrer no-referrer, robots.txt ilman llms.txt:tä).
   --testisivu       sivu piiloon hakukoneilta (noindex ja X-Robots-Tag).
   --haetut          haettujen tietojen kansio (rukousajat, somet …): kopioidaan sivulle, ja --hae päivittää sen.
   --hae             hakee rukousajat ja somet nyt (verkko).
@@ -44,13 +47,19 @@ HAETUT = ["_data/instagram", "_data/aikataulut", "_data/haku", "_data/kuvat", "_
 # Cloudflare Pagesin rajat (suora lataus, ilmainen taso): ADR-0007
 TIEDOSTOJA_ENINT, TIEDOSTO_ENINT = 20000, 25 * 1024 * 1024
 JUURI_SIVU = """<!doctype html>
-<html lang="fi"><head><meta charset="utf-8"><meta name="robots" content="noindex, nofollow">
+<html lang="fi"><head><meta charset="utf-8"><meta name="robots" content="noindex, nofollow, noarchive, noai, noimageai">
 <meta name="referrer" content="no-referrer"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Suomen moskeijat</title></head>
 <body style="font-family:system-ui,sans-serif;margin:3rem 1rem;text-align:center;color:#444">
 <p>Tällä osoitteella ei ole julkista sivua.</p></body></html>
 """
-OTSAKKEET = "/*\n  X-Robots-Tag: noindex, nofollow\n  Referrer-Policy: no-referrer\n"
+OTSAKKEET = "/*\n  X-Robots-Tag: noindex, nofollow, noarchive, noai, noimageai\n  Referrer-Policy: no-referrer\n"
+# Luonnoslinkin juuren robots.txt: kaikki kielletään kaikilta. Tekoälyjen tunnetut botit myös nimeltä, koska osa niistä
+# noudattaa vain omaa nimeään koskevaa kohtaa (ADR-0008: luonnokset piiloon hakukoneilta ja tekoälyiltä).
+TEKOALYBOTIT = ("GPTBot", "ChatGPT-User", "OAI-SearchBot", "ClaudeBot", "Claude-User", "Claude-SearchBot", "anthropic-ai",
+                "Google-Extended", "CCBot", "PerplexityBot", "Perplexity-User", "Applebot-Extended", "Bytespider", "Amazonbot",
+                "meta-externalagent", "cohere-ai", "Diffbot", "YouBot", "DuckAssistBot", "MistralAI-User")
+JUURI_ROBOTS = "User-agent: *\nDisallow: /\n" + "".join(f"\nUser-agent: {b}\nDisallow: /\n" for b in TEKOALYBOTIT)
 
 
 class Rakennus:
@@ -122,6 +131,7 @@ def main():
     p.add_argument("--url", required=True)
     p.add_argument("--baseurl", default="")
     p.add_argument("--nimi", default="")
+    p.add_argument("--luonnoslinkki", action="store_true")
     p.add_argument("--testisivu", action="store_true")
     p.add_argument("--haetut")
     p.add_argument("--hae", action="store_true")
@@ -134,6 +144,8 @@ def main():
     baseurl = a.baseurl.strip("/")
     if baseurl and not re.fullmatch(r"[A-Za-z0-9_-]+", baseurl):
         raise SystemExit("--baseurl: vain kirjaimia, numeroita, - ja _ (yksi polun osa)")
+    if a.luonnoslinkki and not baseurl:
+        raise SystemExit("--luonnoslinkki: anna salainen osa (--baseurl)")
     if a.vain_haku and not a.haetut:
         raise SystemExit("--vain-haku: anna haettujen tietojen kansio (--haetut)")
     if not a.vain_haku and not a.ulos:
@@ -166,6 +178,7 @@ def main():
         asetukset += "\n# Rakennuskomento: sivun asetukset\n"
         asetukset += f"url: {yaml_arvo(a.url.rstrip('/'))}\nbaseurl: {yaml_arvo('/' + baseurl if baseurl else '')}\n"
         if a.nimi: asetukset += f"repo: {yaml_arvo(a.nimi)}\n"  # lomakkeet (osat/lomake-tapa.html), ei baseurlista
+        if a.luonnoslinkki: asetukset += "luonnoslinkki: true\n"  # sivu salaisen polun alla: piiloon kuten luonnos (osat/hakunakyvyys.html)
         if a.testisivu: asetukset += "noindex: true\n"
         if a.aika: asetukset += f"time: {yaml_arvo(a.aika)}\n"
         # Välimuistiversio (?v=) sivun tyyleille ja skripteille: koottujen assets-tiedostojen tiiviste, ei rakennushetki. Näin
@@ -219,7 +232,7 @@ def main():
 
         # 6. Piilossa oleva sivu (salainen polku tai testisivu): juureen vain neutraali sivu, ei hakukoneille
         if baseurl:
-            for nimi, teksti in (("index.html", JUURI_SIVU), ("404.html", JUURI_SIVU), ("robots.txt", "User-agent: *\nDisallow: /\n")):
+            for nimi, teksti in (("index.html", JUURI_SIVU), ("404.html", JUURI_SIVU), ("robots.txt", JUURI_ROBOTS)):
                 with open(os.path.join(ulos, nimi), "w", encoding="utf-8") as f: f.write(teksti)
         if baseurl or a.testisivu:
             with open(os.path.join(ulos, "_headers"), "w", encoding="utf-8") as f: f.write(OTSAKKEET)

@@ -2749,6 +2749,30 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-22"
+    },
+    {
+      "id": "luonnoslinkki",
+      "otsikko": "Luonnoslinkki: luonnos vain salaisella linkillä, kopioi ja vaihda",
+      "alue": "paneeli",
+      "kuvaus": "Uuden julkaisun luonnos- ja ehdotussivut näkyvät vain luonnoslinkillä: sivun osoite, jonka loppuun tulee arvaamaton osa. Linkin saanut näkee sivun kirjautumatta, mutta hakukoneet ja tekoälybotit eivät (noindex, robots.txt ja otsakkeet), eikä linkki vuoda muille sivuille. Paneelin Asetukset → Sivun tila näyttää linkin pääkäyttäjälle ja ylläpitäjälle: Kopioi linkki ja Vaihda linkki. Vaihdon jälkeen vanha linkki lakkaa toimimasta parin minuutin kuluttua (rakennusajo poistaa vanhat julkaisut). Esikatselu, Avaa sivu ja kutsuviesti käyttävät luonnoslinkkiä. Testimoskeija on testisivu, joten se pysyy luonnoslinkin takana, kunnes testisivujen kirjautuminen tulee. Vanhan julkaisun moskeijoilla ei ole luonnoslinkkiä.",
+      "aloitus": "Kirjaudu testipaneeliin testimoskeijan pääkäyttäjänä ja avaa Testimoskeija → Asetukset.",
+      "kohdat": [
+        "Sivun tila -kohdassa näkyy Luonnoslinkki: linkki, Kopioi linkki ja Vaihda linkki sekä ohje — Missä: Testipaneeli → Testimoskeija → Asetukset → Sivun tila",
+        "Kopioi linkki ja avaa se yksityisessä ikkunassa tai toisella laitteella: testimoskeijan sivu avautuu kirjautumatta — Missä: Asetukset → Sivun tila → Kopioi linkki",
+        "Sama osoite ilman loppuosaa näyttää vain tekstin, ettei osoitteella ole julkista sivua (ei linkkiä moskeijan sivulle) — Missä: luonnoslinkin osoite ilman viimeistä osaa",
+        "Esikatselu ja vasemman yläkulman Avaa sivu näyttävät sivun luonnoslinkistä — Missä: Testipaneeli → Testimoskeija → Sivut → Etusivu; Avaa sivu",
+        "Vaihda linkki kysyy varmistuksen ja näyttää heti uuden linkin; parin minuutin kuluttua uusi linkki avaa sivun ja vanha ei enää näytä sitä — Missä: Asetukset → Sivun tila → Vaihda linkki",
+        "Muutoshistoriassa lukee Vaihtoi luonnoslinkin ilman linkkiä — Missä: Testipaneeli → Testimoskeija → Historia",
+        "Sama kohta englanniksi (Oma tili → kieli English: Draft link, Copy link, Change link) ja puhelimella (390 ja 320 px) ilman sivuttaisvieritystä — Missä: Asetukset → Sivun tila"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Testimoskeijan asetukset",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/asetukset"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-22"
     }
   ]
 }

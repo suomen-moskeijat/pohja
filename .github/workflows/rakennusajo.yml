@@ -135,6 +135,9 @@ jobs:
 
       # Haku, syötteiden tiivisteet, rakennus (rakennuskomento) ja julkaisu (julkaisukohde: Cloudflare Pages, suora lataus).
       # Yhden sivun virhe ei estä muita; ajo päättyy virheeseen, ja epäonnistunut sivu yritetään uudelleen seuraavalla ajolla.
+      # Luonnoslinkki (ADR-0008, hallinta#49): luonnos, ehdotus ja testisivu salaisen polun alle, julkaistu juureen; julkaisun
+      # jälkeen projektin vanhat julkaisut, joiden polku on eri (vaihdettu linkki, julkaisu), poistetaan (Cloudflare-avaimen
+      # Pages-muokkausoikeus riittää). Salaiset osat peitetään lokista ennen muuta tulostetta.
       # Rakennusraportti (hallinta#47): ajon lopuksi sivujen sisältöversiot ja tulokset paneeliin omalla avaimella
       # (RAKENNUSRAPORTTI_AVAIN, sama arvo paneelin salaisuuksissa). Main-haaran ajo raportoi paneeliin, testi-haaran ajo
       # testipaneeliin (sama tietokanta). Paras yritys: jos avain puuttuu tai paneeli ei vastaa, julkaisu onnistuu silti.

@@ -7,4 +7,4 @@ User-agent: *
 {%- include osat/hakunakyvyys.html moskeija=m %}
 {% if _piilota %}Disallow: /{% else %}Allow: /{% endif %}
 Sitemap: {{ site.url }}{{ '/sitemap.xml' | relative_url }}
-# Tekoälyhauille tiivis kuvaus: {{ site.url }}{{ '/llms.txt' | relative_url }}
+{% unless _piilota %}# Tekoälyhauille tiivis kuvaus: {{ site.url }}{{ '/llms.txt' | relative_url }}{% endunless %}
