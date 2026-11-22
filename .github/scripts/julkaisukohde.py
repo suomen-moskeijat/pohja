@@ -6,7 +6,8 @@ Yksi rajapinta, kaksi sovitinta:
   julkaise(sivu, kansio, loki)  julkaisee valmiin sivun kansion; palauttaa lyhyen kuvauksen julkiseen lokiin
 
 - CloudflarePages ("cloudflare"): oma Pages-projekti jokaiselle sivulle, suora lataus (wrangler pages deploy).
-  Avain ja tilin tunnus ympäristömuuttujista CLOUDFLARE_API_TOKEN ja CLOUDFLARE_ACCOUNT_ID.
+  Avain ja tilin tunnus ympäristömuuttujista CLOUDFLARE_API_TOKEN ja CLOUDFLARE_ACCOUNT_ID. Wrangler (lukittu versio)
+  asennetaan vasta ensimmäiseen julkaisuun: ajo, jossa mikään sivu ei muuttunut, ei tarvitse sitä.
 - Kansio ("kansio:<polku>"): paikallinen kansio testeille (hallinta testi/rakennusajo.mjs), sivu kansioon <polku>/<projekti>/.
 
 `sivu` on sivustoluettelon kohta (nimi, projekti, salainen_osa, testisivu …). Virheen (Julkaisuvirhe) teksti on julkista
@@ -47,6 +48,7 @@ class CloudflarePages:
     """Cloudflare Pages, suora lataus. Projekti luodaan, jos sitä ei ole (tuotantohaara main, ei Git-yhteyttä)."""
 
     API = "https://api.cloudflare.com/client/v4/accounts/{tili}/pages/projects"
+    WRANGLER = "wrangler@4.158.0"
 
     def __init__(self, avain=None, tili=None, ajo=""):
         # Tunnuksen tai avaimen lopussa voi olla rivinvaihto, jos se liitettiin sellaisenaan
@@ -57,6 +59,7 @@ class CloudflarePages:
             raise SystemExit("CLOUDFLARE_API_TOKEN (salaisuus) tai CLOUDFLARE_ACCOUNT_ID (muuttuja) puuttuu ympäristöstä julkaisu")
         self.ajo = ajo or os.environ.get("GITHUB_RUN_ID", "")
         self.osoitteet, self.lukko = {}, threading.Lock()
+        self.wrangler, self.asennus = None, threading.Lock()
 
     def _api(self, polku="", data=None):
         pyynto = urllib.request.Request(self.API.format(tili=self.tili) + polku, headers={**SELAIN, "Authorization": f"Bearer {self.avain}",
@@ -88,22 +91,36 @@ class CloudflarePages:
             self.osoitteet[projekti] = osoite
         return osoite
 
+    def _wrangler(self):
+        """Wranglerin komento. Asennetaan kerran (npm, lukittu versio), jos sitä ei ole valmiina."""
+        with self.asennus:
+            if not self.wrangler:
+                if not shutil.which("wrangler"):
+                    try:
+                        koodi = subprocess.call(["npm", "install", "--global", "--silent", self.WRANGLER], timeout=600,
+                                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                    except Exception as e:
+                        raise Julkaisuvirhe(f"wranglerin asennus epäonnistui ({type(e).__name__})")
+                    if koodi != 0 or not shutil.which("wrangler"):
+                        raise Julkaisuvirhe(f"wranglerin asennus epäonnistui (koodi {koodi})")
+                self.wrangler = shutil.which("wrangler")
+            return self.wrangler
+
     def julkaise(self, sivu, kansio, loki=None):
         osoite = self.osoite(sivu)
+        wrangler = self._wrangler()
         tyo = tempfile.mkdtemp(prefix="julkaisu-")
         tuloste = os.path.join(tyo, "wrangler.log")
         try:
             with open(tuloste, "w", encoding="utf-8") as f:
                 try:
                     koodi = subprocess.call(
-                        ["wrangler", "pages", "deploy", os.path.abspath(kansio), "--project-name", sivu["projekti"], "--branch", "main",
+                        [wrangler, "pages", "deploy", os.path.abspath(kansio), "--project-name", sivu["projekti"], "--branch", "main",
                          "--commit-dirty=true", "--commit-message", f"Rakennusajo {self.ajo}".strip()],
                         cwd=tyo, stdout=f, stderr=f, timeout=600,
                         env={**os.environ, "CLOUDFLARE_API_TOKEN": self.avain, "CLOUDFLARE_ACCOUNT_ID": self.tili, "WRANGLER_SEND_METRICS": "false"})
                 except subprocess.TimeoutExpired:
                     raise Julkaisuvirhe("suora lataus ei valmistunut 10 minuutissa")
-                except FileNotFoundError:
-                    raise Julkaisuvirhe("wrangler puuttuu")
             with open(tuloste, encoding="utf-8", errors="replace") as f:
                 teksti = f.read()
             if loki:
