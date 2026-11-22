@@ -1,0 +1,22 @@
+# Sivupohjan main- tai testi-haaran muutos käynnistää rakennusajon (rakennusajo.yml) samasta haarasta (hallinta#43):
+# testi-haaran muutos rakentaa testisivut, main-haaran muutos muut sivut. Pieni työnkulku ilman salaisuuksia: käynnistyspyyntö
+# lähtee ajon omalla GITHUB_TOKENilla (actions: write). Rakennusajo tunnistaa itse syötteistä, mitkä sivut muuttuivat,
+# joten tämä on vain vihje: jos käynnistys jää väliin, tunnin ajastus rakentaa muutoksen.
+name: Käynnistä rakennusajo
+
+on:
+  push:
+    branches: [main, testi]
+
+permissions:
+  actions: write
+
+jobs:
+  kaynnista:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Käynnistä rakennusajo tästä haarasta
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run rakennusajo.yml --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF_NAME"
