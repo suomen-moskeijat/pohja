@@ -2645,6 +2645,34 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-21"
+    },
+    {
+      "id": "testimoskeija-sisaltorepoon",
+      "otsikko": "Testipaneeli tallentaa testimoskeijan sisältörepoon",
+      "alue": "paneeli",
+      "kuvaus": "Testipaneeli tallentaa testimoskeijan muutokset nyt yksityiseen sisältörepoon (ei enää vanhaan testimoskeija-repoon), ja tallennus käynnistää rakennusajon, joka rakentaa uuden testimoskeijan. Muutos näkyy siis uudella testimoskeijalla (salainen linkki), ei vanhalla. Muiden moskeijoiden tallennus ei muuttunut. Tiedossa: testimoskeijan kuvat eivät vielä näy paneelissa, koska sisältörepo on yksityinen (korjataan seuraavaksi omassa muutoksessaan).",
+      "aloitus": "Kirjaudu testipaneeliin ja avaa Testimoskeija. Pyydä ylläpitäjältä uuden testimoskeijan väliaikainen linkki (se ei ole tässä tiedostossa, koska repo on julkinen).",
+      "kohdat": [
+        "Etusivun esittelyn muutos tallentuu ilman virhettä ja näkyy uudella testimoskeijalla noin 1–2 minuutissa — Missä: Testipaneeli → Testimoskeija → Sivut → Etusivu → Tallenna; uusi testimoskeija, etusivu",
+        "Uusi tapahtuma näkyy uudella testimoskeijalla Tapahtumat-sivulla — Missä: Testipaneeli → Testimoskeija → Tapahtumat → Lisää tapahtuma",
+        "Monta tallennusta peräkkäin (esim. kolme pientä muutosta minuutin sisällä) tallentuu kaikki, ja uusi testimoskeija näyttää lopuksi viimeisimmän — Missä: Testipaneeli → Testimoskeija → Sivut",
+        "Palvelujen järjestyksen muutos tallentuu kerralla ja näkyy uudella testimoskeijalla — Missä: Testipaneeli → Testimoskeija → Palvelut → nuolet → Tallenna järjestys",
+        "Muutoshistoriassa näkyy tehty muutos, ja Peru palauttaa edellisen version (näkyy myös uudella testimoskeijalla) — Missä: Testipaneeli → Testimoskeija → Muutoshistoria → Peru",
+        "Kun sama tapahtuma on auki kahdessa välilehdessä ja tallennat molemmissa, jälkimmäinen kertoo, että joku muu muutti samaan aikaan — Missä: Testipaneeli → Testimoskeija → Tapahtumat",
+        "Vanha testimoskeija ei enää muutu testipaneelin tallennuksista — Missä: vanha testimoskeija (linkki alla)"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija"
+        },
+        {
+          "nimi": "Vanha testimoskeija",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-22"
     }
   ]
 }
