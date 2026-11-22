@@ -2673,6 +2673,30 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-22"
+    },
+    {
+      "id": "testimoskeijan-kuvat-paneelissa",
+      "otsikko": "Testimoskeijan kuvat näkyvät taas testipaneelissa",
+      "alue": "paneeli",
+      "kuvaus": "Testimoskeijan sisältö on yksityisessä sisältörepossa, joten sen kuvat eivät näkyneet testipaneelissa. Nyt paneeli näyttää testimoskeijan kuvat ja tiedostot omasta osoitteestaan kirjautuneelle käyttäjälle: galleria, logo, artikkelien, tapahtumien ja palvelujen kuvat, jakokuva ja PDF-tiedostot. Juuri ladattu kuva näkyy paneelissa heti. Muiden moskeijoiden kuvat näkyvät kuten ennenkin. Tiedossa: oikealla näkyvässä sivun esikatselussa juuri ladattu kuva näkyy vasta, kun sivu on päivittynyt.",
+      "aloitus": "Kirjaudu testipaneeliin ja avaa Testimoskeija → Kuvat ja tiedostot.",
+      "kohdat": [
+        "Kaikki testimoskeijan kuvat näkyvät (ei rikkinäisiä kuvia) — Missä: Testipaneeli → Testimoskeija → Kuvat ja tiedostot",
+        "Uusi kuva näkyy listassa heti latauksen jälkeen, ja Galleriassa-merkintä toimii — Missä: Testipaneeli → Testimoskeija → Kuvat ja tiedostot → Lisää kuvia tai PDF-tiedostoja",
+        "PDF-tiedosto latautuu ja avautuu selaimessa, kun sen nimeä napauttaa — Missä: Testipaneeli → Testimoskeija → Kuvat ja tiedostot → Tiedostot (PDF)",
+        "Kuvan valinta näyttää kuvat, ja valittu kuva näkyy lomakkeessa — Missä: Testipaneeli → Testimoskeija → Tapahtumat → avaa tapahtuma → Kuva → Valitse kuva",
+        "Logo näkyy ulkoasun asetuksissa, ja jakokuvan automaattinen luonti toimii — Missä: Testipaneeli → Testimoskeija → Ulkoasu; Sivuston asetukset → Haku ja jakaminen → Luo jakokuva automaattisesti",
+        "Kuvan osoite ei aukea ilman kirjautumista: kopioi jonkin kuvan osoite (hiiren oikea → Kopioi kuvan osoite) ja avaa se yksityisessä ikkunassa, kuva ei näy — Missä: Testipaneeli → Testimoskeija → Kuvat ja tiedostot",
+        "Toisen moskeijan (esim. oman moskeijasi varsinaisessa paneelissa) kuvat näkyvät kuten ennen — Missä: Paneeli → oma moskeija → Kuvat ja tiedostot"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Kuvat ja tiedostot",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/tiedostot"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-22"
     }
   ]
 }
