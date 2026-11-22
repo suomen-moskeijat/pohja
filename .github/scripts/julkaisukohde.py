@@ -202,13 +202,16 @@ class CloudflarePages:
         juuri ja robots.txt (ADR-0008, hallinta#49). Virheiden tekstissä vain tarkistuksen nimi: ei osoitetta eikä salaista osaa."""
         piilossa = bool(salainen or sivu.get("testisivu"))
         otsakkeet, teksti = self._hae(osoite + (f"/{salainen}/" if salainen else "/"))
-        robots = (otsakkeet.get("X-Robots-Tag") or "").lower()
+        # Otsake voi tulla monta kertaa (Pagesin oletus ja _headers): kaikki arvot. Arvot eivät ole salaisia, joten ne saa näyttää.
+        kaikki = lambda nimi: ", ".join(otsakkeet.get_all(nimi) or []).lower()
+        robots, viittaus = kaikki("X-Robots-Tag"), kaikki("Referrer-Policy")
         if piilossa and "noindex" not in robots:
             raise Julkaisuvirhe("julkaistulta piilossa olevalta sivulta puuttuu X-Robots-Tag: noindex")
         if not salainen:
             return
-        if "noai" not in robots or (otsakkeet.get("Referrer-Policy") or "").lower() != "no-referrer":
-            raise Julkaisuvirhe("luonnoslinkin sivulta puuttuu otsake X-Robots-Tag: noai tai Referrer-Policy: no-referrer")
+        # Selain käyttää Referrer-Policyn viimeistä tuntemaansa arvoa
+        if "noai" not in robots or [x.strip() for x in viittaus.split(",") if x.strip()][-1:] != ["no-referrer"]:
+            raise Julkaisuvirhe(f"luonnoslinkin sivun otsakkeet eivät ole oikein (X-Robots-Tag: {robots or '-'}; Referrer-Policy: {viittaus or '-'})")
         if '<meta name="referrer" content="no-referrer">' not in teksti or not re.search(r'<meta name="robots" content="noindex[^"]*noai', teksti):
             raise Julkaisuvirhe("luonnoslinkin sivun omista meta-tiedoista puuttuu referrer no-referrer tai robots noindex, noai")
         _, juuri = self._hae(osoite + "/")
