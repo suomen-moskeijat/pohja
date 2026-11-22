@@ -14,7 +14,7 @@ Sivustoluettelo muutetaan tekstinä (rivi lisätään tai sivun kohta poistetaan
 kommentit säilyvät, ja tulos tarkistetaan YAML-lukijalla: muut sivut pysyvät täsmälleen ennallaan.
 Mikään funktio ei tulosta sisältöä eikä salaista osaa (julkinen loki).
 """
-import csv, io, os, re, secrets, string, subprocess
+import csv, io, os, re, secrets, subprocess
 
 import yaml
 
@@ -54,9 +54,10 @@ def sivu(sisalto, nimi):
 
 
 def uusi_salainen_osa():
-    """Luonnoslinkin salainen osa: 22 merkkiä A-Z, a-z, 0-9 (yli 128 bittiä satunnaista, ADR-0008)."""
-    merkit = string.ascii_letters + string.digits
-    return "".join(secrets.choice(merkit) for _ in range(22))
+    """Luonnoslinkin salainen osa samassa muodossa kuin paneelin luonnoslinkin vaihto (hallinta src/sivustoluettelo.js, #49):
+    "luonnos-" + 32 merkkiä A-Z, a-z, 0-9, - ja _ (192 bittiä satunnaista, ADR-0008). Etuliite erottaa luonnoslinkin
+    julkaistun sivun poluista (esim. Cloudflaren sääntö tekoälyboteille) eikä heikennä satunnaisuutta."""
+    return "luonnos-" + secrets.token_urlsafe(24)
 
 
 def projektin_nimi(nimi, sivut):
