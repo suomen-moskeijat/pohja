@@ -1,32 +1,63 @@
-# Luo ehdotussivut moskeijoille listasta moskeijat.csv (ne, joilla ei vielä ole sivua).
-# Ehdotus = esimerkkisivu, josta moskeija ei ole vielä päättänyt: keltainen palkki, ei Googlessa.
+# Luo ehdotussivut sisältöreposta (hallinta#51, ADR-0006) moskeijoille listasta moskeijat.csv (sisältörepon juuressa), joilla ei
+# vielä ole sivua (ei kansiota sisältörepossa eikä vanhan julkaisun moskeijarepoa). Paneeli (Ylläpito → Moskeijalista →
+# Luo ehdotussivu) käynnistää tämän. Ehdotus = esimerkkisivu, josta moskeija ei ole vielä päättänyt: palkki "Ehdotus", näkyy
+# vain luonnoslinkillä. Kaikki ehdotukset tallennetaan sisältörepoon yhtenä committina, ja ne rakentuvat rakennusajossa.
+# Syötteet luetaan käynnistyksen tiedoista; loki ei tulosta tuotua sisältöä eikä salaista osaa (pohja on julkinen repo).
 name: Luo ehdotussivut listasta
 
 on:
   workflow_dispatch:
     inputs:
       vain:
-        description: "Vain nämä repot (pilkulla eroteltuina). Tyhjä = kaikki listan moskeijat, joilla ei vielä ole sivua."
+        description: "Vain nämä sivujen tunnukset (pilkulla eroteltuina). Tyhjä = kaikki listan moskeijat, joilla ei vielä ole sivua."
         required: false
       tuo_sivut:
         description: "Tuo moskeijan nettisivulta logo, värit, kuvat ja tekstit (jos listassa on nettisivu)"
         type: boolean
         default: true
+      kuiva:
+        description: "Kuivaharjoitus: ei tallenneta sisältörepoon"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
+  actions: write   # rakennusajon käynnistys tallennuksen jälkeen
 
 jobs:
   luo:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    environment: julkaisu
+    timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
-      - name: Kuvankäsittely (logon värit, kuvien pienennys)
-        run: pip install --quiet pillow || true
-      - name: Luo sivut
+      - name: Hae sivupohja
+        uses: actions/checkout@v4
+        with:
+          path: pohja
+          persist-credentials: false
+
+      - name: Hae sisältö (yksityinen sisältörepo, kirjoitusavain)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/sisalto
+          token: ${{ secrets.SISALTO_KIRJOITUS }}
+          path: sisalto
+
+      - name: Asenna Python-riippuvuudet (kuvankäsittely, YAML)
+        run: python3 -m pip install --quiet -r pohja/.github/rakennus/requirements.txt
+
+      - name: Luo ehdotukset
         env:
-          MOSKEIJA_AVAIN: ${{ secrets.MOSKEIJA_AVAIN }}
           ORG: ${{ github.repository_owner }}
-          SYOTE_VAIN: ${{ inputs.vain }}
-          SYOTE_TUO: ${{ inputs.tuo_sivut }}
-        run: python3 .github/scripts/lisaa_listasta.py
+          # Vanhan julkaisun moskeijarepojen tarkistus (julkiset repot): ohitetaan moskeijat, joilla on jo sivu
+          GITHUB_TOKEN: ${{ github.token }}
+          KUIVA: ${{ inputs.kuiva }}
+        run: |
+          if [ "$KUIVA" = "true" ]; then tallenna=""; else tallenna="--tallenna"; fi
+          python3 pohja/.github/scripts/lisaa_listasta.py --sisalto sisalto $tallenna
+
+      - name: Käynnistä rakennusajo
+        if: ${{ !inputs.kuiva }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run rakennusajo.yml --repo "$GITHUB_REPOSITORY" --ref main

@@ -2749,6 +2749,36 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-22"
+    },
+    {
+      "id": "uusi-moskeija-sisaltorepoon",
+      "otsikko": "Uusi moskeija, ehdotukset ja poisto sisältörepossa (kuivaharjoitus)",
+      "alue": "paneeli",
+      "kuvaus": "Uusi moskeija ja ehdotussivut listasta luodaan nyt yksityiseen sisältörepoon (moskeijan kansio ja sivustoluettelon rivi luonnoslinkillä), ei omaksi julkiseksi repokseen, ja sivu rakentuu rakennusajossa. Poisto poistaa kansion, rivin ja sivun Cloudflare Pages -projektin. Moskeijalista (moskeijat.csv) on siirtynyt pohjasta sisältörepoon. Testipaneeli ei luo eikä poista moskeijoita: se käynnistää vain kuivaharjoituksen, joka tekee kaiken muun paitsi tallennuksen. Tuotannon ylläpitäjä tarkistaa kuivaharjoituksen tuloksen GitHub Actionsista.",
+      "aloitus": "Kirjaudu testipaneeliin ylläpitäjänä ja avaa Ylläpito → Uusi.",
+      "kohdat": [
+        "Täytä nimi ja kaupunki ja paina Luo moskeijan sivu: tulee kortti Kuivaharjoitus käynnistetty, jossa kerrotaan, ettei testipaneeli luo moskeijaa, ja linkki GitHub Actionsiin — Missä: Testipaneeli → Ylläpito → Uusi",
+        "Kuivaharjoitusta ei näy Moskeijat-listassa, eikä sivua luotu — Missä: Testipaneeli → Ylläpito → Moskeijat",
+        "Sivun osoite -kentän ohje kertoo tunnuksesta (pienet kirjaimet, numerot ja viiva), ei github.io-osoitetta — Missä: Testipaneeli → Ylläpito → Uusi → Sivun osoite",
+        "Moskeijalista aukeaa, ja Luo ehdotussivu kertoo kuivaharjoituksesta — Missä: Testipaneeli → Ylläpito → Lista → moskeija ilman sivua → Luo ehdotussivu",
+        "Ylläpitäjä (tuotanto): GitHub Actionsin Lisää moskeija -ajon lokissa on vain sivun tunnus ja määrät (ei nimeä, osoitetta, yhteystietoja, Meistä-tekstiä eikä luonnoslinkkiä), ja ajo päättyy sanoihin kuivaharjoitus, mitään ei tallennettu — Missä: GitHub → pohja → Actions → Lisää moskeija → viimeisin ajo"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Uusi moskeija",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/yllapito/uusi"
+        },
+        {
+          "nimi": "Testipaneeli: Moskeijalista",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/yllapito/lista"
+        },
+        {
+          "nimi": "GitHub Actions: Lisää moskeija",
+          "url": "https://github.com/suomen-moskeijat/pohja/actions/workflows/lisaa-moskeija.yml"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-22"
     }
   ]
 }

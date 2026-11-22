@@ -5,6 +5,7 @@ Yksi rajapinta, kaksi sovitinta:
   osoite(sivu)                  sivun osoite kohteessa, kun sivustoluettelossa ei ole osoitetta
   julkaise(sivu, kansio, loki)  julkaisee valmiin sivun kansion; palauttaa lyhyen kuvauksen julkiseen lokiin
   projekteja()                  projektien määrä kohteessa (Cloudflaren raja 100, valvonta hallinta#47) tai None
+  poista(sivu)                  poistaa sivun projektin kaikkine julkaisuineen (moskeijan poisto, hallinta#51); palauttaa kuvauksen
 
 - CloudflarePages ("cloudflare"): oma Pages-projekti jokaiselle sivulle, suora lataus (wrangler pages deploy).
   Avain ja tilin tunnus ympäristömuuttujista CLOUDFLARE_API_TOKEN ja CLOUDFLARE_ACCOUNT_ID. Wrangler (lukittu versio)
@@ -50,6 +51,13 @@ class Kansio:
         except OSError:
             return None
 
+    def poista(self, sivu):
+        kohde = os.path.join(self.polku, sivu["projekti"])
+        if not os.path.isdir(kohde):
+            return "ei ollut"
+        shutil.rmtree(kohde)
+        return "poistettu"
+
 
 class CloudflarePages:
     """Cloudflare Pages, suora lataus. Projekti luodaan, jos sitä ei ole (tuotantohaara main, ei Git-yhteyttä)."""
@@ -68,9 +76,10 @@ class CloudflarePages:
         self.osoitteet, self.lukko = {}, threading.Lock()
         self.wrangler, self.asennus = None, threading.Lock()
 
-    def _api(self, polku="", data=None):
+    def _api(self, polku="", data=None, metodi=None):
         pyynto = urllib.request.Request(self.API.format(tili=self.tili) + polku, headers={**SELAIN, "Authorization": f"Bearer {self.avain}",
-                                        "Content-Type": "application/json"}, data=json.dumps(data).encode() if data is not None else None)
+                                        "Content-Type": "application/json"}, data=json.dumps(data).encode() if data is not None else None,
+                                        method=metodi)
         try:
             with urllib.request.urlopen(pyynto, timeout=30) as v:
                 return v.status, json.load(v)
@@ -108,6 +117,29 @@ class CloudflarePages:
             return None
         maara = (v.get("result_info") or {}).get("total_count")
         return maara if isinstance(maara, int) else len(v["result"])
+
+    def poista(self, sivu):
+        """Poistaa projektin. Jos Cloudflare ei poista projektia, jolla on paljon julkaisuja, julkaisut poistetaan ensin."""
+        projekti = sivu["projekti"]
+        koodi, _ = self._api("/" + projekti, metodi="DELETE")
+        if koodi == 404:
+            return "ei ollut"
+        if koodi == 200:
+            return "poistettu"
+        poistettu = 0
+        for _ in range(40):  # enintään 1 000 julkaisua, 25 kerrallaan
+            koodi_, v = self._api(f"/{projekti}/deployments?per_page=25")
+            julkaisut = v.get("result") if koodi_ == 200 and isinstance(v.get("result"), list) else []
+            if not julkaisut:
+                break
+            for j in julkaisut:
+                if self._api(f"/{projekti}/deployments/{j.get('id')}?force=true", metodi="DELETE")[0] == 200:
+                    poistettu += 1
+        koodi, v = self._api("/" + projekti, metodi="DELETE")
+        if koodi in (200, 404):
+            return f"poistettu ({poistettu} julkaisua ensin)"
+        virheet = ", ".join(str(e.get("code")) for e in v.get("errors") or [] if isinstance(e, dict))
+        raise Julkaisuvirhe(f"Pages-projektia ei voitu poistaa (HTTP {koodi}{', koodit ' + virheet if virheet else ''})")
 
     def _wrangler(self):
         """Wranglerin komento. Asennetaan kerran (npm, lukittu versio), jos sitä ei ole valmiina."""

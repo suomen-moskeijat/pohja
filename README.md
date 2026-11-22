@@ -24,8 +24,11 @@ Masjidboxissa ei tyhjennä sivua.
 
 ## Uusi moskeija (noin 2 minuuttia)
 
-1. **Actions → Lisää moskeija → Run workflow**
-   (https://github.com/suomen-moskeijat/pohja/actions/workflows/lisaa-moskeija.yml)
+Uusi moskeija luodaan yksityiseen sisältörepoon (kansio `moskeijat/<nimi>/` ja sivustoluettelon rivi), ei omaksi
+repokseen (hallinta#51, ADR-0006). Sivu rakentuu rakennusajossa omaan Cloudflare Pages -projektiinsa, ja luonnos näkyy
+vain luonnoslinkillä.
+
+1. Hallintapaneeli → Ylläpito → **Uusi moskeija** (tai **Actions → Lisää moskeija → Run workflow**).
 2. Täytä lomake:
    - **nettisivu**: moskeijan nykyinen sivu. Sieltä haetaan logo, värit, yhteystiedot, somet, kuvat ja tekstit
    - **kaupunki** (ei tarvita, jos nettisivulla on osoite)
@@ -33,35 +36,37 @@ Masjidboxissa ei tyhjennä sivua.
      voi liittää sellaisenaan) – silloin nimi, koordinaatit, Jumuah, rukousajat, iqamah
      (ja Mawaqitista kuvat) tulevat automaattisesti
    - muuten **nimi** ja **katuosoite** (koordinaatit haetaan osoitteesta)
-   - valinnaisesti Instagram ja WhatsApp
-3. Valmis: ajon yhteenvedossa on sivun osoite. Repo luodaan nimellä
-   `suomen-moskeijat/<moskeijan-nimi>` ja sivu julkaistaan noin kahdessa minuutissa.
+3. Työnkulku kirjoittaa moskeijan sisältörepoon yhtenä committina ja käynnistää rakennusajon. Julkinen loki näyttää vain
+   sivun tunnuksen ja määrät, ei tuotua sisältöä eikä luonnoslinkkiä.
 4. Täydennä tiedot (osoite, puhelin, logo, tekstit) hallintapaneelissa: https://hallinta.suomenmoskeijat.fi/
+
+Ehdotukset listasta (`lisaa-listasta.yml`, sisältörepon `moskeijat.csv`) ja poisto (`poista-moskeija.yml`: kansio,
+sivustoluettelon rivi ja Pages-projekti) toimivat samoin. Vanhan julkaisun moskeijat (siirtämättömät, Hyvinkää) poistetaan
+kuten ennen (moskeijarepo).
 
 Uusi moskeija alkaa tyhjästä (ADR-0001): sivulla ei ole oletusesittelyä, iqamah-minuutteja, valmiita artikkeleita,
 toiminnan kieliä eikä yläosan nappeja, ennen kuin moskeija lisää tai valitsee ne. Vain tuotu tieto (nimi, osoite,
 yhteystiedot, somet, vanhan sivun tekstit) tulee sivulle valmiiksi.
 
-**Kokeilu ilman että mitään luodaan:**
-`python3 .github/scripts/lisaa_moskeija.py --kuiva /tmp/kokeilu --kaupunki Hyvinkää --mawaqit <linkki>`
+**Kokeilu ilman että mitään tallennetaan:**
+`python3 .github/scripts/lisaa_moskeija.py --kuiva /tmp/kokeilu --kaupunki Hyvinkää --mawaqit <linkki>` (vain moskeijan
+kansio) tai `--sisalto <sisältörepon kopio>` ilman `--tallenna` (kansio ja sivustoluettelon rivi, ei commitia). Työnkuluissa
+sama valinta on **kuiva** (testipaneeli käyttää sitä aina).
 
-### Kertaluonteinen asetus: avain, jolla automaatio luo repoja
+### Kertaluonteinen asetus: sisältörepon kirjoitusavain
 
-1. Luo avain: https://github.com/settings/personal-access-tokens/new
-   - **Resource owner:** `suomen-moskeijat`
-   - **Expiration:** esim. 1 vuosi (uusi avain ennen kuin se vanhenee)
-   - **Repository access:** All repositories
-   - **Repository permissions:** Administration, Contents, Pages ja Workflows → *Read and write*
-2. Jos organisaatio vaatii hyväksynnän: Organisaation asetukset → Personal access tokens →
-   hyväksy avain.
-3. Tallenna avain: tämän repon **Settings → Secrets and variables → Actions →
-   New repository secret**, nimi `MOSKEIJA_AVAIN`.
+1. Luo hienojakoinen avain: https://github.com/settings/personal-access-tokens/new
+   - **Resource owner:** `suomen-moskeijat`, **Repository access:** vain `sisalto`
+   - **Repository permissions:** Contents → *Read and write*
+2. Tallenna se: tämän repon **Settings → Environments → julkaisu → Add secret**, nimi `SISALTO_KIRJOITUS`
+   (ympäristö sallii vain main- ja testi-haaran).
+3. Vanhan julkaisun moskeijarepojen poistoon tarvitaan edelleen repon salaisuus `MOSKEIJA_AVAIN`
+   (Administration: Read and write), ja Pages-projektien poistoon ympäristön `CLOUDFLARE_API_TOKEN` (sama kuin rakennusajossa).
 
 ### Käsin (ilman automaatiota)
 
-1. Luo organisaatioon julkinen repo ja kopioi sinne kansion `malli/` sisältö; korvaa `SLUG`,
-   `REPO`, `MOSKEIJAN NIMI` ja osoitetiedot (`_moskeijat/SLUG.md` → `_moskeijat/<slug>.md`).
-2. Repon asetuksista: **Settings → Pages → Source: GitHub Actions**.
+Aja `lisaa_moskeija.py --sisalto <sisältörepon kopio>` omalla koneella ja tee commit ja push sisältörepoon (tai lisää
+`--tallenna`). Uusia julkisia moskeijarepoja ei enää luoda.
 
 ## Mitä moskeija voi muokata itse (hallintapaneeli)
 
@@ -116,10 +121,10 @@ Moskeijan kannattaa tehdä itse (kerran, ilmaiseksi):
 | `*.html`, `palvelut/` | Sivut: etusivu, rukousajat, meistä, palvelut, lasten opetus, tapahtumat, yhteystiedot, lahjoita, tietosuoja |
 | `assets/css/sivu.css`, `assets/js/sivu.js` | Tyylit ja toiminnot (kielet, rukousajat, lomakkeet …) |
 | `_data/kaannokset.yml` | Käännökset: suomi, englanti, arabia, somali |
-| `.github/scripts/` | Haut: `instagram.py`, `somet.py` (YouTube, Telegram), `rukousajat.py`; uuden moskeijan luonti: `lisaa_moskeija.py` |
+| `.github/scripts/` | Haut: `instagram.py`, `somet.py` (YouTube, Telegram), `rukousajat.py`; uusi moskeija, ehdotukset ja poisto sisältörepossa: `lisaa_moskeija.py`, `lisaa_listasta.py`, `poista_moskeija.py`, `sisaltorepo.py` |
 | `.github/workflows/rakenna.yml` | Yhteinen julkaisuajo |
 | `.github/workflows/lisaa-moskeija.yml` | Lomake: Lisää moskeija |
-| `malli/` | Mallitiedostot uuden moskeijan repoon |
+| `malli/` | Vanhan julkaisun moskeijarepon mallitiedostot (Hyvinkää, `paivita_kaikki.py`) |
 
 Kuvakkeet: Phosphor Icons (MIT).
 

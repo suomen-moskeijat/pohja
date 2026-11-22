@@ -1,32 +1,51 @@
 #!/usr/bin/env python3
-"""Lisää uuden moskeijan: luo sille repon mallista ja julkaisee sivun.
+"""Lisää uuden moskeijan sisältörepoon (hallinta#51, ADR-0006): kansio moskeijat/<nimi>/ ja sivustoluettelon rivi.
 
-Käyttö GitHubissa: pohja → Actions → "Lisää moskeija" → Run workflow.
-Kokeilu paikallisesti (ei luo mitään GitHubiin):
-    python3 .github/scripts/lisaa_moskeija.py --kuiva /tmp/kokeilu --nimi "..." --kaupunki "..." [--mawaqit ...]
+Lopputulos on sama kuin ennen moskeijalle luotu oma repo (kokoelmat, _moskeijat/<nimi>.md, tiedostot/<nimi>/), mutta ilman
+sivun osoitetta (url/baseurl): rakennusajo päättää osoitteen sivustoluettelosta. Uusi sivu on luonnos (tai ehdotus), joten
+sivustoluetteloon tulee luonnoslinkin salainen osa (ADR-0008), ja sivu rakentuu seuraavassa rakennusajossa omaan
+Pages-projektiinsa (julkaisukohde luo projektin). Uusia moskeijarepoja ei luoda.
+
+Käyttö GitHubissa: pohja → Actions → "Lisää moskeija" (paneeli: Ylläpito → Uusi moskeija käynnistää sen).
+    python3 .github/scripts/lisaa_moskeija.py --sisalto <sisältörepon kansio> [--tallenna] --nimi "..." --kaupunki "..." [--mawaqit ...]
+      --sisalto   kirjoittaa moskeijan kansion ja sivustoluettelon rivin sisältörepon kansioon
+      --tallenna  lisäksi commit ja push sisältörepoon (ilman: kuivaharjoitus, mitään ei tallenneta)
+    python3 .github/scripts/lisaa_moskeija.py --kuiva <kansio> --nimi "..." --kaupunki "..."
+      --kuiva     vain moskeijan kansio tähän kansioon (testit), ei sisältörepoa
+
+Työnkulussa syötteet luetaan käynnistyksen tiedoista (GITHUB_EVENT_PATH), eivät ympäristömuuttujista: julkinen loki näyttää
+vaiheen ympäristömuuttujat. Loki ei tulosta tuotua sisältöä (nimi, osoite, yhteystiedot, tekstit) eikä salaista osaa: vain
+sivun tunnuksen ja määrät.
 
 Tiedot täydennetään automaattisesti:
-- Mawaqit: nimi, koordinaatit, Jumuah; ajat, iqamah ja kuvat haetaan julkaisussa.
-- Masjidbox: nimi ja osoite; ajat ja iqamah haetaan julkaisussa.
+- Mawaqit: nimi, koordinaatit, Jumuah; ajat, iqamah ja kuvat haetaan rakennusajossa.
+- Masjidbox: nimi ja osoite; ajat ja iqamah haetaan rakennusajossa.
 - Muuten koordinaatit osoitteesta (OpenStreetMap Nominatim).
 - Nykyinen nettisivu (--nettisivu): logo, värit, yhteystiedot, somet, kuvat, Meistä-teksti,
   WordPress-sivut ja -kirjoitukset (tuo_sivusto.py). Tarkistetaan hallintapaneelissa.
-Ympäristömuuttujat GitHubissa: MOSKEIJA_AVAIN (organisaation avain), ORG.
 """
 import argparse
-import base64
+import contextlib
+import io
 import json
 import os
 import re
 import sys
 import time
 import unicodedata
-import urllib.error
 import urllib.parse
 import urllib.request
 
-POHJA = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.dont_write_bytecode = True  # ei __pycache__-tiedostoja sivupohjan kansioon
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import sisaltorepo
+
 SELAIN = {"User-Agent": "SuomenMoskeijat/1.0 (+https://github.com/suomen-moskeijat/pohja)"}
+
+
+def ilmoita(rivi):
+    """Julkiseen lokiin: ei sisältöä (nimi, osoite, yhteystiedot, tekstit), vain tunnukset ja määrät."""
+    print(rivi, file=sys.stderr, flush=True)
 
 
 def hae(osoite, otsakkeet=None):
@@ -75,16 +94,16 @@ def koordinaatit(osoite, kaupunki):
         if not haku:
             continue
         try:
-            tulos = json.loads(hae("https://nominatim.openstreetmap.org/search?format=json&limit=1&q="
-                                   + urllib.parse.quote(haku)))
+            tulos = json.loads(hae(os.environ.get("NOMINATIM_OSOITE", "https://nominatim.openstreetmap.org/search")
+                                   + "?format=json&limit=1&q=" + urllib.parse.quote(haku)))
             if tulos:
                 return round(float(tulos[0]["lat"]), 6), round(float(tulos[0]["lon"]), 6)
         except Exception as e:
-            print(f"  koordinaatteja ei saatu ({haku}): {e}", file=sys.stderr)
+            ilmoita(f"Koordinaatteja ei saatu osoitteesta ({type(e).__name__})")
         time.sleep(1)  # Nominatimin käyttöehto: enintään 1 haku sekunnissa
     k = KAUPUNKIEN_KESKUSTAT.get(kaupunki.strip().lower())
     if k:
-        print(f"  käytetään kaupungin keskustan sijaintia ({kaupunki}) – tarkista kartalta", file=sys.stderr)
+        ilmoita("Koordinaatit: kaupungin keskusta – tarkista kartalta paneelissa")
         return k
     return 0, 0
 
@@ -109,14 +128,16 @@ def tuo_nettisivu(osoite):
     try:
         import tuo_sivusto
         kansio = tempfile.mkdtemp(prefix="tuonti-")
-        d = tuo_sivusto.tuo(osoite.strip(), kansio)
+        # Tuonnin oma tuloste (sivujen osoitteet, virheet) ei julkiseen lokiin
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            d = tuo_sivusto.tuo(osoite.strip(), kansio)
         d["_kansio"] = kansio
-        print(f"Nettisivu {osoite}: nimi {d.get('nimi')!r}, osoite {d.get('osoite')!r}, sähköposti {d.get('sahkoposti')!r}, "
-              f"puhelin {d.get('puhelin')!r}, somet {list(d.get('some', {}))}, kuvia {len(d.get('kuvat', []))}, "
-              f"omia sivuja {len(d.get('omat_sivut', []))}, artikkeleita {len(d.get('artikkelit', []))}")
+        ilmoita(f"Nettisivu: somekanavia {len(d.get('some', {}))}, kuvia {len(d.get('kuvat', []))}, "
+                f"omia sivuja {len(d.get('omat_sivut', []))}, artikkeleita {len(d.get('artikkelit', []))}"
+                f"{', logo' if d.get('logo') else ''}{', Meistä-teksti' if d.get('meista') else ''}")
         return d
     except Exception as e:
-        print(f"Nettisivua ei voitu lukea ({osoite}): {e}", file=sys.stderr)
+        ilmoita(f"Nettisivua ei voitu lukea ({type(e).__name__})")
         return {}
 
 
@@ -166,19 +187,14 @@ def yaml_teksti(s):
     return t
 
 
-def tiedostot(t, repo, org):
-    """{polku: sisältö} uuden moskeijan repoon."""
-    m = os.path.join(POHJA, "malli")
-    lue = lambda p: open(os.path.join(m, p), encoding="utf-8").read()
-    perus = f"https://{org.lower()}.github.io"
+def tiedostot(t):
+    """{polku: sisältö} moskeijan kansioon sisältörepossa (moskeijat/<nimi>/). Ei sivun osoitetta: rakennusajo päättää sen
+    sivustoluettelosta (ADR-0006), eikä julkaisuajoa tai READMEa (vanhan moskeijarepon tiedostot)."""
     config = (f"# {t['nimi']} – sivun asetukset\n"
-              f"# Ulkoasu, rukousaikojen ja Instagramin haku: https://github.com/{org}/pohja\n"
+              f"# Sivun osoite ja luonnoslinkki ovat sisältörepon sivustoluettelossa (sivustot.yml), ei tässä tiedostossa.\n"
               f"title: {yaml_str(t['nimi'])}\n"
               f"description: {yaml_str(t['nimi'] + ', ' + (t['osoite'] or t['kaupunki']) + '. Rukousajat, tapahtumat ja toiminta.')}\n"
               f"moskeija: {t['slug']}     # tiedosto _moskeijat/{t['slug']}.md\n\n"
-              f"# Osoite: {perus}/{repo}/\n"
-              f"# Omalla verkkotunnuksella (esim. moskeija.fi): url: \"https://moskeija.fi\" ja baseurl: \"\"\n"
-              f"url: \"{perus}\"\nbaseurl: \"/{repo}\"\n\n"
               # Uusi moskeija alkaa vain suomeksi (ADR-0001): muut kielet moskeija valitsee itse (paneeli: aloitus tai
               # Asetukset → Sivuston kielet). Sama rivimuoto kuin paneelin tallennuksessa (hallinta: src/kaannosasetus.js).
               f"kielet: [fi]   # sivuston kielivalikko (hallintapaneeli → Asetukset)\n")
@@ -252,71 +268,76 @@ valikko_piilota: []
 galleria: {json.dumps(t['galleria'], ensure_ascii=False)}
 ---
 """
-    readme = lue("README.md").replace("MOSKEIJAN NIMI", t["nimi"]).replace("SLUG", t["slug"]) \
-        .replace("https://suomen-moskeijat.github.io/REPO/", f"{perus}/{repo}/")
     return {
         "_config.yml": config,
         f"_moskeijat/{t['slug']}.md": md,
-        "README.md": readme,
         "_tapahtumat/.gitkeep": "",
         "_sivut/.gitkeep": "",
         "tiedostot/.gitkeep": "",
         **t.get("lisatiedostot", {}),
-        ".github/workflows/julkaisu.yml": lue(".github/workflows/julkaisu.yml"),  # viimeisenä: käynnistää julkaisun
     }
 
 
-# ------------------------------------------------------------- GitHub
-def api(menetelma, polku, data=None, avain=None, sallitut=()):
-    req = urllib.request.Request("https://api.github.com" + polku, method=menetelma,
-                                 data=json.dumps(data).encode() if data is not None else None,
-                                 headers={**SELAIN, "Authorization": f"Bearer {avain}",
-                                          "Accept": "application/vnd.github+json",
-                                          "X-GitHub-Api-Version": "2022-11-28"})
+# ------------------------------------------------------------- syötteet ja kirjoitus
+KENTAT = ["nimi", "kaupunki", "mawaqit", "masjidbox", "osoite", "instagram", "whatsapp", "youtube", "telegram", "repo", "nettisivu",
+          "puhelin", "sahkoposti", "facebook", "linkki"]
+
+
+def kaynnistyksen_syotteet():
+    """Työnkulun käynnistyksen syötteet (workflow_dispatch) tapahtumatiedostosta. Niitä ei anneta ympäristömuuttujina, koska
+    julkinen loki näyttää vaiheen ympäristömuuttujat."""
+    polku = os.environ.get("GITHUB_EVENT_PATH")
+    if not polku or not os.path.exists(polku):
+        return {}
     try:
-        with urllib.request.urlopen(req, timeout=30) as v:
-            sis = v.read()
-            return v.status, json.loads(sis) if sis else {}
-    except urllib.error.HTTPError as e:
-        sis = e.read().decode("utf-8", "replace")
-        if e.code in sallitut:
-            return e.code, {}
-        raise SystemExit(f"GitHub-virhe {e.code} ({menetelma} {polku}): {sis[:400]}")
+        with open(polku, encoding="utf-8") as f:
+            syotteet = (json.load(f) or {}).get("inputs") or {}
+        return {k: str(v) for k, v in syotteet.items() if v is not None}
+    except Exception:
+        return {}
 
 
-def julkaise(t, repo, org, avain, tiedot):
-    tila, _ = api("GET", f"/repos/{org}/{repo}", avain=avain, sallitut=(404,))
-    if tila == 200:
-        raise SystemExit(f"Repo {org}/{repo} on jo olemassa – valitse toinen nimi.")
-    print(f"Luodaan repo {org}/{repo} …")
-    api("POST", f"/orgs/{org}/repos", {"name": repo, "description": f"{t['nimi']} – nettisivu",
-                                      "homepage": f"https://{org.lower()}.github.io/{repo}/",
-                                      "private": False, "auto_init": True, "has_wiki": False}, avain)
-    time.sleep(3)
-    print("Otetaan julkaisu käyttöön (Pages: GitHub Actions) …")
-    api("POST", f"/repos/{org}/{repo}/pages", {"build_type": "workflow"}, avain, sallitut=(409,))
-    for polku, sisalto in tiedot.items():
-        nykyinen = {}
-        if polku == "README.md":
-            _, nykyinen = api("GET", f"/repos/{org}/{repo}/contents/README.md", avain=avain, sallitut=(404,))
-        tavut = sisalto if isinstance(sisalto, bytes) else sisalto.encode()
-        data = {"message": f"Lisää {polku}", "content": base64.b64encode(tavut).decode()}
-        if nykyinen.get("sha"):
-            data["sha"] = nykyinen["sha"]
-        api("PUT", f"/repos/{org}/{repo}/contents/{polku}", data, avain)
-        print(f"  + {polku}")
-    return f"https://{org.lower()}.github.io/{repo}/"
-
-
-
-
-def main():
-    p = argparse.ArgumentParser()
-    for k in ["nimi", "kaupunki", "mawaqit", "masjidbox", "osoite", "instagram", "whatsapp", "youtube", "telegram", "repo", "nettisivu", "puhelin", "sahkoposti", "facebook", "linkki"]:
-        p.add_argument("--" + k, default=os.environ.get("SYOTE_" + k.upper(), ""))
-    p.add_argument("--kuiva", help="kirjoita tiedostot tähän kansioon, älä luo mitään GitHubiin")
+def argumentit(argv=None):
+    syotteet = kaynnistyksen_syotteet()
+    p = argparse.ArgumentParser(description="Lisää uuden moskeijan sisältörepoon")
+    for k in KENTAT:
+        p.add_argument("--" + k, default=syotteet.get(k, os.environ.get("SYOTE_" + k.upper(), "")))
+    p.add_argument("--kuiva", help="vain moskeijan kansio tähän kansioon (ei sisältörepoa)")
+    p.add_argument("--sisalto", help="sisältörepon kansio: moskeijat/<nimi>/ ja sivustoluettelon rivi")
+    p.add_argument("--tallenna", action="store_true", help="--sisalto: commit ja push sisältörepoon (muuten kuivaharjoitus)")
+    p.add_argument("--pohja", default="main", choices=["main", "testi"], help="sivupohjan versio sivustoluetteloon (oletus main)")
     p.add_argument("--ehdotus", action="store_true", help="esimerkkisivu, josta moskeija ei ole vielä päättänyt (palkki: Ehdotus)")
-    a = p.parse_args()
+    a = p.parse_args(argv)
+    if not a.kuiva and not a.sisalto:
+        p.error("anna --sisalto (sisältörepon kansio) tai --kuiva (kansio)")
+    return a
+
+
+def kirjoita(kohde, tiedot):
+    for polku, sisalto in tiedot.items():
+        tiedosto = os.path.join(kohde, polku)
+        os.makedirs(os.path.dirname(tiedosto), exist_ok=True)
+        with open(tiedosto, "wb") as f:
+            f.write(sisalto if isinstance(sisalto, bytes) else sisalto.encode())
+
+
+def lisaa_sisaltoon(sisalto, nimi, tiedot, pohja="main"):
+    """Moskeijan kansio ja sivustoluettelon rivi sisältörepon kansioon (ei tallennusta). Palauttaa luettelon rivin."""
+    if not sisaltorepo.NIMI.fullmatch(nimi):
+        raise sisaltorepo.Virhe(f"Sivun tunnus ei kelpaa: pienet kirjaimet a–z, numerot ja viiva ({nimi!r})")
+    kansio = sisaltorepo.kansio(sisalto, nimi)
+    sivut = sisaltorepo.lue_sivut(sisalto)
+    if os.path.exists(kansio) or any(str(s.get("nimi") or "") == nimi for s in sivut):
+        raise sisaltorepo.Virhe(f"{nimi} on jo sisältörepossa – valitse toinen tunnus.")
+    rivi = {"nimi": nimi, "projekti": sisaltorepo.projektin_nimi(nimi, sivut), "pohja": pohja,
+            "salainen_osa": sisaltorepo.uusi_salainen_osa()}  # luonnos ja ehdotus näkyvät vain luonnoslinkillä (ADR-0008)
+    kirjoita(kansio, tiedot)
+    sisaltorepo.lisaa_sivu(sisalto, rivi)
+    return rivi
+
+
+def valmistele(a):
+    """Moskeijan tiedot syötteistä, tietolähteistä ja nettisivulta. Palauttaa (sivun tunnus, tiedot, {polku: sisältö})."""
     if not a.nimi.strip() and not (a.mawaqit or a.masjidbox or a.nettisivu):
         raise SystemExit("Anna vähintään moskeijan nimi (tai Mawaqit-, Masjidbox- tai nettisivun linkki).")
     tuotu = tuo_nettisivu(a.nettisivu) if a.nettisivu.strip() else {}
@@ -346,53 +367,65 @@ def main():
         t["lahde"], t["tunnus"] = "mawaqit", tunnus(a.mawaqit, "mawaqit")
         try:
             d = mawaqit_tiedot(t["tunnus"])
-            print(f"Mawaqit: {d['nimi']}, {d['lat']}, {d['lon']}, Jumuah {d['juma']}")
             t["nimi"] = t["nimi"] or d["nimi"]
             t["lat"], t["lon"] = round(float(d["lat"]), 6), round(float(d["lon"]), 6)
             for k in ("juma", "puhelin", "sahkoposti", "nettisivu"):
                 t[k] = t[k] or d[k]
+            ilmoita("Mawaqit: tiedot haettu")
         except Exception as e:
-            print(f"Mawaqit-tietoja ei saatu ({t['tunnus']}): {e}", file=sys.stderr)
+            ilmoita(f"Mawaqit-tietoja ei saatu ({type(e).__name__})")
     elif a.masjidbox:
         t["lahde"], t["tunnus"] = "masjidbox", tunnus(a.masjidbox, "masjidbox")
         try:
             d = masjidbox_tiedot(t["tunnus"])
-            print(f"Masjidbox: {d['nimi']}, {d['osoite']}")
             t["nimi"] = t["nimi"] or d["nimi"]
             t["osoite"] = t["osoite"] or re.sub(r",\s*Suomi$|,\s*Finland$", "", d["osoite"])
+            ilmoita("Masjidbox: tiedot haettu")
         except Exception as e:
-            print(f"Masjidbox-tietoja ei saatu ({t['tunnus']}): {e}", file=sys.stderr)
+            ilmoita(f"Masjidbox-tietoja ei saatu ({type(e).__name__})")
     if not t["lat"]:
         t["lat"], t["lon"] = koordinaatit(t["osoite"], t["kaupunki"])
-        print(f"Koordinaatit osoitteesta: {t['lat']}, {t['lon']}")
     t["slug"] = slugiksi(t["nimi"])
+    if not t["slug"]:
+        raise SystemExit("Moskeijan nimestä ei saatu tunnusta: anna nimi tai sivun tunnus (repo).")
     if tuotu:
         lisaa_tuodut_tiedostot(t, tuotu)
-    repo = slugiksi(a.repo) if a.repo.strip() else t["slug"]
-    org = os.environ.get("ORG", "suomen-moskeijat")
-    tiedot = tiedostot(t, repo, org)
+    nimi = slugiksi(a.repo) if a.repo.strip() else t["slug"]
+    return nimi, t, tiedostot(t)
 
-    if a.kuiva:
-        for polku, sisalto in tiedot.items():
-            kohde = os.path.join(a.kuiva, polku)
-            os.makedirs(os.path.dirname(kohde), exist_ok=True)
-            open(kohde, "wb").write(sisalto if isinstance(sisalto, bytes) else sisalto.encode())
-        print(f"Kuivaharjoitus: {len(tiedot)} tiedostoa kansioon {a.kuiva} (repo olisi {org}/{repo})")
-        return
-    avain = os.environ.get("MOSKEIJA_AVAIN")
-    if not avain:
-        raise SystemExit("Avain puuttuu: lisää pohja-repon asetuksiin salaisuus MOSKEIJA_AVAIN (ks. README).")
-    osoite = julkaise(t, repo, org, avain, tiedot)
-    yhteenveto = (f"## ✅ {t['nimi']} lisätty\n\n- **Sivu:** {osoite} (valmis noin 2 minuutin päästä)\n"
-                  f"- **Repo:** https://github.com/{org}/{repo}\n- **Rukousajat:** {t['lahde'] or 'rukousajat.fi (pääkaupunkiseutu) / ei vielä lähdettä'}"
-                  f"{' (' + t['tunnus'] + ')' if t['tunnus'] else ''}\n- **Koordinaatit:** {t['lat']}, {t['lon']}\n"
-                  f"- **Käyttäjät:** kutsu moskeijan pääkäyttäjä hallintapaneelissa (moskeija → Käyttäjät)\n\n"
-                  f"**Sivu on luonnos.** Lähetä linkki moskeijalle tarkistettavaksi. Kun he hyväksyvät sivun, pääkäyttäjä painaa "
-                  f"paneelin etusivulla Julkaise sivu, niin luonnos-palkki katoaa ja Google saa näyttää sivun.\n\n"
-                  f"Täydennä tiedot (osoite, puhelin, logo, tekstit) hallintapaneelissa: https://hallinta.suomenmoskeijat.fi/\n")
-    print(yhteenveto)
+
+def kuvaus(t, tiedot):
+    """Julkiseen lokiin: määrät, ei sisältöä."""
+    omat = sum(1 for p in tiedot if p.startswith("_sivut/") and p.endswith(".md"))
+    artikkelit = sum(1 for p in tiedot if p.startswith("_artikkelit/"))
+    kuvat = sum(1 for p in tiedot if p.startswith("tiedostot/") and not p.endswith(".gitkeep"))
+    return (f"{'ehdotus' if t.get('ehdotus') else 'luonnos'}, {len(tiedot)} tiedostoa (omia sivuja {omat}, artikkeleita {artikkelit}, "
+            f"kuvia {kuvat}), rukousaikojen lähde {t['lahde'] or 'ei vielä (oletus kaupungin mukaan)'}")
+
+
+def yhteenvetoon(teksti):
     if os.environ.get("GITHUB_STEP_SUMMARY"):
-        open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8").write(yhteenveto)
+        with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as f:
+            f.write(teksti)
+
+
+def main(argv=None):
+    a = argumentit(argv)
+    nimi, t, tiedot = valmistele(a)
+    if a.kuiva:
+        kirjoita(a.kuiva, tiedot)
+        ilmoita(f"Kuivaharjoitus: {nimi}: {kuvaus(t, tiedot)} kansioon (ei sisältörepoa)")
+        return
+    lisaa_sisaltoon(a.sisalto, nimi, tiedot, a.pohja)
+    tila = "kuivaharjoitus, mitään ei tallennettu"
+    if a.tallenna:
+        commit = sisaltorepo.tallenna(a.sisalto, f"Uusi moskeija: {nimi}", [f"moskeijat/{nimi}", sisaltorepo.LUETTELO])
+        tila = "tallennettu sisältörepoon" if commit else "ei muutoksia"
+    rivi = f"{nimi}: {kuvaus(t, tiedot)}; kansio moskeijat/{nimi}/ ja sivustoluettelon rivi (luonnoslinkki) – {tila}"
+    ilmoita(rivi)
+    yhteenvetoon(f"## Uusi moskeija: {nimi}\n\n- {rivi}\n"
+                 + ("- Sivu rakentuu seuraavassa rakennusajossa omaan Pages-projektiinsa. Se on luonnos ja näkyy vain luonnoslinkillä "
+                    "(paneeli). Kutsu moskeijan pääkäyttäjä paneelissa (moskeija → Käyttäjät).\n" if a.tallenna else ""))
 
 
 if __name__ == "__main__":

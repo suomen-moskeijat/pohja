@@ -21,7 +21,7 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 | **Sivun muokkaus (hallintapaneeli)** | https://hallinta.suomenmoskeijat.fi/ | moskeijan pääkäyttäjille ja muokkaajille |
 | **Uusi moskeija, käyttäjät, kielet, tekstit** | hallintapaneeli → Ylläpito | ylläpitäjille |
 | **Automaatiot (varalla)** | https://github.com/suomen-moskeijat/pohja/actions | ylläpitäjille |
-| **Moskeijalista** | `moskeijat.csv` pohja-repossa | ylläpitäjille |
+| **Moskeijalista** | `moskeijat.csv` yksityisessä sisältörepossa (paneeli → Ylläpito → Moskeijalista) | ylläpitäjille |
 | **Esimerkkisivu** | https://suomen-moskeijat.github.io/testimoskeija/ (testimoskeija, esimerkkidata) | esittelyyn ja kokeiluun |
 
 **Miten kokonaisuus toimii:**
@@ -47,7 +47,7 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 
 | Tilanne | Kuka | Mitä tehdään |
 |---|---|---|
-| Haluan näyttää moskeijalle, millainen sivu heille tulisi | ylläpitäjä | Katso hakemistosta, onko heillä ehdotussivu. Jos ei, lisää heidät `moskeijat.csv`:hen ja aja **Luo ehdotussivut listasta** (Osa 2, kohta 3a). Lähetä linkki. |
+| Haluan näyttää moskeijalle, millainen sivu heille tulisi | ylläpitäjä | Katso hakemistosta, onko heillä ehdotussivu. Jos ei, lisää heidät paneelin **Moskeijalistaan** ja paina **Luo ehdotussivu** (Osa 2, kohta 3a). Lähetä luonnoslinkki. |
 | Moskeija haluaa lähteä mukaan | ylläpitäjä | 1) Paneeli → avaa moskeija → **Moskeija lähtee mukaan** (sivu muuttuu luonnokseksi). 2) Jos heillä on vanha nettisivu: kysy lupa ja tuo tiedot (Osa 2, kohta 3b). 3) **Käyttäjät** → kutsu moskeijan pääkäyttäjä sähköpostilla. Pääkäyttäjä hyväksyy käyttöehdot paneelin etusivulla. |
 | Moskeija on tarkistanut sivun ja hyväksyy sen | pääkäyttäjä tai ylläpitäjä | Paneelin etusivu → **Julkaise sivu**. Sivu on julkinen noin 2 minuutissa. |
 | Moskeija ei halua sivua | ylläpitäjä | Paneeli → avaa moskeija → Sivuston asetukset → **Poista moskeija**. Se merkitään listaan, eikä sivua luoda uudelleen. |
@@ -280,7 +280,7 @@ tiedot Googlelle, sivukartta ja jakokuvat. Nämä kannattaa lisäksi tehdä itse
 > |---|---|
 > | 🕌 Moskeijat | Kaikki sivut, tila (julkaistu / luonnos / ehdotus), avaa ja muokkaa, + Uusi moskeija |
 > | 🚀 Julkaisut | Jokaisen sivun viimeisin päivitys ✅/❌, julkaise uudelleen tai kaikki kerralla |
-> | 📋 Moskeijalista | Suomen moskeijat (moskeijat.csv): lisää moskeija, luo ehdotussivut napista |
+> | 📋 Moskeijalista | Suomen moskeijat (sisältörepon moskeijat.csv): lisää moskeija, luo ehdotussivut napista |
 > | 🔤 Yhteiset tekstit | Valikot, napit ja otsikot kaikilla sivuilla neljällä kielellä |
 > | 🎨 Värimaailmat | Valmiit värit, joista moskeijat valitsevat – muokkaa tai lisää uusia |
 > | 🖼️ Taustat ja kuviot | Valmiit taustakuvat (etusivun yläosa) ja taustakuviot – lisää uusia tai poista (`_data/taustakuvat.yml`, `_data/kuviot.yml`) |
@@ -336,11 +336,12 @@ suomen-moskeijat/<moskeija>       ← yhden moskeijan tiedot + julkaisu.yml, jok
 
 ### 3a. Ehdotussivut listasta (moskeijat, jotka eivät vielä ole mukana)
 
-1. Lisää moskeija tiedostoon **`moskeijat.csv`** (pohja-repo → tiedosto → kynä → muokkaa → *Commit*).
-   Sarakkeet: nimi, kaupunki, osoite, puhelin, sähköposti, nettisivu, facebook, **repo** (sivun osoite,
-   esim. `masjid-al-nuur`), **tila** (tyhjä = tee ehdotus, `ei` = ei sivua), lähde, huomautus.
-2. **Actions → Luo ehdotussivut listasta → Run workflow.** Kenttä *vain* tyhjäksi = kaikki listan moskeijat,
-   joilla ei vielä ole sivua. Voit myös kirjoittaa yhden repon nimen.
+1. Lisää moskeija paneelin **Ylläpito → Moskeijalista** -välilehdellä (tiedosto `moskeijat.csv` on yksityisessä
+   sisältörepossa, ei pohjassa). Sarakkeet: nimi, kaupunki, osoite, puhelin, sähköposti, nettisivu, facebook, **repo**
+   (sivun tunnus, esim. `masjid-al-nuur`), **tila** (tyhjä = tee ehdotus, `ei` = ei sivua), lähde, huomautus.
+2. Paina moskeijan kohdalla **Luo ehdotussivu** (tai **Luo ehdotussivut kaikille**). Paneeli käynnistää työnkulun
+   **Luo ehdotussivut listasta**, joka kirjoittaa ehdotukset sisältörepoon (kansio ja sivustoluettelon rivi); sivut
+   rakentuvat seuraavassa rakennusajossa ja näkyvät vain luonnoslinkillä.
 3. Sivut syntyvät **ehdotuksina**, ja niissä on vain listan julkiset tiedot: nimi, osoite, yhteystiedot ja linkit.
    Rukousajat tulevat rukousajat.fi:stä (Helsinki, Espoo ja Vantaa); muualla sivulla lukee "Rukousajat lisätään pian".
 4. Hakemisto https://suomen-moskeijat.github.io/pohja/ päivittyy. Lähetä moskeijalle linkki heidän sivuunsa.

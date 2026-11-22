@@ -52,7 +52,9 @@ def repot():
 
 def main():
     kohde = sys.argv[1] if len(sys.argv) > 1 else "index.html"
-    lista = {r["repo"].strip().lower(): r for r in csv.DictReader(open(os.path.join(POHJA, "moskeijat.csv"), encoding="utf-8"))}
+    # moskeijat.csv on siirtynyt yksityiseen sisältörepoon (hallinta#51): hakemisto ei listaa moskeijoita, joilla ei ole sivua
+    csv_polku = os.path.join(POHJA, "moskeijat.csv")
+    lista = {r["repo"].strip().lower(): r for r in csv.DictReader(open(csv_polku, encoding="utf-8"))} if os.path.exists(csv_polku) else {}
     rivit = []
     try:
         kaikki = repot()

@@ -1,6 +1,13 @@
-# Lisää uusi moskeija: Actions → "Lisää moskeija" → Run workflow → täytä lomake.
-# Luo moskeijalle repon mallista, hakee tiedot (Mawaqit / Masjidbox / osoite)
-# ja julkaisee sivun. Vaatii salaisuuden MOSKEIJA_AVAIN (ks. README).
+# Lisää uusi moskeija sisältörepoon (hallinta#51, ADR-0006): paneeli (Ylläpito → Uusi moskeija) käynnistää tämän, tai
+# Actions → "Lisää moskeija" → Run workflow. Hakee tiedot (Mawaqit / Masjidbox / osoite / nykyinen nettisivu) ja kirjoittaa
+# moskeijan kansion moskeijat/<nimi>/ ja sivustoluettelon rivin (luonnoslinkki) yksityiseen sisältörepoon yhtenä committina.
+# Uusia moskeijarepoja ei luoda: sivu rakentuu rakennusajossa omaan Pages-projektiinsa (julkaisukohde luo projektin).
+#
+# Pohja on julkinen repo, joten:
+# - syötteet luetaan käynnistyksen tiedoista (GITHUB_EVENT_PATH), ei ympäristömuuttujista (loki näyttää vaiheen ympäristön)
+# - loki ei tulosta tuotua sisältöä eikä salaista osaa, vain sivun tunnuksen ja määrät
+# - sisältörepon kirjoitusavain (SISALTO_KIRJOITUS) on ympäristössä julkaisu, jonka saavat vain main- ja testi-haara
+# Kuivaharjoitus (kuiva): kaikki muu paitsi tallennus sisältörepoon ja rakennusajon käynnistys (testipaneeli käyttää tätä).
 name: Lisää moskeija
 
 on:
@@ -34,32 +41,53 @@ on:
         description: "Telegram-kanava, esim. https://t.me/kanava (valinnainen)"
         required: false
       repo:
-        description: "Repon nimi (valinnainen; oletus nimestä)"
+        description: "Sivun tunnus (valinnainen; oletus nimestä): pienet kirjaimet, numerot ja viiva"
         required: false
       nettisivu:
         description: "Moskeijan nykyinen nettisivu (valinnainen). Sieltä haetaan logo, värit, yhteystiedot, somet, kuvat, Meistä-teksti ja sivut."
         required: false
+      kuiva:
+        description: "Kuivaharjoitus: ei tallenneta sisältörepoon"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  actions: write   # rakennusajon käynnistys tallennuksen jälkeen
 
 jobs:
   lisaa:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    environment: julkaisu
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - name: Kuvankäsittely (logon värit, kuvien pienennys)
-        run: pip install --quiet pillow || true
-      - name: Luo moskeijan sivu
+      - name: Hae sivupohja
+        uses: actions/checkout@v4
+        with:
+          path: pohja
+          persist-credentials: false
+
+      - name: Hae sisältö (yksityinen sisältörepo, kirjoitusavain)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/sisalto
+          token: ${{ secrets.SISALTO_KIRJOITUS }}
+          path: sisalto
+
+      - name: Asenna Python-riippuvuudet (kuvankäsittely, YAML)
+        run: python3 -m pip install --quiet -r pohja/.github/rakennus/requirements.txt
+
+      - name: Lisää moskeija sisältörepoon
         env:
-          MOSKEIJA_AVAIN: ${{ secrets.MOSKEIJA_AVAIN }}
           ORG: ${{ github.repository_owner }}
-          SYOTE_NIMI: ${{ inputs.nimi }}
-          SYOTE_KAUPUNKI: ${{ inputs.kaupunki }}
-          SYOTE_MAWAQIT: ${{ inputs.mawaqit }}
-          SYOTE_MASJIDBOX: ${{ inputs.masjidbox }}
-          SYOTE_OSOITE: ${{ inputs.osoite }}
-          SYOTE_INSTAGRAM: ${{ inputs.instagram }}
-          SYOTE_WHATSAPP: ${{ inputs.whatsapp }}
-          SYOTE_YOUTUBE: ${{ inputs.youtube }}
-          SYOTE_TELEGRAM: ${{ inputs.telegram }}
-          SYOTE_REPO: ${{ inputs.repo }}
-          SYOTE_NETTISIVU: ${{ inputs.nettisivu }}
-        run: python3 .github/scripts/lisaa_moskeija.py
+          KUIVA: ${{ inputs.kuiva }}
+        run: |
+          if [ "$KUIVA" = "true" ]; then tallenna=""; else tallenna="--tallenna"; fi
+          python3 pohja/.github/scripts/lisaa_moskeija.py --sisalto sisalto $tallenna
+
+      # Uusi sivu on main-version sivu: main-haaran rakennusajo rakentaa sen heti (muuten seuraavassa ajastetussa ajossa)
+      - name: Käynnistä rakennusajo
+        if: ${{ !inputs.kuiva }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run rakennusajo.yml --repo "$GITHUB_REPOSITORY" --ref main
