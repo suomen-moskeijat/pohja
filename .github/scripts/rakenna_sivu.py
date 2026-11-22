@@ -24,6 +24,10 @@ Sivun asetukset:
                     .github/rakennus/vanha-julkaisu/Gemfile.lock). Vain vertailuun: hallinta testi/jekyll3-yhteensopivuus.mjs tarkistaa, että
                     sivupohja rakentuu Hyvinkään vanhalla julkaisulla samaksi näkyväksi sisällöksi (ADR-0006). Muut vaiheet ovat samat.
 
+Toistettava rakennus (hallinta#45): tyylien ja skriptien välimuistiversio (?v=) on koottujen assets-tiedostojen tiiviste
+(assetversio) ja kalenterien DTSTAMP rakennuspäivä, joten muuttumaton sivu rakentuu samana päivänä samaksi. Vain aidosti
+aikaan sidotut tiedostot muuttuvat (feed.xml, rukousajat/tila.json, llms-full.txt), ja julkaisu lataa vain muuttuneet.
+
 Julkinen loki: komento tulostaa vain vaiheiden kestot ja lukumäärät, ei sisältöä, polkuja eikä tiedostonimiä. Vaiheiden
 oma tuloste menee tiedostoon --loki (ei julkiseen lokiin); ilman sitä virheilmoitusvirtaan (paikallinen käyttö).
 """
