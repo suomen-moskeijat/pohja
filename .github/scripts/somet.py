@@ -11,6 +11,10 @@ Tiedot: _data/youtube/<slug>.json ja _data/telegram/<slug>.json; kuvat ladataan
 sivustolle (tiedostot/youtube/<slug>/, tiedostot/telegram/<slug>/), joten sivulla
 ei ladata mitään YouTuben tai Telegramin palvelimilta. Jos haku epäonnistuu,
 vanhat tiedot jäävät voimaan. Ei ulkoisia riippuvuuksia.
+
+Rakennusajo (rakennusajo.py, yhteinen_haku.py) käyttää samoja funktioita: moskeijat(sisältökansio) ja
+youtube/telegram(slug, osoite, juuri=<sivun haetut tiedot>). Osoitteet YOUTUBE_OSOITE, YOUTUBE_KUVAT ja TELEGRAM_OSOITE:
+testeissä paikallinen korvike.
 """
 import datetime
 import glob
@@ -25,6 +29,9 @@ import xml.etree.ElementTree as ET
 JUURI = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ENINTAAN = 6
 SELAIN = {"User-Agent": "Mozilla/5.0", "Accept-Language": "fi,en;q=0.8"}
+YOUTUBE_OSOITE = os.environ.get("YOUTUBE_OSOITE", "https://www.youtube.com").rstrip("/")
+YOUTUBE_KUVAT = os.environ.get("YOUTUBE_KUVAT", "https://i.ytimg.com").rstrip("/")
+TELEGRAM_OSOITE = os.environ.get("TELEGRAM_OSOITE", "https://t.me").rstrip("/")
 
 
 def hae(osoite, binaari=False):
@@ -33,10 +40,10 @@ def hae(osoite, binaari=False):
         return d if binaari else d.decode("utf-8", "replace")
 
 
-def moskeijat():
-    """[(slug, {'youtube': url, 'telegram': url})]"""
+def moskeijat(juuri=None):
+    """[(slug, {'youtube': url, 'telegram': url})] tiedostoista <juuri>/_moskeijat/*.md"""
     tulos = []
-    for polku in sorted(glob.glob(os.path.join(JUURI, "_moskeijat", "*.md"))):
+    for polku in sorted(glob.glob(os.path.join(juuri or JUURI, "_moskeijat", "*.md"))):
         slug = os.path.splitext(os.path.basename(polku))[0]
         somet = {}
         for rivi in open(polku, encoding="utf-8"):
@@ -62,14 +69,14 @@ def lataa_kuva(osoite, kansio, nimi):
     return kohde
 
 
-def tallenna(laji, slug, tiedot):
-    kansio = os.path.join(JUURI, "_data", laji)
+def tallenna(laji, slug, tiedot, juuri=None):
+    kansio = os.path.join(juuri or JUURI, "_data", laji)
     os.makedirs(kansio, exist_ok=True)
     json.dump(tiedot, open(os.path.join(kansio, slug + ".json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
 
 # ---------------------------------------------------------------- YouTube
-def youtube(slug, osoite):
+def youtube(slug, osoite, juuri=None, loki=None):
     m = re.search(r"/channel/(UC[A-Za-z0-9_-]{22})", osoite)
     kanava_id = m.group(1) if m else None
     if not kanava_id:  # @nimi, /c/nimi tai /user/nimi → kanavan tunnus kanavan sivulta
@@ -81,17 +88,17 @@ def youtube(slug, osoite):
         kanava_id = m.group(1)
     ns = {"a": "http://www.w3.org/2005/Atom", "yt": "http://www.youtube.com/xml/schemas/2015",
           "media": "http://search.yahoo.com/mrss/"}
-    juuri = ET.fromstring(hae("https://www.youtube.com/feeds/videos.xml?channel_id=" + kanava_id))
-    kansio = os.path.join(JUURI, "tiedostot", "youtube", slug)
+    syote = ET.fromstring(hae(f"{YOUTUBE_OSOITE}/feeds/videos.xml?channel_id=" + kanava_id))
+    kansio = os.path.join(juuri or JUURI, "tiedostot", "youtube", slug)
     videot = []
-    for e in juuri.findall("a:entry", ns):
+    for e in syote.findall("a:entry", ns):
         vid = e.find("yt:videoId", ns).text
         if "/shorts/" in (e.find("a:link", ns).get("href") or ""):
             continue  # lyhyet pystyvideot eivät sovi videoruudukkoon
         try:
-            lataa_kuva(f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg", kansio, vid + ".jpg")
+            lataa_kuva(f"{YOUTUBE_KUVAT}/vi/{vid}/hqdefault.jpg", kansio, vid + ".jpg")
         except Exception as ex:
-            print(f"  YouTube-kuvaa ei saatu ({vid}): {ex}", file=sys.stderr)
+            print(f"  YouTube-kuvaa ei saatu ({vid}): {ex}", file=loki or sys.stderr)
             continue
         videot.append({"id": vid, "otsikko": e.find("a:title", ns).text or "",
                        "paiva": (e.find("a:published", ns).text or "")[:10],
@@ -100,22 +107,22 @@ def youtube(slug, osoite):
             break
     if not videot:
         raise ValueError("ei videoita")
-    tallenna("youtube", slug, {"kanava": juuri.find("a:title", ns).text, "osoite": osoite,
+    tallenna("youtube", slug, {"kanava": syote.find("a:title", ns).text, "osoite": osoite,
                                "paivitetty": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="minutes"),
-                               "videot": videot})
+                               "videot": videot}, juuri)
     return len(videot)
 
 
 # ---------------------------------------------------------------- Telegram
-def telegram(slug, osoite):
+def telegram(slug, osoite, juuri=None, loki=None):
     m = re.search(r"t\.me/(?:s/)?([A-Za-z0-9_]{4,})", osoite)
     if not m:
         raise ValueError("ei julkisen kanavan osoite (t.me/kanava)")
     nimi = m.group(1)
-    sivu = hae(f"https://t.me/s/{nimi}")
+    sivu = hae(f"{TELEGRAM_OSOITE}/s/{nimi}")
     otsikko = re.search(r'<meta property="og:title" content="([^"]*)"', sivu)
     osat = re.split(r'(?=<div class="tgme_widget_message_wrap)', sivu)[1:]
-    kansio = os.path.join(JUURI, "tiedostot", "telegram", slug)
+    kansio = os.path.join(juuri or JUURI, "tiedostot", "telegram", slug)
     julkaisut = []
     for v in reversed(osat):  # uusin ensin
         pid = re.search(r'data-post="[^"/]+/(\d+)"', v)
@@ -132,7 +139,7 @@ def telegram(slug, osoite):
                 lataa_kuva(kuva.group(1), kansio, pid.group(1) + ".jpg")
                 polku = f"/tiedostot/telegram/{slug}/{pid.group(1)}.jpg"
             except Exception as ex:
-                print(f"  Telegram-kuvaa ei saatu ({pid.group(1)}): {ex}", file=sys.stderr)
+                print(f"  Telegram-kuvaa ei saatu ({pid.group(1)}): {ex}", file=loki or sys.stderr)
         if not teksti and not polku:
             continue
         julkaisut.append({"id": pid.group(1), "teksti": teksti[:400], "kuva": polku,
@@ -145,7 +152,7 @@ def telegram(slug, osoite):
     tallenna("telegram", slug, {"kanava": html.unescape(otsikko.group(1)) if otsikko else nimi, "nimi": nimi,
                                 "osoite": f"https://t.me/{nimi}",
                                 "paivitetty": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="minutes"),
-                                "julkaisut": julkaisut})
+                                "julkaisut": julkaisut}, juuri)
     return len(julkaisut)
 
 

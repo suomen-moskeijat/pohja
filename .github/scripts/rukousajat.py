@@ -65,12 +65,13 @@ PAAKAUPUNKISEUTU = ("helsinki", "espoo", "vantaa")
 
 
 # ---------------------------------------------------------------- moskeijat
-def moskeijat():
-    """[(slug, lähde, tunnus, lisä)] tiedostoista _moskeijat/*.md (lisä = {"masjidbox_id": …}).
+def moskeijat(juuri=None):
+    """[(slug, lähde, tunnus, lisä)] tiedostoista <juuri>/_moskeijat/*.md (lisä = {"masjidbox_id": …}). rukousajat.fi:n
+    tunnus on kaupunki. Oletuksena juuri on sivu, jossa skripti on (vanha julkaisuajo); rakennusajo antaa sisältökansion.
 
     Tukee myös vanhaa muotoa (ylätason kenttä masjidbox: <tunnus>)."""
     tulos = []
-    for polku in sorted(glob.glob(os.path.join(JUURI, "_moskeijat", "*.md"))):
+    for polku in sorted(glob.glob(os.path.join(juuri or JUURI, "_moskeijat", "*.md"))):
         slug = os.path.splitext(os.path.basename(polku))[0]
         lahde = tunnus = None
         lisa = {}
@@ -470,8 +471,8 @@ def rukousajat_fi(_kaupunki, kuukausia=13):
 
 
 # ---------------------------------------------------------------- tallennus
-def tallenna_ajat(slug, paivat):
-    kansio = os.path.join(JUURI, "_data", "aikataulut", slug)
+def tallenna_ajat(slug, paivat, juuri=None):
+    kansio = os.path.join(juuri or JUURI, "_data", "aikataulut", slug)
     os.makedirs(kansio, exist_ok=True)
     kuukausittain = {}
     for pvm, rivi in paivat.items():
@@ -514,11 +515,12 @@ def tallenna_ajat(slug, paivat):
     return muutettu, sum(len(r) for r in kuukausittain.values())
 
 
-def tallenna_kuvat(slug, osoitteet):
+def tallenna_kuvat(slug, osoitteet, juuri=None, loki=None):
     """Lataa kuvat sivustolle ja kirjoittaa luettelon _data/kuvat/<slug>.json."""
     if not osoitteet:
         return 0
-    kansio = os.path.join(JUURI, "tiedostot", slug, "mawaqit")
+    juuri = juuri or JUURI
+    kansio = os.path.join(juuri, "tiedostot", slug, "mawaqit")
     os.makedirs(kansio, exist_ok=True)
     polut = []
     for u in osoitteet:
@@ -533,17 +535,17 @@ def tallenna_kuvat(slug, osoitteet):
                     f.write(data)
             polut.append(f"/tiedostot/{slug}/mawaqit/{nimi}")
         except Exception as e:
-            print(f"  kuvaa ei saatu ({u}): {e}", file=sys.stderr)
+            print(f"  kuvaa ei saatu ({u}): {e}", file=loki or sys.stderr)
     if polut:
-        os.makedirs(os.path.join(JUURI, "_data", "kuvat"), exist_ok=True)
-        with open(os.path.join(JUURI, "_data", "kuvat", slug + ".json"), "w", encoding="utf-8") as f:
+        os.makedirs(os.path.join(juuri, "_data", "kuvat"), exist_ok=True)
+        with open(os.path.join(juuri, "_data", "kuvat", slug + ".json"), "w", encoding="utf-8") as f:
             json.dump({"lahde": "mawaqit", "kuvat": polut}, f, ensure_ascii=False, indent=1)
     return len(polut)
 
 
-def tallenna_tila(slug, tila):
+def tallenna_tila(slug, tila, juuri=None):
     """Haun tila paneelia varten: _data/haku/<slug>.json (säilyy välimuistissa ajojen välillä)."""
-    kansio = os.path.join(JUURI, "_data", "haku")
+    kansio = os.path.join(juuri or JUURI, "_data", "haku")
     os.makedirs(kansio, exist_ok=True)
     polku = os.path.join(kansio, slug + ".json")
     vanha = {}
@@ -562,11 +564,11 @@ def tallenna_tila(slug, tila):
         json.dump(tila, f, ensure_ascii=False, indent=1)
 
 
-def tulevat(slug):
+def tulevat(slug, juuri=None):
     """(montako tulevaa päivää on tallessa, viimeinen päivä) – paneelin tilaa varten."""
     tanaan = datetime.date.today().isoformat()
     paivat = []
-    for polku in glob.glob(os.path.join(JUURI, "_data", "aikataulut", slug, "????-??.csv")):
+    for polku in glob.glob(os.path.join(juuri or JUURI, "_data", "aikataulut", slug, "????-??.csv")):
         kk = os.path.basename(polku)[:7]
         with open(polku, encoding="utf-8", newline="") as f:
             for r in csv.DictReader(f):
@@ -596,6 +598,59 @@ def jasenna_tiedosto(lahde, polku, tanaan=None):
     return {"nimi": nimi, "kuvat": kuvat, "paivat": paivat}
 
 
+# ---------------------------------------------------------------- haku ja käsittely
+def ryhma(lahde, tunnus, lisa):
+    """Yhteisen haun avain (rakennusajo, hallinta#45): moskeijat, joilla on sama lähde ja tunnus (rukousajat.fi: sama
+    kaupunki, Masjidbox: sama tunnus ja rajapinnan tunnus), haetaan kerran. Jokainen moskeija käyttää silti omaa lähdettään."""
+    if lahde == "rukousajat":
+        return (lahde, str(tunnus or "").strip().lower())
+    return (lahde, str(tunnus or ""), (lisa or {}).get("masjidbox_id", "") if lahde == "masjidbox" else "")
+
+
+def hae_lahde(lahde, tunnus, lisa):
+    """Hakee lähteen ajat tarkistamatta: (päivät, kuvat, tieto, varoitus). Virhe nousee poikkeuksena."""
+    tieto, varoitus = {"tapa": "sivu"}, ""
+    if lahde == "masjidbox" and lisa.get("masjidbox_id"):
+        try:
+            paivat, kuvat, tieto = masjidbox_api(lisa["masjidbox_id"])
+        except EiAvainta as e:
+            if not tunnus:
+                raise ValueError(f"Masjidboxin rajapinta-avain puuttuu paneelista ({e})")
+            varoitus = "Masjidboxin rajapinta-avain puuttuu – ajat luettiin väliaikaisesti julkiselta sivulta (7 päivää)."
+            paivat, kuvat = masjidbox(tunnus)
+    else:
+        paivat, kuvat = {"masjidbox": masjidbox, "mawaqit": mawaqit, "rukousajat": rukousajat_fi}[lahde](tunnus)
+    return paivat, kuvat, tieto, varoitus
+
+
+def kasittele(slug, lahde, tunnus, lisa, juuri=None, haku=None, loki=None):
+    """Yhden moskeijan ajat: haku (tai yhteisen haun tulos: haku(lähde, tunnus, lisä) kuten hae_lahde), järkevyystarkistus,
+    tallennus ja haun tila moskeijan omalla nimellä kansioon juuri. Rikkinäistä ei julkaista: vanhat ajat jäävät, ja tila kertoo
+    virheen. Palauttaa (onnistui, rivi lokiin)."""
+    nyt = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+    try:
+        paivat, kuvat, tieto, varoitus = (haku or hae_lahde)(lahde, tunnus, lisa)
+        # Järkevyystarkistus: rikkinäistä ei julkaista, vanhat ajat jäävät (except-haara)
+        tarkista(paivat, RUKOUSAJAT_PUUTTUVAT if lahde == "rukousajat" else ())
+        muutettu, yhteensa = tallenna_ajat(slug, paivat, juuri)
+        k = tallenna_kuvat(slug, kuvat, juuri, loki)
+        n, viimeinen = tulevat(slug, juuri)
+        tallenna_tila(slug, {"ok": True, "lahde": lahde, "haettu": nyt, "paivia": n, "viimeinen": viimeinen,
+                             "varoitus": varoitus, **tieto}, juuri)
+        return True, (f"{slug}: {yhteensa} päivää lähteestä {lahde} ({tieto.get('tapa')}: {lisa.get('masjidbox_id') or tunnus}), {muutettu} muuttui"
+                      + (f", {k} kuvaa" if k else "") + (f" – {varoitus}" if varoitus else ""))
+    except Exception as e:  # haku epäonnistui tai aikataulu oli rikki: vanhat ajat jäävät voimaan
+        lisatieto = {}
+        if isinstance(e, Laskettu):  # Masjidboxin laskemat ajat: aiemmin julkaistut tulevat päivät pois ("Rukousajat lisätään pian")
+            tallenna_ajat(slug, {}, juuri)
+            lisatieto = {"tapa": "rajapinta", "tyyppi": "calculated"}
+        n, viimeinen = tulevat(slug, juuri)
+        viesti = (f"Rikkinäinen aikataulu, ei julkaistu: {e}" if isinstance(e, Kelvoton) else str(e))[:300]
+        tallenna_tila(slug, {"ok": False, "lahde": lahde, "yritetty": nyt, "virhe": viesti, "koodi": getattr(e, "koodi", "") or "haku",
+                             "paivia": n, "viimeinen": viimeinen, **lisatieto}, juuri)
+        return False, f"{slug}: haku lähteestä {lahde} epäonnistui ({tunnus}): {viesti}"
+
+
 def main():
     if len(sys.argv) >= 4 and sys.argv[1] == "--jasenna":
         try:
@@ -608,39 +663,8 @@ def main():
     if not lista:
         print("Yhdelläkään moskeijalla ei ole rukousaikojen lähdettä (masjidbox/mawaqit).")
     for slug, lahde, tunnus, lisa in lista:
-        nyt = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
-        tieto = {"tapa": "sivu"}
-        varoitus = ""
-        try:
-            if lahde == "masjidbox" and lisa.get("masjidbox_id"):
-                try:
-                    paivat, kuvat, tieto = masjidbox_api(lisa["masjidbox_id"])
-                except EiAvainta as e:
-                    if not tunnus:
-                        raise ValueError(f"Masjidboxin rajapinta-avain puuttuu paneelista ({e})")
-                    varoitus = "Masjidboxin rajapinta-avain puuttuu – ajat luettiin väliaikaisesti julkiselta sivulta (7 päivää)."
-                    paivat, kuvat = masjidbox(tunnus)
-            else:
-                paivat, kuvat = {"masjidbox": masjidbox, "mawaqit": mawaqit, "rukousajat": rukousajat_fi}[lahde](tunnus)
-            # Järkevyystarkistus: rikkinäistä ei julkaista, vanhat ajat jäävät (except-haara)
-            tarkista(paivat, RUKOUSAJAT_PUUTTUVAT if lahde == "rukousajat" else ())
-            muutettu, yhteensa = tallenna_ajat(slug, paivat)
-            k = tallenna_kuvat(slug, kuvat)
-            n, viimeinen = tulevat(slug)
-            tallenna_tila(slug, {"ok": True, "lahde": lahde, "haettu": nyt, "paivia": n, "viimeinen": viimeinen,
-                                 "varoitus": varoitus, **tieto})
-            print(f"{slug}: {yhteensa} päivää lähteestä {lahde} ({tieto.get('tapa')}: {lisa.get('masjidbox_id') or tunnus}), {muutettu} muuttui"
-                  + (f", {k} kuvaa" if k else "") + (f" – {varoitus}" if varoitus else ""))
-        except Exception as e:  # haku epäonnistui tai aikataulu oli rikki: vanhat ajat jäävät voimaan
-            lisatieto = {}
-            if isinstance(e, Laskettu):  # Masjidboxin laskemat ajat: aiemmin julkaistut tulevat päivät pois ("Rukousajat lisätään pian")
-                tallenna_ajat(slug, {})
-                lisatieto = {"tapa": "rajapinta", "tyyppi": "calculated"}
-            n, viimeinen = tulevat(slug)
-            viesti = (f"Rikkinäinen aikataulu, ei julkaistu: {e}" if isinstance(e, Kelvoton) else str(e))[:300]
-            tallenna_tila(slug, {"ok": False, "lahde": lahde, "yritetty": nyt, "virhe": viesti, "koodi": getattr(e, "koodi", "") or "haku",
-                                 "paivia": n, "viimeinen": viimeinen, **lisatieto})
-            print(f"{slug}: haku lähteestä {lahde} epäonnistui ({tunnus}): {viesti}", file=sys.stderr)
+        onnistui, rivi = kasittele(slug, lahde, tunnus, lisa)
+        print(rivi, file=sys.stdout if onnistui else sys.stderr)
     return 0
 
 

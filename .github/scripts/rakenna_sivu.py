@@ -24,10 +24,14 @@ Sivun asetukset:
                     .github/rakennus/vanha-julkaisu/Gemfile.lock). Vain vertailuun: hallinta testi/jekyll3-yhteensopivuus.mjs tarkistaa, että
                     sivupohja rakentuu Hyvinkään vanhalla julkaisulla samaksi näkyväksi sisällöksi (ADR-0006). Muut vaiheet ovat samat.
 
+Toistettava rakennus (hallinta#45): tyylien ja skriptien välimuistiversio (?v=) on koottujen assets-tiedostojen tiiviste
+(assetversio) ja kalenterien DTSTAMP rakennuspäivä, joten muuttumaton sivu rakentuu samana päivänä samaksi. Vain aidosti
+aikaan sidotut tiedostot muuttuvat (feed.xml, rukousajat/tila.json, llms-full.txt), ja julkaisu lataa vain muuttuneet.
+
 Julkinen loki: komento tulostaa vain vaiheiden kestot ja lukumäärät, ei sisältöä, polkuja eikä tiedostonimiä. Vaiheiden
 oma tuloste menee tiedostoon --loki (ei julkiseen lokiin); ilman sitä virheilmoitusvirtaan (paikallinen käyttö).
 """
-import argparse, glob, os, re, shutil, subprocess, sys, tempfile, time
+import argparse, glob, hashlib, os, re, shutil, subprocess, sys, tempfile, time
 
 POHJA = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 GEMFILE = os.path.join(POHJA, ".github", "rakennus", "Gemfile")
@@ -94,6 +98,19 @@ def kopioi_haetut(lahde, kohde):
                 shutil.copytree(a, b)
 
 
+def assetversio(kansio):
+    """Lyhyt tiiviste kansion tiedostoista (polku ja sisältö)."""
+    h = hashlib.sha256()
+    for juuri, kansiot, tiedostot in os.walk(kansio):
+        kansiot.sort()
+        for n in sorted(tiedostot):
+            f = os.path.join(juuri, n)
+            h.update(os.path.relpath(f, kansio).encode() + b"\0")
+            with open(f, "rb") as t:
+                h.update(hashlib.sha256(t.read()).digest())
+    return h.hexdigest()[:12]
+
+
 def yaml_arvo(s):
     return '"' + str(s).replace("\\", "\\\\").replace('"', '\\"') + '"'
 
@@ -151,6 +168,9 @@ def main():
         if a.nimi: asetukset += f"repo: {yaml_arvo(a.nimi)}\n"  # lomakkeet (osat/lomake-tapa.html), ei baseurlista
         if a.testisivu: asetukset += "noindex: true\n"
         if a.aika: asetukset += f"time: {yaml_arvo(a.aika)}\n"
+        # Välimuistiversio (?v=) sivun tyyleille ja skripteille: koottujen assets-tiedostojen tiiviste, ei rakennushetki. Näin
+        # muuttumaton sivu rakentuu tavu tavulta samaksi, ja julkaisu lataa vain muuttuneet tiedostot (hallinta#45).
+        asetukset += f"assetversio: {yaml_arvo(assetversio(os.path.join(sivu, 'assets')))}\n"
         with open(os.path.join(sivu, "_config.yml"), "w", encoding="utf-8") as f: f.write(asetukset)
         r.kesto("kokoaminen", t0)
 

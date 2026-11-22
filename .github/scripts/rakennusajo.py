@@ -7,13 +7,15 @@ Työnkulku .github/workflows/rakennusajo.yml ajaa tämän; testit ajavat saman k
 Käyttö:
   python3 .github/scripts/rakennusajo.py --sisalto <sisältörepon kansio> --versio main|testi \\
       --luettelo tiivisteet/tiivisteet.json --kohde cloudflare|kansio:<polku> \\
-      [--haetut haetut] [--hae] [--aika "2026-03-01 12:00:00 +0200"] [--lokit <kansio>] [--rinnakkain 4] \\
+      [--haetut haetut] [--hae] [--somet-nyt <nimi>[,<nimi>…]] [--aika "2026-03-01 12:00:00 +0200"] [--lokit <kansio>] [--rinnakkain 4] \\
       [--raportti <paneelin osoite>]   (avain ympäristömuuttujassa RAKENNUSRAPORTTI_AVAIN)
 
 Mitä ajo tekee:
 1. Lukee sivustoluettelon (sivustot.yml) ja valitsee sivut, joiden sivupohjan versio (pohja: main/testi) on tämän ajon
    versio. Sivupohja on se kansio, josta tämä komento ajetaan: kukin haara rakentaa omat sivunsa omalla sivupohjallaan.
-2. --hae: hakee jokaisen sivun haetut tiedot (rukousajat, somet) kansioon <haetut>/<nimi>/ (rakenna_sivu.py --vain-haku).
+2. --hae: yhteinen haku (yhteinen_haku.py, hallinta#45) kansioon <haetut>/<nimi>/: rukousajat joka ajossa kerran lähdettä
+   kohden ja tallennus jokaiselle moskeijalle sen omalla nimellä; somet sivuille, joilla on tili, 3 tunnin välein tai kun
+   käynnistys pyytää (--somet-nyt: paneelin Päivitä somet nyt).
 3. Laskee jokaiselle sivulle syötteiden tiivisteen: sisältökansio, sivun asetukset sivustoluettelossa, sivupohja (myös
    yhteiset artikkelit, _artikkelit), haetut tiedot ja rakennuspäivä (Helsingin aikaa). Hakuajat (haettu, yritetty,
    paivitetty) eivät ole tiivisteessä, koska ne muuttuvat joka haulla.
@@ -44,6 +46,7 @@ sys.dont_write_bytecode = True  # ei __pycache__-tiedostoja sivupohjan kansioon
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import julkaisukohde
 import rakenna_sivu
+import yhteinen_haku
 
 POHJA = rakenna_sivu.POHJA
 RAKENNA = os.path.join(POHJA, ".github", "scripts", "rakenna_sivu.py")
@@ -205,9 +208,6 @@ class Ajo:
             raise Sivuvirhe(vaihe, m.group(1) if m else f"rakennuskomento epäonnistui (koodi {t.returncode})")
         return t.stdout or ""
 
-    def hae(self, s):
-        self.komento(s, "haku", ["--url", "https://haku.invalid", "--vain-haku", "--haetut", self.haettujen_kansio(s)])
-
     def osat(self, s, pohja, paiva):
         haetut = self.haettujen_kansio(s)
         return {
@@ -333,6 +333,7 @@ def main():
     p.add_argument("--kohde", required=True, help='julkaisukohde: "cloudflare" tai "kansio:<polku>"')
     p.add_argument("--haetut", help="haettujen tietojen kansio: <haetut>/<nimi>/")
     p.add_argument("--hae", action="store_true", help="hae rukousajat ja somet nyt (verkko)")
+    p.add_argument("--somet-nyt", default="", help="sivut (nimet pilkuin), joiden somet haetaan heti (käynnistyksen pyyntö)")
     p.add_argument("--aika", help='rakennushetki, esim. "2026-03-01 12:00:00 +0200" (oletus: nyt)')
     p.add_argument("--lokit", help="kansio vaiheiden tulosteille (ei julkiseen lokiin)")
     p.add_argument("--rinnakkain", type=int, default=1, help="montako sivua kerralla")
@@ -340,6 +341,8 @@ def main():
     a = p.parse_args()
     if a.hae and not a.haetut:
         raise SystemExit("--hae: anna haettujen tietojen kansio (--haetut)")
+    # Käynnistyksen somepyyntö on vain vihje: tuntemattomat ja huonot nimet ohitetaan
+    pyydetyt = {n for n in re.split(r"[\s,]+", a.somet_nyt or "") if re.fullmatch(r"[a-z0-9][a-z0-9-]{0,62}", n)}
     t_alku = time.time()
     ajo = Ajo(a)
     kaikki, virheelliset = lue_sivustoluettelo(ajo.sisalto)  # peittää salaiset osat: ensimmäisenä
@@ -350,18 +353,27 @@ def main():
     epaonnistuneet = dict(virheelliset)
 
     # 1. Haetut tiedot (rukousajat, somet): ennen tiivisteitä, koska ne ovat sivun syötteitä
-    haetut_ennen = kansion_tiiviste(ajo.haetut, hakuajat=True) if a.hae else ""  # puuttuva kansio = tyhjä
+    # Välimuistiin tallennetaan, kun haettu tieto tai somejen hakuaika muuttui (hakuaika ratkaisee seuraavan somehaun, joten sen
+    # pitää säilyä, vaikka julkaisut olisivat ennallaan; sivun tiivisteessä hakuaikoja ei ole)
+    valimuisti = lambda: kansion_tiiviste(ajo.haetut, hakuajat=True) + "".join(sorted(
+        n + tiedoston_tiiviste(os.path.join(ajo.haetut, n, yhteinen_haku.SOMET_TILA)).hex()
+        for n in (os.listdir(ajo.haetut) if os.path.isdir(ajo.haetut) else []) if os.path.isfile(os.path.join(ajo.haetut, n, yhteinen_haku.SOMET_TILA))))
+    haetut_ennen = valimuisti() if a.hae else ""  # puuttuva kansio = tyhjä
     if a.hae:
-        t0 = time.time()
         os.makedirs(ajo.haetut, exist_ok=True)
         nimet = {s["nimi"] for s in sivut}
         for n in os.listdir(ajo.haetut):  # poistuneen sivun haetut tiedot pois
             if n not in nimet:
                 shutil.rmtree(os.path.join(ajo.haetut, n), ignore_errors=True)
-        for nimi, tulos in rinnakkain(a.rinnakkain, ajo.hae, sivut).items():
-            if isinstance(tulos, Sivuvirhe):
-                epaonnistuneet[nimi] = str(tulos)
-        sano(f"Haku: {len(sivut)} sivua, {time.time() - t0:.1f} s")
+        hetki = datetime.datetime.strptime(a.aika, "%Y-%m-%d %H:%M:%S %z") if a.aika else datetime.datetime.now(datetime.timezone.utc)
+        haettavat = [yhteinen_haku.Sivu(s["nimi"], ajo.kansio(s), ajo.haettujen_kansio(s), ajo.loki(s)) for s in sivut]
+        try:
+            virheet, yhteenveto = yhteinen_haku.hae(haettavat, hetki, pyydetyt & {s["nimi"] for s in sivut}, a.rinnakkain)
+            sano(yhteenveto)
+        except Exception as e:  # odottamaton: julkiseen lokiin vain virheen laji; sivut rakennetaan edellisillä haetuilla tiedoilla
+            virheet = {}
+            sano(f"::warning::Haku epäonnistui ({type(e).__name__}), edelliset haetut tiedot jäävät")
+        epaonnistuneet.update(virheet)
 
     # 2. Syötteiden tiivisteet: sivu rakennetaan, kun tiiviste eroaa viimeksi onnistuneesti julkaistusta
     t0 = time.time()
@@ -418,7 +430,7 @@ def main():
     ennallaan = len(sivut) - rakennetut - len([s for s in sivut if s["nimi"] in epaonnistuneet])
     yhteenveto = f"Rakennettu ja julkaistu {rakennetut}, ei muutoksia {ennallaan}, epäonnistui {len(epaonnistuneet)}, yhteensä {time.time() - t_alku:.1f} s"
     sano(yhteenveto)
-    haetut_muuttui = bool(a.hae) and kansion_tiiviste(ajo.haetut, hakuajat=True) != haetut_ennen
+    haetut_muuttui = bool(a.hae) and valimuisti() != haetut_ennen
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
             f.write(f"luettelo_muuttui={str(luettelo_muuttui).lower()}\nhaetut_muuttui={str(haetut_muuttui).lower()}\n"

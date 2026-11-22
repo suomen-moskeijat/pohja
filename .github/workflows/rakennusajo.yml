@@ -8,7 +8,8 @@
 #
 # Käynnistys:
 # - ajastus tunnin välein. GitHub ajaa ajastuksen vain main-haarasta, joten se käynnistää myös testi-haaran ajon (työ testisivut).
-# - käynnistyspyyntö (workflow_dispatch): paneeli tallennuksen jälkeen, valvonta ja käsin
+# - käynnistyspyyntö (workflow_dispatch): paneeli tallennuksen jälkeen, valvonta ja käsin. Syöte somet: paneelin
+#   Päivitä somet nyt (moskeijan somet haetaan heti, muuten 3 tunnin välein; rukousajat joka ajossa kerran lähdettä kohden)
 # - sivupohjan main- tai testi-haaran muutos: kaynnista-rakennusajo.yml (pieni työnkulku ilman salaisuuksia)
 # - ei koskaan pull requestista
 #
@@ -31,6 +32,10 @@ on:
         description: Käynnistä myös testisivujen ajo testi-haarasta (kuten ajastus)
         type: boolean
         default: false
+      somet:
+        description: Sivut (nimet pilkuin), joiden somet haetaan heti (paneelin Päivitä somet nyt)
+        type: string
+        default: ""
 
 permissions:
   contents: read
@@ -140,9 +145,11 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
           RAKENNUSRAPORTTI_AVAIN: ${{ secrets.RAKENNUSRAPORTTI_AVAIN }}
           PANEELI: ${{ github.ref_name == 'main' && 'https://hallinta.suomenmoskeijat.fi' || 'https://hallinta-testi.suomenmoskeijat.fi' }}
+          # Käynnistyksen somepyyntö ympäristömuuttujana (ei suoraan komentoon); rakennusajo hyväksyy vain sivujen nimet
+          SOMET_NYT: ${{ inputs.somet }}
         run: |
           python pohja/.github/scripts/rakennusajo.py --sisalto sisalto --versio "$VERSIO" \
-            --haetut haetut --hae --luettelo tiivisteet/tiivisteet.json --kohde cloudflare \
+            --haetut haetut --hae --somet-nyt "$SOMET_NYT" --luettelo tiivisteet/tiivisteet.json --kohde cloudflare \
             --lokit "$RUNNER_TEMP/lokit" --rinnakkain 4 --raportti "$PANEELI"
 
       # Välimuistiin vain, kun tieto muuttui (myös epäonnistuneen ajon jälkeen: onnistuneet sivut jäävät luetteloon)
