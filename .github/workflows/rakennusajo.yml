@@ -1,41 +1,66 @@
-# Rakennusajo (ADR-0006, ADR-0007; J1 hallinta#41): hakee sisällön yksityisestä sisältöreposta lukuavaimella, rakentaa
-# sivun rakennuskomennolla (.github/scripts/rakenna_sivu.py) ja julkaisee sen Cloudflare Pagesiin suoralla latauksella.
-# J1: vain testimoskeija ja vain käsin käynnistettynä. Testisivujen kirjautumista ei vielä ole (J8), joten testisivu
-# rakennetaan sivustoluettelon salaisen osan alle, ja juuressa on vain neutraali noindex-sivu.
+# Rakennusajo (ADR-0006, ADR-0007; hallinta#41, #43): hakee sisällön yksityisestä sisältöreposta lukuavaimella, käy läpi
+# sivustoluettelon ja rakentaa ja julkaisee Cloudflare Pagesiin (suora lataus) vain sivut, joiden syötteet muuttuivat
+# (.github/scripts/rakennusajo.py: sisältö, sivun asetukset, sivupohja, haetut tiedot ja rakennuspäivä).
+#
+# Kukin haara rakentaa omat sivunsa: main-haaran ajo sivut, joiden sivupohjan versio on main, ja testi-haaran ajo
+# testisivut (pohja: testi) testi-haaran sivupohjalla ja rakennusajolla. Yksi ajo kerrallaan haaraa kohden, uusi odottaa.
+# Ajo ei luota käynnistyksen tietoihin vaan tunnistaa muutokset syötteistä, joten odottava ajo, jonka uudempi korvaa, ei hukkaa mitään.
+#
+# Käynnistys:
+# - ajastus tunnin välein. GitHub ajaa ajastuksen vain main-haarasta, joten se käynnistää myös testi-haaran ajon (työ testisivut).
+# - käynnistyspyyntö (workflow_dispatch): paneeli tallennuksen jälkeen, valvonta ja käsin
+# - sivupohjan main- tai testi-haaran muutos: kaynnista-rakennusajo.yml (pieni työnkulku ilman salaisuuksia)
+# - ei koskaan pull requestista
 #
 # Pohja on julkinen repo, joten:
-# - käynnistys vain käsin (workflow_dispatch), ei koskaan pull requestista; avaimet ovat ympäristössä `julkaisu`,
-#   jonka saavat vain main- ja testi-haara
-# - lokissa ei ole sisältöä eikä salaista osaa: salainen osa peitetään (add-mask), rakennuskomento tulostaa vain kestot ja
-#   määrät, ja vaiheiden sekä wranglerin tuloste menee tiedostoon, jota ei tulosteta
-# - ei artefakteja; välimuistissa vain julkista tietoa (gemit, pip, haetut tiedot julkisista lähteistä)
+# - avaimet ovat ympäristössä `julkaisu`, jonka saavat vain main- ja testi-haara
+# - lokissa ei ole sisältöä eikä salaista osaa: rakennusajo peittää salaiset osat (add-mask) ja tulostaa vain sivujen nimet,
+#   tulokset, syyt, kestot ja määrät; vaiheiden ja wranglerin tuloste menee tiedostoihin, joita ei tulosteta
+# - ei artefakteja; välimuistissa vain julkista tietoa: gemit, pip, julkisista lähteistä haetut tiedot ja tiivisteluettelo
+#   (vain tiivisteitä, ei sisältöä). Välimuistiin tallennetaan vain, kun tieto muuttui.
 # Vanha julkaisu (rakenna.yml, julkaisu.yml) toimii tämän rinnalla ennallaan.
 name: Rakennusajo
 
 on:
+  schedule:
+    - cron: "7 * * * *"
   workflow_dispatch:
     inputs:
-      julkaisuja:
-        description: Montako julkaisua samaan projektiin (mittaus, 1–30)
-        default: "1"
+      testisivut:
+        description: Käynnistä myös testisivujen ajo testi-haarasta (kuten ajastus)
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
 concurrency:
-  group: rakennusajo
+  group: rakennusajo-${{ github.ref_name }}
   cancel-in-progress: false
 
 jobs:
+  # Ajastus toimii vain main-haarasta: testisivujen ajo käynnistetään testi-haarasta käynnistyspyynnöllä. Ei salaisuuksia.
+  testisivut:
+    if: github.event_name == 'schedule' || inputs.testisivut
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    steps:
+      - name: Käynnistä rakennusajo testi-haarasta
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run rakennusajo.yml --repo "$GITHUB_REPOSITORY" --ref testi
+
   rakenna:
     # Kiinteä kuva: Ruby 3.3.6 (Gemfile.lock, paikalliset testit) on valmiina ubuntu-24.04:lle, ei ubuntu-26.04:lle (ubuntu-latest)
     runs-on: ubuntu-24.04
     environment: julkaisu
     timeout-minutes: 30
     env:
-      SIVU: testimoskeija
-      WRANGLER_SEND_METRICS: "false"
+      VERSIO: ${{ github.ref_name }}
     steps:
+      # Tämän haaran sivupohja, rakennuskomento ja rakennusajo
       - name: Hae sivupohja
         uses: actions/checkout@v4
         with:
@@ -88,152 +113,45 @@ jobs:
           npm install --global --silent wrangler@4.158.0 > /dev/null
           echo "wrangler $(wrangler --version 2>/dev/null | tail -1)"
 
-      # Salainen osa peitetään ennen kuin mikään vaihe voi tulostaa sitä. Asetukset tiedostoon, ei ympäristömuuttujiin.
-      - name: Lue sivun asetukset sivustoluettelosta
-        id: sivu
-        run: |
-          python - <<'PY'
-          import json, os, re, sys
-          import yaml
-          try:
-              d = yaml.safe_load(open("sisalto/sivustot.yml", encoding="utf-8"))
-              s = next(x for x in d["sivut"] if x.get("nimi") == os.environ["SIVU"])
-          except Exception:
-              sys.exit("Sivustoluetteloa (sivustot.yml) ei voitu lukea, tai siitä puuttuu sivu")
-          salainen = str(s.get("salainen_osa") or "")
-          if salainen:
-              print(f"::add-mask::{salainen}")
-              if not re.fullmatch(r"[A-Za-z0-9_-]{22,}", salainen):
-                  sys.exit("salainen_osa: vähintään 22 merkkiä A-Z, a-z, 0-9, - tai _ (128 bittiä)")
-          if not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,57}", str(s.get("projekti") or "")):
-              sys.exit("projekti: Cloudflare Pages -projektin nimi puuttuu tai on huono")
-          json.dump(s, open(os.path.join(os.environ["RUNNER_TEMP"], "sivu.json"), "w"))
-          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-              f.write(f"projekti={s['projekti']}\n")
-          print(f"Sivu: {s['nimi']}, projekti {s['projekti']}, pohja {s.get('pohja', 'main')}, testisivu {bool(s.get('testisivu'))}")
-          PY
-
-      # Projekti luodaan, jos sitä ei ole (suora lataus, tuotantohaara main). Git-yhteydellistä projektia ei käytetä.
-      - name: Varmista Cloudflare Pages -projekti
-        id: projekti
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
-          PROJEKTI: ${{ steps.sivu.outputs.projekti }}
-        run: |
-          # Tunnuksen tai avaimen lopussa voi olla rivinvaihto, jos se liitettiin sellaisenaan
-          export CLOUDFLARE_ACCOUNT_ID="$(printf %s "$CLOUDFLARE_ACCOUNT_ID" | tr -d '[:space:]')" CLOUDFLARE_API_TOKEN="$(printf %s "$CLOUDFLARE_API_TOKEN" | tr -d '[:space:]')"
-          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
-            echo "::error::CLOUDFLARE_API_TOKEN (salaisuus) tai CLOUDFLARE_ACCOUNT_ID (muuttuja) puuttuu ympäristöstä julkaisu"; exit 1
-          fi
-          api="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects"
-          koodi=$(curl -s -o "$RUNNER_TEMP/p.json" -w '%{http_code}' -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "$api/$PROJEKTI")
-          if [ "$koodi" = "404" ]; then
-            koodi=$(curl -s -o "$RUNNER_TEMP/p.json" -w '%{http_code}' -X POST -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-              -H "Content-Type: application/json" "$api" -d "{\"name\":\"$PROJEKTI\",\"production_branch\":\"main\"}")
-            echo "Projekti luotu ($koodi)"
-          fi
-          if [ "$koodi" != "200" ]; then
-            echo "::error::Projektia ei voitu lukea tai luoda ($koodi): $(jq -c '[.errors[]? | {code, message}]' "$RUNNER_TEMP/p.json")"; exit 1
-          fi
-          if [ "$(jq -r '.result.source // empty | .type' "$RUNNER_TEMP/p.json")" != "" ]; then
-            echo "::error::Projekti on kytketty Git-repoon; rakennusajo julkaisee vain suoralla latauksella"; exit 1
-          fi
-          echo "osoite=https://$(jq -r '.result.subdomain' "$RUNNER_TEMP/p.json")" >> "$GITHUB_OUTPUT"
-          echo "Projekti: $PROJEKTI ($(jq -r '.result.subdomain' "$RUNNER_TEMP/p.json"), tuotantohaara $(jq -r '.result.production_branch' "$RUNNER_TEMP/p.json"))"
-
       # Haetut tiedot (rukousajat, somet) julkisista lähteistä: jos haku epäonnistuu, edelliset jäävät (ADR-0004)
       - name: Palauta edelliset haetut tiedot
         uses: actions/cache/restore@v4
         with:
           path: haetut
-          key: rakennusajo-haetut-${{ env.SIVU }}-${{ github.run_id }}
-          restore-keys: rakennusajo-haetut-${{ env.SIVU }}-
+          key: rakennusajo-haetut-v2-${{ env.VERSIO }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: rakennusajo-haetut-v2-${{ env.VERSIO }}-
 
-      - name: Rakenna sivu (rakennuskomento)
+      # Tiivisteluettelo: viimeksi onnistuneesti julkaistujen sivujen syötteiden tiivisteet. Jos se puuttuu, kaikki rakennetaan.
+      - name: Palauta tiivisteluettelo
+        uses: actions/cache/restore@v4
+        with:
+          path: tiivisteet
+          key: rakennusajo-tiivisteet-${{ env.VERSIO }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: rakennusajo-tiivisteet-${{ env.VERSIO }}-
+
+      # Haku, syötteiden tiivisteet, rakennus (rakennuskomento) ja julkaisu (julkaisukohde: Cloudflare Pages, suora lataus).
+      # Yhden sivun virhe ei estä muita; ajo päättyy virheeseen, ja epäonnistunut sivu yritetään uudelleen seuraavalla ajolla.
+      - name: Rakenna ja julkaise muuttuneet sivut
+        id: ajo
         env:
-          OSOITE: ${{ steps.projekti.outputs.osoite }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
-          s="$RUNNER_TEMP/sivu.json"
-          url=$(jq -r '.osoite // ""' "$s"); [ -n "$url" ] || url="$OSOITE"
-          salainen=$(jq -r '.salainen_osa // ""' "$s")
-          testisivu=$(jq -r 'if .testisivu then "--testisivu" else "" end' "$s")
-          python pohja/.github/scripts/rakenna_sivu.py --sisalto "sisalto/moskeijat/$SIVU" --ulos valmis \
-            --url "$url" ${salainen:+--baseurl "/$salainen"} --nimi "$SIVU" $testisivu \
-            --haetut haetut --hae --loki "$RUNNER_TEMP/rakennus.log" | tee -a "$GITHUB_STEP_SUMMARY"
+          python pohja/.github/scripts/rakennusajo.py --sisalto sisalto --versio "$VERSIO" \
+            --haetut haetut --hae --luettelo tiivisteet/tiivisteet.json --kohde cloudflare \
+            --lokit "$RUNNER_TEMP/lokit" --rinnakkain 4
 
+      # Välimuistiin vain, kun tieto muuttui (myös epäonnistuneen ajon jälkeen: onnistuneet sivut jäävät luetteloon)
       - name: Tallenna haetut tiedot seuraavaa ajoa varten
+        if: ${{ !cancelled() && steps.ajo.outputs.haetut_muuttui == 'true' }}
         uses: actions/cache/save@v4
         with:
           path: haetut
-          key: rakennusajo-haetut-${{ env.SIVU }}-${{ github.run_id }}
+          key: rakennusajo-haetut-v2-${{ env.VERSIO }}-${{ github.run_id }}-${{ github.run_attempt }}
 
-      # Suora lataus (wrangler pages deploy). Tuloste tiedostoon: julkiseen lokiin vain tulos, kesto ja ladattujen määrä.
-      - name: Julkaise Cloudflare Pagesiin
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
-          PROJEKTI: ${{ steps.sivu.outputs.projekti }}
-          JULKAISUJA: ${{ inputs.julkaisuja }}
-        run: |
-          # Tunnuksen tai avaimen lopussa voi olla rivinvaihto, jos se liitettiin sellaisenaan
-          export CLOUDFLARE_ACCOUNT_ID="$(printf %s "$CLOUDFLARE_ACCOUNT_ID" | tr -d '[:space:]')" CLOUDFLARE_API_TOKEN="$(printf %s "$CLOUDFLARE_API_TOKEN" | tr -d '[:space:]')"
-          n="${JULKAISUJA:-1}"
-          case "$n" in ''|*[!0-9]*) echo "::error::julkaisuja: anna luku 1–30"; exit 1;; esac
-          [ "$n" -ge 1 ] && [ "$n" -le 30 ] || { echo "::error::julkaisuja: anna luku 1–30"; exit 1; }
-          cd "$RUNNER_TEMP"
-          for i in $(seq 1 "$n"); do
-            t0=$(date +%s.%N)
-            if wrangler pages deploy "$GITHUB_WORKSPACE/valmis" --project-name "$PROJEKTI" --branch main \
-                 --commit-dirty=true --commit-message "Rakennusajo $GITHUB_RUN_ID ($i/$n)" > julkaisu.log 2>&1; then
-              ladattu=$(grep -oE 'Uploaded [0-9]+ files( \([0-9]+ already uploaded\))?' julkaisu.log | tail -1 || true)
-              rivi="Julkaisu $i/$n: onnistui, $(awk -v a="$t0" -v b="$(date +%s.%N)" 'BEGIN { printf "%.1f", b - a }') s, ${ladattu:-ei ladattavaa}"
-              echo "$rivi"; echo "$rivi" >> "$GITHUB_STEP_SUMMARY"
-            else
-              echo "::error::Julkaisu $i/$n epäonnistui $(grep -oE '\[code: [0-9]+\]' julkaisu.log | sort -u | tr '\n' ' ')"; exit 1
-            fi
-          done
-
-      # Todennus (J1): sivu avautuu ja otsakkeet ovat oikein. Polkuja ei tulosteta, vain niiden nimet.
-      - name: Tarkista sivu ja otsakkeet
-        env:
-          OSOITE: ${{ steps.projekti.outputs.osoite }}
-        run: |
-          s="$RUNNER_TEMP/sivu.json"
-          salainen=$(jq -r '.salainen_osa // ""' "$s"); p="${salainen:+/$salainen}"
-          tarkista() { # nimi polku: tulostaa HTTP-koodin, vastaus ja otsakkeet tiedostoihin
-            rm -f "$RUNNER_TEMP/vastaus" "$RUNNER_TEMP/otsakkeet"; touch "$RUNNER_TEMP/vastaus" "$RUNNER_TEMP/otsakkeet"
-            curl -s -o "$RUNNER_TEMP/vastaus" -D "$RUNNER_TEMP/otsakkeet" -w '%{http_code}' "$OSOITE$2" 2>/dev/null || true
-          }
-          for yritys in $(seq 1 30); do koodi=$(tarkista etusivu "$p/"); [ "$koodi" = "200" ] && break; sleep 10; done
-          virheita=0
-          for kohta in "juuri|/" "etusivu|$p/" "kalenteri|$p/kalenteri/rukous.ics" "olematon|$p/olematon-sivu/" "juuren olematon|/olematon-sivu/"; do
-            nimi="${kohta%%|*}"; polku="${kohta#*|}"
-            koodi=$(tarkista "$nimi" "$polku")
-            echo "$nimi: $koodi; $(grep -iE '^(x-robots-tag|referrer-policy|content-type):' "$RUNNER_TEMP/otsakkeet" | tr -d '\r' | tr '\n' ';')"
-            grep -qi '^x-robots-tag: .*noindex' "$RUNNER_TEMP/otsakkeet" || { echo "::error::$nimi: X-Robots-Tag noindex puuttuu"; virheita=1; }
-            grep -qi '^referrer-policy: no-referrer' "$RUNNER_TEMP/otsakkeet" || { echo "::error::$nimi: Referrer-Policy puuttuu"; virheita=1; }
-          done
-          tarkista etusivu "$p/" > /dev/null
-          if grep -qi "<title>[^<]*$(jq -r .nimi "$s" | sed 's/-/ /g')" "$RUNNER_TEMP/vastaus"; then echo "Etusivulla on moskeijan sivu"; else echo "::error::Etusivulla ei ole moskeijan sivua"; virheita=1; fi
-          tarkista juuri "/" > /dev/null
-          if [ -n "$salainen" ] && grep -q -- "$salainen" "$RUNNER_TEMP/vastaus"; then echo "::error::Juuren sivu paljastaa salaisen osan"; virheita=1; else echo "Juuressa ei ole linkkiä sivulle"; fi
-          exit $virheita
-
-      # Todennus (J1, ADR-0007): julkaisujen määrä ja laukaisija (suora lataus = ad_hoc), projektien määrä tilillä
-      - name: Julkaisut ja projektit Cloudflaren rajapinnasta
-        if: always() && steps.projekti.outcome == 'success'
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
-          PROJEKTI: ${{ steps.sivu.outputs.projekti }}
-        run: |
-          # Tunnuksen tai avaimen lopussa voi olla rivinvaihto, jos se liitettiin sellaisenaan
-          export CLOUDFLARE_ACCOUNT_ID="$(printf %s "$CLOUDFLARE_ACCOUNT_ID" | tr -d '[:space:]')" CLOUDFLARE_API_TOKEN="$(printf %s "$CLOUDFLARE_API_TOKEN" | tr -d '[:space:]')"
-          api="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects"
-          curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "$api/$PROJEKTI/deployments?per_page=25" > "$RUNNER_TEMP/j.json"
-          jq -r '"Julkaisuja projektissa: \(.result_info.total_count // (.result | length))",
-                 "Viimeisimmät \(.result | length): " + ([.result[] | "\(.deployment_trigger.type)/\(.environment)/build:\(([.stages[]? | select(.name == "build") | .status] | first) // "-")"] | group_by(.) | map("\(.[0]) ×\(length)") | join(", ")),
-                 "Ohitettuja: \([.result[] | select(.is_skipped)] | length)"' "$RUNNER_TEMP/j.json" | tee -a "$GITHUB_STEP_SUMMARY"
-          curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "$api?per_page=10" \
-            | jq -r '"Pages-projekteja tilillä: \(.result_info.total_count // (.result | length)) (raja 100)"' | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Tallenna tiivisteluettelo
+        if: ${{ !cancelled() && steps.ajo.outputs.luettelo_muuttui == 'true' }}
+        uses: actions/cache/save@v4
+        with:
+          path: tiivisteet
+          key: rakennusajo-tiivisteet-${{ env.VERSIO }}-${{ github.run_id }}-${{ github.run_attempt }}

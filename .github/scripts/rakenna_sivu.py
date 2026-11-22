@@ -9,6 +9,8 @@ Käyttö:
   python3 .github/scripts/rakenna_sivu.py --sisalto moskeijat/testimoskeija --ulos valmis \\
       --url https://esimerkki.pages.dev [--baseurl /<salainen osa>] [--nimi testimoskeija] [--testisivu] \\
       [--haetut haetut/testimoskeija] [--hae] [--aika "2026-03-01 12:00:00 +0200"] [--loki rakennus.log] [--vanha-julkaisu]
+  python3 .github/scripts/rakenna_sivu.py --sisalto moskeijat/testimoskeija --url https://esimerkki.pages.dev \\
+      --vain-haku --haetut haetut/testimoskeija [--loki haku.log]
 
 Sivun asetukset:
   --url, --baseurl  sivun osoite (sisältökansiossa ei ole osoitetta, ADR-0006). Kun baseurl on annettu, sivu
@@ -16,6 +18,8 @@ Sivun asetukset:
   --testisivu       sivu piiloon hakukoneilta (noindex ja X-Robots-Tag).
   --haetut          haettujen tietojen kansio (rukousajat, somet …): kopioidaan sivulle, ja --hae päivittää sen.
   --hae             hakee rukousajat ja somet nyt (verkko).
+  --vain-haku       hakee rukousajat ja somet kansioon --haetut eikä rakenna sivua. Rakennusajo (rakennusajo.py) hakee ensin ja
+                    rakentaa sitten vain sivut, joiden syötteet (myös haetut tiedot) muuttuivat.
   --vanha-julkaisu  Jekyll-vaihe kuten vanha julkaisuajo (rakenna.yml: jekyll-build-pages v1, github-pages 232, Jekyll 3.10;
                     .github/rakennus/vanha-julkaisu/Gemfile.lock). Vain vertailuun: hallinta testi/jekyll3-yhteensopivuus.mjs tarkistaa, että
                     sivupohja rakentuu Hyvinkään vanhalla julkaisulla samaksi näkyväksi sisällöksi (ADR-0006). Muut vaiheet ovat samat.
@@ -97,13 +101,14 @@ def yaml_arvo(s):
 def main():
     p = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     p.add_argument("--sisalto", required=True)
-    p.add_argument("--ulos", required=True)
+    p.add_argument("--ulos")
     p.add_argument("--url", required=True)
     p.add_argument("--baseurl", default="")
     p.add_argument("--nimi", default="")
     p.add_argument("--testisivu", action="store_true")
     p.add_argument("--haetut")
     p.add_argument("--hae", action="store_true")
+    p.add_argument("--vain-haku", action="store_true")
     p.add_argument("--aika")
     p.add_argument("--loki")
     p.add_argument("--vanha-julkaisu", action="store_true")
@@ -112,7 +117,11 @@ def main():
     baseurl = a.baseurl.strip("/")
     if baseurl and not re.fullmatch(r"[A-Za-z0-9_-]+", baseurl):
         raise SystemExit("--baseurl: vain kirjaimia, numeroita, - ja _ (yksi polun osa)")
-    sisalto, ulos = os.path.abspath(a.sisalto), os.path.abspath(a.ulos)
+    if a.vain_haku and not a.haetut:
+        raise SystemExit("--vain-haku: anna haettujen tietojen kansio (--haetut)")
+    if not a.vain_haku and not a.ulos:
+        raise SystemExit("--ulos puuttuu")
+    sisalto, ulos = os.path.abspath(a.sisalto), os.path.abspath(a.ulos or ".")
     if not os.path.isfile(os.path.join(sisalto, "_config.yml")):
         raise SystemExit("--sisalto: kansiosta puuttuu _config.yml")
     r = Rakennus(a.loki)
@@ -147,16 +156,20 @@ def main():
 
         skriptit = os.path.join(sivu, ".github", "scripts")
         py = lambda nimi, *argv: [sys.executable, os.path.join(skriptit, nimi), *argv]
-        r.aja("artikkelit", py("artikkelit.py", "--karsi", "."), sivu)
+        if not a.vain_haku:
+            r.aja("artikkelit", py("artikkelit.py", "--karsi", "."), sivu)
 
         # 2. Haku (valinnainen): rukousajat ja somet; tulos talteen haettujen tietojen kansioon
-        if a.hae:
+        if a.hae or a.vain_haku:
             r.aja("instagram", py("instagram.py"), sivu)
             r.aja("rukousajat", py("rukousajat.py"), sivu)
             r.aja("somet", py("somet.py"), sivu)
             if a.haetut:
                 os.makedirs(a.haetut, exist_ok=True)
                 kopioi_haetut(sivu, os.path.abspath(a.haetut))
+        if a.vain_haku:
+            print(f"Haku valmis: yhteensä {time.time() - t_alku:.1f} s", flush=True)
+            return
 
         # 3. Kuvat ennen Jekylliä: gallerioiden pienet kuvat ja jakokuva
         r.aja("pienet kuvat", py("pienet.py", sivu), sivu)
