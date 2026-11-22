@@ -18,9 +18,11 @@
   {%- comment -%} Tietoturva: vain sivuston omat skriptit (+ Cloudflare Turnstile lomakkeissa). Ei sisäisiä skriptejä eikä
   tapahtumankäsittelijöitä, joten muokattuun sisältöön lisätty koodi ei suoritu. {%- endcomment %}
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self' https:; upgrade-insecure-requests">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
   {%- include osat/hakunakyvyys.html moskeija=m -%}
-  {% if _piilota %}<meta name="robots" content="noindex, nofollow">{% endif %}
+  {%- comment -%} Luonnoslinkki (ADR-0008, hallinta#49): piilossa oleva sivu ei kerro osoitettaan muille sivuille
+  (no-referrer; sivun meta ohittaisi otsakkeen Referrer-Policy) eikä päädy hakukoneisiin tai tekoälyjen aineistoksi. {%- endcomment %}
+  <meta name="referrer" content="{% if _piilota %}no-referrer{% else %}strict-origin-when-cross-origin{% endif %}">
+  {% if _piilota %}<meta name="robots" content="noindex, nofollow, noarchive, noai, noimageai">{% endif %}
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 {% include seo.html moskeija=m %}
   <meta name="theme-color" content="{{ _pt | default: '#2b1a0e' }}">

@@ -22,6 +22,12 @@ Mitä ajo tekee:
 4. Rakentaa (rakenna_sivu.py) ja julkaisee (julkaisukohde.py) sivut, joiden tiiviste eroaa tiivisteluettelon tiivisteestä,
    ja päivittää luettelon onnistuneille sivuille. Jos luettelo puuttuu, kaikki rakennetaan. Rakennuspäivä tiivisteessä
    rakentaa jokaisen sivun kerran vuorokaudessa.
+   Luonnoslinkki (ADR-0008, hallinta#49): luonnos ja ehdotus (moskeijan _moskeijat-tiedoston luonnos/ehdotus) ja testisivu,
+   jolla on salainen osa, rakennetaan kokonaan polun /<salainen osa>/ alle (--baseurl, --luonnoslinkki). Luonnosta tai
+   ehdotusta ilman salaista osaa ei julkaista (sivun virhe), jotta se ei koskaan päädy juureen. Julkaistu sivu rakennetaan
+   juureen. Julkaisun jälkeen projektin vanhat julkaisut, joiden polku on eri (vaihdettu luonnoslinkki, julkaisu tai
+   luonnokseksi palautus), poistetaan (julkaisukohde.poista_vanhat): vanha linkki ei näytä sivua julkaisukohtaisissakaan
+   osoitteissa.
 
 5. --raportti: lähettää rakennusraportin paneeliin (POST <paneeli>/api/rakennusraportti, oma avain RAKENNUSRAPORTTI_AVAIN):
    jokaisesta ajon sivusta sisältöversio (sisältökansion git-puun tunniste sisältörepossa), tulos (rakennettu, ennallaan,
@@ -36,7 +42,7 @@ Julkinen loki ja välimuisti (pohja on julkinen repo): komento tulostaa vain siv
 määrät. Sivustoluettelon salaiset osat peitetään (add-mask) ennen muuta tulostetta. Vaiheiden oma tuloste menee
 tiedostoihin --lokit (ei julkiseen lokiin). Tiivisteluettelossa on vain tiivisteitä (SHA-256) ja rakennuspäivä, ei sisältöä.
 """
-import argparse, concurrent.futures, datetime, hashlib, json, os, re, shutil, subprocess, sys, tempfile, threading, time
+import argparse, concurrent.futures, datetime, glob, hashlib, json, os, re, shutil, subprocess, sys, tempfile, threading, time
 import urllib.error, urllib.request
 from zoneinfo import ZoneInfo
 
@@ -144,6 +150,7 @@ def lue_sivustoluettelo(sisalto):
             continue
         nimet.add(nimi)
         s = {**s, "nimi": nimi, "pohja": str(s.get("pohja") or "main")}
+        if s.get("salainen_osa") is not None: s["salainen_osa"] = str(s["salainen_osa"])
         salainen = str(s.get("salainen_osa") or "")
         if not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,57}", str(s.get("projekti") or "")) or s["projekti"] in projektit:
             virheet.append((nimi, "projekti: Cloudflare Pages -projektin nimi puuttuu, on huono tai on luettelossa kahdesti"))
@@ -208,6 +215,15 @@ class Ajo:
             raise Sivuvirhe(vaihe, m.group(1) if m else f"rakennuskomento epäonnistui (koodi {t.returncode})")
         return t.stdout or ""
 
+    def polku(self, s):
+        """Polku, jonka alle sivu rakennetaan: luonnoslinkin salainen osa (luonnos, ehdotus tai testisivu, jolla on salainen
+        osa) tai "" (juuri). Luonnos tai ehdotus ilman salaista osaa on virhe: sitä ei julkaista juureen."""
+        salainen = str(s.get("salainen_osa") or "")
+        tila = sivun_tila(self.kansio(s))
+        if tila != "julkaistu" and not salainen:
+            raise Sivuvirhe("luonnoslinkki", f"sivu on {tila}, mutta sivustoluettelosta puuttuu salainen_osa (luonnoslinkki): sivua ei julkaista")
+        return salainen if tila != "julkaistu" or s.get("testisivu") else ""
+
     def osat(self, s, pohja, paiva):
         haetut = self.haettujen_kansio(s)
         return {
@@ -223,13 +239,14 @@ class Ajo:
         tyo = tempfile.mkdtemp(prefix="rakennusajo-")
         try:
             t0 = time.time()
+            polku = self.polku(s)
             try:
                 osoite = str(s.get("osoite") or "") or kohde.osoite(s)
             except julkaisukohde.Julkaisuvirhe as e:
                 raise Sivuvirhe("julkaisu", str(e))
             ulos = os.path.join(tyo, "valmis")
             argumentit = ["--ulos", ulos, "--url", osoite, "--nimi", s["nimi"]]
-            if s.get("salainen_osa"): argumentit += ["--baseurl", "/" + str(s["salainen_osa"])]
+            if polku: argumentit += ["--baseurl", "/" + polku, "--luonnoslinkki"]
             if s.get("testisivu"): argumentit += ["--testisivu"]
             haetut = self.haettujen_kansio(s)
             if haetut and os.path.isdir(haetut): argumentit += ["--haetut", haetut]
@@ -240,13 +257,33 @@ class Ajo:
             valmis = re.search(r"^Valmis: ((\d+) tiedostoa, [\d.]+ MiB)", tuloste, re.M)
             t1 = time.time()
             try:
-                julkaisu = kohde.julkaise(s, ulos, self.loki(s))
+                julkaisu = kohde.julkaise(s, ulos, self.loki(s), polku=polku)
+                poistettu = kohde.poista_vanhat(s, polku, self.loki(s))
             except julkaisukohde.Julkaisuvirhe as e:
                 raise Sivuvirhe("julkaisu", str(e))
+            if poistettu: julkaisu += f"; poistettu {poistettu} vanha{'a' if poistettu > 1 else ''} julkaisu{'a' if poistettu > 1 else ''}"
             return {"kuvaus": f"rakennus {t1 - t0:.1f} s ({valmis.group(1) if valmis else 'valmis'}), julkaisu {time.time() - t1:.1f} s ({julkaisu})",
-                    "osoite": osoite, "tiedostoja": int(valmis.group(2)) if valmis else None}
+                    "osoite": osoite, "tiedostoja": int(valmis.group(2)) if valmis else None, "luonnoslinkki": bool(polku)}
         finally:
             shutil.rmtree(tyo, ignore_errors=True)
+
+
+def sivun_tila(kansio):
+    """Sivun tila moskeijan omasta tiedostosta (_moskeijat/<moskeija>.md, kuten paneeli ja sivupohja): luonnos, ehdotus tai
+    julkaistu. Jos tiedostoa ei voi lukea, sivu on luonnos (turvallinen oletus: ei juureen)."""
+    try:
+        with open(os.path.join(kansio, "_config.yml"), encoding="utf-8") as f:
+            moskeija = str((yaml.safe_load(f) or {}).get("moskeija") or "")
+        tiedostot = sorted(glob.glob(os.path.join(kansio, "_moskeijat", "*.md")))
+        for polku in sorted(tiedostot, key=lambda p: os.path.basename(p) != f"{moskeija}.md"):
+            with open(polku, encoding="utf-8") as f:
+                osat = f.read().split("---", 2)
+            d = yaml.safe_load(osat[1]) if len(osat) == 3 else None
+            if isinstance(d, dict) and (not moskeija or str(d.get("slug") or os.path.basename(polku)[:-3]) == moskeija or len(tiedostot) == 1):
+                return "ehdotus" if d.get("ehdotus") is True else "luonnos" if d.get("luonnos") is True else "julkaistu"
+    except Exception:
+        pass
+    return "luonnos"
 
 
 def sisaltoversio(sisalto, nimi):
@@ -311,15 +348,22 @@ def ajon_tiedot():
     return {"id": int(tunnus), "osoite": f"{os.environ.get('GITHUB_SERVER_URL', 'https://github.com')}/{repo}/actions/runs/{tunnus}"}
 
 
+def luonnoslinkin_alla(ajo, s):
+    try:
+        return bool(ajo.polku(s))
+    except Sivuvirhe:
+        return False
+
+
 def sivun_raportti(ajo, s, valmis, virhe):
     """Yhden sivun rivi rakennusraporttiin: ei sisältöä eikä salaista osaa (osoite ilman luonnoslinkin osaa)."""
     rivi = {"nimi": s["nimi"], "sisaltoversio": sisaltoversio(ajo.sisalto, s["nimi"]), "aika": iso_aika(),
-            "osoite": str(s.get("osoite") or "") or None, "luonnoslinkki": bool(s.get("salainen_osa")), "tiedostoja": None}
+            "osoite": str(s.get("osoite") or "") or None, "luonnoslinkki": luonnoslinkin_alla(ajo, s), "tiedostoja": None}
     if virhe:
         rivi.update(tulos="virhe", virhe=virhe)
     elif valmis:
         tulos, aika = valmis
-        rivi.update(tulos="rakennettu", aika=aika, osoite=tulos["osoite"], tiedostoja=tulos["tiedostoja"])
+        rivi.update(tulos="rakennettu", aika=aika, osoite=tulos["osoite"], tiedostoja=tulos["tiedostoja"], luonnoslinkki=tulos["luonnoslinkki"])
     else:
         rivi["tulos"] = "ennallaan"
     return rivi
