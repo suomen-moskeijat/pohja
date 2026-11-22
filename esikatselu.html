@@ -52,4 +52,4 @@ sitemap: false
     <iframe src="{{ '/' | relative_url }}" title="Etusivun esikatselu" data-esik-kehys loading="eager"></iframe>
   </div>
 </div>
-<script src="{{ '/assets/js/esikatselu.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
+<script src="{{ '/assets/js/esikatselu.js' | relative_url }}?v={% if site.assetversio %}{{ site.assetversio }}{% else %}{{ site.time | date: '%s' }}{% endif %}" defer></script>

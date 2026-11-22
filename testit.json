@@ -2697,6 +2697,30 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-22"
+    },
+    {
+      "id": "paivita-somet-nyt",
+      "otsikko": "Päivitä somet nyt: uusimmat somejulkaisut sivulle heti",
+      "alue": "paneeli",
+      "kuvaus": "Sivu hakee Instagramin, YouTuben ja Telegramin uusimmat julkaisut 3 tunnin välein (ennen joka tunti), ja vain moskeijoille, joilla on tili. Paneelin Some-kohdassa on nyt Päivitä somet nyt -nappi, joka hakee moskeijan julkaisut heti ja kertoo, kun ne näkyvät sivulla. Nappia voi painaa kerran 10 minuutissa. Rukousajat haetaan edelleen tunnin välein, ja sama lähde haetaan kerran kaikille moskeijoille, mutta jokainen moskeija käyttää omaa lähdettään.",
+      "aloitus": "Kirjaudu testipaneeliin pääkäyttäjänä ja avaa Testimoskeija → Muut → Some.",
+      "kohdat": [
+        "Jos Instagram-, YouTube- tai Telegram-osoitetta ei ole tallennettu, nappia ei ole; kun osoite on tallennettu ja sivu ladattu uudelleen, Päivitä somet nyt -nappi ja teksti 3 tunnin välein näkyvät — Missä: Testipaneeli → Testimoskeija → Muut → Some",
+        "Napin painallus näyttää ilmoituksen Haetaan uusimmat julkaisut, ja 1–3 minuutin päästä Uusimmat julkaisut näkyvät nyt sivulla — Missä: Testipaneeli → Testimoskeija → Muut → Some → Päivitä somet nyt",
+        "Uusin Instagram-julkaisu näkyy testimoskeijan sivun Seuraa meitä -osiossa (pyydä ylläpitäjältä uuden testimoskeijan linkki) — Missä: uusi testimoskeija, etusivu",
+        "Toinen painallus heti perään kertoo, että somet päivitettiin juuri ja milloin voi yrittää uudelleen — Missä: Testipaneeli → Testimoskeija → Muut → Some → Päivitä somet nyt",
+        "Englanniksi napissa lukee Refresh social media now — Missä: Testipaneeli → Oma tili → kieli English → Testimoskeija → Other → Social media",
+        "Puhelimella (390 ja 320 px) nappi mahtuu ruutuun ilman sivuttaisvieritystä — Missä: Testipaneeli puhelimella → Testimoskeija → Kaikki → Some",
+        "Rukousajat näkyvät testimoskeijan sivulla kuten ennen — Missä: uusi testimoskeija → Rukousajat"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Some",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/some"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-22"
     }
   ]
 }

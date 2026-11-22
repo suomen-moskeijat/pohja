@@ -10,6 +10,9 @@ Näin sivu näyttää julkaisut omana kevyenä galleriana ilman Instagramin
 upotuksia, evästeitä tai vanhenevia kuvaosoitteita.
 
 Jos haku epäonnistuu, vanhoja tiedostoja ei muuteta. Ei ulkoisia riippuvuuksia.
+
+Rakennusajo (rakennusajo.py, yhteinen_haku.py) käyttää samoja funktioita: tunnukset(sisältökansio) ja
+kasittele(tunnus, juuri=<sivun haetut tiedot>). Osoite INSTAGRAM_OSOITE: testeissä paikallinen korvike.
 """
 import datetime
 import glob
@@ -25,12 +28,13 @@ ENINTAAN = 12
 # valmiina HTML:ssä (täydellä Chrome-tunnisteella ne ladataan vasta JavaScriptillä).
 SELAIMET = ["Mozilla/5.0", "Mozilla/5.0 (compatible; MoskeijaSivusto/1.0)"]
 TYYPIT = {"GraphImage": "kuva", "GraphVideo": "video", "GraphSidecar": "albumi"}
+OSOITE = os.environ.get("INSTAGRAM_OSOITE", "https://www.instagram.com").rstrip("/")
 
 
-def tunnukset():
-    """Instagram-käyttäjätunnukset moskeijoiden tiedoista (pienillä kirjaimilla)."""
+def tunnukset(juuri=None):
+    """Instagram-käyttäjätunnukset moskeijoiden tiedoista <juuri>/_moskeijat/*.md (pienillä kirjaimilla)."""
     loydetyt = []
-    for polku in sorted(glob.glob(os.path.join(JUURI, "_moskeijat", "*.md"))):
+    for polku in sorted(glob.glob(os.path.join(juuri or JUURI, "_moskeijat", "*.md"))):
         with open(polku, encoding="utf-8") as f:
             for rivi in f:
                 m = re.match(r'\s+instagram:\s*["\']?https?://(?:www\.)?instagram\.com/([A-Za-z0-9._]+)', rivi)
@@ -48,7 +52,7 @@ def lataa(url, selain="Mozilla/5.0"):
 def profiili(tunnus):
     """Palauttaa profiiliupotuksen contextJSON-tiedot tai None."""
     for selain in SELAIMET:
-        html = lataa(f"https://www.instagram.com/{tunnus}/embed/", selain).decode("utf-8", "replace")
+        html = lataa(f"{OSOITE}/{tunnus}/embed/", selain).decode("utf-8", "replace")
         i = html.find('"contextJSON"')
         if i < 0:
             continue
@@ -60,12 +64,14 @@ def profiili(tunnus):
     return None
 
 
-def kasittele(tunnus):
+def kasittele(tunnus, juuri=None, loki=None):
+    """Hakee tilin julkaisut ja kuvat kansioon juuri (oletus: sivu, jossa skripti on). Palauttaa julkaisujen määrän."""
+    juuri = juuri or JUURI
     konteksti = profiili(tunnus)
     if not konteksti:
         raise RuntimeError("julkaisuja ei löytynyt")
     avain = tunnus.replace(".", "_")
-    kuvakansio = os.path.join(JUURI, "tiedostot", "instagram", avain)
+    kuvakansio = os.path.join(juuri, "tiedostot", "instagram", avain)
     os.makedirs(kuvakansio, exist_ok=True)
 
     julkaisut = []
@@ -77,13 +83,13 @@ def kasittele(tunnus):
         kuvat = sorted(m.get("display_resources") or [], key=lambda r: r.get("config_width", 0))
         kuva_url = (kuvat[0]["src"] if kuvat else None) or m.get("display_url")
         kuvapolku = f"tiedostot/instagram/{avain}/{koodi}.jpg"
-        tiedosto = os.path.join(JUURI, kuvapolku)
+        tiedosto = os.path.join(juuri, kuvapolku)
         if kuva_url and not os.path.exists(tiedosto):
             try:
                 with open(tiedosto, "wb") as f:
                     f.write(lataa(kuva_url))
             except Exception as e:
-                print(f"{tunnus}/{koodi}: kuvan lataus epäonnistui ({e})", file=sys.stderr)
+                print(f"{tunnus}/{koodi}: kuvan lataus epäonnistui ({e})", file=loki or sys.stderr)
                 if os.path.exists(tiedosto):
                     os.remove(tiedosto)
         if not os.path.exists(tiedosto):
@@ -109,8 +115,8 @@ def kasittele(tunnus):
         if os.path.basename(vanha) not in kaytossa:
             os.remove(vanha)
 
-    os.makedirs(os.path.join(JUURI, "_data", "instagram"), exist_ok=True)
-    with open(os.path.join(JUURI, "_data", "instagram", avain + ".json"), "w", encoding="utf-8") as f:
+    os.makedirs(os.path.join(juuri, "_data", "instagram"), exist_ok=True)
+    with open(os.path.join(juuri, "_data", "instagram", avain + ".json"), "w", encoding="utf-8") as f:
         json.dump({
             "kayttaja": tunnus,
             "nimi": konteksti.get("full_name") or tunnus,

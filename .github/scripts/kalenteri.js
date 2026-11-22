@@ -195,7 +195,8 @@ function taita(rivi) { // RFC 5545: rivit enintään 75 tavua, jatkorivi alkaa v
   return out.join('\r\n ');
 }
 function ics(lajit, tapaht) {
-  const leima = utc(nyt);
+  // DTSTAMP: rakennuspäivä (sama päivä → sama kalenteritiedosto, julkaisu ei lataa sitä uudelleen; RFC 5545 sallii)
+  const leima = `${paiva8(tanaan)}T000000Z`;
   const r = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Suomen moskeijat//Kalenteri//FI', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
     `X-WR-CALNAME:${teksti(`${tiedot.nimi} – ${lajit.map((l) => NIMET[l]).join(', ')}`)}`, `X-WR-TIMEZONE:${TZ}`,
     `X-WR-CALDESC:${teksti(`${tiedot.nimi}: ${lajit.map((l) => NIMET[l].toLowerCase()).join(', ')}. Päivittyy automaattisesti. ${tiedot.sivu || ''}${MAININTA ? `\n${MAININTA}` : ''}`)}`,
