@@ -27,6 +27,8 @@ lokia varten: ei sisältöä, osoitteita eikä salaista osaa. Wranglerin tuloste
 """
 import hashlib, json, os, re, shutil, subprocess, tempfile, threading, time, urllib.error, urllib.request
 
+ODOTUS = 5  # s tarkistusyritysten välillä (testit lyhentävät)
+VALIKERROS_ODOTA = 24  # yritystä: uusi julkaisu voi näkyä tuotanto-osoitteessa vasta hetken päästä (edellinen vastaa siihen asti)
 SIVULUPA_AVAIN_VAHINTAAN = 32  # merkkiä (vain ASCII-kirjaimia ja numeroita), sama raja kuin välikerroksessa ja paneelissa
 SELAIN = {"User-Agent": "SuomenMoskeijat-rakennusajo/1.0 (+https://github.com/suomen-moskeijat/pohja)"}
 
@@ -252,7 +254,7 @@ class CloudflarePages:
                 virhe = f"HTTP {e.code}"
             except Exception as e:
                 virhe = type(e).__name__
-            time.sleep(5)
+            time.sleep(ODOTUS)
         raise Julkaisuvirhe(f"julkaistu sivu ei vastaa projektin osoitteessa ({virhe})")
 
     def _hae(self, osoite):
@@ -266,7 +268,7 @@ class CloudflarePages:
                 virhe = f"HTTP {e.code}"
             except Exception as e:
                 virhe = type(e).__name__
-            time.sleep(5)
+            time.sleep(ODOTUS)
         raise Julkaisuvirhe(f"julkaistu sivu ei vastaa projektin osoitteessa ({virhe})")
 
     def _tarkista(self, sivu, osoite, salainen, sivulupa=False):
@@ -276,7 +278,12 @@ class CloudflarePages:
         (salainen: polku, jonka alla sivu on) myös noai ja no-referrer otsakkeissa ja sivun omissa meta-tiedoissa sekä neutraali
         juuri ja robots.txt (ADR-0008, hallinta#49). Virheiden tekstissä vain tarkistuksen nimi: ei osoitetta eikä salaista osaa."""
         if sivulupa:
-            tila, otsakkeet = self._ohjaus(osoite + "/")
+            # Edellinen julkaisu (ilman välikerrosta) voi vastata tuotanto-osoitteessa vielä hetken: odotetaan ohjausta
+            for _ in range(VALIKERROS_ODOTA):
+                tila, otsakkeet = self._ohjaus(osoite + "/")
+                if tila == 302 and "/api/sivulupa?paluu=" in (otsakkeet.get("Location") or ""):
+                    break
+                time.sleep(ODOTUS)
             if tila != 302 or "/api/sivulupa?paluu=" not in (otsakkeet.get("Location") or ""):
                 raise Julkaisuvirhe(f"testisivu ei ole välikerroksen takana: juuri vastasi HTTP {tila} ilman ohjausta paneeliin")
             r_otsakkeet, robots_txt = self._hae(osoite + "/robots.txt")
