@@ -1,8 +1,9 @@
-# Testiversio: kun pohjan testi-haaraan tulee muutos, testimoskeija rakennetaan heti uudelleen
-# (se käyttää pohjan testi-haaraa, ks. testimoskeija/.github/workflows/julkaisu.yml).
-# Testattavat kohdat ovat tiedostossa testit.json, ja ne kuitataan paneelin Testaus ja julkaisu -sivulla.
-# Kun kaikki on hyväksytty, paneelin Julkaise kaikille yhdistää testi-haaran main-haaraan.
-name: Päivitä testimoskeija
+# Testiversio: testit.json tarkistetaan, kun pohjan testi-haaraan tulee muutos. Testattavat kohdat kuitataan paneelin
+# Testaus ja julkaisu -sivulla; kun kaikki on hyväksytty, paneelin Julkaise kaikille yhdistää testi-haaran main-haaraan.
+# Testimoskeija (testisivu) rakentuu heti rakennusajolla: testi-haaran muutos käynnistää sen (kaynnista-rakennusajo.yml, ilman
+# salaisuuksia). Vanhan testimoskeijan julkaisuajoa ei enää käynnistetä avaimella toiseen repoon (hallinta#53); vanha
+# testimoskeija päivittyy omalla tunnin ajastuksellaan, kunnes se suljetaan.
+name: Tarkista testit.json
 
 on:
   push:
@@ -13,7 +14,7 @@ permissions:
   contents: read
 
 jobs:
-  testimoskeija:
+  testit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -35,16 +36,3 @@ jobs:
           if virheet: sys.exit("testit.json: " + "; ".join(virheet))
           print(len(idt), "testiä")
           PY
-      # repository_dispatch riittää avaimelle, jolla on Contents-oikeus (MOSKEIJA_AVAIN)
-      - name: Käynnistä testimoskeijan julkaisu
-        env:
-          MOSKEIJA_AVAIN: ${{ secrets.MOSKEIJA_AVAIN }}
-        run: |
-          koodi=$(curl -s -o /tmp/v.txt -w '%{http_code}' -X POST \
-            -H "Authorization: Bearer $MOSKEIJA_AVAIN" -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository_owner }}/testimoskeija/dispatches" \
-            -d '{"event_type":"pohja-testi"}')
-          if [ "$koodi" != "204" ]; then
-            echo "::warning::Testimoskeijan julkaisua ei voitu käynnistää ($koodi). Se päivittyy tunnin sisällä itsestään, tai paina paneelissa Päivitä testimoskeija nyt."
-            cat /tmp/v.txt
-          fi

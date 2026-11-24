@@ -2876,6 +2876,59 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-24"
+    },
+    {
+      "id": "testimoskeija-koko-ketju",
+      "otsikko": "Testimoskeija kokonaan uudessa julkaisussa: koko ketju",
+      "alue": "sivut",
+      "kuvaus": "Testimoskeija on ensimmäinen moskeija, joka siirretään kokonaan uuteen julkaisuun: sisältö on yksityisessä sisältörepossa, testipaneeli muokkaa sitä siellä, ja yksi rakennusajo rakentaa sivun ja julkaisee sen Cloudflareen osoitteeseen testimoskeija.suomenmoskeijat.fi (vain kirjautuneille testaajille). Siirtotyökalu vertasi vanhan ja uuden testimoskeijan sivu sivulta: näkyvä sisältö on sama (erot vain osoitteessa ja testisivun suojauksessa). Tässä kohdassa käydään koko ketju läpi kerralla. Vanha testimoskeija (github.io) toimii vielä rinnalla, ja se suljetaan vasta, kun tämä kohta on hyväksytty ja ylläpitäjä antaa luvan. Pohjan testi-haaran muutos ei enää käynnistä vanhaa testimoskeijaa, vaan uuden (rakennusajo).",
+      "aloitus": "Kirjaudu testipaneeliin testaajan tunnuksilla. Avaa rinnalle testisivu (kirjautuminen avaa sen) ja vanha testimoskeija tietokoneella ja puhelimella.",
+      "kohdat": [
+        "Testisivu avautuu vain kirjautuneena: yksityisessä ikkunassa testipaneelin kirjautuminen aukeaa, ja kirjautumisen jälkeen palataan testisivulle — Missä: Testisivu (linkki alla)",
+        "Testisivulla on sama sisältö kuin vanhassa testimoskeijassa: etusivun tekstit, tapahtumat, palvelut, artikkelit, kuvat ja yhteystiedot — Missä: testisivu ja vanha testimoskeija rinnakkain, valikon sivut",
+        "Muokkaa etusivun esittelyä ja tallenna: ilmoitus Muutos näkyy nyt sivulla tulee noin 1–2 minuutissa, ja muutos näkyy testisivulla (ei vanhassa testimoskeijassa) — Missä: Testipaneeli → Testimoskeija → Sivut → Etusivu",
+        "Uusi tapahtuma näkyy testisivun Tapahtumat-sivulla ja kalenterissa (Lisää kalenteriin -tilaus) — Missä: Testipaneeli → Testimoskeija → Tapahtumat → Lisää tapahtuma; testisivu → Tapahtumat",
+        "Muutoshistoriassa näkyy muutos, ja Peru palauttaa edellisen version myös testisivulle — Missä: Testipaneeli → Testimoskeija → Muutoshistoria → Peru",
+        "Kuvat näkyvät paneelissa (galleria, logo) ja testisivulla; uusi kuva näkyy paneelissa heti — Missä: Testipaneeli → Testimoskeija → Kuvat ja tiedostot",
+        "Rukousajat näkyvät testisivulla ja päivittyvät tunnin välein; Valvonnan rukousaikojen tila on kunnossa — Missä: testisivu → Rukousajat; Testipaneeli → Ylläpito → Valvonta",
+        "Somejulkaisut: kun some-osoite on tallennettu, Päivitä somet nyt hakee julkaisut ja kertoo, kun ne näkyvät testisivulla — Missä: Testipaneeli → Testimoskeija → Muut → Some",
+        "Esikatselu näyttää testisivun ja päivittyy muokatessa — Missä: Testipaneeli → Testimoskeija → Sivut → Etusivu (oikea reuna)",
+        "Ylläpitäjä: Valvonnan Rakennusajo-osiossa sivupohjan versio testi, viimeksi onnistunut ajo ja GitHub-minuutit; pohjan testi-haaran muutoksen jälkeen uusi ajo näkyy muutamassa minuutissa — Missä: Testipaneeli → Ylläpito → Valvonta → Rakennusajo",
+        "Testaus ja julkaisu -sivun linkit ja Avaa testimoskeija vievät testisivulle — Missä: Testipaneeli → Testaus ja julkaisu",
+        "Puhelimella (390 ja 320 px) testisivu ja paneelin näkymät mahtuvat ruutuun ilman sivuttaisvieritystä — Missä: testisivu ja testipaneeli puhelimella"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testisivu: etusivu",
+          "url": "https://testimoskeija.suomenmoskeijat.fi/"
+        },
+        {
+          "nimi": "Testisivu: Tapahtumat",
+          "url": "https://testimoskeija.suomenmoskeijat.fi/tapahtumat/"
+        },
+        {
+          "nimi": "Vanha testimoskeija (github.io)",
+          "url": "https://suomen-moskeijat.github.io/testimoskeija/"
+        },
+        {
+          "nimi": "Testipaneeli: Testimoskeijan etusivu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/sivut/etusivu"
+        },
+        {
+          "nimi": "Testipaneeli: Muutoshistoria",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/historia"
+        },
+        {
+          "nimi": "Testipaneeli: Valvonta",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/yllapito/valvonta"
+        },
+        {
+          "nimi": "Testipaneeli: Testaus ja julkaisu",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/testaus"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-24"
     }
   ]
 }
