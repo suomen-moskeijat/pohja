@@ -1,0 +1,39 @@
+---
+layout: perus
+---
+{%- comment -%} Ohjeet (OHJEET.md, rakennusajo kopioi sen sivuksi /ohjeet/): sisällys ja haku otsikoista, nykyinen kohta korostettuna. {%- endcomment -%}
+<div class="u-kehys ml-ohje">
+  <nav class="ml-ohje__sisallys u-kortti" id="sisallys" aria-label="Sisällys">
+    <details class="ml-ohje__avaa" open>
+      <summary>Sisällys</summary>
+      <input class="ml-ohje__haku" id="haku" type="search" placeholder="Hae ohjeista" autocomplete="off" aria-label="Hae ohjeista">
+      <div class="ml-ohje__linkit" id="linkit"></div>
+    </details>
+  </nav>
+  <article class="ml-ohje__teksti u-kortti" id="ohje">{{ content }}</article>
+</div>
+<script>
+  (function () {
+    var linkit = document.getElementById('linkit'), teksti = document.getElementById('ohje'), avaa = document.querySelector('.ml-ohje__avaa');
+    if (innerWidth < 1000) avaa.removeAttribute('open');
+    var parit = [];
+    teksti.querySelectorAll('h2, h3').forEach(function (h) {
+      if (!h.id) return;
+      var a = document.createElement('a'); a.href = '#' + h.id; a.textContent = h.textContent; a.className = h.tagName === 'H2' ? 't2' : 't3';
+      a.addEventListener('click', function () { if (innerWidth < 1000) avaa.removeAttribute('open'); });
+      linkit.appendChild(a); parit.push([h, a]);
+    });
+    document.getElementById('haku').addEventListener('input', function () {
+      var q = this.value.trim().toLowerCase();
+      parit.forEach(function (p) {
+        var h = p[0], t = h.textContent, n = h.nextElementSibling;
+        while (n && !/^H[23]$/.test(n.tagName)) { t += ' ' + n.textContent; n = n.nextElementSibling; }
+        p[1].hidden = !!q && t.toLowerCase().indexOf(q) < 0;
+      });
+    });
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (e) { e.forEach(function (x) { if (x.isIntersecting) parit.forEach(function (p) { p[1].classList.toggle('nyt', p[0] === x.target); }); }); }, { rootMargin: '-80px 0px -70% 0px' });
+      parit.forEach(function (p) { io.observe(p[0]); });
+    }
+  })();
+</script>

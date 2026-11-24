@@ -1,0 +1,55 @@
+<!doctype html>
+{%- comment -%}
+  Moskeijalistan sivujen kehys (hallinta#52). Tyylit ja fontit ovat sivupohjan omat (assets/css/sivu.css, assets/fontit):
+  samat värit, kortit, napit ja lomakkeen kentät kuin moskeijoiden sivuilla. Testiversio (site.testi) on piilossa hakukoneilta.
+{%- endcomment -%}
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{{ page.kuvaus | default: 'Suomen moskeijoiden nettisivut: rukousajat, tapahtumat ja yhteystiedot.' | escape }}">
+  {%- if site.testi or page.noindex %}
+  <meta name="robots" content="noindex, nofollow">
+  {%- endif %}
+  {%- unless site.testi or page.noindex %}
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <meta property="og:title" content="{{ page.title | default: site.title | escape }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  <meta property="og:type" content="website">
+  {%- endunless %}
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#3f2717">
+  <link rel="stylesheet" href="{{ '/assets/fontit/fontit.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/sivu.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/lista.css' | relative_url }}">
+</head>
+<body>
+  <a class="u-ohita" href="#sisalto">Siirry sisältöön</a>
+  <header class="u-yla ml-yla">
+    <div class="u-kehys u-yla__sisalto">
+      <a class="ml-merkki" href="{{ '/' | relative_url }}">Suomen moskeijat</a>
+      <nav class="ml-nav" aria-label="Päävalikko">
+        <a href="{{ '/#moskeijat' | relative_url }}">Moskeijat</a>
+        <a href="{{ '/ohjeet/' | relative_url }}"{% if page.layout == 'ohje' %} aria-current="page"{% endif %}>Ohjeet</a>
+      </nav>
+      <a class="u-nappi u-nappi--tumma u-nappi--pieni" href="{{ '/#lisaa' | relative_url }}">Lisää moskeija</a>
+    </div>
+  </header>
+  {%- if site.testi %}
+  <p class="ml-testi u-kehys">Testiversio: lomakkeen pyynnöt menevät testipaneeliin.</p>
+  {%- endif %}
+  <main id="sisalto">{{ content }}</main>
+  <footer class="ml-ala">
+    <div class="u-kehys ml-ala__sisalto">
+      <p>Suomen moskeijat</p>
+      <nav aria-label="Alavalikko">
+        <a href="{{ '/#moskeijat' | relative_url }}">Moskeijat</a>
+        <a href="{{ '/#lisaa' | relative_url }}">Lisää moskeija</a>
+        <a href="{{ '/ohjeet/' | relative_url }}">Ohjeet</a>
+        <a href="{{ site.paneeli }}/">Hallintapaneeli</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,17 @@
+---
+layout: null
+permalink: /llms.txt
+---
+# Suomen moskeijat
+
+> Suomen moskeijoiden nettisivut kaupungeittain. Jokaisella moskeijalla on oma sivu (rukousajat, tapahtumat, yhteystiedot), jota moskeija päivittää itse.
+
+## Moskeijat
+{% for x in site.data.lista.julkaistut %}
+- [{{ x.nimi }}]({{ x.osoite }}){% if x.kaupunki != "" %}: {{ x.kaupunki }}{% endif %}
+{%- endfor %}
+
+## Muuta
+
+- [Lisää moskeija]({{ '/#lisaa' | absolute_url }}): lomake, jolla moskeijan edustaja pyytää sivua
+- [Ohjeet]({{ '/ohjeet/' | absolute_url }}): moskeijoiden sivujen muokkaus ja ylläpito

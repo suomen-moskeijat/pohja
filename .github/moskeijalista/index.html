@@ -1,0 +1,73 @@
+---
+layout: perus
+kuvaus: Suomen moskeijoiden nettisivut kaupungeittain. Puuttuuko moskeijasi? Lisää se lomakkeella.
+---
+{%- comment -%}
+  Moskeijalista (hallinta#52): julkaistut sivut linkkeinä, luonnokset pelkkinä niminä (luonnoksen osoite on luonnoslinkki,
+  ADR-0008). Rivit tulevat rakennusajosta (_data/lista.json: kaupungit → sivut { nimi, kaupunki, tila, osoite }).
+  Lisää moskeija -lomake lähettää pyynnön paneeliin (assets/lista.js → <paneeli>/api/moskeijapyynto); ylläpitäjä hyväksyy sen.
+{%- endcomment -%}
+{%- assign lista = site.data.lista -%}
+<section class="u-kehys ml-alku">
+  <h1>Suomen moskeijoiden nettisivut</h1>
+  <p class="ml-alku__teksti">Moskeijoiden omat sivut kaupungeittain: rukousajat, tapahtumat ja yhteystiedot. Jokainen moskeija päivittää sivuaan itse.</p>
+</section>
+
+<section class="u-kehys ml-lista" id="moskeijat" aria-labelledby="moskeijat-otsikko">
+  <div class="ml-lista__otsake">
+    <h2 id="moskeijat-otsikko">Moskeijat</h2>
+    <p class="u-hieno">{{ lista.julkaistuja }} {% if lista.julkaistuja == 1 %}julkaistu sivu{% else %}julkaistua sivua{% endif %}{% if lista.maara > lista.julkaistuja %}, {{ lista.maara | minus: lista.julkaistuja }} tulossa{% endif %}</p>
+  </div>
+  {%- if lista.maara == 0 %}
+  <p class="ml-tyhja">Julkaistuja sivuja ei ole vielä. <a class="u-linkki" href="#lisaa">Lisää moskeija</a></p>
+  {%- endif %}
+  {%- for kaupunki in lista.kaupungit %}
+  <div class="ml-kaupunki">
+    <h3>{{ kaupunki.nimi | escape }}</h3>
+    <ul class="ml-rivit">
+      {%- for x in kaupunki.sivut %}
+      {%- if x.osoite %}
+      <li class="ml-rivi u-kortti" data-tila="julkaistu"><a class="ml-rivi__linkki" href="{{ x.osoite | escape }}"><span class="ml-rivi__nimi">{{ x.nimi | escape }}</span><span class="ml-rivi__osoite">{{ x.osoite | remove: 'https://' | remove: 'www.' | split: '/' | first | escape }}</span><span class="ml-rivi__nuoli" aria-hidden="true">→</span></a></li>
+      {%- else %}
+      <li class="ml-rivi ml-rivi--tulossa" data-tila="luonnos"><span class="ml-rivi__nimi">{{ x.nimi | escape }}</span><span class="ml-rivi__osoite">Sivu on tulossa</span></li>
+      {%- endif %}
+      {%- endfor %}
+    </ul>
+  </div>
+  {%- endfor %}
+</section>
+
+<section class="u-kehys ml-lisaa" id="lisaa" aria-labelledby="lisaa-otsikko">
+  <div class="ml-lisaa__teksti">
+    <h2 id="lisaa-otsikko">Lisää moskeija</h2>
+    <p>Puuttuuko moskeijasi listalta? Lähetä tiedot, niin ylläpitäjä ottaa yhteyttä ja tekee moskeijalle sivun yhdessä moskeijan kanssa.</p>
+    <p class="u-hieno">Pyyntö ei vielä luo sivua: ylläpitäjä tarkistaa sen ensin. Sivun luonnos näkyy vain moskeijalle, kunnes moskeija julkaisee sen.</p>
+  </div>
+  <form class="u-kortti u-lomake ml-lomake" data-moskeijapyynto data-api="{{ site.paneeli }}/api/moskeijapyynto" novalidate>
+    <div class="u-kentat">
+      <label class="u-kentta"><span>Moskeijan nimi *</span><input name="nimi" required maxlength="120" autocomplete="organization"></label>
+      <label class="u-kentta"><span>Kaupunki *</span><input name="kaupunki" required maxlength="80" autocomplete="address-level2"></label>
+    </div>
+    <label class="u-kentta"><span>Moskeijan nykyinen nettisivu</span><input name="nettisivu" type="url" inputmode="url" maxlength="300" placeholder="https://" dir="ltr"></label>
+    <div class="u-kentat">
+      <label class="u-kentta"><span>Yhteyshenkilö *</span><input name="yhteyshenkilo" required maxlength="120" autocomplete="name"></label>
+      <label class="u-kentta"><span>Sähköposti *</span><input name="sahkoposti" type="email" required maxlength="200" autocomplete="email" inputmode="email" dir="ltr"></label>
+    </div>
+    <label class="u-kentta"><span>Puhelin</span><input name="puhelin" type="tel" maxlength="40" autocomplete="tel" inputmode="tel" pattern="[0-9+ ()\-]{6,20}" dir="ltr"></label>
+    <label class="u-kentta"><span>Lisätietoja</span><textarea name="viesti" rows="4" maxlength="2000"></textarea></label>
+    <label class="u-hyvaksy"><input type="checkbox" name="tuonti"><span>Moskeijan nykyiseltä nettisivulta saa tuoda tekstit ja yhteystiedot uuden sivun pohjaksi.</span></label>
+    <p class="u-lomake__huom u-hieno">Tietoja käytetään vain moskeijan sivun tekemiseen ja yhteydenottoon. Ne näkyvät vain ylläpitäjille, ja ne poistetaan vuoden kuluttua.</p>
+    <label class="u-nakymaton" aria-hidden="true">Jätä tyhjäksi <input type="text" name="_sivu" tabindex="-1" autocomplete="off"></label>
+    {%- if site.turnstile_avain and site.turnstile_avain != "" %}
+    <div class="cf-turnstile" data-sitekey="{{ site.turnstile_avain }}" data-size="flexible" data-appearance="interaction-only"></div>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    {%- endif %}
+    <p class="u-lomake__viesti u-lomake__viesti--virhe" data-viesti="virhe" hidden>Täytä tähdellä merkityt kentät.</p>
+    <p class="u-lomake__viesti u-lomake__viesti--virhe" data-viesti="lahetysvirhe" hidden>Lähetys ei onnistunut. Yritä hetken päästä uudelleen.</p>
+    <p class="u-lomake__viesti u-lomake__viesti--virhe" data-viesti="palvelin" hidden></p>
+    <p class="u-lomake__viesti u-lomake__viesti--ok" data-viesti="kiitos" tabindex="-1" hidden>Kiitos, pyyntö on perillä. Ylläpitäjä ottaa yhteyttä antamaasi sähköpostiin.</p>
+    <p class="u-lomake__viesti" data-viesti="lahetetaan" hidden>Lähetetään…</p>
+    <button type="submit" class="u-nappi u-nappi--kulta">Lähetä pyyntö</button>
+  </form>
+</section>
+<script src="{{ '/assets/lista.js' | relative_url }}" defer></script>

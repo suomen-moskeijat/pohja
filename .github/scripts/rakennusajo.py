@@ -43,6 +43,10 @@ Mitä ajo tekee:
    tarkistetaan uudelleen joka ajossa, myös kun sivu ei muutu. Osoitteen lisäyksen virhe ei kaada sivua (varoitus lokiin):
    sivu näkyy silloin projektin omassa osoitteessa.
 
+   Moskeijalista (hallinta#52, moskeijalista.py): ajon lopuksi sivustoluettelosta suomenmoskeijat.fi:n lista omaan
+   Pages-projektiinsa (main: sm-moskeijalista, testi: testiversio sm-moskeijalista-testi), kun sen syötteet muuttuivat.
+   Julkaistut sivut linkkeinä, luonnokset pelkkinä niminä, ei ehdotuksia eikä testisivuja.
+
 5. --raportti: lähettää rakennusraportin paneeliin (POST <paneeli>/api/rakennusraportti, oma avain RAKENNUSRAPORTTI_AVAIN):
    jokaisesta ajon sivusta sisältöversio (sisältökansion git-puun tunniste sisältörepossa), tulos (rakennettu, ennallaan,
    virhe), aika ja osoite, sekä koko ajon tulos, määrät, kesto ja julkaisukohteen projektien määrä (hallinta#47).
@@ -65,6 +69,7 @@ import yaml
 sys.dont_write_bytecode = True  # ei __pycache__-tiedostoja sivupohjan kansioon
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import julkaisukohde
+import moskeijalista
 import rakenna_sivu
 import yhteinen_haku
 
@@ -77,7 +82,7 @@ PANEELIT = {"main": "https://hallinta.suomenmoskeijat.fi", "testi": "https://hal
 MUOTO = 1  # tiivisteluettelon muoto: muutos rakentaa kaikki sivut
 # Ei sivupohjan versioon: ei sivulle menevät kansiot (kuten rakennuskomento), työnkulut ja asennetut riippuvuudet
 _RAKENNUS = os.path.join(".github", "rakennus")
-EI_POHJAN_VERSIOON = set(rakenna_sivu.EI_POHJASTA) | {os.path.join(".github", "workflows")} | {
+EI_POHJAN_VERSIOON = set(rakenna_sivu.EI_POHJASTA) | {os.path.join(".github", "workflows"), os.path.join(".github", "moskeijalista")} | {
     os.path.join(_RAKENNUS, k, n) for k in ("", "vanha-julkaisu") for n in ("vendor", ".bundle")}
 EI_TIIVISTEESEEN = {".git", "__pycache__"}
 # Hakuajat haetuissa tiedoissa: muuttuvat joka haulla, vaikka tieto on sama
@@ -373,6 +378,12 @@ def valikerroksen_takana(s):
 def sivun_tila(kansio):
     """Sivun tila moskeijan omasta tiedostosta (_moskeijat/<moskeija>.md, kuten paneeli ja sivupohja): luonnos, ehdotus tai
     julkaistu. Jos tiedostoa ei voi lukea, sivu on luonnos (turvallinen oletus: ei juureen)."""
+    return sivun_tiedot(kansio)["tila"]
+
+
+def sivun_tiedot(kansio):
+    """Sivun tila, nimi (title) ja kaupunki moskeijan omasta tiedostosta. Ilman luettavaa tiedostoa: luonnos ilman nimeä."""
+    teksti = lambda v: str((v.get("fi") or next(iter(v.values()), "")) if isinstance(v, dict) and v else (v or "")).strip()
     try:
         with open(os.path.join(kansio, "_config.yml"), encoding="utf-8") as f:
             moskeija = str((yaml.safe_load(f) or {}).get("moskeija") or "")
@@ -382,10 +393,27 @@ def sivun_tila(kansio):
                 osat = f.read().split("---", 2)
             d = yaml.safe_load(osat[1]) if len(osat) == 3 else None
             if isinstance(d, dict) and (not moskeija or str(d.get("slug") or os.path.basename(polku)[:-3]) == moskeija or len(tiedostot) == 1):
-                return "ehdotus" if d.get("ehdotus") is True else "luonnos" if d.get("luonnos") is True else "julkaistu"
+                return {"tila": "ehdotus" if d.get("ehdotus") is True else "luonnos" if d.get("luonnos") is True else "julkaistu",
+                        "nimi": teksti(d.get("title")), "kaupunki": teksti(d.get("kaupunki"))}
     except Exception:
         pass
-    return "luonnos"
+    return {"tila": "luonnos", "nimi": "", "kaupunki": ""}
+
+
+def listan_rivit(ajo, kaikki):
+    """Moskeijalistan rivit (hallinta#52): sivupohjan versiolla main julkaistavat sivut (ei testisivuja). Julkaistu: nimi, kaupunki
+    ja sivun osoite; luonnos: nimi ja kaupunki ilman osoitetta (luonnoslinkki ei saa näkyä); ehdotus ei näy. Ei projektia,
+    tunnusta eikä salaista osaa. Sivu, jonka nimeä ei voi lukea, jätetään pois."""
+    rivit = []
+    for s in kaikki:
+        if s["pohja"] != "main" or s.get("testisivu"):
+            continue
+        t = sivun_tiedot(ajo.kansio(s))
+        if t["tila"] == "ehdotus" or not t["nimi"]:
+            continue
+        rivit.append({"nimi": t["nimi"][:120], "kaupunki": t["kaupunki"][:80], "tila": t["tila"],
+                      "osoite": rakennusosoite(s).rstrip("/") + "/" if t["tila"] == "julkaistu" else None})
+    return rivit
 
 
 def sisaltoversio(sisalto, nimi):
@@ -573,12 +601,28 @@ def main():
         if isinstance(tila, dict):
             luettelo[nimi] = {**luettelo[nimi], "osoite": tila}
 
+    # Moskeijalista (hallinta#52): sivustoluettelosta omaan Pages-projektiinsa, kun sen syötteet muuttuivat. Virhe ei estä sivuja.
+    lista_muuttui = False
+    try:
+        if any(s["nimi"] == moskeijalista.NIMI or s["projekti"] in moskeijalista.PROJEKTI.values() for s in kaikki):
+            raise moskeijalista.Listavirhe(f"sivustoluettelossa on sivu, jonka nimi tai projekti on varattu moskeijalistalle")
+        lista = moskeijalista.paivita(listan_rivit(ajo, kaikki), a.versio, ajo.paneeli, kohde,
+                                      os.path.join(os.path.dirname(os.path.abspath(a.luettelo)), "moskeijalista.json"),
+                                      os.path.join(ajo.lokit, "moskeijalista.log"), julkaisuvirhe=julkaisukohde.Julkaisuvirhe)
+        lista_muuttui = lista["muuttui"]
+        sano(f"Moskeijalista: {lista['kuvaus']}")
+    except moskeijalista.Listavirhe as e:
+        epaonnistuneet[moskeijalista.NIMI] = str(e)
+    except Exception as e:  # odottamaton: julkiseen lokiin vain virheen laji
+        epaonnistuneet[moskeijalista.NIMI] = f"odottamaton virhe ({type(e).__name__})"
+
     # Poistuneet sivut pois luettelosta (muiden versioiden sivut jäävät, jos luettelo on yhteinen)
     for nimi in [n for n in luettelo if n not in {s["nimi"] for s in kaikki}]:
         del luettelo[nimi]
     luettelo_muuttui = json.dumps(luettelo, sort_keys=True) != alussa
     if luettelo_muuttui or not os.path.exists(a.luettelo):
         tallenna_tiivisteluettelo(a.luettelo, luettelo)
+    luettelo_muuttui = luettelo_muuttui or lista_muuttui  # listan tiiviste on samassa välimuistin kansiossa
 
     # 4. Yhteenveto
     for nimi, kuvaus in epaonnistuneet.items():

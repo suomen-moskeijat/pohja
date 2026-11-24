@@ -1,6 +1,6 @@
 # Ohjeet: moskeijoiden nettisivut
 
-Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/pohja/ohjeet/**
+Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomenmoskeijat.fi/ohjeet/**
 
 - **[Missä mikin on](#kartta)**: linkit ja kokonaisuus yhdellä silmäyksellä
 - **[Tilanteet: mitä teen, kun…](#tilanteet)**: nopeat vastaukset
@@ -15,8 +15,9 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 
 | Mikä | Osoite | Kenelle |
 |---|---|---|
-| **Kaikki moskeijat ja niiden tila** | https://suomen-moskeijat.github.io/pohja/ | kaikille |
-| **Nämä ohjeet** | https://suomen-moskeijat.github.io/pohja/ohjeet/ | kaikille |
+| **Moskeijalista ja Lisää moskeija -lomake** | https://suomenmoskeijat.fi/ (julkaistut sivut linkkeinä, luonnokset pelkkinä niminä) | kaikille |
+| **Nämä ohjeet** | https://suomenmoskeijat.fi/ohjeet/ | kaikille |
+| **Kaikki sivut ja niiden tila (vanha hakemisto)** | https://suomen-moskeijat.github.io/pohja/ | ylläpitäjille siirron ajan |
 | **Moskeijan sivu** | `https://suomen-moskeijat.github.io/<moskeija>/` (tai oma verkkotunnus) | kävijöille |
 | **Sivun muokkaus (hallintapaneeli)** | https://hallinta.suomenmoskeijat.fi/ | moskeijan pääkäyttäjille ja muokkaajille |
 | **Uusi moskeija, käyttäjät, kielet, tekstit** | hallintapaneeli → Ylläpito | ylläpitäjille |
@@ -57,6 +58,7 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/
 | Henkilö lopettaa | pääkäyttäjä | Paneeli → **Käyttäjät** → Poista. |
 | Rukousajat ovat väärin | pääkäyttäjä | Paneeli → Rukousajat ja Jumua: tarkista lähde ja seuraavat 7 päivää. Yksittäisen päivän voi korjata kohdassa Muutokset yksittäisiin päiviin. |
 | Moskeija ottaa Mawaqitin tai Masjidboxin käyttöön | pääkäyttäjä | Paneeli → **Rukousajat ja Jumua** → Rukousaikojen lähde. |
+| Moskeija lähetti Lisää moskeija -pyynnön (suomenmoskeijat.fi) | ylläpitäjä | Saat sähköpostin. Paneeli → Ylläpito → **Pyynnöt** → **Luo sivu** (Uusi moskeija -lomake pyynnön tiedoilla) tai **Hylkää**. Pyyntö ei luo sivua itse. Kutsu yhteyshenkilö pääkäyttäjäksi vasta, kun moskeija on vahvistanut hänet. |
 | Moskeija haluaa oman osoitteen (esim. moskeija.fi) | ylläpitäjä | Osa 2, kohta 8. Tee vasta, kun sivu on julkaistu. |
 | Sivu ei päivity tai näyttää rikkinäiseltä | ylläpitäjä | Osa 2, kohta 10 (Actions-loki). |
 | Haluan muuttaa ulkoasua kaikille | ylläpitäjä | Muutos pohjaan → tarkista testimoskeijalta → kaikki päivittyvät tunnin sisällä. |
@@ -400,7 +402,8 @@ Kaikki muokkaus tapahtuu paneelissa. GitHub-tunnusta ei tarvita, eikä muokkaaji
 |---|---|---|
 | Moskeijan sivun julkaisu: rukousajat, Instagram, YouTube, Telegram, Mawaqitin kuvat | kerran tunnissa ja aina kun tietoja muutetaan | moskeijan repo → Actions → *Julkaise sivusto* |
 | Yhteiset artikkelit (islaminusko.fi) | maanantaisin | pohja → Actions → *Päivitä yhteiset artikkelit* |
-| Moskeijahakemisto ja nämä ohjeet | pohjan muutoksesta ja 6 tunnin välein | pohja → Actions → *Esittelysivu* |
+| Moskeijalista ja nämä ohjeet (suomenmoskeijat.fi) | rakennusajossa, kun lista tai ohjeet muuttuvat | pohja → Actions → *Rakennusajo* |
+| Vanha moskeijahakemisto (github.io) | pohjan muutoksesta ja 6 tunnin välein | pohja → Actions → *Esittelysivu* |
 
 Jokaisen ajon voi käynnistää myös käsin: Actions → työnkulku → **Run workflow**.
 
@@ -466,6 +469,7 @@ pohja/
   _artikkelit/islaminusko/   ← yhteiset artikkelit
   malli/                     ← uuden moskeijan tiedostot
   esittely/ohjeet/           ← ohjesivun ulkoasu (hakemisto + ohjeet: /pohja/)
+  .github/moskeijalista/     ← moskeijalista ja ohjeet suomenmoskeijat.fi:ssä (rakennusajo, moskeijalista.py)
   .github/scripts/           ← haut ja automaatiot (Python, ei riippuvuuksia)
   .github/workflows/         ← julkaisu, Lisää moskeija, artikkelit, hakemisto ja ohjeet, Päivitä tiedosto kaikille
 ```

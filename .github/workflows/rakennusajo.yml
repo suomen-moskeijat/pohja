@@ -150,6 +150,9 @@ jobs:
       # (Pages: Edit). Pagesin rajapinta ei luo DNS-tietuetta, joten ajo luo CNAME-tietueen suomenmoskeijat.fi-alueelle:
       # avaimeen lisäksi Zone → DNS → Edit ja Zone → Zone → Read alueelle suomenmoskeijat.fi. Ilman niitä sivu julkaistaan
       # silti projektin omaan osoitteeseen, ja lokiin tulee varoitus.
+      # Moskeijalista (hallinta#52): ajon lopuksi sivustoluettelosta suomenmoskeijat.fi:n lista omaan Pages-projektiinsa
+      # (main: sm-moskeijalista, testi-haara: testiversio sm-moskeijalista-testi), kun lista tai ohjeet muuttuivat. Luonnokset vain
+      # niminä, ei salaista osaa. suomenmoskeijat.fi ja www liitetään projektiin Cloudflaressa käsin (ei tässä ajossa).
       - name: Rakenna ja julkaise muuttuneet sivut
         id: ajo
         env:

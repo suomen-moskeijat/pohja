@@ -2876,6 +2876,42 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-24"
+    },
+    {
+      "id": "moskeijalista-lisaa-moskeija",
+      "otsikko": "Moskeijalista suomenmoskeijat.fi ja Lisää moskeija -lomake",
+      "alue": "sivu ja paneeli",
+      "kuvaus": "Rakennusajo tekee sivustoluettelosta moskeijalistan omaan Pages-projektiinsa: julkaistut moskeijoiden sivut linkkeinä kaupungeittain, luonnokset pelkkinä niminä ilman linkkiä (luonnoslinkki ei näy), ei ehdotuksia eikä testisivuja. Samalla sivustolla ovat ohjeet (/ohjeet/) ja Lisää moskeija -lomake. Lomakkeen pyyntö ei luo sivua: se menee paneelin Ylläpito → Pyynnöt -näkymään, ylläpitäjät saavat sähköpostin, ja ylläpitäjä painaa Luo sivu (Uusi moskeija -lomake pyynnön tiedoilla) tai Hylkää. Testiversio on osoitteessa sm-moskeijalista-testi.pages.dev: se näyttää samat sivut kuin tuotannon lista, on piilossa hakukoneilta, ja sen lomake lähettää testipaneeliin. Paneelin Ohjeet-linkki osoittaa suomenmoskeijat.fi/ohjeet/, joka toimii, kun suomenmoskeijat.fi on liitetty listaan.",
+      "aloitus": "Avaa moskeijalistan testiversio (linkki alla) puhelimella ja tietokoneella.",
+      "kohdat": [
+        "Listassa on otsikko Suomen moskeijoiden nettisivut ja kohta Moskeijat. Julkaistut sivut ovat kortteja, joista pääsee moskeijan sivulle; luonnokset ovat katkoviivakortteja, joissa lukee Sivu on tulossa ilman linkkiä. Ehdotuksia ei näy — Missä: moskeijalistan testiversio → Moskeijat",
+        "Puhelimella (390 ja 320 px) lista, lomake ja ohjeet mahtuvat ilman sivuttaisvieritystä, ja yläpalkin Lisää moskeija -nappi vie lomakkeeseen — Missä: moskeijalistan testiversio",
+        "Sivun yläreunassa lukee Testiversio: lomakkeen pyynnöt menevät testipaneeliin — Missä: moskeijalistan testiversio",
+        "Paina Lähetä pyyntö tyhjänä: punainen viesti pyytää täyttämään tähdellä merkityt kentät — Missä: moskeijalistan testiversio → Lisää moskeija",
+        "Täytä lomake keksityillä tiedoilla (esim. Kokeilumoskeija, Testikaupunki, kokeilu@testi.fi, +358 40 000 0000), odota hetki ja lähetä: näkyy Kiitos, pyyntö on perillä — Missä: moskeijalistan testiversio → Lisää moskeija",
+        "Ylläpitäjä: pyyntö näkyy tiedoineen, ja ylläpitäjät saivat sähköpostin otsikolla Testi: Lisää moskeija -pyyntö (vastaus menee lomakkeen sähköpostiin). Ylläpidon etusivulla on palkki odottavista pyynnöistä — Missä: Testipaneeli → Ylläpito → Pyynnöt",
+        "Ylläpitäjä: Luo sivu avaa Uusi moskeija -lomakkeen pyynnön nimellä ja kaupungilla; yläpuolella näkyvät yhteystiedot. Pääkäyttäjän sähköposti on tyhjä. Luo moskeijan sivu tekee testipaneelissa vain kuivaharjoituksen, ja pyyntö siirtyy kohtaan Käsitellyt (Hyväksytty) — Missä: Testipaneeli → Ylläpito → Pyynnöt → Luo sivu",
+        "Ylläpitäjä: lähetä toinen pyyntö ja paina Hylkää (varmistus): pyyntö siirtyy kohtaan Käsitellyt (Hylätty) — Missä: Testipaneeli → Ylläpito → Pyynnöt",
+        "Saman moskeijan pyyntö uudelleen ei tee uutta pyyntöä, ja neljäs pyyntö tunnin sisällä samasta yhteydestä kertoo, että pyyntöjä on liian monta — Missä: moskeijalistan testiversio → Lisää moskeija",
+        "Ohjeet aukeavat listan Ohjeet-linkistä: sisällys ja haku toimivat, puhelimella sisällys avautuu napista — Missä: moskeijalistan testiversio → Ohjeet",
+        "Ylläpitäjä: rakennusajon lokissa on rivi Moskeijalista: rakennettu ja julkaistu tai Moskeijalista: ei muutoksia, eikä virhettä — Missä: GitHub → pohja → Actions → Rakennusajo → viimeisin testi-haaran ajo"
+      ],
+      "linkit": [
+        {
+          "nimi": "Moskeijalistan testiversio",
+          "url": "https://sm-moskeijalista-testi.pages.dev/"
+        },
+        {
+          "nimi": "Testipaneeli: Pyynnöt",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/yllapito/pyynnot"
+        },
+        {
+          "nimi": "GitHub Actions: Rakennusajo",
+          "url": "https://github.com/suomen-moskeijat/pohja/actions/workflows/rakennusajo.yml"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-24"
     }
   ]
 }
