@@ -35,6 +35,14 @@ Mitä ajo tekee:
    luonnokseksi palautus), poistetaan (julkaisukohde.poista_vanhat): vanha linkki ei näytä sivua julkaisukohtaisissakaan
    osoitteissa.
 
+   Sivun osoite (hallinta#50, ADR-0007): oma verkkotunnus (sivustoluettelon verkkotunnus: paneeli kirjoittaa sen, kun Cloudflare
+   on vahvistanut sen), sivustoluettelon osoite tai <nimi>.suomenmoskeijat.fi. Sivu rakennetaan sillä osoitteella (canonical,
+   jakolinkit). Julkaisun jälkeen ajo lisää osoitteen <nimi>.suomenmoskeijat.fi (tai luettelon suomenmoskeijat.fi-osoitteen)
+   sivun Pages-projektiin, jos se puuttuu (julkaisukohde.lisaa_verkkotunnus, myös DNS-tietue); se jää omalle verkkotunnukselle
+   rinnalle, joten sivu ei katoa siirtymän aikana. Osoitteen tila on tiivisteluettelossa: osoite, joka ei ole vielä käytössä,
+   tarkistetaan uudelleen joka ajossa, myös kun sivu ei muutu. Osoitteen lisäyksen virhe ei kaada sivua (varoitus lokiin):
+   sivu näkyy silloin projektin omassa osoitteessa.
+
 5. --raportti: lähettää rakennusraportin paneeliin (POST <paneeli>/api/rakennusraportti, oma avain RAKENNUSRAPORTTI_AVAIN):
    jokaisesta ajon sivusta sisältöversio (sisältökansion git-puun tunniste sisältörepossa), tulos (rakennettu, ennallaan,
    virhe), aika ja osoite, sekä koko ajon tulos, määrät, kesto ja julkaisukohteen projektien määrä (hallinta#47).
@@ -61,6 +69,7 @@ import rakenna_sivu
 import yhteinen_haku
 
 POHJA = rakenna_sivu.POHJA
+ALUE = julkaisukohde.ALUE
 RAKENNA = os.path.join(POHJA, ".github", "scripts", "rakenna_sivu.py")
 VERSIOT = ("main", "testi")
 # Paneeli, jonka sivulupa-reittiin testisivujen välikerros ohjaa (hallinta#48): testi-haaran sivut testipaneeliin (sama tietokanta)
@@ -262,9 +271,10 @@ class Ajo:
             t0 = time.time()
             polku = self.polku(s)
             try:
-                osoite = str(s.get("osoite") or "") or kohde.osoite(s)
+                projektin = kohde.osoite(s)  # luo projektin, jos sitä ei ole
             except julkaisukohde.Julkaisuvirhe as e:
                 raise Sivuvirhe("julkaisu", str(e))
+            osoite = rakennusosoite(s)
             ulos = os.path.join(tyo, "valmis")
             argumentit = ["--ulos", ulos, "--url", osoite, "--nimi", s["nimi"]]
             if polku: argumentit += ["--baseurl", "/" + polku, "--luonnoslinkki"]
@@ -284,10 +294,72 @@ class Ajo:
             except julkaisukohde.Julkaisuvirhe as e:
                 raise Sivuvirhe("julkaisu", str(e))
             if poistettu: julkaisu += f"; poistettu {poistettu} vanha{'a' if poistettu > 1 else ''} julkaisu{'a' if poistettu > 1 else ''}"
+            osoitteen_tila = self.varmista_osoite(s, kohde)
             return {"kuvaus": f"rakennus {t1 - t0:.1f} s ({valmis.group(1) if valmis else 'valmis'}), julkaisu {time.time() - t1:.1f} s ({julkaisu})",
-                    "osoite": osoite, "tiedostoja": int(valmis.group(2)) if valmis else None, "luonnoslinkki": bool(polku)}
+                    "osoite": raportin_osoite(s, osoitteen_tila, projektin), "osoitteen_tila": osoitteen_tila,
+                    "tiedostoja": int(valmis.group(2)) if valmis else None, "luonnoslinkki": bool(polku)}
         finally:
             shutil.rmtree(tyo, ignore_errors=True)
+
+    def varmista_osoite(self, s, kohde):
+        """Sivun suomenmoskeijat.fi-osoite projektiin, jos se puuttuu (hallinta#50). Palauttaa { host, tila } tai None (sivulla ei
+        ole suomenmoskeijat.fi-osoitetta). Ei kaada sivua: virhe ja odottava osoite ovat varoituksia. Lokiin ei osoitetta."""
+        host = alueen_osoite(s)
+        if not host:
+            return None
+        try:
+            t = kohde.lisaa_verkkotunnus(s, host, self.loki(s))
+        except julkaisukohde.Julkaisuvirhe as e:
+            sano(f"::warning::{s['nimi']}: sivun osoitetta ei voitu lisätä Pages-projektiin ({e}). Sivu näkyy projektin omassa osoitteessa, ja seuraava ajo yrittää uudelleen.")
+            return {"host": host, "tila": "virhe"}
+        if t["tila"] != "active":
+            sano(f"::warning::{s['nimi']}: sivun osoite ei ole vielä käytössä (Cloudflare: {t['tila']}{'; ' + t['dns'] if t.get('dns') else ''}). "
+                 "Sivu näkyy projektin omassa osoitteessa, ja seuraava ajo tarkistaa osoitteen uudelleen.")
+        elif t.get("lisatty") or t.get("dns"):
+            sano(f"{s['nimi']}: sivun osoite lisätty Pages-projektiin{' (' + t['dns'] + ')' if t.get('dns') else ''}")
+        return {"host": host, "tila": t["tila"]}
+
+
+VERKKOTUNNUS = re.compile(r"(?=.{4,253}$)([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,24}")
+
+
+def verkkotunnus(s):
+    """Moskeijan oma verkkotunnus sivustoluettelosta (paneeli kirjoittaa sen, kun Cloudflare on vahvistanut sen) tai ""."""
+    d = str(s.get("verkkotunnus") or "").strip().lower().rstrip(".")
+    return d if VERKKOTUNNUS.fullmatch(d) else ""
+
+
+def rakennusosoite(s):
+    """Osoite, jolla sivu rakennetaan (canonical, jakolinkit): oma verkkotunnus, luettelon osoite tai <nimi>.suomenmoskeijat.fi."""
+    d = verkkotunnus(s)
+    if d:
+        return f"https://{d}"
+    return str(s.get("osoite") or "") or f"https://{s['nimi']}.{ALUE}"
+
+
+def alueen_osoite(s):
+    """suomenmoskeijat.fi-osoite, jonka rakennusajo pitää sivun projektissa: luettelon osoite, jos se on alueella, muuten
+    <nimi>.suomenmoskeijat.fi; None, jos luettelon osoite on muualla."""
+    oma = str(s.get("osoite") or "").strip()
+    if not oma:
+        return f"{s['nimi']}.{ALUE}"
+    m = re.fullmatch(r"https://([a-z0-9.-]+)/?", oma.lower())
+    return m.group(1) if m and (m.group(1) == ALUE or m.group(1).endswith("." + ALUE)) else None
+
+
+def raportin_osoite(s, osoitteen_tila, projektin=None):
+    """Osoite rakennusraporttiin: oma verkkotunnus, luettelon osoite, käytössä oleva <nimi>.suomenmoskeijat.fi tai projektin oma
+    osoite (None: paneeli päättelee sen projektista). Paneeli näyttää sivun tästä osoitteesta."""
+    d = verkkotunnus(s)
+    if d:
+        return f"https://{d}"
+    oma = str(s.get("osoite") or "").strip().rstrip("/")
+    if oma:
+        return oma
+    host = alueen_osoite(s)
+    if osoitteen_tila and osoitteen_tila.get("tila") == "active" and osoitteen_tila.get("host") == host:
+        return f"https://{host}"
+    return projektin
 
 
 def valikerroksen_takana(s):
@@ -385,10 +457,10 @@ def luonnoslinkin_alla(ajo, s):
         return False
 
 
-def sivun_raportti(ajo, s, valmis, virhe):
+def sivun_raportti(ajo, s, valmis, virhe, osoitteen_tila=None):
     """Yhden sivun rivi rakennusraporttiin: ei sisältöä eikä salaista osaa (osoite ilman luonnoslinkin osaa)."""
     rivi = {"nimi": s["nimi"], "sisaltoversio": sisaltoversio(ajo.sisalto, s["nimi"]), "aika": iso_aika(),
-            "osoite": str(s.get("osoite") or "") or None, "luonnoslinkki": luonnoslinkin_alla(ajo, s), "tiedostoja": None}
+            "osoite": raportin_osoite(s, osoitteen_tila), "luonnoslinkki": luonnoslinkin_alla(ajo, s), "tiedostoja": None}
     if virhe:
         rivi.update(tulos="virhe", virhe=virhe)
     elif valmis:
@@ -480,7 +552,7 @@ def main():
     def rakenna(s):
         tulos = ajo.rakenna_ja_julkaise(s, kohde)
         with lukko:
-            luettelo[s["nimi"]] = uudet[s["nimi"]]
+            luettelo[s["nimi"]] = {**uudet[s["nimi"]], **({"osoite": tulos["osoitteen_tila"]} if tulos.get("osoitteen_tila") else {})}
             tallenna_tiivisteluettelo(a.luettelo, luettelo)
         sano(f"{s['nimi']}: rakennettu ja julkaistu (syy: {syyt[s['nimi']]}) – {tulos['kuvaus']}")
         return tulos
@@ -491,6 +563,15 @@ def main():
         else:
             rakennetut += 1
             valmiit[nimi] = (tulos, iso_aika())
+
+    # Sivun osoite, joka ei ollut käytössä (tai luettelon osoite muuttui), tarkistetaan myös, kun sivu ei muuttunut (hallinta#50)
+    def tarkista_osoite(s):
+        return ajo.varmista_osoite(s, kohde)
+    tarkistettavat = [s for s in sivut if s["nimi"] in luettelo and s["nimi"] not in valmiit and s["nimi"] not in epaonnistuneet
+                      and alueen_osoite(s) and (luettelo[s["nimi"]].get("osoite") or {}) != {"host": alueen_osoite(s), "tila": "active"}]
+    for nimi, tila in rinnakkain(a.rinnakkain, tarkista_osoite, tarkistettavat).items():
+        if isinstance(tila, dict):
+            luettelo[nimi] = {**luettelo[nimi], "osoite": tila}
 
     # Poistuneet sivut pois luettelosta (muiden versioiden sivut jäävät, jos luettelo on yhteinen)
     for nimi in [n for n in luettelo if n not in {s["nimi"] for s in kaikki}]:
@@ -516,7 +597,7 @@ def main():
             "tulos": "virhe" if epaonnistuneet else "ok", "rakennettu": rakennetut, "ennallaan": ennallaan,
             "epaonnistui": len([x for x in sivut if x["nimi"] in epaonnistuneet]), "luettelonVirheet": len(virheelliset), "ajo": ajon_tiedot(),
             "projekteja": kohde.projekteja(),
-            "sivut": [sivun_raportti(ajo, s, valmiit.get(s["nimi"]), epaonnistuneet.get(s["nimi"])) for s in sivut],
+            "sivut": [sivun_raportti(ajo, s, valmiit.get(s["nimi"]), epaonnistuneet.get(s["nimi"]), (luettelo.get(s["nimi"]) or {}).get("osoite")) for s in sivut],
         })
     if os.environ.get("GITHUB_STEP_SUMMARY"):
         with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as f:

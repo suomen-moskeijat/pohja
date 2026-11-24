@@ -2843,6 +2843,39 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-22"
+    },
+    {
+      "id": "sivun-osoite-verkkotunnus-cloudflare",
+      "otsikko": "Sivun osoite nimi.suomenmoskeijat.fi ja oma verkkotunnus Cloudflareen",
+      "alue": "paneeli",
+      "kuvaus": "Uuden julkaisun sivun osoite on <nimi>.suomenmoskeijat.fi, ja rakennusajo lisää osoitteen sivulle itse. Paneelin Asetukset → Oma verkkotunnus lisää moskeijan oman verkkotunnuksen sivun Cloudflare Pages -projektiin, näyttää Cloudflaren antamat DNS-arvot ja tilan ja ottaa osoitteen käyttöön vasta, kun Cloudflare on vahvistanut sen (tarkistus puolen tunnin välein ja sähköposti kuten ennen). Vanha osoite toimii rinnalla, joten sivu ei katoa siirtymän aikana. Juuritason osoitteelle (moskeija.fi) paneeli kertoo, että se vaatii nimipalvelimet Cloudflareen, ja suosittelee www-osoitetta. Jos paneelille ei ole vielä annettu Cloudflare-avainta, kohta kertoo, ettei toimintoa ole otettu käyttöön. Lomakkeet hyväksytään vain sivun osoitteesta ja moskeijan omasta verkkotunnuksesta. Vanhan julkaisun moskeijat (Hyvinkää) toimivat ennallaan.",
+      "aloitus": "Kirjaudu testipaneeliin testimoskeijan pääkäyttäjänä ja avaa Testimoskeija → Asetukset → Oma verkkotunnus.",
+      "kohdat": [
+        "Kohdassa lukee Sivu on nyt osoitteessa https://testimoskeija.suomenmoskeijat.fi/ eikä github.io-osoitetta. Jos Cloudflare-avainta ei ole vielä annettu, kohta kertoo selvästi, ettei oman verkkotunnuksen lisäystä ole otettu käyttöön, eikä mikään kaadu — Missä: Testipaneeli → Testimoskeija → Asetukset → Oma verkkotunnus",
+        "Kirjoita www.esimerkki.fi ja paina Näytä ohjeet ja tarkista: näkyy rivi Cloudflare: odottaa … ja DNS-taulukko CNAME www.esimerkki.fi → sm-testimoskeija.pages.dev; Ota käyttöön -nappi on harmaa — Missä: Asetukset → Oma verkkotunnus",
+        "Paina Peru: osoite unohtuu (kenttä tyhjenee) — Missä: Asetukset → Oma verkkotunnus",
+        "Kirjoita esimerkki.fi (ilman www) ja tarkista: harmaa ohjelaatikko kertoo, että juuritaso vaatii nimipalvelimet Cloudflareen, ja suosittelee osoitetta www.esimerkki.fi; CNAME-ohjetta ei näytetä. Paina lopuksi Peru — Missä: Asetukset → Oma verkkotunnus",
+        "Sama kohta puhelimella (390 ja 320 px): teksti ja DNS-taulukko mahtuvat ilman sivuttaisvieritystä — Missä: Asetukset → Oma verkkotunnus",
+        "Avaa sivu ja esikatselu toimivat kuten ennen (testisivu osoitteessa testimoskeija.suomenmoskeijat.fi) — Missä: Testipaneeli → Testimoskeija → Sivut → Etusivu",
+        "Ylläpitäjä: Uusi moskeija -kuivaharjoituksen tuloskortissa lukee Sivun osoite julkaisun jälkeen: https://<nimi>.suomenmoskeijat.fi/ — Missä: Testipaneeli → Ylläpito → Uusi",
+        "Ylläpitäjä: rakennusajon lokissa ei ole varoitusta sivun osoitteesta (tai varoitus kertoo, mikä Cloudflare-avaimen oikeus puuttuu) — Missä: GitHub → pohja → Actions → Rakennusajo → viimeisin testi-haaran ajo"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Testimoskeijan asetukset",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/m/testimoskeija/asetukset"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi moskeija",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/yllapito/uusi"
+        },
+        {
+          "nimi": "GitHub Actions: Rakennusajo",
+          "url": "https://github.com/suomen-moskeijat/pohja/actions/workflows/rakennusajo.yml"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-24"
     }
   ]
 }

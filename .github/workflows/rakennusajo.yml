@@ -145,6 +145,11 @@ jobs:
       # tai ylläpitäjä. Välikerros ohjaa paneelin sivulupa-reittiin ($PANEELI). Julkaisukohde asettaa välikerroksen avaimen
       # SIVULUPA_AVAIN (sama arvo paneelin salaisuuksissa) Pages-projektin salaisuudeksi ennen julkaisua (Cloudflare-avaimen
       # Pages-muokkausoikeus riittää). Ilman avainta testisivua ei julkaista, ja vanha julkaisu jää.
+      # Sivun osoite (hallinta#50): julkaistu sivu rakennetaan osoitteeseen <nimi>.suomenmoskeijat.fi (tai sivustoluettelon
+      # omaan verkkotunnukseen), ja ajo lisää osoitteen <nimi>.suomenmoskeijat.fi sivun Pages-projektiin, jos se puuttuu
+      # (Pages: Edit). Pagesin rajapinta ei luo DNS-tietuetta, joten ajo luo CNAME-tietueen suomenmoskeijat.fi-alueelle:
+      # avaimeen lisäksi Zone → DNS → Edit ja Zone → Zone → Read alueelle suomenmoskeijat.fi. Ilman niitä sivu julkaistaan
+      # silti projektin omaan osoitteeseen, ja lokiin tulee varoitus.
       - name: Rakenna ja julkaise muuttuneet sivut
         id: ajo
         env:

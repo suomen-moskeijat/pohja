@@ -12,6 +12,13 @@ Yksi rajapinta, kaksi sovitinta:
                                 poistaa projektin vanhat julkaisut, joiden polku on eri (hallinta#49, ADR-0008): luonnoslinkin
                                 vaihdon tai julkaisun jälkeen vanha linkki ei näytä sivua julkaisukohtaisissakaan osoitteissa
                                 (Cloudflare Pages säilyttää jokaisen julkaisun omassa osoitteessaan). Palauttaa poistettujen määrän.
+  lisaa_verkkotunnus(sivu, host, loki)
+                                lisää sivun osoitteen (host, esim. <nimi>.suomenmoskeijat.fi) projektiin, jos se puuttuu (hallinta#50,
+                                ADR-0007). Palauttaa { tila (Cloudflaren tila: active, pending …), lisatty, dns (julkiseen lokiin) }.
+                                Cloudflare-sovitin luo suomenmoskeijat.fi-alueelle DNS-tietueen (CNAME → <projekti>.pages.dev), jos
+                                osoite ei ole käytössä eikä nimellä ole tietuetta: Pagesin rajapinta ei luo sitä itse (Cloudflaren
+                                Terraform-dokumentaatio: "A DNS record for the domain is not automatically created"). Ilman DNS-oikeutta
+                                tulos kertoo tarvittavan oikeuden, eikä se ole julkaisuvirhe.
   projekteja()                  projektien määrä kohteessa (Cloudflaren raja 100, valvonta hallinta#47) tai None
   poista(sivu)                  poistaa sivun projektin kaikkine julkaisuineen (moskeijan poisto, hallinta#51); palauttaa kuvauksen
 
@@ -21,15 +28,18 @@ Yksi rajapinta, kaksi sovitinta:
   asennetaan vasta ensimmäiseen julkaisuun: ajo, jossa mikään sivu ei muuttunut, ei tarvitse sitä.
 - Kansio ("kansio:<polku>"): paikallinen kansio testeille (hallinta testi/rakennusajo.mjs), sivu kansioon <polku>/<projekti>/.
   Julkaisuhistoria kuten Cloudflaren julkaisukohtaiset osoitteet: <polku>/<projekti>.julkaisut/<numero>-<tunniste>/.
+  Projektin osoitteet ja niiden tilat: <polku>/<projekti>.verkkotunnukset.json (uusi osoite on heti active; testi voi kirjoittaa
+  tilaksi esim. pending).
 
 `sivu` on sivustoluettelon kohta (nimi, projekti, salainen_osa, testisivu …). Virheen (Julkaisuvirhe) teksti on julkista
 lokia varten: ei sisältöä, osoitteita eikä salaista osaa. Wranglerin tuloste (julkaisun osoite) menee lokitiedostoon.
 """
-import hashlib, json, os, re, shutil, subprocess, tempfile, threading, time, urllib.error, urllib.request
+import hashlib, json, os, re, shutil, subprocess, tempfile, threading, time, urllib.error, urllib.parse, urllib.request
 
 ODOTUS = 5  # s tarkistusyritysten välillä (testit lyhentävät)
 VALIKERROS_ODOTA = 24  # yritystä: uusi julkaisu voi näkyä tuotanto-osoitteessa vasta hetken päästä (edellinen vastaa siihen asti)
 SIVULUPA_AVAIN_VAHINTAAN = 32  # merkkiä (vain ASCII-kirjaimia ja numeroita), sama raja kuin välikerroksessa ja paneelissa
+ALUE = "suomenmoskeijat.fi"  # sivujen osoitteet <nimi>.suomenmoskeijat.fi (Cloudflare-tilin oma DNS-alue)
 SELAIN = {"User-Agent": "SuomenMoskeijat-rakennusajo/1.0 (+https://github.com/suomen-moskeijat/pohja)"}
 
 
@@ -82,6 +92,21 @@ class Kansio:
             shutil.rmtree(os.path.join(historia, n))
         return len(poistettavat)
 
+    def lisaa_verkkotunnus(self, sivu, host, loki=None):
+        tiedosto = os.path.join(self.polku, sivu["projekti"] + ".verkkotunnukset.json")
+        try:
+            with open(tiedosto, encoding="utf-8") as f:
+                osoitteet = json.load(f)
+        except (OSError, ValueError):
+            osoitteet = {}
+        lisatty = host not in osoitteet
+        if lisatty:
+            osoitteet[host] = "active"
+            os.makedirs(self.polku, exist_ok=True)
+            with open(tiedosto, "w", encoding="utf-8") as f:
+                json.dump(osoitteet, f)
+        return {"tila": str(osoitteet[host]), "lisatty": lisatty, "dns": ""}
+
     def projekteja(self):
         try:
             return sum(1 for n in os.listdir(self.polku) if "." not in n and os.path.isdir(os.path.join(self.polku, n)))
@@ -101,6 +126,7 @@ class CloudflarePages:
     """Cloudflare Pages, suora lataus. Projekti luodaan, jos sitä ei ole (tuotantohaara main, ei Git-yhteyttä)."""
 
     API = "https://api.cloudflare.com/client/v4/accounts/{tili}/pages/projects"
+    CF = "https://api.cloudflare.com/client/v4"  # DNS-alueet (zones)
     WRANGLER = "wrangler@4.158.0"
 
     def __init__(self, avain=None, tili=None, ajo=""):
@@ -115,7 +141,10 @@ class CloudflarePages:
         self.wrangler, self.asennus = None, threading.Lock()
 
     def _api(self, polku="", data=None, metodi=None):
-        pyynto = urllib.request.Request(self.API.format(tili=self.tili) + polku, headers={**SELAIN, "Authorization": f"Bearer {self.avain}",
+        return self._pyynto(self.API.format(tili=self.tili) + polku, data, metodi)
+
+    def _pyynto(self, osoite, data=None, metodi=None):
+        pyynto = urllib.request.Request(osoite, headers={**SELAIN, "Authorization": f"Bearer {self.avain}",
                                         "Content-Type": "application/json"}, data=json.dumps(data).encode() if data is not None else None, method=metodi)
         try:
             with urllib.request.urlopen(pyynto, timeout=30) as v:
@@ -143,6 +172,67 @@ class CloudflarePages:
         with self.lukko:
             self.osoitteet[projekti] = osoite
         return osoite
+
+    def lisaa_verkkotunnus(self, sivu, host, loki=None):
+        """Sivun osoite (host) Pages-projektiin, jos se puuttuu (hallinta#50). Käytössä olevaa osoitetta ei kosketa (yksi GET).
+        Kun osoite ei ole käytössä ja se on suomenmoskeijat.fi-alueella, DNS-tietue luodaan (_dns_tietue) ja Cloudflarea
+        pyydetään tarkistamaan osoite heti uudelleen. Julkaisuvirhe vain, jos osoitetta ei voitu lisätä projektiin."""
+        projekti = sivu["projekti"]
+        polku = f"/{projekti}/domains/{urllib.parse.quote(host)}"
+        koodi, v = self._api(polku)
+        lisatty = False
+        if koodi != 200:
+            koodi, v = self._api(f"/{projekti}/domains", {"name": host})
+            if koodi == 200:
+                lisatty = True
+            else:
+                virheet = ", ".join(str(e.get("code")) for e in v.get("errors") or [] if isinstance(e, dict))
+                koodi_, v_ = self._api(polku)  # toinen ajo ehti lisätä saman osoitteen
+                if koodi_ != 200:
+                    raise Julkaisuvirhe(f"sivun osoitetta ei voitu lisätä Pages-projektiin (HTTP {koodi}{', koodit ' + virheet if virheet else ''})")
+                v = v_
+        d = v.get("result") or {}
+        tila = str(d.get("status") or "")
+        dns = ""
+        if tila != "active" and (host == ALUE or host.endswith("." + ALUE)):
+            dns = self._dns_tietue(str(d.get("zone_tag") or ""), host, self.osoite(sivu)[len("https://"):])
+            if dns.startswith("luotu"):
+                koodi, v = self._api(polku, metodi="PATCH")  # vahvistus uudelleen heti (Retry custom domain validation)
+                if koodi == 200:
+                    tila = str((v.get("result") or {}).get("status") or tila)
+        if loki:
+            with open(loki, "a", encoding="utf-8") as f:
+                f.write(f"\n== sivun osoite {host}: {tila}{' (lisätty)' if lisatty else ''}{'; ' + dns if dns else ''}\n")
+        return {"tila": tila if re.fullmatch(r"[a-z_]{1,30}", tila) else "tuntematon", "lisatty": lisatty, "dns": dns}
+
+    def _dns_tietue(self, vyohyke, host, kohde):
+        """CNAME host → kohde (välityspalvelin päällä, kuten Cloudflaren hallinnan lisäämä) suomenmoskeijat.fi-alueelle, jos
+        nimellä ei ole tietuetta. Alue: osoitteen zone_tag tai haku nimellä (Zone → Zone → Read). Palauttaa kuvauksen julkiseen
+        lokiin (ei osoitetta eikä avainta): "luotu", "nimellä on jo …" tai mitä oikeutta tarvitaan."""
+        ehdokkaat, koodi = ([vyohyke] if re.fullmatch(r"[A-Za-z0-9-]{1,64}", vyohyke) else []), None
+        for kierros in range(2):
+            for z in ehdokkaat:
+                koodi, v = self._pyynto(f"{self.CF}/zones/{z}/dns_records?name={urllib.parse.quote(host)}")
+                if koodi != 200 or not isinstance(v.get("result"), list):
+                    continue
+                if v["result"]:
+                    tyypit = ", ".join(sorted({str(r.get("type")) for r in v["result"] if isinstance(r, dict)}))
+                    return f"nimellä on jo DNS-tietue ({tyypit}), jota ei korvata: tarkista se Cloudflaren DNS-asetuksista"
+                koodi, v = self._pyynto(f"{self.CF}/zones/{z}/dns_records", {"type": "CNAME", "name": host, "content": kohde, "proxied": True,
+                                        "comment": "Rakennusajo: sivun osoite Pages-projektiin"}, "POST")
+                if koodi == 200:
+                    return "luotu DNS-tietue (CNAME projektin osoitteeseen)"
+                virheet = ", ".join(str(e.get("code")) for e in v.get("errors") or [] if isinstance(e, dict))
+                return f"DNS-tietuetta ei voitu luoda (HTTP {koodi}{', koodit ' + virheet if virheet else ''}): Cloudflare-avaimelta puuttuu ehkä oikeus Zone → DNS → Edit alueelle {ALUE}"
+            if kierros == 0:
+                k, v = self._pyynto(f"{self.CF}/zones?name={ALUE}")
+                uudet = [str(z.get("id")) for z in (v.get("result") if k == 200 and isinstance(v.get("result"), list) else []) if isinstance(z, dict) and z.get("id")]
+                ehdokkaat = [z for z in uudet if z not in ehdokkaat]
+                if not ehdokkaat:
+                    koodi = koodi or k
+                    break
+        return (f"DNS-tietuetta ei voitu tarkistaa (HTTP {koodi}): Cloudflare-avaimelta puuttuu oikeus Zone → DNS → Edit (ja Zone → Zone → Read) "
+                f"alueelle {ALUE}, tai lisää osoitteen CNAME-tietue projektin osoitteeseen käsin")
 
     def projekteja(self):
         """Tilin Pages-projektien määrä (paras yritys: None, jos rajapinta ei vastaa)."""
