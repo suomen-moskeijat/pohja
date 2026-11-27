@@ -2931,52 +2931,16 @@
       "lisatty": "2026-11-24"
     },
     {
-      "id": "moskeijalista-lisaa-moskeija",
-      "otsikko": "Moskeijalista suomenmoskeijat.fi ja Lisää moskeija -lomake",
-      "alue": "sivu ja paneeli",
-      "kuvaus": "Rakennusajo tekee sivustoluettelosta moskeijalistan omaan Pages-projektiinsa: julkaistut moskeijoiden sivut linkkeinä kaupungeittain, luonnokset pelkkinä niminä ilman linkkiä (luonnoslinkki ei näy), ei ehdotuksia eikä testisivuja. Samalla sivustolla ovat ohjeet (/ohjeet/) ja Lisää moskeija -lomake. Lomakkeen pyyntö ei luo sivua: se menee paneelin Ylläpito → Pyynnöt -näkymään, ylläpitäjät saavat sähköpostin, ja ylläpitäjä painaa Luo sivu (Uusi moskeija -lomake pyynnön tiedoilla) tai Hylkää. Testiversio on osoitteessa sm-moskeijalista-testi.pages.dev: se näyttää samat sivut kuin tuotannon lista, on piilossa hakukoneilta, ja sen lomake lähettää testipaneeliin. Paneelin Ohjeet-linkki osoittaa suomenmoskeijat.fi/ohjeet/, joka toimii, kun suomenmoskeijat.fi on liitetty listaan.",
-      "aloitus": "Avaa moskeijalistan testiversio (linkki alla) puhelimella ja tietokoneella.",
-      "kohdat": [
-        "Listassa on otsikko Suomen moskeijoiden nettisivut ja kohta Moskeijat. Julkaistut sivut ovat kortteja, joista pääsee moskeijan sivulle; luonnokset ovat katkoviivakortteja, joissa lukee Sivu on tulossa ilman linkkiä. Ehdotuksia ei näy — Missä: moskeijalistan testiversio → Moskeijat",
-        "Puhelimella (390 ja 320 px) lista, lomake ja ohjeet mahtuvat ilman sivuttaisvieritystä, ja yläpalkin Lisää moskeija -nappi vie lomakkeeseen — Missä: moskeijalistan testiversio",
-        "Sivun yläreunassa lukee Testiversio: lomakkeen pyynnöt menevät testipaneeliin — Missä: moskeijalistan testiversio",
-        "Paina Lähetä pyyntö tyhjänä: punainen viesti pyytää täyttämään tähdellä merkityt kentät — Missä: moskeijalistan testiversio → Lisää moskeija",
-        "Täytä lomake keksityillä tiedoilla (esim. Kokeilumoskeija, Testikaupunki, kokeilu@testi.fi, +358 40 000 0000), odota hetki ja lähetä: näkyy Kiitos, pyyntö on perillä — Missä: moskeijalistan testiversio → Lisää moskeija",
-        "Ylläpitäjä: pyyntö näkyy tiedoineen, ja ylläpitäjät saivat sähköpostin otsikolla Testi: Lisää moskeija -pyyntö (vastaus menee lomakkeen sähköpostiin). Ylläpidon etusivulla on palkki odottavista pyynnöistä — Missä: Testipaneeli → Ylläpito → Pyynnöt",
-        "Ylläpitäjä: Luo sivu avaa Uusi moskeija -lomakkeen pyynnön nimellä ja kaupungilla; yläpuolella näkyvät yhteystiedot. Pääkäyttäjän sähköposti on tyhjä. Luo moskeijan sivu tekee testipaneelissa vain kuivaharjoituksen, ja pyyntö siirtyy kohtaan Käsitellyt (Hyväksytty) — Missä: Testipaneeli → Ylläpito → Pyynnöt → Luo sivu",
-        "Ylläpitäjä: lähetä toinen pyyntö ja paina Hylkää (varmistus): pyyntö siirtyy kohtaan Käsitellyt (Hylätty) — Missä: Testipaneeli → Ylläpito → Pyynnöt",
-        "Saman moskeijan pyyntö uudelleen ei tee uutta pyyntöä, ja neljäs pyyntö tunnin sisällä samasta yhteydestä kertoo, että pyyntöjä on liian monta — Missä: moskeijalistan testiversio → Lisää moskeija",
-        "Ohjeet aukeavat listan Ohjeet-linkistä: sisällys ja haku toimivat, puhelimella sisällys avautuu napista — Missä: moskeijalistan testiversio → Ohjeet",
-        "Ylläpitäjä: rakennusajon lokissa on rivi Moskeijalista: rakennettu ja julkaistu tai Moskeijalista: ei muutoksia, eikä virhettä — Missä: GitHub → pohja → Actions → Rakennusajo → viimeisin testi-haaran ajo"
-      ],
-      "linkit": [
-        {
-          "nimi": "Moskeijalistan testiversio",
-          "url": "https://sm-moskeijalista-testi.pages.dev/"
-        },
-        {
-          "nimi": "Testipaneeli: Pyynnöt",
-          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/yllapito/pyynnot"
-        },
-        {
-          "nimi": "GitHub Actions: Rakennusajo",
-          "url": "https://github.com/suomen-moskeijat/pohja/actions/workflows/rakennusajo.yml"
-        }
-      ],
-      "versio": 1,
-      "lisatty": "2026-11-24"
-    },
-    {
       "id": "vanhan-julkaisun-purku",
       "otsikko": "Vanhan julkaisun purku: siirrettyjen moskeijoiden vanhat repot pois, Hyvinkää ennallaan",
       "alue": "sivut ja paneeli",
-      "kuvaus": "Siirrettyjen moskeijoiden vanhat moskeijarepot poistetaan pohjan uudella työnkululla Poista vanhat repot (käsin, kuivaharjoitus oletuksena). Se poistaa vain vanhan GitHub-repon, ei mitään sisältörepossa eikä Cloudflaressa, ja vain kun moskeija on sisältörepossa (kansio ja sivustoluettelon rivi samalla nimellä). Hyvinkää, Masjid-sunnah ja testimoskeija eivät koskaan kuulu poistettaviin. Paneelin valvonta ja Päivitä lista eivät enää lue siirrettyjen moskeijoiden vanhoja repoja, joten poistettu repo ei aiheuta virheitä eikä poista moskeijaa listalta. Pohjasta poistettiin Päivitä tiedosto kaikille -työnkulku ja moskeijarepon malli (malli/), joita mikään ei enää käyttänyt. Työnkulku ajetaan oikeasti vasta main-haarasta; testissä tarkistetaan paneeli ja kuivaharjoituksen lista.",
+      "kuvaus": "Siirrettyjen moskeijoiden vanhat moskeijarepot poistetaan pohjan uudella työnkululla Poista vanhat repot (käsin, kuivaharjoitus oletuksena). Se poistaa vain vanhan GitHub-repon, ei mitään sisältörepossa eikä Cloudflaressa, ja vain kun moskeija on sisältörepossa (kansio ja sivustoluettelon rivi samalla nimellä). Hyvinkää ja testimoskeija eivät koskaan kuulu poistettaviin. Masjid Sunnah on siirretty tunnuksella masjid-sunnah, joten sen vanha repo Masjid-sunnah kuuluu nyt poistettaviin (GitHubin nimessä kirjainkoko saa erota). Paneelin valvonta ja Päivitä lista eivät enää lue siirrettyjen moskeijoiden vanhoja repoja, joten poistettu repo ei aiheuta virheitä eikä poista moskeijaa listalta. Pohjasta poistettiin Päivitä tiedosto kaikille -työnkulku ja moskeijarepon malli (malli/), joita mikään ei enää käyttänyt. Työnkulku ajetaan oikeasti vasta main-haarasta; testissä tarkistetaan paneeli ja kuivaharjoituksen lista.",
       "aloitus": "Kirjaudu testipaneeliin ylläpitäjänä.",
       "kohdat": [
         "Päivitä lista toimii ilman virheilmoitusta, ja kaikki moskeijat (myös siirretyt luonnokset ja Hyvinkää) ovat yhä listalla — Missä: Testipaneeli → Ylläpito → Moskeijat → ⟳ Päivitä lista GitHubista",
         "Valvonta-sivulla ei ole siirrettyjen moskeijoiden vanhan julkaisun virheitä, ja Tarkista nyt toimii — Missä: Testipaneeli → Ylläpito → Valvonta → Tarkista nyt",
         "Ylläpitäjä (main-haaraan viennin jälkeen; testipaneelissa voi muokata vain testimoskeijaa): Hyvinkään tietojen tallennus toimii kuten ennen ja muutos näkyy sen sivulla tunnin sisällä — Missä: Paneeli → Hyvinkää → Moskeijan tiedot",
-        "Ylläpitäjä (main-haaraan viennin jälkeen): Poista vanhat repot -työnkulku kuivaharjoituksena syötteellä siirretyt listaa siirretyt moskeijat kohdalla poistettaisiin, eikä listassa ole Hyvinkäätä, Masjid-sunnahia eikä testimoskeijaa poistettavina — Missä: GitHub → pohja → Actions → Poista vanhat repot → Run workflow (moskeijat: siirretyt, kuiva: päällä)"
+        "Ylläpitäjä (main-haaraan viennin jälkeen): Poista vanhat repot -työnkulku kuivaharjoituksena syötteellä siirretyt listaa siirretyt moskeijat kohdalla poistettaisiin, myös masjid-sunnah (vanha repo suomen-moskeijat/Masjid-sunnah), eikä listassa ole Hyvinkäätä eikä testimoskeijaa poistettavina — Missä: GitHub → pohja → Actions → Poista vanhat repot → Run workflow (moskeijat: siirretyt, kuiva: päällä)"
       ],
       "linkit": [
         {
@@ -2992,7 +2956,7 @@
           "url": "https://github.com/suomen-moskeijat/pohja/actions/workflows/poista-vanhat-repot.yml"
         }
       ],
-      "versio": 1,
+      "versio": 2,
       "lisatty": "2026-11-27"
     },
     {
@@ -3023,6 +2987,54 @@
         {
           "nimi": "Vanha sivu",
           "url": "https://suomen-moskeijat.github.io/Masjid-sunnah/"
+        },
+        {
+          "nimi": "GitHub Actions: Rakennusajo",
+          "url": "https://github.com/suomen-moskeijat/pohja/actions/workflows/rakennusajo.yml"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-27"
+    },
+    {
+      "id": "juuriosoite-neutraali-ja-pyynnot-pois",
+      "otsikko": "suomenmoskeijat.fi ilman moskeijalistaa; Lisää moskeija -pyynnöt pois paneelista",
+      "alue": "sivut ja paneeli",
+      "kuvaus": "Moskeijalista, sen ohjeet ja Lisää moskeija -lomake on otettu pois suomenmoskeijat.fi:stä. Juuriosoitteessa (suomenmoskeijat.fi, www, sm-moskeijalista.pages.dev ja testiversio sm-moskeijalista-testi.pages.dev) on nyt sama neutraali sivu kuin luonnoslinkin juuressa: Tällä osoitteella ei ole julkista sivua. Hakukoneet eivät näe sitä (noindex, robots.txt kieltää kaiken). Vanhat polut kuten /ohjeet/, sitemap.xml ja llms.txt eivät enää näytä mitään, ja projektin vanhat julkaisut on poistettu. Rakennusajo julkaisee sivun vain, kun se muuttuu. Paneelista on poistettu pyyntöjen vastaanotto (Ylläpito → Pyynnöt ja julkinen pyyntöreitti): ylläpitäjä luo moskeijat paneelissa Ylläpito → Uusi moskeija kuten ennen. Paneelin Ohjeet- ja Hakemisto-linkit vievät vanhalle esittelysivulle (suomen-moskeijat.github.io/pohja).",
+      "aloitus": "Avaa testiversio sm-moskeijalista-testi.pages.dev (linkki alla) puhelimella ja tietokoneella, sitten testipaneeli ylläpitäjänä.",
+      "kohdat": [
+        "Sivulla lukee vain Tällä osoitteella ei ole julkista sivua: ei moskeijalistaa, lomaketta eikä linkkejä, ja sivu mahtuu puhelimella ilman sivuttaisvieritystä — Missä: Testiversio (linkki alla)",
+        "Vanhat polut eivät näytä listaa eivätkä ohjeita: /ohjeet/ ja llms.txt näyttävät saman neutraalin sivun — Missä: Testiversio: vanhat ohjeet ja Testiversio: llms.txt (linkit alla)",
+        "robots.txt kieltää kaiken (User-agent: * ja Disallow: /) — Missä: Testiversio: robots.txt (linkki alla)",
+        "Ylläpidon sivupalkissa ei ole Pyynnöt-kohtaa, eikä Moskeijat-sivulla ole ilmoitusta odottavista pyynnöistä — Missä: Testipaneeli → Ylläpito",
+        "Ohjeet-nappi (sivupalkin alalaita) ja Moskeijat-sivun Ohjeet ja Hakemisto -napit avaavat esittelysivun (suomen-moskeijat.github.io/pohja), eivät suomenmoskeijat.fi:tä — Missä: Testipaneeli → Ylläpito → Moskeijat",
+        "Uusi moskeija -lomake toimii kuten ennen: nimi ja kaupunki, Luo moskeijan sivu käynnistää kuivaharjoituksen — Missä: Testipaneeli → Ylläpito → Uusi moskeija",
+        "Ylläpitäjä (main-haaraan viennin jälkeen): suomenmoskeijat.fi ja www.suomenmoskeijat.fi näyttävät saman neutraalin sivun, ja rakennusajon lokissa on rivi Juuriosoite: neutraali sivu julkaistu tai Juuriosoite: ei muutoksia ilman virhettä — Missä: suomenmoskeijat.fi ja GitHub → pohja → Actions → Rakennusajo"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testiversio",
+          "url": "https://sm-moskeijalista-testi.pages.dev/"
+        },
+        {
+          "nimi": "Testiversio: vanhat ohjeet",
+          "url": "https://sm-moskeijalista-testi.pages.dev/ohjeet/"
+        },
+        {
+          "nimi": "Testiversio: llms.txt",
+          "url": "https://sm-moskeijalista-testi.pages.dev/llms.txt"
+        },
+        {
+          "nimi": "Testiversio: robots.txt",
+          "url": "https://sm-moskeijalista-testi.pages.dev/robots.txt"
+        },
+        {
+          "nimi": "Testipaneeli: Ylläpito",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/yllapito"
+        },
+        {
+          "nimi": "Testipaneeli: Uusi moskeija",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/yllapito/uusi"
         },
         {
           "nimi": "GitHub Actions: Rakennusajo",

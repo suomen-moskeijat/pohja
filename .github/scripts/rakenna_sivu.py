@@ -67,6 +67,15 @@ TEKOALYBOTIT = ("GPTBot", "ChatGPT-User", "OAI-SearchBot", "ClaudeBot", "Claude-
 JUURI_ROBOTS = "User-agent: *\nDisallow: /\n" + "".join(f"\nUser-agent: {b}\nDisallow: /\n" for b in TEKOALYBOTIT)
 
 
+def neutraali_juuri(ulos):
+    """Neutraali juuri kansioon ulos: index.html ja 404.html ("Tällä osoitteella ei ole julkista sivua", noindex), robots.txt
+    (kielto kaikille, myös tekoälybotit nimeltä) ja _headers (X-Robots-Tag, Referrer-Policy). Luonnoslinkin sivun juuri (ADR-0008)
+    ja suomenmoskeijat.fi:n juuriosoite (juuriosoite.py) käyttävät samaa sivua."""
+    os.makedirs(ulos, exist_ok=True)
+    for nimi, teksti in (("index.html", JUURI_SIVU), ("404.html", JUURI_SIVU), ("robots.txt", JUURI_ROBOTS), ("_headers", OTSAKKEET)):
+        with open(os.path.join(ulos, nimi), "w", encoding="utf-8") as f: f.write(teksti)
+
+
 class Rakennus:
     def __init__(self, loki):
         self.loki = open(loki, "a", encoding="utf-8") if loki else None
@@ -240,9 +249,8 @@ def main():
 
         # 6. Piilossa oleva sivu (salainen polku tai testisivu): juureen vain neutraali sivu, ei hakukoneille
         if baseurl:
-            for nimi, teksti in (("index.html", JUURI_SIVU), ("404.html", JUURI_SIVU), ("robots.txt", JUURI_ROBOTS)):
-                with open(os.path.join(ulos, nimi), "w", encoding="utf-8") as f: f.write(teksti)
-        if baseurl or a.testisivu or a.sivulupa:
+            neutraali_juuri(ulos)
+        elif a.testisivu or a.sivulupa:
             with open(os.path.join(ulos, "_headers"), "w", encoding="utf-8") as f: f.write(OTSAKKEET)
         # Testisivun välikerros (hallinta#48): vain paneelin testaajat ja ylläpitäjät. Pages ei lisää _headers-otsakkeita
         # välikerroksen vastauksiin, joten välikerros lisää ne itse; robots.txt on kaikille (kielto).

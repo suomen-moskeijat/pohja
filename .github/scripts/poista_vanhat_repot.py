@@ -11,9 +11,10 @@ Turvarajat (testi: hallinta testi/vanhat-repot.mjs):
 - repo poistetaan vain, jos sisältörepossa on kansio moskeijat/<nimi>/ (jossa _moskeijat/*.md) ja sivustoluettelossa rivi samalla
   nimellä, kirjainkoko tarkasti
 - ei koskaan SUOJATUT (vertailu kirjainkoosta riippumatta, koska GitHubin repojen nimet eivät erottele kirjainkokoa: esim.
-  /repos/<org>/masjid-sunnah osuu repoon Masjid-sunnah)
-- vain organisaation moskeijarepo: GitHubin vastauksen nimi on täsmälleen <nimi> (ei uudelleennimettyä eikä eri kirjainkokoa),
-  omistaja on organisaatio ja repossa on _moskeijat/*.md
+  /repos/<org>/hyvinkaa-islam-keskus osuisi myös repoon Hyvinkaa-Islam-Keskus)
+- vain organisaation moskeijarepo: GitHubin vastauksen nimi on <nimi> kirjainkokoa lukuun ottamatta (ei uudelleennimettyä),
+  omistaja on organisaatio ja repossa on _moskeijat/*.md. Kirjainkoko saa erota, koska GitHub ei erottele sitä ja tunnuksen
+  vaihdossa (hallinta#53) uusi tunnus on pienillä kirjaimilla: sivu masjid-sunnah, vanha repo Masjid-sunnah.
 - nimetty lista: jos yksikin nimi hylätään, mitään ei poisteta. siirretyt: hylätyt ohitetaan, muut poistetaan.
 - kuivaharjoitus (oletus) tekee tarkistukset ja tulostaa listan, mutta ei poista mitään
 
@@ -28,8 +29,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import sisaltorepo
 
 # Ei koskaan poisteta: sivupohja, paneeli, sisältörepo, organisaation asetukset ja vanhaan julkaisuun jäävät sivut
-# (Hyvinkää, Masjid-sunnah siirretään erikseen, vanha testimoskeija odottaa testaajan kuittausta).
-SUOJATUT = {"pohja", "hallinta", "sisalto", ".github", "hyvinkaa-islam-keskus", "masjid-sunnah", "testimoskeija"}
+# (Hyvinkää siirretään erikseen, vanha testimoskeija odottaa testaajan kuittausta). Masjid Sunnah on siirretty tunnuksella
+# masjid-sunnah (hallinta#53), joten sen vanha repo Masjid-sunnah saa poistua (käyttäjän päätös 27.11.2026).
+SUOJATUT = {"pohja", "hallinta", "sisalto", ".github", "hyvinkaa-islam-keskus", "testimoskeija"}
 NIMI = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,99}")
 SIIRRETYT = "siirretyt"
 
@@ -82,7 +84,8 @@ def tarkista_paikallisesti(sisalto, nimi, luettelo):
 
 
 def tarkista_githubissa(org, nimi):
-    """Vanha repo: None, jos sitä ei ole; muuten True, kun se on organisaation moskeijarepo täsmälleen tällä nimellä."""
+    """Vanha repo: None, jos sitä ei ole; muuten sen nimi GitHubissa, kun se on organisaation moskeijarepo tällä nimellä
+    (kirjainkoko saa erota: GitHub ei erottele sitä)."""
     polku = f"/repos/{urllib.parse.quote(org)}/{urllib.parse.quote(nimi)}"
     try:
         repo = api(polku)
@@ -92,8 +95,9 @@ def tarkista_githubissa(org, nimi):
         raise Hylatty(f"tarkistus epäonnistui (HTTP {e.code})")
     except (urllib.error.URLError, TimeoutError):
         raise Hylatty("tarkistus epäonnistui (yhteys)")
-    if str(repo.get("name") or "") != nimi:
-        raise Hylatty(f"GitHubin repon nimi on {repo.get('name')!r} (uudelleennimetty tai eri kirjainkoko)")
+    oikea = str(repo.get("name") or "")
+    if oikea.lower() != nimi.lower():
+        raise Hylatty(f"GitHubin repon nimi on {oikea!r} (uudelleennimetty)")
     omistaja = str((repo.get("owner") or {}).get("login") or "")
     if omistaja.lower() != org.lower() or str(repo.get("full_name") or "").lower() != f"{org}/{nimi}".lower():
         raise Hylatty(f"ei organisaation {org} repo")
@@ -107,7 +111,7 @@ def tarkista_githubissa(org, nimi):
         raise Hylatty("tarkistus epäonnistui (yhteys)")
     if not isinstance(tiedostot, list) or not any(str(t.get("name", "")).endswith(".md") for t in tiedostot):
         raise Hylatty("ei moskeijarepo (_moskeijat/*.md puuttuu)")
-    return True
+    return oikea
 
 
 def main(argv=None):
@@ -138,10 +142,11 @@ def main(argv=None):
     for nimi in nimet:
         try:
             tarkista_paikallisesti(a.sisalto, nimi, luettelo)
-            if tarkista_githubissa(org, nimi) is None:
+            repo = tarkista_githubissa(org, nimi)
+            if repo is None:
                 print(f"  {nimi}: ei vanhaa repoa (jo poistettu tai ei ollut)", flush=True)
                 continue
-            poistettavat.append(nimi)
+            poistettavat.append((nimi, repo))
         except Hylatty as e:
             hylatyt.append(nimi)
             if str(e).startswith("tarkistus epäonnistui"):
@@ -153,12 +158,12 @@ def main(argv=None):
 
     # 2) Poisto (tai kuivana lista)
     poistetut = []
-    for nimi in poistettavat:
+    for nimi, repo in poistettavat:
         if kuiva:
-            print(f"  {nimi}: vanha repo {org}/{nimi} poistettaisiin", flush=True)
+            print(f"  {nimi}: vanha repo {org}/{repo} poistettaisiin", flush=True)
             continue
         try:
-            api(f"/repos/{urllib.parse.quote(org)}/{urllib.parse.quote(nimi)}", "DELETE")
+            api(f"/repos/{urllib.parse.quote(org)}/{urllib.parse.quote(repo)}", "DELETE")
             poistetut.append(nimi)
             print(f"  {nimi}: vanha repo poistettu", flush=True)
         except urllib.error.HTTPError as e:

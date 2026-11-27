@@ -1,6 +1,6 @@
 # Ohjeet: moskeijoiden nettisivut
 
-Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomenmoskeijat.fi/ohjeet/**
+Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomen-moskeijat.github.io/pohja/ohjeet/**
 
 - **[Missä mikin on](#kartta)**: linkit ja kokonaisuus yhdellä silmäyksellä
 - **[Tilanteet: mitä teen, kun…](#tilanteet)**: nopeat vastaukset
@@ -15,8 +15,7 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomenmoskeijat.fi/ohjeet/*
 
 | Mikä | Osoite | Kenelle |
 |---|---|---|
-| **Moskeijalista ja Lisää moskeija -lomake** | https://suomenmoskeijat.fi/ (julkaistut sivut linkkeinä, luonnokset pelkkinä niminä) | kaikille |
-| **Nämä ohjeet** | https://suomenmoskeijat.fi/ohjeet/ | kaikille |
+| **Nämä ohjeet** | https://suomen-moskeijat.github.io/pohja/ohjeet/ | kaikille |
 | **Kaikki sivut ja niiden tila (vanha hakemisto)** | https://suomen-moskeijat.github.io/pohja/ | ylläpitäjille siirron ajan |
 | **Moskeijan sivu** | `https://suomen-moskeijat.github.io/<moskeija>/` (tai oma verkkotunnus) | kävijöille |
 | **Sivun muokkaus (hallintapaneeli)** | https://hallinta.suomenmoskeijat.fi/ | moskeijan pääkäyttäjille ja muokkaajille |
@@ -58,7 +57,6 @@ Kaikki ohjeet yhdessä paikassa. Verkossa: **https://suomenmoskeijat.fi/ohjeet/*
 | Henkilö lopettaa | pääkäyttäjä | Paneeli → **Käyttäjät** → Poista. |
 | Rukousajat ovat väärin | pääkäyttäjä | Paneeli → Rukousajat ja Jumua: tarkista lähde ja seuraavat 7 päivää. Yksittäisen päivän voi korjata kohdassa Muutokset yksittäisiin päiviin. |
 | Moskeija ottaa Mawaqitin tai Masjidboxin käyttöön | pääkäyttäjä | Paneeli → **Rukousajat ja Jumua** → Rukousaikojen lähde. |
-| Moskeija lähetti Lisää moskeija -pyynnön (suomenmoskeijat.fi) | ylläpitäjä | Saat sähköpostin. Paneeli → Ylläpito → **Pyynnöt** → **Luo sivu** (Uusi moskeija -lomake pyynnön tiedoilla) tai **Hylkää**. Pyyntö ei luo sivua itse. Kutsu yhteyshenkilö pääkäyttäjäksi vasta, kun moskeija on vahvistanut hänet. |
 | Moskeija haluaa oman osoitteen (esim. moskeija.fi) | ylläpitäjä | Osa 2, kohta 8. Tee vasta, kun sivu on julkaistu. |
 | Sivu ei päivity tai näyttää rikkinäiseltä | ylläpitäjä | Osa 2, kohta 10 (Actions-loki). |
 | Haluan muuttaa ulkoasua kaikille | ylläpitäjä | Muutos pohjaan → tarkista testimoskeijalta → kaikki päivittyvät tunnin sisällä. |
@@ -402,7 +400,7 @@ Kaikki muokkaus tapahtuu paneelissa. GitHub-tunnusta ei tarvita, eikä muokkaaji
 |---|---|---|
 | Moskeijan sivun julkaisu: rukousajat, Instagram, YouTube, Telegram, Mawaqitin kuvat | kerran tunnissa ja aina kun tietoja muutetaan | moskeijan repo → Actions → *Julkaise sivusto* |
 | Yhteiset artikkelit (islaminusko.fi) | maanantaisin | pohja → Actions → *Päivitä yhteiset artikkelit* |
-| Moskeijalista ja nämä ohjeet (suomenmoskeijat.fi) | rakennusajossa, kun lista tai ohjeet muuttuvat | pohja → Actions → *Rakennusajo* |
+| suomenmoskeijat.fi (neutraali sivu, ei julkista sisältöä) | rakennusajossa, kun sivu muuttuu | pohja → Actions → *Rakennusajo* |
 | Vanha moskeijahakemisto (github.io) | pohjan muutoksesta ja 6 tunnin välein | pohja → Actions → *Esittelysivu* |
 
 Jokaisen ajon voi käynnistää myös käsin: Actions → työnkulku → **Run workflow**.
@@ -416,7 +414,7 @@ Jokaisen ajon voi käynnistää myös käsin: Actions → työnkulku → **Run w
 - Kirjoita jokaisesta muutoksesta kohta tiedostoon `testit.json` (otsikko, mitä tarkistetaan, linkit). Testaaja kuittaa kohdat paneelissa: **Testaus ja julkaisu** → Toimii ✓ / Ei toimi ✗ ja syy. Kun korjaat hylätyn kohdan, nosta sen `versio`.
 - Kun kaikki on hyväksytty, ylläpitäjä painaa paneelissa **Julkaise kaikille**. `testi` yhdistyy `main`-haaraan, ja kaikki moskeijat saavat muutoksen tunnin sisällä. Kuka testasi ja kuka julkaisi, näkyy paneelin historiassa.
 - Älä kirjoita `testit.json`-tiedostoon nimiä tai muita henkilötietoja: repo on julkinen.
-- Siirrettyjen moskeijoiden vanhat moskeijarepot poistetaan käsin: pohja → Actions → **Poista vanhat repot** (kuivaharjoitus ensin; Hyvinkää, Masjid-sunnah ja testimoskeija eivät koskaan kuulu poistettaviin).
+- Siirrettyjen moskeijoiden vanhat moskeijarepot poistetaan käsin: pohja → Actions → **Poista vanhat repot** (kuivaharjoitus ensin; Hyvinkää ja testimoskeija eivät koskaan kuulu poistettaviin).
 
 ### 7. Rukousaikojen lähteet
 
@@ -468,7 +466,6 @@ pohja/
   _data/kaannokset.yml       ← käyttöliittymän tekstit neljällä kielellä
   _artikkelit/islaminusko/   ← yhteiset artikkelit
   esittely/ohjeet/           ← ohjesivun ulkoasu (hakemisto + ohjeet: /pohja/)
-  .github/moskeijalista/     ← moskeijalista ja ohjeet suomenmoskeijat.fi:ssä (rakennusajo, moskeijalista.py)
   .github/scripts/           ← haut ja automaatiot (Python, ei riippuvuuksia)
   .github/workflows/         ← rakennusajo, julkaisu (Hyvinkää), Lisää moskeija, poisto, artikkelit, hakemisto ja ohjeet, Poista vanhat repot
 ```

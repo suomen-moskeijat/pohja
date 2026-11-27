@@ -2,8 +2,9 @@
 # → Run workflow (main-haarasta). Moskeija on siirretty, kun sen sisältö on sisältörepossa (kansio moskeijat/<nimi>/ ja
 # sivustoluettelon rivi); vanha moskeijarepo (GitHub Pages) on silloin tarpeeton.
 # - Poistaa vain vanhan GitHub-repon. Sisältörepoon (vain luku), sivustoluetteloon ja Cloudflareen ei kosketa.
-# - Ei koskaan pohja, hallinta, sisalto, .github, hyvinkaa-islam-keskus, Masjid-sunnah tai testimoskeija; vain organisaation
-#   moskeijarepo, jonka nimi on täsmälleen sama kuin sisältörepon kansio ja sivustoluettelon rivi (turvarajat:
+# - Ei koskaan pohja, hallinta, sisalto, .github, hyvinkaa-islam-keskus tai testimoskeija; vain organisaation moskeijarepo,
+#   jonka nimi on sama kuin sisältörepon kansio ja sivustoluettelon rivi (GitHubissa kirjainkoko saa erota, esim. sivu
+#   masjid-sunnah ja vanha repo Masjid-sunnah; turvarajat:
 #   .github/scripts/poista_vanhat_repot.py, testi hallinta testi/vanhat-repot.mjs).
 # - Kuivaharjoitus on oletus: tarkistaa ja tulostaa listan, ei poista mitään. Poisto vain, kun kuiva otetaan pois.
 # - Syötteet luetaan käynnistyksen tiedoista; loki näyttää vain nimet ja tulokset.

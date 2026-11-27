@@ -8,10 +8,14 @@ Yksi rajapinta, kaksi sovitinta:
                                 salainen osa, jonka alla sivu on, tai "" (juuri); sen tunniste (polun_tunniste) kirjataan julkaisuun.
                                 sivulupa: testisivu välikerroksen takana (hallinta#48): Cloudflare-sovitin asettaa ensin välikerroksen
                                 avaimen (SIVULUPA_AVAIN) projektin salaisuudeksi ja tarkistaa julkaisun jälkeen, että sivu on suojattu
-  poista_vanhat(sivu, polku, loki, sivulupa)
+                                Julkaisu korvaa projektin koko sisällön: tiedosto, jota kansiossa ei ole, ei näy uudessa julkaisussa
+                                (Cloudflare Pages: jokainen julkaisu on oma kokonainen tiedostojoukko; kansio: edellinen korvataan).
+  poista_vanhat(sivu, polku, loki, sivulupa, kaikki)
                                 poistaa projektin vanhat julkaisut, joiden polku on eri (hallinta#49, ADR-0008): luonnoslinkin
                                 vaihdon tai julkaisun jälkeen vanha linkki ei näytä sivua julkaisukohtaisissakaan osoitteissa
-                                (Cloudflare Pages säilyttää jokaisen julkaisun omassa osoitteessaan). Palauttaa poistettujen määrän.
+                                (Cloudflare Pages säilyttää jokaisen julkaisun omassa osoitteessaan). kaikki: kaikki paitsi nykyinen
+                                julkaisu polusta riippumatta (juuriosoite: vanhan moskeijalistan julkaisut pois). Palauttaa
+                                poistettujen määrän.
   lisaa_verkkotunnus(sivu, host, loki)
                                 lisää sivun osoitteen (host, esim. <nimi>.suomenmoskeijat.fi) projektiin, jos se puuttuu (hallinta#50,
                                 ADR-0007). Palauttaa { tila (Cloudflaren tila: active, pending …), lisatty, dns (julkiseen lokiin) }.
@@ -84,10 +88,10 @@ class Kansio:
         shutil.copytree(kohde, os.path.join(historia, f"{nro:04d}-{polun_tunniste(polku, sivulupa)}"), copy_function=os.link)
         return "paikallinen kansio"
 
-    def poista_vanhat(self, sivu, polku, loki=None, sivulupa=False):
+    def poista_vanhat(self, sivu, polku, loki=None, sivulupa=False, kaikki=False):
         tunniste, historia = polun_tunniste(polku, sivulupa), self.historia(sivu)
         julkaisut = sorted(n for n in os.listdir(historia) if n.split("-")[0].isdigit()) if os.path.isdir(historia) else []
-        poistettavat = [n for n in julkaisut[:-1] if n.split("-", 1)[1] != tunniste]  # uusin on nykyinen julkaisu
+        poistettavat = [n for n in julkaisut[:-1] if kaikki or n.split("-", 1)[1] != tunniste]  # uusin on nykyinen julkaisu
         for n in poistettavat:
             shutil.rmtree(os.path.join(historia, n))
         return len(poistettavat)
@@ -400,9 +404,9 @@ class CloudflarePages:
         if salainen in juuri or not re.search(r"^User-agent: \*\s*\nDisallow: /\s*$", robots_txt, re.M):
             raise Julkaisuvirhe("luonnoslinkin osoitteen juuri ei ole neutraali (juuren sivu tai robots.txt)")
 
-    def poista_vanhat(self, sivu, polku, loki=None, sivulupa=False):
-        """Poistaa projektin julkaisut, joiden polun tunniste (julkaisun viestissä) on eri kuin nyt, paitsi nykyisen
-        tuotantojulkaisun. Myös ennen tunnisteita tehdyt julkaisut poistetaan. Epäonnistunut poisto on julkaisuvirhe: sivun
+    def poista_vanhat(self, sivu, polku, loki=None, sivulupa=False, kaikki=False):
+        """Poistaa projektin julkaisut, joiden polun tunniste (julkaisun viestissä) on eri kuin nyt (kaikki: polusta riippumatta),
+        paitsi nykyisen tuotantojulkaisun. Myös ennen tunnisteita tehdyt julkaisut poistetaan. Epäonnistunut poisto on julkaisuvirhe: sivun
         tiiviste ei päivity, joten seuraava ajo julkaisee ja yrittää poistoa uudelleen."""
         projekti, tunniste = sivu["projekti"], polun_tunniste(polku, sivulupa)
         koodi, v = self._api("/" + projekti)
@@ -416,7 +420,7 @@ class CloudflarePages:
                 raise Julkaisuvirhe(f"Pages-projektin julkaisuja ei voitu listata (HTTP {koodi})")
             for j in v["result"]:
                 viesti = str(((j.get("deployment_trigger") or {}).get("metadata") or {}).get("commit_message") or "")
-                if j.get("id") and j["id"] != nykyinen and not viesti.endswith(f"polku:{tunniste}"):
+                if j.get("id") and j["id"] != nykyinen and (kaikki or not viesti.endswith(f"polku:{tunniste}")):
                     poistettavat.append(j["id"])
             if len(v["result"]) < 25:
                 break

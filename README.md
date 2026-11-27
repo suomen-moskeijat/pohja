@@ -47,8 +47,9 @@ kuten ennen (moskeijarepo).
 Siirrettyjen moskeijoiden vanhat moskeijarepot poistetaan erikseen käsin (`poista-vanhat-repot.yml`, hallinta#56): syöte
 `moskeijat` (nimet pilkuin tai `siirretyt` = sivustoluettelon sivut, joilla on vanha repo) ja `kuiva` (oletus: vain lista).
 Työnkulku poistaa vain vanhan GitHub-repon, ei mitään sisältörepossa eikä Cloudflaressa, ja vain kun sisältörepossa on kansio
-`moskeijat/<nimi>/` ja sivustoluettelossa rivi samalla nimellä. Pohja, hallinta, sisalto, .github, Hyvinkää, Masjid-sunnah ja
-testimoskeija eivät koskaan kuulu poistettaviin.
+`moskeijat/<nimi>/` ja sivustoluettelossa rivi samalla nimellä (GitHubin repon nimessä kirjainkoko saa erota: sivu
+masjid-sunnah, vanha repo Masjid-sunnah). Pohja, hallinta, sisalto, .github, Hyvinkää ja testimoskeija eivät koskaan kuulu
+poistettaviin.
 
 Uusi moskeija alkaa tyhjästä (ADR-0001): sivulla ei ole oletusesittelyä, iqamah-minuutteja, valmiita artikkeleita,
 toiminnan kieliä eikä yläosan nappeja, ennen kuin moskeija lisää tai valitsee ne. Vain tuotu tieto (nimi, osoite,
