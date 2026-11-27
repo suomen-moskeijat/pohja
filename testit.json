@@ -2965,6 +2965,35 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-24"
+    },
+    {
+      "id": "vanhan-julkaisun-purku",
+      "otsikko": "Vanhan julkaisun purku: siirrettyjen moskeijoiden vanhat repot pois, Hyvinkää ennallaan",
+      "alue": "sivut ja paneeli",
+      "kuvaus": "Siirrettyjen moskeijoiden vanhat moskeijarepot poistetaan pohjan uudella työnkululla Poista vanhat repot (käsin, kuivaharjoitus oletuksena). Se poistaa vain vanhan GitHub-repon, ei mitään sisältörepossa eikä Cloudflaressa, ja vain kun moskeija on sisältörepossa (kansio ja sivustoluettelon rivi samalla nimellä). Hyvinkää, Masjid-sunnah ja testimoskeija eivät koskaan kuulu poistettaviin. Paneelin valvonta ja Päivitä lista eivät enää lue siirrettyjen moskeijoiden vanhoja repoja, joten poistettu repo ei aiheuta virheitä eikä poista moskeijaa listalta. Pohjasta poistettiin Päivitä tiedosto kaikille -työnkulku ja moskeijarepon malli (malli/), joita mikään ei enää käyttänyt. Työnkulku ajetaan oikeasti vasta main-haarasta; testissä tarkistetaan paneeli ja kuivaharjoituksen lista.",
+      "aloitus": "Kirjaudu testipaneeliin ylläpitäjänä.",
+      "kohdat": [
+        "Päivitä lista toimii ilman virheilmoitusta, ja kaikki moskeijat (myös siirretyt luonnokset ja Hyvinkää) ovat yhä listalla — Missä: Testipaneeli → Ylläpito → Moskeijat → ⟳ Päivitä lista GitHubista",
+        "Valvonta-sivulla ei ole siirrettyjen moskeijoiden vanhan julkaisun virheitä, ja Tarkista nyt toimii — Missä: Testipaneeli → Ylläpito → Valvonta → Tarkista nyt",
+        "Ylläpitäjä (main-haaraan viennin jälkeen; testipaneelissa voi muokata vain testimoskeijaa): Hyvinkään tietojen tallennus toimii kuten ennen ja muutos näkyy sen sivulla tunnin sisällä — Missä: Paneeli → Hyvinkää → Moskeijan tiedot",
+        "Ylläpitäjä (main-haaraan viennin jälkeen): Poista vanhat repot -työnkulku kuivaharjoituksena syötteellä siirretyt listaa siirretyt moskeijat kohdalla poistettaisiin, eikä listassa ole Hyvinkäätä, Masjid-sunnahia eikä testimoskeijaa poistettavina — Missä: GitHub → pohja → Actions → Poista vanhat repot → Run workflow (moskeijat: siirretyt, kuiva: päällä)"
+      ],
+      "linkit": [
+        {
+          "nimi": "Testipaneeli: Moskeijat",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/yllapito"
+        },
+        {
+          "nimi": "Testipaneeli: Valvonta",
+          "url": "https://hallinta-testi.suomenmoskeijat.fi/#/yllapito/valvonta"
+        },
+        {
+          "nimi": "GitHub Actions: Poista vanhat repot",
+          "url": "https://github.com/suomen-moskeijat/pohja/actions/workflows/poista-vanhat-repot.yml"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-27"
     }
   ]
 }

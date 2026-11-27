@@ -45,7 +45,7 @@ GEMFILE = os.path.join(POHJA, ".github", "rakennus", "Gemfile")
 GEMFILE_VANHA = os.path.join(POHJA, ".github", "rakennus", "vanha-julkaisu", "Gemfile")
 VALIKERROS = os.path.join(POHJA, ".github", "sivulupa", "_worker.js")
 # Sivupohjasta ei sivulle (kuten rakenna.yml; lisäksi pohjan omat ohjeet ja päätökset)
-EI_POHJASTA = {".git", ".claude", "docs", "malli", "testi", "testit.json", "esittely", "_site"}
+EI_POHJASTA = {".git", ".claude", "docs", "testi", "testit.json", "esittely", "_site"}
 # Haetut tiedot (kuten rakenna.yml:n välimuisti)
 HAETUT = ["_data/instagram", "_data/aikataulut", "_data/haku", "_data/kuvat", "_data/youtube", "_data/telegram",
           "tiedostot/instagram", "tiedostot/youtube", "tiedostot/telegram", "tiedostot/*/mawaqit"]

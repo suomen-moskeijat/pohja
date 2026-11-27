@@ -1,0 +1,58 @@
+# Poistaa siirrettyjen moskeijoiden vanhat moskeijarepot (hallinta#56, J16, ADR-0006). Vain käsin: Actions → "Poista vanhat repot"
+# → Run workflow (main-haarasta). Moskeija on siirretty, kun sen sisältö on sisältörepossa (kansio moskeijat/<nimi>/ ja
+# sivustoluettelon rivi); vanha moskeijarepo (GitHub Pages) on silloin tarpeeton.
+# - Poistaa vain vanhan GitHub-repon. Sisältörepoon (vain luku), sivustoluetteloon ja Cloudflareen ei kosketa.
+# - Ei koskaan pohja, hallinta, sisalto, .github, hyvinkaa-islam-keskus, Masjid-sunnah tai testimoskeija; vain organisaation
+#   moskeijarepo, jonka nimi on täsmälleen sama kuin sisältörepon kansio ja sivustoluettelon rivi (turvarajat:
+#   .github/scripts/poista_vanhat_repot.py, testi hallinta testi/vanhat-repot.mjs).
+# - Kuivaharjoitus on oletus: tarkistaa ja tulostaa listan, ei poista mitään. Poisto vain, kun kuiva otetaan pois.
+# - Syötteet luetaan käynnistyksen tiedoista; loki näyttää vain nimet ja tulokset.
+# Poista moskeija -työnkulkua (poista-moskeija.yml) ei käytetä tähän: sisältörepon moskeijalta se poistaisi uuden sisällön.
+name: Poista vanhat repot
+
+on:
+  workflow_dispatch:
+    inputs:
+      moskeijat:
+        description: 'Moskeijat pilkuin (esim. masjid-esimerkki, toinen-moskeija) tai "siirretyt" = kaikki sivustoluettelon sivut, joilla on vanha repo'
+        required: true
+      kuiva:
+        description: "Kuivaharjoitus: vain lista, ei poisteta mitään"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: poista-vanhat-repot
+  cancel-in-progress: false
+
+jobs:
+  poista:
+    runs-on: ubuntu-24.04
+    environment: julkaisu
+    timeout-minutes: 15
+    steps:
+      - name: Hae sivupohja
+        uses: actions/checkout@v4
+        with:
+          path: pohja
+          persist-credentials: false
+
+      - name: Hae sisältö (yksityinen sisältörepo, lukuavain)
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/sisalto
+          token: ${{ secrets.SISALTO_LUKU }}
+          path: sisalto
+          persist-credentials: false
+
+      - name: Asenna Python-riippuvuudet (YAML)
+        run: python3 -m pip install --quiet -r pohja/.github/rakennus/requirements.txt
+
+      - name: Poista vanhat repot
+        env:
+          ORG: ${{ github.repository_owner }}
+          MOSKEIJA_AVAIN: ${{ secrets.MOSKEIJA_AVAIN }}
+        run: python3 pohja/.github/scripts/poista_vanhat_repot.py --sisalto sisalto
