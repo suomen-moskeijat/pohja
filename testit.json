@@ -2965,6 +2965,43 @@
       ],
       "versio": 1,
       "lisatty": "2026-11-24"
+    },
+    {
+      "id": "masjid-sunnah-tunnus",
+      "otsikko": "Masjid Sunnah uuteen julkaisuun: tunnus masjid-sunnah",
+      "alue": "paneeli ja sivu",
+      "kuvaus": "Masjid Sunnahin sivu siirretään vanhasta julkaisusta uuteen kuten muut moskeijat, mutta moskeijan tunnus vaihtuu: vanhan repon nimessä on iso kirjain (Masjid-sunnah), ja uuden julkaisun sivun nimi on pienillä kirjaimilla (masjid-sunnah). Paneelin kaikki tiedot siirtyvät uudelle tunnukselle: käyttäjät ja roolit, muutoshistoria, käyttöehtojen hyväksyntä, aloitus ja asetukset. Vanha paneelilinkki #/m/Masjid-sunnah vie uuteen, eikä vanha tunnus avaa enää vanhaa repoa. Vanha sivu (suomen-moskeijat.github.io/Masjid-sunnah/) toimii rinnalla, kunnes se suljetaan erikseen luvalla. Tarkistetaan siirron jälkeen tuotannon paneelissa (ylläpitäjä ilmoittaa, kun siirto on tehty); ennen siirtoa testipaneelissa ei näy muutosta.",
+      "aloitus": "Kun ylläpitäjä on ilmoittanut siirron tehdyksi, kirjaudu paneeliin tunnuksella, jolla on oikeus Masjid Sunnahiin (tai ylläpitäjänä).",
+      "kohdat": [
+        "Masjid Sunnah aukeaa, osoiterivillä on #/m/masjid-sunnah, ja Yleiskatsaus näyttää moskeijan nimen ja tiedot kuten ennen — Missä: Paneeli → Masjid Sunnah → Yleiskatsaus",
+        "Muutoshistoriassa näkyvät myös ennen siirtoa tehdyt muutokset — Missä: Paneeli → Masjid Sunnah → Muutoshistoria",
+        "Käyttäjät ja roolit ovat samat kuin ennen siirtoa — Missä: Paneeli → Masjid Sunnah → Käyttäjät",
+        "Käyttöehtoja ei pyydetä hyväksymään uudelleen (hyväksyntä säilyi) — Missä: Paneeli → Masjid Sunnah → Asetukset → Käyttöehdot",
+        "Vanha linkki (Vanha paneelilinkki alla) vie osoitteeseen #/m/masjid-sunnah — Missä: selaimen osoiterivi",
+        "Pieni muutos (esim. tapahtuman kuvaus) tallentuu, ja Julkaisun tila kertoo hetken päästä, että muutos näkyy sivulla; uusi sivu aukeaa luonnoslinkistä — Missä: Paneeli → Masjid Sunnah → Asetukset → Sivun tila",
+        "Uudella sivulla ovat samat sivut, rukousajat, tapahtumat ja kieliversiot kuin vanhalla sivulla — Missä: luonnoslinkki (Asetukset → Sivun tila) ja Vanha sivu alla",
+        "Ylläpitäjä: listalla on yksi Masjid Sunnah (masjid-sunnah), eikä Päivitä lista tuo toista riviä (Masjid-sunnah) — Missä: Paneeli → Ylläpito → Moskeijat"
+      ],
+      "linkit": [
+        {
+          "nimi": "Paneeli: Masjid Sunnah",
+          "url": "https://hallinta.suomenmoskeijat.fi/#/m/masjid-sunnah"
+        },
+        {
+          "nimi": "Vanha paneelilinkki",
+          "url": "https://hallinta.suomenmoskeijat.fi/#/m/Masjid-sunnah"
+        },
+        {
+          "nimi": "Vanha sivu",
+          "url": "https://suomen-moskeijat.github.io/Masjid-sunnah/"
+        },
+        {
+          "nimi": "GitHub Actions: Rakennusajo",
+          "url": "https://github.com/suomen-moskeijat/pohja/actions/workflows/rakennusajo.yml"
+        }
+      ],
+      "versio": 1,
+      "lisatty": "2026-11-27"
     }
   ]
 }
