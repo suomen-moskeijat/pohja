@@ -406,21 +406,22 @@ class CloudflarePages:
 
     def poista_vanhat(self, sivu, polku, loki=None, sivulupa=False, kaikki=False):
         """Poistaa projektin julkaisut, joiden polun tunniste (julkaisun viestissä) on eri kuin nyt (kaikki: polusta riippumatta),
-        paitsi nykyisen tuotantojulkaisun. Myös ennen tunnisteita tehdyt julkaisut poistetaan. Epäonnistunut poisto on julkaisuvirhe: sivun
+        paitsi nykyisen tuotantojulkaisun ja (kaikki) tämän ajon julkaisun, vaikka Pages ei vielä näyttäisi sitä nykyisenä.
+        Myös ennen tunnisteita tehdyt julkaisut poistetaan. Epäonnistunut poisto on julkaisuvirhe: sivun
         tiiviste ei päivity, joten seuraava ajo julkaisee ja yrittää poistoa uudelleen."""
         projekti, tunniste = sivu["projekti"], polun_tunniste(polku, sivulupa)
         koodi, v = self._api("/" + projekti)
         nykyinen = ((v.get("result") or {}).get("canonical_deployment") or {}).get("id") if koodi == 200 else None
         if not nykyinen:
             raise Julkaisuvirhe(f"Pages-projektin nykyistä julkaisua ei voitu lukea (HTTP {koodi})")
-        poistettavat = []
+        poistettavat, tama = [], f"Rakennusajo {self.ajo} polku:{tunniste}"
         for sivunro in range(1, 41):  # enintään 1 000 julkaisua
             koodi, v = self._api(f"/{projekti}/deployments?per_page=25&page={sivunro}")
             if koodi != 200 or not isinstance(v.get("result"), list):
                 raise Julkaisuvirhe(f"Pages-projektin julkaisuja ei voitu listata (HTTP {koodi})")
             for j in v["result"]:
                 viesti = str(((j.get("deployment_trigger") or {}).get("metadata") or {}).get("commit_message") or "")
-                if j.get("id") and j["id"] != nykyinen and (kaikki or not viesti.endswith(f"polku:{tunniste}")):
+                if j.get("id") and j["id"] != nykyinen and (not viesti.endswith(f"polku:{tunniste}") or (kaikki and viesti != tama)):
                     poistettavat.append(j["id"])
             if len(v["result"]) < 25:
                 break
