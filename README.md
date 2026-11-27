@@ -44,6 +44,12 @@ Ehdotukset listasta (`lisaa-listasta.yml`, sisältörepon `moskeijat.csv`) ja po
 sivustoluettelon rivi ja Pages-projekti) toimivat samoin. Vanhan julkaisun moskeijat (siirtämättömät, Hyvinkää) poistetaan
 kuten ennen (moskeijarepo).
 
+Siirrettyjen moskeijoiden vanhat moskeijarepot poistetaan erikseen käsin (`poista-vanhat-repot.yml`, hallinta#56): syöte
+`moskeijat` (nimet pilkuin tai `siirretyt` = sivustoluettelon sivut, joilla on vanha repo) ja `kuiva` (oletus: vain lista).
+Työnkulku poistaa vain vanhan GitHub-repon, ei mitään sisältörepossa eikä Cloudflaressa, ja vain kun sisältörepossa on kansio
+`moskeijat/<nimi>/` ja sivustoluettelossa rivi samalla nimellä. Pohja, hallinta, sisalto, .github, Hyvinkää, Masjid-sunnah ja
+testimoskeija eivät koskaan kuulu poistettaviin.
+
 Uusi moskeija alkaa tyhjästä (ADR-0001): sivulla ei ole oletusesittelyä, iqamah-minuutteja, valmiita artikkeleita,
 toiminnan kieliä eikä yläosan nappeja, ennen kuin moskeija lisää tai valitsee ne. Vain tuotu tieto (nimi, osoite,
 yhteystiedot, somet, vanhan sivun tekstit) tulee sivulle valmiiksi.
@@ -124,7 +130,7 @@ Moskeijan kannattaa tehdä itse (kerran, ilmaiseksi):
 | `.github/scripts/` | Haut: `instagram.py`, `somet.py` (YouTube, Telegram), `rukousajat.py`; uusi moskeija, ehdotukset ja poisto sisältörepossa: `lisaa_moskeija.py`, `lisaa_listasta.py`, `poista_moskeija.py`, `sisaltorepo.py` |
 | `.github/workflows/rakenna.yml` | Yhteinen julkaisuajo |
 | `.github/workflows/lisaa-moskeija.yml` | Lomake: Lisää moskeija |
-| `malli/` | Vanhan julkaisun moskeijarepon mallitiedostot (Hyvinkää, `paivita_kaikki.py`) |
+| `.github/workflows/poista-vanhat-repot.yml` | Siirrettyjen moskeijoiden vanhojen moskeijarepojen poisto (käsin, kuivaharjoitus oletuksena; `poista_vanhat_repot.py`) |
 
 Kuvakkeet: Phosphor Icons (MIT).
 

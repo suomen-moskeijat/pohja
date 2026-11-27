@@ -411,12 +411,12 @@ Jokaisen ajon voi käynnistää myös käsin: Actions → työnkulku → **Run w
 
 - Ulkoasu: `assets/css/sivu.css`. Toiminnot: `assets/js/sivu.js`.
 - Sivut: juuren `*.html`. Osat: `_includes/osat/`. Käännökset: `_data/kaannokset.yml`.
-- Uuden moskeijan malli: `malli/`. Paneelin kentät: `hallinta`-repon `src/kaavio.js`.
+- Uusi moskeija: pohjan `lisaa_moskeija.py` (Lisää moskeija -työnkulku). Paneelin kentät: `hallinta`-repon `src/kaavio.js`.
 - **Muutokset tehdään `testi`-haaraan, ei suoraan `main`-haaraan.** Testimoskeija (https://suomen-moskeijat.github.io/testimoskeija/) ja testipaneeli (https://hallinta-testi.suomenmoskeijat.fi) näyttävät testiversion heti. Muiden moskeijoiden sivut eivät muutu.
 - Kirjoita jokaisesta muutoksesta kohta tiedostoon `testit.json` (otsikko, mitä tarkistetaan, linkit). Testaaja kuittaa kohdat paneelissa: **Testaus ja julkaisu** → Toimii ✓ / Ei toimi ✗ ja syy. Kun korjaat hylätyn kohdan, nosta sen `versio`.
 - Kun kaikki on hyväksytty, ylläpitäjä painaa paneelissa **Julkaise kaikille**. `testi` yhdistyy `main`-haaraan, ja kaikki moskeijat saavat muutoksen tunnin sisällä. Kuka testasi ja kuka julkaisi, näkyy paneelin historiassa.
 - Älä kirjoita `testit.json`-tiedostoon nimiä tai muita henkilötietoja: repo on julkinen.
-- Tiedoston voi päivittää tai poistaa kaikista moskeijarepoista: pohja → Actions → **Päivitä tiedosto kaikille**.
+- Siirrettyjen moskeijoiden vanhat moskeijarepot poistetaan käsin: pohja → Actions → **Poista vanhat repot** (kuivaharjoitus ensin; Hyvinkää, Masjid-sunnah ja testimoskeija eivät koskaan kuulu poistettaviin).
 
 ### 7. Rukousaikojen lähteet
 
@@ -467,9 +467,8 @@ pohja/
   assets/                    ← tyylit, toiminnot, kuvakkeet
   _data/kaannokset.yml       ← käyttöliittymän tekstit neljällä kielellä
   _artikkelit/islaminusko/   ← yhteiset artikkelit
-  malli/                     ← uuden moskeijan tiedostot
   esittely/ohjeet/           ← ohjesivun ulkoasu (hakemisto + ohjeet: /pohja/)
   .github/moskeijalista/     ← moskeijalista ja ohjeet suomenmoskeijat.fi:ssä (rakennusajo, moskeijalista.py)
   .github/scripts/           ← haut ja automaatiot (Python, ei riippuvuuksia)
-  .github/workflows/         ← julkaisu, Lisää moskeija, artikkelit, hakemisto ja ohjeet, Päivitä tiedosto kaikille
+  .github/workflows/         ← rakennusajo, julkaisu (Hyvinkää), Lisää moskeija, poisto, artikkelit, hakemisto ja ohjeet, Poista vanhat repot
 ```
